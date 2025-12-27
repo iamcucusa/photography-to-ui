@@ -1,0 +1,315 @@
+---
+description: "Visual system tokens + usage rules for photography-to-ui (single source of truth for MVP visuals)"
+alwaysApply: true
+---
+
+# Design System Rules — photography-to-ui (MVP)
+
+This rule defines the **visual primitives** for the project:
+tokens + semantics + strict usage constraints.
+
+Cursor must **not invent** additional scales, token namespaces, or one-off visual constants.
+If something is missing, extend *this* rule deliberately.
+
+---
+
+## 1) Color System
+
+### 1.1 Brand Palette (Fixed)
+- Cucusa Frost = base canvas
+- Cucusa Sand = warm surfaces
+- Cucusa Magenta = identity accent (reserved)
+
+```css
+:root{
+  --color-frost: #F3F5F7;
+  --color-sand:  #E8DFD2;
+  --color-magenta: #C0185D;
+}
+```
+
+### 1.2 Semantic Roles (Use these in components)
+```css
+:root{
+  --color-bg-canvas: var(--color-frost);
+  --color-bg-surface: var(--color-sand);
+
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #4A4A4A;
+  --color-text-muted: #7A7A7A;
+
+  --color-border-subtle: rgba(0,0,0,0.08);
+  --color-border-strong: rgba(0,0,0,0.14);
+
+  --color-accent: var(--color-magenta);
+  --color-accent-subtle: color-mix(in srgb, var(--color-magenta) 18%, transparent);
+}
+```
+
+### 1.3 Color Usage Rules (Strict)
+- **Magenta is never a large background fill.**
+- Accent is reserved for intent:
+  - focus rings
+  - inline affordances (links, small buttons)
+  - tiny indicators (dots, markers, thin rules)
+- Frost is the **thinking space** (canvas).
+- Sand is for **surfaces** (panels/containers).
+- Prefer borders/dividers over shadows.
+- Do not use gradients, neon glows, or "highlight washes" as decoration.
+
+### 1.4 Color Family Semantics
+
+**MAGENTA — Brand Core**
+- Identity color: bold, feminine, tech-forward, high-impact
+- Palette Name: Cucusa Magenta
+- Purpose: Accents, highlights, data viz, brand UI
+- Usage: Focus rings, interactive elements, emphasis (never large background fills)
+
+**FROST — Pure Surfaces**
+- Snow, ice, clean light aesthetic
+- Palette Name: Cucusa Frost
+- Purpose: Pure surfaces for photography-based brand aesthetic
+- Dark Mode: Darker shades (Frost-1, Frost-2) for surfaces and backgrounds
+- Light Mode: Lighter shades (Frost-4, Frost-5) for canvas and clean surfaces
+
+**SAND — Warm Neutrals**
+- From Madrid photos
+- Brings humanity, softness, grounding
+- Palette Name: Cucusa Sand
+- Purpose: Warm surfaces, grounding elements
+- Dark Mode: Darker shades (Sand-1, Sand-2) for subtle warmth in backgrounds
+- Light Mode: Lighter shades (Sand-4, Sand-5) for warm surface backgrounds
+
+**SKY — Cool, Calm Blues**
+- Extracted from snow/forest photos
+- Palette Name: Cucusa Sky
+- Purpose: Backgrounds, calm surfaces, balancing magenta
+- Dark Mode: Darkest shades (Sky-1, Sky-2) for canvas and primary backgrounds
+- Light Mode: Lighter shades (Sky-4, Sky-5) for calm, cool backgrounds
+
+**INK — Neutrals & Text System**
+- Clarity, structure, engineering layer
+- Palette Name: Cucusa Ink
+- Purpose: Text, foregrounds, shadows, contrast surfaces
+- Dark Mode: Lighter shades (Ink-4, Ink-5) for text on dark backgrounds
+- Light Mode: Darker shades (Ink-1, Ink-2) for text on light backgrounds
+
+### 1.5 Mode-Specific Semantics
+
+**Dark Mode:**
+- Canvas: Sky-1 (darkest blue)
+- Surfaces: Frost-1 (dark neutral) or Sky-1 with opacity
+- Text: Ink-5 (lightest) for primary, Ink-4 for secondary, Ink-3 for muted
+- Borders: White with opacity (12% subtle, 24% strong)
+
+**Light Mode (when implemented):**
+- Canvas: Frost-5 or Sky-5 (lightest)
+- Surfaces: Sand-5 or Frost-4 (warm/clean light)
+- Text: Ink-1 (darkest) for primary, Ink-2 for secondary, Ink-3 for muted
+- Borders: Black with opacity (8% subtle, 14% strong)
+
+---
+
+## 2) Typography System
+
+### 2.1 Font Family (Single Font Only)
+```css
+:root{
+  --font-family-base: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+```
+
+### 2.2 Weights (Limited)
+```css
+:root{
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+}
+```
+
+### 2.3 Type Scale — Perfect Fifth (1.5), Base 16px
+```css
+:root{
+  --text-xs: 0.667rem;  /* ~10.7px */
+  --text-sm: 0.889rem;  /* ~14.2px */
+  --text-md: 1rem;      /* 16px */
+  --text-lg: 1.5rem;    /* 24px */
+  --text-xl: 2.25rem;   /* 36px */
+  --text-xxl: 3.375rem; /* 54px — use sparingly; avoid hero theatrics */
+}
+```
+
+### 2.3.1 Display / Experimental Scale — Golden Ratio-inspired
+**Separate from core token scale. For experimental hero moments only.**
+
+```css
+:root{
+  --display-xl: 5.46rem;  /* ~87.4px — Golden Ratio from xxl (3.375 × 1.618) */
+}
+```
+
+**Usage Rules:**
+- **Experimental only** — not part of core design system
+- Reserved for hero moments (e.g., full-bleed intro phrases overlaying photos)
+- `--display-xl`: Fixed size, Golden Ratio progression from `--text-xxl`
+- **Monospace constraint**: Display XL is the practical maximum for monospace fonts. Larger sizes become too heavy and lose the technical aesthetic.
+- Use sparingly and intentionally — this is a display size, not body text
+
+### 2.4 Line-height + Letter-spacing (Minimal, Intentional)
+```css
+:root{
+  --line-height-tight: 1.2;
+  --line-height-base: 1.45;
+  --line-height-loose: 1.7;
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+}
+```
+
+### 2.5 Typography Usage Rules
+- One font family only; hierarchy via size, weight, spacing, contrast.
+- Avoid oversized hero typography; `--text-xxl` should be rare.
+- No decorative text treatments (shadows, outlines, gradients).
+- Avoid ALL CAPS except short labels (≤ 12 chars).
+- Prefer short, declarative headings; avoid long “marketing” headlines.
+
+---
+
+## 3) Spacing System (Intent-based, Fixed Set)
+
+```css
+:root{
+  --space-xs: 0.25rem; /* micro separation */
+  --space-sm: 0.5rem;  /* related items */
+  --space-md: 1rem;    /* grouping */
+  --space-lg: 2rem;    /* breathing room */
+  --space-xl: 4rem;    /* structural separation */
+}
+```
+
+Spacing rules:
+- Do not introduce additional spacing scales.
+- Use spacing to communicate hierarchy (content feels **placed**, not stacked).
+- Prefer fewer, larger separations over many small gaps.
+
+---
+
+## 4) Shape, Dividers, Elevation
+
+### 4.1 Radius (Soft, restrained)
+```css
+:root{
+  --radius-sm: 10px;
+  --radius-md: 14px;
+}
+```
+
+### 4.2 Dividers (Preferred over shadows)
+```css
+:root{
+  --divider-subtle: 1px solid var(--color-border-subtle);
+  --divider-strong: 1px solid var(--color-border-strong);
+}
+```
+
+### 4.3 Elevation (Minimal)
+```css
+:root{
+  --shadow-1: 0 1px 0 rgba(0,0,0,0.05);
+  --shadow-2: 0 8px 24px rgba(0,0,0,0.08);
+}
+```
+
+Elevation rules:
+- Prefer dividers/borders; shadows must stay subtle.
+- Do not create “stacked card” aesthetics.
+- Do not use heavy drop-shadows or blurred glows.
+
+---
+
+## 5) Focus Ring (A11y + Brand Signal)
+
+```css
+:root{
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-magenta);
+}
+```
+
+Rules:
+- Focus ring must be visible on all interactive elements.
+- Use the magenta focus ring consistently as the “intent” signal.
+- Never remove focus outlines without providing an equivalent visible ring.
+
+---
+
+## 6) Assets & Pattern Usage (Photography + Ovals + LEGO/Grid)
+
+### 6.1 Photography Rules
+Photography is **context**, not content.
+
+Use photography as:
+- cropped planes
+- subdued background fields
+- side-context blocks inside the Primary Panel
+
+Never:
+- full-bleed hero images
+- wallpaper / repeated backgrounds
+- attention-stealing overlays
+
+Practical defaults:
+- Reduce prominence via opacity/contrast reduction; blur only if necessary and subtle.
+- Ensure text remains readable without relying on photo content.
+
+### 6.2 Oval Pattern Rules
+Meaning: softness, rhythm, human interruption.
+
+Use sparingly:
+- **max 1 oval moment per panel**
+- clipped edges or small inserts
+
+Never:
+- tile or repeat as wallpaper
+- place behind primary text
+- animate beyond opacity
+
+### 6.3 LEGO/Grid Pattern Rules
+Meaning: modularity, construction, systems thinking.
+
+Use only in:
+- insight containers
+- dividers
+- headers/labels within the Insight Rail
+
+Never:
+- as global background wallpaper
+- behind primary text
+- as the main visual focal point
+
+### 6.4 Pattern Global Rules
+- Patterns annotate thinking; they do not decorate surfaces.
+- Patterns must not animate beyond opacity.
+- Patterns must not compete with photography.
+
+---
+
+## 7) Token Discipline (Non-negotiable)
+
+- Use ONLY tokens defined in this rule for:
+  - colors and semantic roles
+  - typography (font, scale, metrics)
+  - spacing
+  - radius
+  - dividers
+  - shadows
+  - focus rings
+- Do not introduce new token namespaces or “one-off” constants in components.
+- If a new token is needed, add it here (this file) deliberately with a rationale.
+- Avoid duplicate tokens that mean the same thing.
+
+---
+End of design-system rule.

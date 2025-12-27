@@ -1,0 +1,73 @@
+---
+description: "Narrative tone and copy rules for the photography-to-ui UI"
+alwaysApply: false
+---
+
+# Narrative & Copy Rules
+
+## Narrative Intent
+
+One story only:
+
+“Visual systems observed in photography are translated into product decisions,
+calmly, intentionally, and directly in code.”
+
+This is a thinking narrative, not branding.
+
+---
+
+## Tone
+
+Copy must be:
+- editorial
+- observational
+- declarative
+- quietly technical
+
+Avoid:
+- marketing language
+- emotional adjectives
+- enthusiasm
+- long explanations
+- first-person storytelling
+
+---
+
+## Copy Length
+
+- No paragraph longer than 2 short lines
+- Most copy readable in <3 seconds
+- If unsure, remove words
+
+---
+
+## Primary Panel Copy (Use verbatim in first draft)
+
+**Headline**
+Photography translated into product UI.
+
+**Supporting line**
+Mood, rhythm, and hierarchy expressed through code.
+
+**Inline actions**
+- Inspect layout decisions
+- View interaction constraints
+
+---
+
+## Insight Rail (Initial Set)
+
+- Typography leads the interface.  
+  Layout follows reading, not decoration.
+
+- Color is structural.  
+  Accent is reserved for intent and focus.
+
+- Photography is context, not content.  
+  It informs decisions without demanding attention.
+
+- Minimal scrolling by design.  
+  Exploration happens through interaction.
+
+- This is not a design system.  
+  It is a controlled starting point.

@@ -1,0 +1,112 @@
+/* Design System Tokens */
+
+:root {
+  /* 1.1 Brand Palette - Cucusa Color System */
+  
+  /* Cucusa Magenta Palette */
+  --color-magenta-1: #FF0F8F;
+  --color-magenta-2: #D60076;
+  --color-magenta-3: #B30062;
+  --color-magenta-4: #FF4FB1;
+  --color-magenta-5: #FFE0F1;
+
+  /* Cucusa Sky Palette */
+  --color-sky-1: #0D1B2A;
+  --color-sky-2: #3A506B;
+  --color-sky-3: #5C7A96;
+  --color-sky-4: #9BB5C9;
+  --color-sky-5: #D6E4EE;
+
+  /* Cucusa Frost Palette */
+  --color-frost-1: #1C1C1F;
+  --color-frost-2: #6B6B73;
+  --color-frost-3: #B0B0B8;
+  --color-frost-4: #DFDFE6;
+  --color-frost-5: #F7F7FB;
+
+  /* Cucusa Sand Palette */
+  --color-sand-1: #5E4630;
+  --color-sand-2: #9E7B5C;
+  --color-sand-3: #B28A67;
+  --color-sand-4: #E8D8C9;
+  --color-sand-5: #F5EFEA;
+
+  /* Cucusa Ink Palette */
+  --color-ink-1: #1A1A1A;
+  --color-ink-2: #4A4A4A;
+  --color-ink-3: #7A7A7A;
+  --color-ink-4: #B3B3B3;
+  --color-ink-5: #E6E6E6;
+
+  /* 1.1.1 Legacy Aliases (for compatibility) */
+  --color-frost: var(--color-frost-5);
+  --color-sand: var(--color-sand-4);
+  --color-magenta: var(--color-magenta-2);
+
+  /* 1.2 Semantic Roles - Dark Mode */
+  --color-bg-canvas: var(--color-sky-1);
+  --color-bg-surface: var(--color-frost-1);
+
+  --color-text-primary: var(--color-ink-5);
+  --color-text-secondary: var(--color-ink-4);
+  --color-text-muted: var(--color-ink-3);
+
+  --color-border-subtle: color-mix(in srgb, var(--color-frost-2) 40%, transparent);
+  --color-border-strong: color-mix(in srgb, var(--color-frost-3) 60%, transparent);
+
+  --color-accent: var(--color-magenta-2);
+  --color-accent-subtle: color-mix(in srgb, var(--color-magenta-2) 18%, transparent);
+
+  /* 2.1 Font Family */
+  --font-family-base: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* 2.2 Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+
+  /* 2.3 Type Scale — Perfect Fifth (1.5), Base 16px */
+  --text-xs: 0.667rem;  /* ~10.7px */
+  --text-sm: 0.889rem;  /* ~14.2px */
+  --text-md: 1rem;      /* 16px */
+  --text-lg: 1.5rem;    /* 24px */
+  --text-xl: 2.25rem;   /* 36px */
+  --text-xxl: 3.375rem; /* 54px — use sparingly; avoid hero theatrics */
+
+  /* 2.3.1 Display / Experimental Scale — Golden Ratio-inspired (1.618), for hero moments */
+  --display-xl: 5.46rem;  /* ~87.4px — Golden Ratio from xxl (3.375 × 1.618) */
+  /* Display XXL removed: monospace fonts work best at restrained sizes. Display XL is the practical maximum. */
+
+  /* 2.4 Line-height + Letter-spacing */
+  --line-height-tight: 1.2;
+  --line-height-base: 1.45;
+  --line-height-loose: 1.7;
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+
+  /* 3. Spacing System */
+  --space-xs: 0.25rem; /* micro separation */
+  --space-sm: 0.5rem;  /* related items */
+  --space-md: 1rem;    /* grouping */
+  --space-lg: 2rem;    /* breathing room */
+  --space-xl: 4rem;    /* structural separation */
+
+  /* 4.1 Radius */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+
+  /* 4.2 Dividers */
+  --divider-subtle: 1px solid var(--color-border-subtle);
+  --divider-strong: 1px solid var(--color-border-strong);
+
+  /* 4.3 Elevation - Dark Mode */
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  /* 5. Focus Ring */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-magenta-2);
+}
+

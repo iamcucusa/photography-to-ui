@@ -1,0 +1,35 @@
+---
+description: "Engineering guardrails for the photography-to-ui project"
+alwaysApply: true
+---
+
+# Engineering Guardrails
+
+## Stack
+
+- React + TypeScript
+- Modern CSS + CSS variables
+- Minimal dependencies
+
+Code must be:
+- readable
+- predictable
+- intentionally boring
+
+---
+
+## Do NOT Introduce
+
+- Storybook
+- token automation
+- theming systems
+- monorepos
+- heavy abstractions
+- experimental libraries
+
+## Accessibility (Non-Negotiable)
+
+- Keyboard accessible interactions
+- Visible focus states
+- WCAG AA contrast
+- Motion respectful
