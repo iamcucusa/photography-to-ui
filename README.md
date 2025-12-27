@@ -4,7 +4,7 @@ A design-in-code exploration translating photographic inputs into product UI dec
 
 ## Live
 
-https://<GITHUB_USERNAME>.github.io/photography-to-ui/
+https://iamcucusa.github.io/photography-to-ui/
 
 ## What this is
 
