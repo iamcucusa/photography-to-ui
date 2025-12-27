@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # Source asset folders (not version controlled)
-assets/
+/assets/
 JetBrainsMono-2.304/
 master web jpegs/
 source/
