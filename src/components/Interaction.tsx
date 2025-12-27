@@ -1,24 +1,26 @@
 import { useState } from 'react'
 
+const baseUrl = import.meta.env.BASE_URL
+
 const legoImages = [
   {
     id: 'banner',
-    legoSrc: '/assets/magnific/magnific-linkedin_banner_bg_lego.png',
-    originalSrc: '/assets/magnific/magnific-linkedin_banner_bg.jpeg',
+    legoSrc: `${baseUrl}assets/magnific/magnific-linkedin_banner_bg_lego.png`,
+    originalSrc: `${baseUrl}assets/magnific/magnific-linkedin_banner_bg.jpeg`,
     alt: 'LEGO banner mosaic',
     gridClass: 'interaction-image-banner',
   },
   {
     id: 'photo-3x2',
-    legoSrc: '/assets/magnific/magnific-photo-02_3x2_1_master_lego.png',
-    originalSrc: '/assets/magnific/magnific-photo-02_3x2_1_master.jpeg',
+    legoSrc: `${baseUrl}assets/magnific/magnific-photo-02_3x2_1_master_lego.png`,
+    originalSrc: `${baseUrl}assets/magnific/magnific-photo-02_3x2_1_master.jpeg`,
     alt: 'LEGO 3x2 portrait',
     gridClass: 'interaction-image-3x2',
   },
   {
     id: 'photo-4x5',
-    legoSrc: '/assets/magnific/magnific-photo-02_4x5_master_lego.png',
-    originalSrc: '/assets/magnific/magnific-photo-02_4x5_master.jpeg',
+    legoSrc: `${baseUrl}assets/magnific/magnific-photo-02_4x5_master_lego.png`,
+    originalSrc: `${baseUrl}assets/magnific/magnific-photo-02_4x5_master.jpeg`,
     alt: 'LEGO 4x5 portrait',
     gridClass: 'interaction-image-4x5',
   },

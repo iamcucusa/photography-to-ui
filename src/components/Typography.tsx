@@ -14,14 +14,15 @@ const phrase = 'A beautiful face that codes and design.'
 
 // Pre-sized image sources
 const getImageSource = (selectedSize: string): string => {
+  const baseUrl = import.meta.env.BASE_URL
   const imageMap: Record<string, string> = {
-    'xs': '/assets/magnific/magnific-photo-01_3x2_1_120px.jpg',
-    'sm': '/assets/magnific/magnific-photo-01_3x2_1_150px.jpg',
-    'md': '/assets/magnific/magnific-photo-01_3x2_1_200px.jpg',
-    'lg': '/assets/magnific/magnific-photo-01_3x2_1_250px.jpg',
-    'xl': '/assets/magnific/magnific-photo-01_3x2_1_300px.jpg',
-    'xxl': '/assets/magnific/magnific-photo-01_3x2_1_350px.jpg',
-    'display-xl': '/assets/magnific/magnific-photo-01_3x2_1_400px.jpg',
+    'xs': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_120px.jpg`,
+    'sm': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_150px.jpg`,
+    'md': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_200px.jpg`,
+    'lg': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_250px.jpg`,
+    'xl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_300px.jpg`,
+    'xxl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_350px.jpg`,
+    'display-xl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_400px.jpg`,
   }
   return imageMap[selectedSize] || imageMap['md']
 }

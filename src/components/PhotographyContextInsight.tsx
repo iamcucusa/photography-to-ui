@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './photographyContextInsight.css'
 
+const baseUrl = import.meta.env.BASE_URL
+
 type Variant = 'peripheral' | 'asymmetric'
 
 interface PhotographyContextInsightProps {
@@ -58,7 +60,7 @@ function PeripheralVariant() {
     <div className="photography-context-variant photography-context-variant--peripheral">
       <div className="photography-context-image photography-context-image--left">
         <img
-          src="/assets/magnific/magnific-photo-01_1x1_master.jpeg"
+          src={`${baseUrl}assets/magnific/magnific-photo-01_1x1_master.jpeg`}
           alt=""
           className="photography-context-img"
         />
@@ -77,7 +79,7 @@ function PeripheralVariant() {
 
       <div className="photography-context-image photography-context-image--right">
         <img
-          src="/assets/magnific/magnific-photo-02_2x3_master.jpeg"
+          src={`${baseUrl}assets/magnific/magnific-photo-02_2x3_master.jpeg`}
           alt=""
           className="photography-context-img"
         />
@@ -92,7 +94,7 @@ function PeripheralVariant() {
 
       <div className="photography-context-image photography-context-image--left">
         <img
-          src="/assets/magnific/magnific-photo-03_3x2_master.jpeg"
+          src={`${baseUrl}assets/magnific/magnific-photo-03_3x2_master.jpeg`}
           alt=""
           className="photography-context-img"
         />
@@ -108,7 +110,7 @@ function AsymmetricVariant() {
     <div className="photography-context-variant photography-context-variant--asymmetric">
       <div className="photography-context-plane photography-context-plane--background">
         <img
-          src="/assets/magnific/magnific-photo-02_1x1_master.jpeg"
+          src={`${baseUrl}assets/magnific/magnific-photo-02_1x1_master.jpeg`}
           alt=""
           className="photography-context-img photography-context-img--muted"
         />
@@ -126,7 +128,7 @@ function AsymmetricVariant() {
 
       <div className="photography-context-plane photography-context-plane--counter">
         <img
-          src="/assets/magnific/magnific-photo-03_3x2_master.jpeg"
+          src={`${baseUrl}assets/magnific/magnific-photo-03_3x2_master.jpeg`}
           alt=""
           className="photography-context-img photography-context-img--small"
         />
@@ -145,7 +147,7 @@ function AsymmetricVariant() {
 
       <div className="photography-context-pattern">
         <img
-          src="/assets/magnific/magnific-photo-01_1x1_master.jpeg"
+          src={`${baseUrl}assets/magnific/magnific-photo-01_1x1_master.jpeg`}
           alt=""
           className="photography-context-pattern-img"
         />
