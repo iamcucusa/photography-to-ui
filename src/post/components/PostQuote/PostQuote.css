@@ -1,0 +1,117 @@
+.post-quote {
+  position: relative;
+  background-color: var(--color-bg-canvas);
+  border: var(--divider-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  /* Optimized for LinkedIn export - ensures proper aspect ratio */
+}
+
+/* Subtle grid background - engineering-adjacent aesthetic */
+.post-quote-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, var(--color-border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border-subtle) 1px, transparent 1px);
+  background-size: var(--space-md) var(--space-md);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* OPTION 1: Minimal - Vertical lines only (no grid) */
+.post-quote--variant-minimal .post-quote-grid {
+  display: none;
+}
+/* Keep ::before and ::after vertical lines */
+
+.post-quote-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  /* Responsive max-width for readability while maintaining LinkedIn aspect ratio */
+  max-width: 100%;
+}
+
+.post-quote-text {
+  font-family: var(--font-family-base);
+  font-size: var(--text-lg-plus);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+  /* Optimized for LinkedIn export readability - prevent unwanted word breaks */
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.post-quote-highlighted {
+  color: var(--color-magenta-4);
+  font-weight: var(--font-weight-bold);
+}
+
+.post-quote-author {
+  margin-top: var(--space-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+  font-style: normal;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.post-quote-meta {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.post-quote-author cite {
+  font-style: normal;
+}
+
+/* System rhythm - alignment and spacing */
+.post-quote::before {
+  content: '';
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  width: 2px;
+  height: calc(100% - var(--space-md) * 2);
+  background-color: var(--color-border-subtle);
+  opacity: 0.5;
+}
+
+.post-quote::after {
+  content: '';
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 2px;
+  height: calc(100% - var(--space-md) * 2);
+  background-color: var(--color-border-subtle);
+  opacity: 0.5;
+}
+
