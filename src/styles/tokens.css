@@ -70,6 +70,7 @@
   --text-sm: 0.889rem;  /* ~14.2px */
   --text-md: 1rem;      /* 16px */
   --text-lg: 1.5rem;    /* 24px */
+  --text-lg-plus: 1.75rem; /* ~28px — between lg and xl for quote optimization */
   --text-xl: 2.25rem;   /* 36px */
   --text-xxl: 3.375rem; /* 54px — use sparingly; avoid hero theatrics */
 
@@ -108,5 +109,10 @@
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
   --focus-ring-color: var(--color-magenta-2);
+
+  /* 6. LinkedIn Preview Sizing */
+  --post-card-width: clamp(340px, 32vw, 440px);
+  --post-grid-gap: var(--space-lg);
+  --post-safe-zone: var(--space-md);
 }
 
