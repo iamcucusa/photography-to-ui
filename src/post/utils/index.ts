@@ -4,6 +4,19 @@
  */
 
 export { buildNarrativeText } from './narrative'
+export {
+  generatePostId,
+  parsePostId,
+  createSlug,
+  generatePostIdFromNotion,
+  isValidPostId,
+  type PostIdParts,
+} from './postId'
+export {
+  extractPostDataFromNotion,
+  generatePostIdFromNotionPage,
+  createIdMigrationMap,
+} from './notionPostId'
 
 /**
  * Type guard to check if content is SinglePostContent

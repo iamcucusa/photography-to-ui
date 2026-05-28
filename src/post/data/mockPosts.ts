@@ -8,7 +8,7 @@ export const mockPosts: PostEntity[] = [
     type: 'single',
     title: 'Career Progress Comes From Systems, Not Speed',
     topic: 'career-systems',
-    tags: ['SystemsThinking', 'SeniorEngineering', 'CareerSystems'],
+    tags: ['SystemsThinking', 'SeniorEngineering'],
     createdAt: '2025-01-21T10:00:00Z',
     linkedinFormat: 'landscape',
     narrative: 'Speed creates motion.\n\nSystems create progress.\n\nThe runner moves alone, while the platform carries many.\n\nWhich path builds trust?\n\nWhich path scales?',
@@ -25,7 +25,7 @@ export const mockPosts: PostEntity[] = [
     type: 'single',
     title: "Staff engineers don't scale themselves. They scale trust.",
     topic: 'staff-engineering',
-    tags: ['StaffEngineering', 'SystemsThinking', 'EngineeringLeadership'],
+    tags: ['StaffEngineering', 'EngineeringLeadership'],
     createdAt: '2025-01-22T10:00:00Z',
     linkedinFormat: 'landscape',
     narrative: `Staff engineers don't scale themselves. They scale trust.
@@ -62,7 +62,7 @@ Not effort. Not heroics. Trust.`,
     type: 'single',
     title: "Most frontend burnout isn't workload. It's entropy.",
     topic: 'frontend-systems',
-    tags: ['frontend', 'designsystems', 'softwarearchitecture', 'productengineering'],
+    tags: ['DesignSystems', 'FrontendArchitecture', 'ProductEngineering'],
     createdAt: '2025-01-23T10:00:00Z',
     linkedinFormat: 'landscape',
     narrative: `Most frontend burnout isn't workload.
@@ -126,7 +126,7 @@ Explanations don't.`,
     type: 'single',
     title: "If consistency depends on discipline, the system will decay.",
     topic: 'system-invariants',
-    tags: ['SystemsThinking', 'DesignSystems', 'EngineeringLeadership'],
+    tags: ['SystemsThinking', 'DesignSystems'],
     createdAt: '2025-01-25T10:00:00Z',
     linkedinFormat: 'landscape',
     narrative: `If consistency depends on discipline, the system will decay.
@@ -163,7 +163,7 @@ They erode quietly.`,
     type: 'single',
     title: "If scaling requires more coordination, the abstraction failed.",
     topic: 'system-invariants',
-    tags: ['SystemsThinking', 'StaffEngineering', 'SoftwareArchitecture'],
+    tags: ['SystemsThinking', 'FrontendArchitecture'],
     createdAt: '2025-01-26T10:00:00Z',
     linkedinFormat: 'landscape',
     narrative: `If scaling requires more coordination, the abstraction failed.
@@ -305,6 +305,45 @@ Together, they fragment the system.`,
           },
         },
       ],
+    },
+  },
+  {
+    id: 'post-15-senior-engineers-dont-scale-by-writing',
+    type: 'single',
+    title: "Senior engineers don't scale by writing more code. They scale by increasing the output of everyone around them.",
+    topic: 'staff-engineering',
+    tags: ['StaffEngineering', 'FrontendLeadership', 'UXEngineering'],
+    createdAt: '2025-01-27T10:00:00Z',
+    linkedinFormat: 'landscape',
+    narrative: `Senior engineers don't scale by writing more code.
+They scale by increasing the output of everyone around them.
+
+Over the last 8+ years, the work I'm most proud of wasn't individual delivery.
+It was building environments where other people could grow faster, and safely.
+
+In several cases, I explicitly encouraged managers to hire junior engineers.
+With a clear commitment that I would mentor them and absorb the ramp-up risk.
+Not as a favor.
+As a system design decision.
+
+I've seen juniors become independent contributors.
+I've seen specialists scale across teams once their strengths were reframed.
+And I've seen what happens when teams optimize for "all seniors" instead.
+
+Teams don't fail because they lack seniors.
+They fail because seniors stop absorbing risk and start optimizing for comfort.
+
+If junior demand rebounds — as it always does —
+the differentiator won't be speed.
+It will be who knows how to grow people without breaking the system.
+
+*(Related thinking from Addy Osmani on the next wave of junior hiring — worth the read.)*`,
+    content: {
+      cover: {
+        src: `${baseUrl}assets/posts/senior-engineer-mentorship-scaling-trust-workshop-barcelona.jpg`,
+        alt: 'Photograph representing senior engineering mentorship, scaling trust, and workshop collaboration in Barcelona',
+      },
+      caption: "Senior engineers don't scale by writing more code. They scale by increasing the output of everyone around them.",
     },
   },
 ]

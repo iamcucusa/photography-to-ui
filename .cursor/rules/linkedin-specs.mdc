@@ -1,3 +1,178 @@
 ---
-alwaysApply: true
+description: Generating LinkedIn-ready visual content, including carousels, single-image posts, documents, alt-text, captions, and post metadata. Applies when creating or exporting assets intended for LinkedIn distribution, ensuring correct dimensions, aspect ratios, narrative constraints, and mobile-first design.
+alwaysApply: false
 ---
+# LinkedIn Visual & Post Specs (2026)
+
+This file defines the canonical specifications for generating LinkedIn-ready visual content.
+It MUST be followed in addition to:
+- design-system.mdc
+- engineering-guardrails.mdc
+- narrative-copy.mdc
+
+If there is a conflict, prefer:
+clarity > consistency > minimalism > platform correctness.
+
+---
+
+## 1. Supported LinkedIn Post Types
+
+Only the following post types are allowed:
+
+- carousel
+- single-image
+- video
+- document
+
+Do NOT invent new post types.
+
+---
+
+## 2. Canonical Export Sizes (Single Source of Truth)
+
+### 2.1 Carousel (Primary format)
+
+Carousel posts are uploaded to LinkedIn as **Documents (PDF)**.
+
+Design EACH slide at one of the following sizes:
+
+- **Square (default):** 1080 × 1080 px (1:1)
+- **Portrait (mobile-first):** 1080 × 1350 px (4:5)
+
+Rules:
+- Use PNG for slide generation
+- Compile slides into a single PDF for upload
+- Max slides: 7
+- Min slides: 5
+- Text-first design
+- One statement per slide
+
+Do NOT exceed these limits.
+
+---
+
+### 2.2 Single Image Feed Post
+
+Use for one-off insights or visual metaphors.
+
+Canonical size:
+- **Square:** 1200 × 1200 px (1:1)
+
+Allowed fallback:
+- 1080 × 1080 px
+
+Rules:
+- PNG preferred
+- Minimal text (≤ 12 words)
+- Image must stand alone without relying on caption
+
+---
+
+### 2.3 Video
+
+Use sparingly.
+
+Allowed sizes:
+- 1080 × 1080 px (1:1)
+- 1920 × 1080 px (16:9)
+
+Rules:
+- MP4 format
+- Silent-first (captions required)
+- Motion must communicate meaning (no decorative animation)
+
+---
+
+### 2.4 Documents (Non-carousel)
+
+Used for long-form content (reports, frameworks).
+
+Rules:
+- PDF only
+- Max file size: 100MB
+- Aspect ratios allowed: 1:1, 4:5, 16:9
+
+---
+
+## 3. Global Design Constraints (Mandatory)
+
+Applies to ALL LinkedIn assets.
+
+### 3.1 Mobile-first
+- Assume majority mobile consumption
+- Text must be readable at phone width
+- Avoid thin fonts and low contrast
+
+### 3.2 Safe Zone
+- Keep all critical text away from edges
+- No important content in corners
+- Assume LinkedIn may crop previews
+
+### 3.3 Visual Restraint
+- Prefer negative space over decoration
+- No stock photography
+- No decorative icons
+- No visual noise
+
+---
+
+## 4. Narrative & Copy Constraints (LinkedIn-specific)
+
+These rules extend narrative-copy.mdc.
+
+Allowed:
+- Declarative statements
+- Systems thinking
+- Cause → effect reasoning
+- Calm, factual tone
+
+Forbidden:
+- Marketing language
+- Emojis
+- “Tips”, “Secrets”, “Tricks”
+- Calls to action inside visuals
+- Questions beyond an optional first slide hook
+
+Captions may contain light CTAs.
+Visuals must not.
+
+---
+
+## 5. Required Metadata (for coded posts)
+
+Every LinkedIn asset MUST define:
+
+- postId (stable identifier, shared with Notion)
+- postType (carousel | single-image | video | document)
+- aspectRatio (1:1 | 4:5 | 1.91:1 | 16:9)
+- theme (light | dark)
+- altText (LinkedIn accessibility)
+
+---
+
+## 6. Cursor Guardrails
+
+Cursor MUST NOT:
+- Generate unsupported sizes
+- Introduce new aspect ratios
+- Add logos unless explicitly requested
+- Add emojis
+- Add stock imagery
+- Add marketing copy
+
+Cursor SHOULD:
+- Default to carousel format when content is multi-step
+- Default to dark theme for analytical/system content
+- Keep visuals publish-ready without manual resizing
+
+---
+
+## 7. Intent
+
+This spec exists to:
+- Ensure platform correctness
+- Maintain visual consistency
+- Enable regeneration and automation
+- Treat LinkedIn as a distribution layer, not a design tool
+
+End of file.

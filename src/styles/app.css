@@ -197,6 +197,28 @@
   margin-bottom: var(--space-md);
 }
 
+.posts-header-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.posts-header-count {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  font-family: var(--font-family-base);
+}
+
+@media (min-width: 768px) {
+  .posts-header-count {
+    font-size: var(--text-xxl);
+  }
+}
+
 .posts-content {
   display: grid;
   grid-template-columns: 1fr;

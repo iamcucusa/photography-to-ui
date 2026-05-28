@@ -66,3 +66,4 @@ export function PostCard({ post, onOpen }: PostCardProps) {
   )
 }
 
+

@@ -22,10 +22,13 @@ function Post() {
       </button>
       <div className="layout layout--posts">
         <div className="posts-header">
-          <h1 className="primary-panel-headline">
-            Posts
-            <span className="headline-cursor">_</span>
-          </h1>
+          <div className="posts-header-title">
+            <h1 className="primary-panel-headline">
+              Posts
+              <span className="headline-cursor">_</span>
+            </h1>
+            <span className="posts-header-count">{mockPosts.length}</span>
+          </div>
           <p className="primary-panel-supporting">
             A coded post library. Designed for LinkedIn-ready assets.
           </p>
