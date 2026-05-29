@@ -1,0 +1,52 @@
+{
+  "color": {
+    "$type": "color",
+
+    "bg": {
+      "canvas": {
+        "$value": "{color.sky.1}",
+        "$description": "Primary dark background"
+      },
+      "surface": {
+        "$value": "{color.frost.1}",
+        "$description": "Elevated surface background"
+      }
+    },
+
+    "text": {
+      "primary": {
+        "$value": "{color.ink.5}",
+        "$description": "High-emphasis text"
+      },
+      "secondary": {
+        "$value": "{color.ink.4}",
+        "$description": "Medium-emphasis text"
+      },
+      "muted": {
+        "$value": "{color.ink.3}",
+        "$description": "Low-emphasis text"
+      }
+    },
+
+    "border": {
+      "subtle": {
+        "$value": "{color.frost.2}",
+        "$description": "Subtle border base — consumed by derived border tokens at reduced opacity"
+      },
+      "strong": {
+        "$value": "{color.frost.3}",
+        "$description": "Strong border base — consumed by derived border tokens at reduced opacity"
+      }
+    },
+
+    "accent": {
+      "$value": "{color.magenta.2}",
+      "$description": "Primary accent color"
+    },
+
+    "accent-subtle": {
+      "$value": "{color.magenta.2}",
+      "$description": "Accent at 18% opacity — resolved via color-mix in derived tokens"
+    }
+  }
+}

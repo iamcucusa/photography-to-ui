@@ -1,6 +1,7 @@
 import StyleDictionary from 'style-dictionary'
 
 const sd = new StyleDictionary({
+  log: { verbosity: 'default', warnings: 'disabled' },
   source: ['tokens/**/*.json'],
   platforms: {
     css: {
