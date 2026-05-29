@@ -1,4 +1,6 @@
-import type { PostType, Theme, PostStatus } from '../../posts/types'
+type PostType = 'single-image' | 'carousel' | 'document' | 'video'
+type Theme = 'light' | 'dark'
+type PostStatus = 'draft' | 'ready' | 'published'
 
 export type PostFilterProps = {
   selectedTypes?: PostType[]
@@ -103,5 +105,3 @@ export function PostFilter({
     </aside>
   )
 }
-
-
