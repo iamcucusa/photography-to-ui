@@ -43,7 +43,7 @@ function ComingSoon() {
       } else {
         setSubmitStatus('error')
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -65,9 +65,7 @@ function ComingSoon() {
       </div>
 
       <div className="coming-soon-contact">
-        <p className="coming-soon-question">
-          Want to collaborate or discuss this work?
-        </p>
+        <p className="coming-soon-question">Want to collaborate or discuss this work?</p>
         <form className="coming-soon-cta" onSubmit={handleSubmit}>
           <div className="coming-soon-cta-group">
             <input
@@ -108,4 +106,3 @@ function ComingSoon() {
 }
 
 export default ComingSoon
-

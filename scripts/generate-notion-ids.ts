@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Helper to generate Post IDs from Notion page data
  */
 
-import { generatePostIdFromNotion, createSlug } from '../src/post/utils/postId'
+import { generatePostIdFromNotion } from '../src/post/utils/postId'
 
 export function generateIdFromNotionPage(page: any): string {
   const props = page.properties || {}

@@ -23,7 +23,7 @@ export {
  * Useful for Notion integration where content structure may vary
  */
 export function isSinglePostContent(
-  content: unknown
+  content: unknown,
 ): content is import('../model').SinglePostContent {
   return (
     typeof content === 'object' &&
@@ -37,13 +37,12 @@ export function isSinglePostContent(
  * Type guard to check if content is CarouselPostContent
  */
 export function isCarouselPostContent(
-  content: unknown
+  content: unknown,
 ): content is import('../model').CarouselPostContent {
   return (
     typeof content === 'object' &&
     content !== null &&
     'slides' in content &&
-    Array.isArray((content as any).slides)
+    Array.isArray((content as Record<string, unknown>).slides)
   )
 }
-

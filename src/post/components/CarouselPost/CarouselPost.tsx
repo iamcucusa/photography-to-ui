@@ -17,7 +17,7 @@ export function CarouselPost({ post }: CarouselPostProps) {
     return null
   }
 
-  const content = post.content as { aspect: '4:5' | '1:1'; slides: any[] }
+  const content = post.content as { aspect: '4:5' | '1:1'; slides: CarouselSlide[] }
   const slides = content.slides
   const currentSlide = slides[currentSlideIndex]
 
@@ -48,8 +48,9 @@ export function CarouselPost({ post }: CarouselPostProps) {
     }
   }
 
+  /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
   return (
-    <article 
+    <div
       className="carousel-post"
       role="region"
       aria-label={`Carousel: ${post.title}`}
@@ -60,11 +61,7 @@ export function CarouselPost({ post }: CarouselPostProps) {
       {post.narrative && (
         <PostNarrative narrative={post.narrative} className="carousel-post-narrative" />
       )}
-      <PostTags 
-        tags={post.tags}
-        className="carousel-post-tags"
-        tagClassName="carousel-post-tag"
-      />
+      <PostTags tags={post.tags} className="carousel-post-tags" tagClassName="carousel-post-tag" />
       <div className="carousel-post-slides">
         <div className="carousel-slide-wrapper">
           <CarouselSlide
@@ -79,11 +76,7 @@ export function CarouselPost({ post }: CarouselPostProps) {
           </div>
         </div>
       </div>
-      <div 
-        className="carousel-post-dots"
-        role="tablist"
-        aria-label="Slide navigation"
-      >
+      <div className="carousel-post-dots" role="tablist" aria-label="Slide navigation">
         {slides.map((slide, index) => {
           const isActive = index === currentSlideIndex
           return (
@@ -108,7 +101,7 @@ export function CarouselPost({ post }: CarouselPostProps) {
           )
         })}
       </div>
-    </article>
+    </div>
   )
 }
 
@@ -149,15 +142,13 @@ function renderTextWithEmphasis(text: string, emphasizedWords?: string[]): React
   matches.forEach((match) => {
     // Add text before the match
     if (match.index > lastIndex) {
-      parts.push(
-        <span key={key++}>{text.slice(lastIndex, match.index)}</span>
-      )
+      parts.push(<span key={key++}>{text.slice(lastIndex, match.index)}</span>)
     }
     // Add the emphasized word
     parts.push(
       <span key={key++} className="carousel-slide-emphasized">
         {match.word}
-      </span>
+      </span>,
     )
     lastIndex = match.index + match.word.length
   })
@@ -199,15 +190,17 @@ function CarouselSlide({ slide, aspect, slideIndex, totalSlides, onNavigate }: C
           <img src={slide.image.src} alt={slide.image.alt} />
         </div>
       )}
-      <div 
+      <div
         className="carousel-slide-content"
-        style={slide.image?.mode === 'full' ? {
-          '--carousel-slide-full-bg-image': `url('${slide.image.src}')`
-        } as React.CSSProperties : undefined}
+        style={
+          slide.image?.mode === 'full'
+            ? ({
+                '--carousel-slide-full-bg-image': `url('${slide.image.src}')`,
+              } as React.CSSProperties)
+            : undefined
+        }
       >
-        {slide.eyebrow && (
-          <div className="carousel-slide-eyebrow">{slide.eyebrow}</div>
-        )}
+        {slide.eyebrow && <div className="carousel-slide-eyebrow">{slide.eyebrow}</div>}
         {slide.subhead && (
           <p className="carousel-slide-subhead">
             {slide.subhead
@@ -232,9 +225,7 @@ function CarouselSlide({ slide, aspect, slideIndex, totalSlides, onNavigate }: C
           </h4>
         )}
         <div className="carousel-slide-actions">
-          {slide.number && (
-            <div className="carousel-slide-number">{slide.number}</div>
-          )}
+          {slide.number && <div className="carousel-slide-number">{slide.number}</div>}
           <button
             type="button"
             className="carousel-slide-cta"
@@ -266,4 +257,3 @@ function CarouselSlide({ slide, aspect, slideIndex, totalSlides, onNavigate }: C
     </section>
   )
 }
-

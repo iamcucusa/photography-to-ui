@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { PostEntity, LinkedInFormat } from '../../model'
+import type { PostEntity, LinkedInFormat, SinglePostContent } from '../../model'
 import { CarouselPost } from '../CarouselPost'
 import { PostNarrative } from '../PostNarrative/PostNarrative'
 import { PostTags } from '../PostTags/PostTags'
@@ -29,32 +29,19 @@ function getAspectRatio(format: LinkedInFormat): string {
 }
 
 export function PostEntityCard({ post, onOpen, debug = false }: PostEntityCardProps) {
+  const narrativeText = useMemo(
+    () => buildNarrativeText(post.title, post.narrative),
+    [post.title, post.narrative],
+  )
+
   if (post.type === 'carousel') {
     return <CarouselPost post={post} onOpen={onOpen} />
   }
 
-  // Single post rendering
-  const content = post.content as {
-    cover?: { src: string; alt: string }
-    quote?: { text: string; author: string; highlightedPhrase?: string }
-    summary?: string
-    primaryLine?: string
-    secondaryLines?: string
-    belief?: string
-    reframe?: string
-    caption?: string
-  }
-  
+  const content = post.content as SinglePostContent
   const isImageLed = content.caption && !content.belief
   const aspectRatio = content.cover ? getAspectRatio(post.linkedinFormat) : undefined
-  
-  // Memoize narrative text building for performance
-  // This prevents recalculation on every render
-  const narrativeText = useMemo(
-    () => buildNarrativeText(post.title, post.narrative),
-    [post.title, post.narrative]
-  )
-  
+
   return (
     <article
       className={`post-entity-card post-entity-card--single ${debug ? 'post-entity-card--debug' : ''}`}
@@ -62,12 +49,9 @@ export function PostEntityCard({ post, onOpen, debug = false }: PostEntityCardPr
       data-linkedin-format={post.linkedinFormat}
     >
       {narrativeText && (
-        <PostNarrative 
-          narrative={narrativeText}
-          className="post-entity-card-narrative"
-        />
+        <PostNarrative narrative={narrativeText} className="post-entity-card-narrative" />
       )}
-      <PostTags 
+      <PostTags
         tags={post.tags}
         className="post-entity-card-tags"
         tagClassName="post-entity-card-tag"
@@ -84,10 +68,7 @@ export function PostEntityCard({ post, onOpen, debug = false }: PostEntityCardPr
         />
       )}
       {content.cover?.src && (
-        <div 
-          className="post-entity-card-cover"
-          style={{ aspectRatio }}
-        >
+        <div className="post-entity-card-cover" style={{ aspectRatio }}>
           <img src={content.cover.src} alt={content.cover.alt} />
           {debug && (
             <div className="post-entity-card-debug-label">
@@ -135,16 +116,11 @@ export function PostEntityCard({ post, onOpen, debug = false }: PostEntityCardPr
                 </div>
               </div>
             )}
-            {content.caption && (
-              <p className="post-entity-card-caption">{content.caption}</p>
-            )}
-            {content.summary && (
-              <p className="post-entity-card-summary">{content.summary}</p>
-            )}
+            {content.caption && <p className="post-entity-card-caption">{content.caption}</p>}
+            {content.summary && <p className="post-entity-card-summary">{content.summary}</p>}
           </>
         )}
       </div>
     </article>
   )
 }
-
