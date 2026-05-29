@@ -1,0 +1,10 @@
+{
+  "space": {
+    "$type": "dimension",
+    "xs": { "$value": "0.25rem", "$description": "Micro separation" },
+    "sm": { "$value": "0.5rem", "$description": "Related items" },
+    "md": { "$value": "1rem", "$description": "Grouping" },
+    "lg": { "$value": "2rem", "$description": "Breathing room" },
+    "xl": { "$value": "4rem", "$description": "Structural separation" }
+  }
+}

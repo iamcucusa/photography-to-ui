@@ -1,0 +1,17 @@
+{
+  "focus-ring": {
+    "width": {
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "offset": {
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "color": {
+      "$type": "color",
+      "$value": "{color.magenta.2}",
+      "$description": "Focus ring color — matches accent"
+    }
+  }
+}

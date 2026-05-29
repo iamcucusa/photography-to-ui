@@ -1,0 +1,26 @@
+{
+  "radius": {
+    "$type": "dimension",
+    "sm": { "$value": "10px" },
+    "md": { "$value": "14px" }
+  },
+  "divider": {
+    "$type": "border",
+    "subtle": {
+      "$value": {
+        "color": "{color.border-subtle}",
+        "width": "1px",
+        "style": "solid"
+      },
+      "$description": "Subtle divider line"
+    },
+    "strong": {
+      "$value": {
+        "color": "{color.border-strong}",
+        "width": "1px",
+        "style": "solid"
+      },
+      "$description": "Strong divider line"
+    }
+  }
+}

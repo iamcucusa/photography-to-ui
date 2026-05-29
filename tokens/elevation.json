@@ -1,0 +1,74 @@
+{
+  "shadow": {
+    "$type": "shadow",
+    "1": {
+      "$value": {
+        "color": "rgba(255, 255, 255, 0.05)",
+        "offsetX": "0",
+        "offsetY": "1px",
+        "blur": "0",
+        "spread": "0"
+      },
+      "$description": "Subtle top highlight"
+    },
+    "soft": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.2)",
+        "offsetX": "0",
+        "offsetY": "2px",
+        "blur": "8px",
+        "spread": "0"
+      },
+      "$description": "Soft elevation"
+    },
+    "hover": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.3)",
+        "offsetX": "0",
+        "offsetY": "4px",
+        "blur": "12px",
+        "spread": "0"
+      },
+      "$description": "Hover state elevation"
+    },
+    "2": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.4)",
+        "offsetX": "0",
+        "offsetY": "8px",
+        "blur": "24px",
+        "spread": "0"
+      },
+      "$description": "High elevation — cards, slides"
+    },
+    "glow-accent": {
+      "$value": [
+        {
+          "color": "rgba(214, 0, 118, 0.4)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "0",
+          "spread": "1px"
+        },
+        {
+          "color": "rgba(255, 15, 143, 0.25)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "12px",
+          "spread": "0"
+        },
+        {
+          "color": "rgba(179, 0, 98, 0.15)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "24px",
+          "spread": "0"
+        }
+      ],
+      "$description": "Accent glow — interactive focus/hover highlights",
+      "$extensions": {
+        "com.cucusa.cssShadow": "0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 0 12px color-mix(in srgb, var(--color-magenta-1) 25%, transparent), 0 0 24px color-mix(in srgb, var(--color-magenta-3) 15%, transparent)"
+      }
+    }
+  }
+}

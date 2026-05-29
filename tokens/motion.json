@@ -1,0 +1,22 @@
+{
+  "duration": {
+    "$type": "duration",
+    "micro": { "$value": "120ms" },
+    "fast": { "$value": "150ms" },
+    "normal": { "$value": "200ms" },
+    "slow": { "$value": "300ms" },
+    "crossfade": { "$value": "500ms" },
+    "blink": { "$value": "1800ms" }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "default": {
+      "$value": [0.25, 0.1, 0.25, 1],
+      "$description": "CSS ease keyword equivalent"
+    },
+    "emphasized": {
+      "$value": [0.4, 0, 0.2, 1],
+      "$description": "Material-style emphasized easing"
+    }
+  }
+}
