@@ -12,35 +12,40 @@ const insights = [
     title: 'Typography leads the interface.',
     text: 'Layout follows reading, not decoration.',
     headline: 'Typography leads the interface_',
-    supporting: 'Layout follows reading, not decoration. Type scale creates hierarchy. Weight and spacing guide attention.',
+    supporting:
+      'Layout follows reading, not decoration. Type scale creates hierarchy. Weight and spacing guide attention.',
   },
   {
     id: 'color',
     title: 'Color is structural.',
     text: 'Accent is reserved for intent and focus.',
     headline: 'Color is structural_',
-    supporting: 'The palette is extracted from a professional urban study and a personal natural one.',
+    supporting:
+      'The palette is extracted from a professional urban study and a personal natural one.',
   },
   {
     id: 'photography',
     title: 'Photography is context, not content.',
     text: 'It shapes layout and rhythm without competing for hierarchy..',
     headline: 'Photography is context, not content_',
-    supporting: 'It informs decisions without demanding attention. Subdued. Muted. Supporting the narrative.',
+    supporting:
+      'It informs decisions without demanding attention. Subdued. Muted. Supporting the narrative.',
   },
   {
     id: 'interaction',
     title: 'Minimal scrolling by design.',
     text: 'Exploration happens through interaction.',
     headline: 'Minimal scrolling by design_',
-    supporting: 'Exploration happens through interaction. Click. Reveal. Engage. Content responds to intent.',
+    supporting:
+      'Exploration happens through interaction. Click. Reveal. Engage. Content responds to intent.',
   },
   {
     id: 'system',
     title: 'This is not a design system.',
     text: 'It is a controlled starting point.',
     headline: 'This is not a design system_',
-    supporting: 'It is a controlled starting point. Deliberate constraints. Intentional boundaries. Thoughtful defaults.',
+    supporting:
+      'It is a controlled starting point. Deliberate constraints. Intentional boundaries. Thoughtful defaults.',
   },
   {
     id: 'coming-soon',
@@ -83,11 +88,11 @@ Layout and interaction constraints are resolved through implementation and itera
   const renderNarrativeWithLinks = (text: string) => {
     const insightMap: Record<string, string> = {
       'design-in-code': 'system',
-      'color': 'color',
-      'rhythm': 'photography',
-      'typography': 'typography',
-      'interaction': 'interaction',
-      'iteration': 'coming-soon',
+      color: 'color',
+      rhythm: 'photography',
+      typography: 'typography',
+      interaction: 'interaction',
+      iteration: 'coming-soon',
     }
 
     // Split by longer phrases first, then single words (case-insensitive)
@@ -110,7 +115,7 @@ Layout and interaction constraints are resolved through implementation and itera
     if (lastIndex < text.length) {
       parts.push({ text: text.substring(lastIndex), isLink: false })
     }
-    
+
     return parts.map((part, index) => {
       if (part.isLink) {
         // Normalize to lowercase for lookup but preserve original casing in display
@@ -251,4 +256,3 @@ Layout and interaction constraints are resolved through implementation and itera
 }
 
 export default Home
-

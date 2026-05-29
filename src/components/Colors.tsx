@@ -172,4 +172,3 @@ function Colors() {
 }
 
 export default Colors
-

@@ -16,20 +16,15 @@ export function PostTags({ tags, className = '', tagClassName = '' }: PostTagsPr
   }
 
   return (
-    <ul 
-      className={`post-tags ${className}`}
-      aria-label="Post tags"
-    >
+    <ul className={`post-tags ${className}`} aria-label="Post tags">
       {tags.map((tag) => (
-        <li 
-          key={tag} 
-          className={`post-tag ${tagClassName}`}
-        >
-          <span className="post-tag-hash" aria-hidden="true">#</span>
+        <li key={tag} className={`post-tag ${tagClassName}`}>
+          <span className="post-tag-hash" aria-hidden="true">
+            #
+          </span>
           {tag}
         </li>
       ))}
     </ul>
   )
 }
-

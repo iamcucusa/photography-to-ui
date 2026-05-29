@@ -58,12 +58,9 @@ function System() {
                   {block.param && (
                     <>
                       <span className="system-notes-delimiter"> * </span>
-                      <span className="system-notes-directive">@param</span>
-                      {' '}
-                      <span className="system-notes-code-element">{`{${block.paramType}}`}</span>
-                      {' '}
-                      <span className="system-notes-code-element">{block.param}</span>
-                      {' '}
+                      <span className="system-notes-directive">@param</span>{' '}
+                      <span className="system-notes-code-element">{`{${block.paramType}}`}</span>{' '}
+                      <span className="system-notes-code-element">{block.param}</span>{' '}
                       <span className="system-notes-comment">{block.paramDesc}</span>
                       {'\n'}
                     </>
@@ -71,8 +68,7 @@ function System() {
                   {block.defaultValue && (
                     <>
                       <span className="system-notes-delimiter"> * </span>
-                      <span className="system-notes-directive">@default</span>
-                      {' '}
+                      <span className="system-notes-directive">@default</span>{' '}
                       <span className="system-notes-code-element">{block.defaultValue}</span>
                       {'\n'}
                     </>
@@ -80,10 +76,8 @@ function System() {
                   {block.returns && (
                     <>
                       <span className="system-notes-delimiter"> * </span>
-                      <span className="system-notes-directive">@returns</span>
-                      {' '}
-                      <span className="system-notes-code-element">{`{${block.returns}}`}</span>
-                      {' '}
+                      <span className="system-notes-directive">@returns</span>{' '}
+                      <span className="system-notes-code-element">{`{${block.returns}}`}</span>{' '}
                       <span className="system-notes-comment">{block.note}</span>
                       {'\n'}
                     </>
@@ -112,12 +106,9 @@ function System() {
       )}
       <div className="system-tools">
         <div className="system-tools-code">
-          <span className="system-tools-keyword">const</span>
-          {' '}
-          <span className="system-tools-variable">tools</span>
-          {' '}
-          <span className="system-tools-operator">=</span>
-          {' '}
+          <span className="system-tools-keyword">const</span>{' '}
+          <span className="system-tools-variable">tools</span>{' '}
+          <span className="system-tools-operator">=</span>{' '}
           <span className="system-tools-bracket">[</span>
           <div className="system-tools-items">
             {[
@@ -147,4 +138,3 @@ function System() {
 }
 
 export default System
-

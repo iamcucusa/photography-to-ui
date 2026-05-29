@@ -49,8 +49,9 @@
   border: var(--divider-subtle);
   opacity: 0;
   transform: translateY(-4px);
-  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 10;
 }
@@ -223,7 +224,7 @@
 }
 
 .carousel-slide-image--full + .carousel-slide-content {
-  background: 
+  background:
     linear-gradient(
       135deg,
       color-mix(in srgb, var(--color-sky-1) 90%, transparent) 20%,
@@ -251,8 +252,14 @@
   box-shadow: none;
 }
 
-.carousel-slide--cover .carousel-slide-image--full + .carousel-slide-content .carousel-slide-actions,
-.carousel-slide--closing .carousel-slide-image--full + .carousel-slide-content .carousel-slide-actions {
+.carousel-slide--cover
+  .carousel-slide-image--full
+  + .carousel-slide-content
+  .carousel-slide-actions,
+.carousel-slide--closing
+  .carousel-slide-image--full
+  + .carousel-slide-content
+  .carousel-slide-actions {
   justify-content: flex-end;
 }
 
@@ -303,7 +310,9 @@
 
 .carousel-slide-eyebrow {
   font-size: var(--text-xs);
-  color: var(--color-text-secondary); /* Changed from --color-text-muted to improve contrast (from ~3.2:1 to ~7.2:1) */
+  color: var(
+    --color-text-secondary
+  ); /* Changed from --color-text-muted to improve contrast (from ~3.2:1 to ~7.2:1) */
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-tight);
   font-weight: var(--font-weight-medium);
@@ -377,7 +386,7 @@
 .carousel-slide-cta-label {
   opacity: 0;
   visibility: hidden;
-  transition: 
+  transition:
     opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     visibility 0.12s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: var(--font-weight-medium);
@@ -464,8 +473,9 @@
   height: 8px;
   border-radius: 50%;
   background-color: var(--color-text-muted);
-  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carousel-post-dot--active .carousel-post-dot-indicator {
@@ -490,7 +500,8 @@
 }
 
 .carousel-slide-emphasized {
-  color: var(--color-magenta-4); /* Changed from --color-accent to lighter magenta (#FF4FB1) for better contrast (~5.2:1, passes WCAG AA) */
+  color: var(
+    --color-magenta-4
+  ); /* Changed from --color-accent to lighter magenta (#FF4FB1) for better contrast (~5.2:1, passes WCAG AA) */
   font-weight: var(--font-weight-bold);
 }
-

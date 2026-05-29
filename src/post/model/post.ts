@@ -61,4 +61,3 @@ export type PostEntity = {
   content: SinglePostContent | CarouselPostContent
   narrative?: string
 }
-

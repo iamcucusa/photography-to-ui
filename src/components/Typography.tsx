@@ -16,12 +16,12 @@ const phrase = 'A beautiful face that codes and design.'
 const getImageSource = (selectedSize: string): string => {
   const baseUrl = import.meta.env.BASE_URL
   const imageMap: Record<string, string> = {
-    'xs': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_120px.jpg`,
-    'sm': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_150px.jpg`,
-    'md': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_200px.jpg`,
-    'lg': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_250px.jpg`,
-    'xl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_300px.jpg`,
-    'xxl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_350px.jpg`,
+    xs: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_120px.jpg`,
+    sm: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_150px.jpg`,
+    md: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_200px.jpg`,
+    lg: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_250px.jpg`,
+    xl: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_300px.jpg`,
+    xxl: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_350px.jpg`,
     'display-xl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_400px.jpg`,
   }
   return imageMap[selectedSize] || imageMap['md']
@@ -29,12 +29,12 @@ const getImageSource = (selectedSize: string): string => {
 
 const getImageWidth = (selectedSize: string): string => {
   const sizeMap: Record<string, string> = {
-    'xs': '120px',
-    'sm': '150px',
-    'md': '200px',
-    'lg': '250px',
-    'xl': '300px',
-    'xxl': '350px',
+    xs: '120px',
+    sm: '150px',
+    md: '200px',
+    lg: '250px',
+    xl: '300px',
+    xxl: '350px',
     'display-xl': '400px',
   }
   return sizeMap[selectedSize] || '200px'
@@ -44,9 +44,9 @@ function Typography() {
   const [selectedSize, setSelectedSize] = useState<string>('md')
 
   // Memoize calculations to prevent unnecessary recalculations
-  const selectedScale = useMemo(() => 
-    typeScale.find((scale) => scale.name === selectedSize),
-    [selectedSize]
+  const selectedScale = useMemo(
+    () => typeScale.find((scale) => scale.name === selectedSize),
+    [selectedSize],
   )
   const imageSource = useMemo(() => getImageSource(selectedSize), [selectedSize])
   const imageWidth = useMemo(() => getImageWidth(selectedSize), [selectedSize])
@@ -82,10 +82,7 @@ function Typography() {
                 maxWidth: '100%',
               }}
             >
-              <img
-                src={imageSource}
-                alt=""
-              />
+              <img src={imageSource} alt="" />
             </div>
           </div>
         </div>
@@ -98,4 +95,3 @@ function Typography() {
 }
 
 export default Typography
-

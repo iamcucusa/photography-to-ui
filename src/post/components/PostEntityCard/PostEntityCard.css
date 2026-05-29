@@ -36,7 +36,6 @@
   gap: var(--space-sm);
 }
 
-
 .post-entity-card-title {
   font-size: var(--text-md);
   font-weight: var(--font-weight-medium);
@@ -151,4 +150,3 @@
   font-family: var(--font-family-base);
   z-index: 1;
 }
-

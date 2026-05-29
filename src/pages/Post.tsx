@@ -11,11 +11,7 @@ function Post() {
 
   return (
     <div className="app">
-      <button
-        className="page-title"
-        onClick={() => navigate('/')}
-        aria-label="Return to homepage"
-      >
+      <button className="page-title" onClick={() => navigate('/')} aria-label="Return to homepage">
         <span className="page-title-top">Photography</span>
         <span className="page-title-arrow">↓</span>
         <span className="page-title-bottom">Product UI</span>
@@ -41,11 +37,7 @@ function Post() {
           </div>
           <PostFilter />
         </div>
-        <button
-          className="back-home-nav"
-          onClick={() => navigate('/')}
-          aria-label="Back to home"
-        >
+        <button className="back-home-nav" onClick={() => navigate('/')} aria-label="Back to home">
           <span className="back-home-arrow">←</span>
           <span className="back-home-label">back home</span>
         </button>
@@ -65,4 +57,3 @@ function Post() {
 }
 
 export default Post
-

@@ -54,11 +54,7 @@ function Interaction() {
               aria-label={isRevealed ? 'Hide original image' : 'Reveal original image'}
             >
               <div className="interaction-image-overlay">
-                <img
-                  src={image.legoSrc}
-                  alt={image.alt}
-                  className="interaction-image-lego"
-                />
+                <img src={image.legoSrc} alt={image.alt} className="interaction-image-lego" />
                 <img
                   src={image.originalSrc}
                   alt={image.alt}
@@ -79,8 +75,8 @@ function Interaction() {
           {revealedImages.size === 0
             ? 'Click each image to reveal the original photograph.'
             : revealedImages.size < legoImages.length
-            ? `Revealed ${revealedImages.size} of ${legoImages.length}.`
-            : 'All images revealed. Click again to return to LEGO view.'}
+              ? `Revealed ${revealedImages.size} of ${legoImages.length}.`
+              : 'All images revealed. Click again to return to LEGO view.'}
         </p>
       </div>
     </div>
@@ -88,4 +84,3 @@ function Interaction() {
 }
 
 export default Interaction
-

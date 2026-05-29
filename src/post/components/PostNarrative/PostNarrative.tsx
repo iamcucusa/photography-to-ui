@@ -18,7 +18,7 @@ export function PostNarrative({ narrative, className = '' }: PostNarrativeProps)
 
   // Memoize toggle handler to prevent unnecessary re-renders
   const handleToggle = useCallback(() => {
-    setIsExpanded(prev => !prev)
+    setIsExpanded((prev) => !prev)
   }, [])
 
   // Check if narrative needs truncation
@@ -38,7 +38,7 @@ export function PostNarrative({ narrative, className = '' }: PostNarrativeProps)
         setShowMoreButton(actualHeight > maxHeight)
       }
     }, 0)
-    
+
     return () => clearTimeout(timeoutId)
   }, [narrative])
 
@@ -51,7 +51,7 @@ export function PostNarrative({ narrative, className = '' }: PostNarrativeProps)
     <section className={`post-narrative ${className}`} aria-label="Post narrative">
       <div className="post-narrative-container" ref={narrativeContainerRef}>
         <div className="post-narrative-wrapper">
-          <p 
+          <p
             ref={narrativeRef}
             className={`post-narrative-text ${!isExpanded ? 'post-narrative-text--truncated' : ''}`}
           >
@@ -84,4 +84,3 @@ export function PostNarrative({ narrative, className = '' }: PostNarrativeProps)
     </section>
   )
 }
-

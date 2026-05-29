@@ -7,4 +7,3 @@ export type {
   ImageMode,
   LinkedInFormat,
 } from './post'
-

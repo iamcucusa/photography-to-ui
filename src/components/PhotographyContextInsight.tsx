@@ -9,7 +9,9 @@ interface PhotographyContextInsightProps {
   variant?: Variant
 }
 
-function PhotographyContextInsight({ variant: initialVariant = 'peripheral' }: PhotographyContextInsightProps) {
+function PhotographyContextInsight({
+  variant: initialVariant = 'peripheral',
+}: PhotographyContextInsightProps) {
   const [variant, setVariant] = useState<Variant>(initialVariant)
 
   return (
@@ -37,17 +39,11 @@ function PhotographyContextInsight({ variant: initialVariant = 'peripheral' }: P
         <p className="photography-context-body">
           It shapes layout and rhythm without competing for hierarchy.
         </p>
-        <p className="photography-context-supporting">
-          Cropped, muted, and spatially constrained.
-        </p>
+        <p className="photography-context-supporting">Cropped, muted, and spatially constrained.</p>
       </div>
 
       <div className="photography-context-content">
-        {variant === 'peripheral' ? (
-          <PeripheralVariant />
-        ) : (
-          <AsymmetricVariant />
-        )}
+        {variant === 'peripheral' ? <PeripheralVariant /> : <AsymmetricVariant />}
       </div>
     </div>
   )
@@ -68,12 +64,12 @@ function PeripheralVariant() {
 
       <div className="photography-context-text-block">
         <p>
-          Photography informs spatial decisions without demanding attention.
-          It appears at the periphery, supporting the narrative structure.
+          Photography informs spatial decisions without demanding attention. It appears at the
+          periphery, supporting the narrative structure.
         </p>
         <p>
-          Images are cropped and positioned to create rhythm, not to become focal points.
-          They suggest context rather than display content.
+          Images are cropped and positioned to create rhythm, not to become focal points. They
+          suggest context rather than display content.
         </p>
       </div>
 
@@ -87,8 +83,8 @@ function PeripheralVariant() {
 
       <div className="photography-context-text-block">
         <p>
-          The layout uses photography as structural material.
-          It shapes white space and guides the eye without competing with typography.
+          The layout uses photography as structural material. It shapes white space and guides the
+          eye without competing with typography.
         </p>
       </div>
 
@@ -118,12 +114,10 @@ function AsymmetricVariant() {
 
       <div className="photography-context-text-block photography-context-text-block--overlay">
         <p>
-          Photography creates depth through layering.
-          A muted background plane establishes atmosphere without drawing focus.
+          Photography creates depth through layering. A muted background plane establishes
+          atmosphere without drawing focus.
         </p>
-        <p>
-          Text remains primary. Images provide context through subtle presence.
-        </p>
+        <p>Text remains primary. Images provide context through subtle presence.</p>
       </div>
 
       <div className="photography-context-plane photography-context-plane--counter">
@@ -136,12 +130,12 @@ function AsymmetricVariant() {
 
       <div className="photography-context-text-block">
         <p>
-          A small counter-image balances the composition.
-          It adds visual interest without disrupting the reading flow.
+          A small counter-image balances the composition. It adds visual interest without disrupting
+          the reading flow.
         </p>
         <p>
-          The asymmetric layout reflects how photography appears in real contexts:
-          present but not dominant, supporting but not competing.
+          The asymmetric layout reflects how photography appears in real contexts: present but not
+          dominant, supporting but not competing.
         </p>
       </div>
 
@@ -157,4 +151,3 @@ function AsymmetricVariant() {
 }
 
 export default PhotographyContextInsight
-

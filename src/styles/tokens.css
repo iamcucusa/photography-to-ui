@@ -2,41 +2,41 @@
 
 :root {
   /* 1.1 Brand Palette - Cucusa Color System */
-  
+
   /* Cucusa Magenta Palette */
-  --color-magenta-1: #FF0F8F;
-  --color-magenta-2: #D60076;
-  --color-magenta-3: #B30062;
-  --color-magenta-4: #FF4FB1;
-  --color-magenta-5: #FFE0F1;
+  --color-magenta-1: #ff0f8f;
+  --color-magenta-2: #d60076;
+  --color-magenta-3: #b30062;
+  --color-magenta-4: #ff4fb1;
+  --color-magenta-5: #ffe0f1;
 
   /* Cucusa Sky Palette */
-  --color-sky-1: #0D1B2A;
-  --color-sky-2: #3A506B;
-  --color-sky-3: #5C7A96;
-  --color-sky-4: #9BB5C9;
-  --color-sky-5: #D6E4EE;
+  --color-sky-1: #0d1b2a;
+  --color-sky-2: #3a506b;
+  --color-sky-3: #5c7a96;
+  --color-sky-4: #9bb5c9;
+  --color-sky-5: #d6e4ee;
 
   /* Cucusa Frost Palette */
-  --color-frost-1: #1C1C1F;
-  --color-frost-2: #6B6B73;
-  --color-frost-3: #B0B0B8;
-  --color-frost-4: #DFDFE6;
-  --color-frost-5: #F7F7FB;
+  --color-frost-1: #1c1c1f;
+  --color-frost-2: #6b6b73;
+  --color-frost-3: #b0b0b8;
+  --color-frost-4: #dfdfe6;
+  --color-frost-5: #f7f7fb;
 
   /* Cucusa Sand Palette */
-  --color-sand-1: #5E4630;
-  --color-sand-2: #9E7B5C;
-  --color-sand-3: #B28A67;
-  --color-sand-4: #E8D8C9;
-  --color-sand-5: #F5EFEA;
+  --color-sand-1: #5e4630;
+  --color-sand-2: #9e7b5c;
+  --color-sand-3: #b28a67;
+  --color-sand-4: #e8d8c9;
+  --color-sand-5: #f5efea;
 
   /* Cucusa Ink Palette */
-  --color-ink-1: #1A1A1A;
-  --color-ink-2: #4A4A4A;
-  --color-ink-3: #7A7A7A;
-  --color-ink-4: #B3B3B3;
-  --color-ink-5: #E6E6E6;
+  --color-ink-1: #1a1a1a;
+  --color-ink-2: #4a4a4a;
+  --color-ink-3: #7a7a7a;
+  --color-ink-4: #b3b3b3;
+  --color-ink-5: #e6e6e6;
 
   /* 1.1.1 Legacy Aliases (for compatibility) */
   --color-frost: var(--color-frost-5);
@@ -58,7 +58,9 @@
   --color-accent-subtle: color-mix(in srgb, var(--color-magenta-2) 18%, transparent);
 
   /* 2.1 Font Family */
-  --font-family-base: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-family-base:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 
   /* 2.2 Weights */
   --font-weight-regular: 400;
@@ -66,16 +68,16 @@
   --font-weight-bold: 600;
 
   /* 2.3 Type Scale — Perfect Fifth (1.5), Base 16px */
-  --text-xs: 0.667rem;  /* ~10.7px */
-  --text-sm: 0.889rem;  /* ~14.2px */
-  --text-md: 1rem;      /* 16px */
-  --text-lg: 1.5rem;    /* 24px */
+  --text-xs: 0.667rem; /* ~10.7px */
+  --text-sm: 0.889rem; /* ~14.2px */
+  --text-md: 1rem; /* 16px */
+  --text-lg: 1.5rem; /* 24px */
   --text-lg-plus: 1.75rem; /* ~28px — between lg and xl for quote optimization */
-  --text-xl: 2.25rem;   /* 36px */
+  --text-xl: 2.25rem; /* 36px */
   --text-xxl: 3.375rem; /* 54px — use sparingly; avoid hero theatrics */
 
   /* 2.3.1 Display / Experimental Scale — Golden Ratio-inspired (1.618), for hero moments */
-  --display-xl: 5.46rem;  /* ~87.4px — Golden Ratio from xxl (3.375 × 1.618) */
+  --display-xl: 5.46rem; /* ~87.4px — Golden Ratio from xxl (3.375 × 1.618) */
   /* Display XXL removed: monospace fonts work best at restrained sizes. Display XL is the practical maximum. */
 
   /* 2.4 Line-height + Letter-spacing */
@@ -88,10 +90,10 @@
 
   /* 3. Spacing System */
   --space-xs: 0.25rem; /* micro separation */
-  --space-sm: 0.5rem;  /* related items */
-  --space-md: 1rem;    /* grouping */
-  --space-lg: 2rem;    /* breathing room */
-  --space-xl: 4rem;    /* structural separation */
+  --space-sm: 0.5rem; /* related items */
+  --space-md: 1rem; /* grouping */
+  --space-lg: 2rem; /* breathing room */
+  --space-xl: 4rem; /* structural separation */
 
   /* 4.1 Radius */
   --radius-sm: 10px;
@@ -115,4 +117,3 @@
   --post-grid-gap: var(--space-lg);
   --post-safe-zone: var(--space-md);
 }
-

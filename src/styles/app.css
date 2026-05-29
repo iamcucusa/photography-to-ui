@@ -21,13 +21,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--color-sky-1) 70%, var(--color-frost-1) 30%) 0%,
-      color-mix(in srgb, var(--color-sand-1) 55%, var(--color-sky-1) 45%) 50%,
-      color-mix(in srgb, var(--color-sky-2) 35%, var(--color-frost-1) 65%) 100%
-    );
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-sky-1) 70%, var(--color-frost-1) 30%) 0%,
+    color-mix(in srgb, var(--color-sand-1) 55%, var(--color-sky-1) 45%) 50%,
+    color-mix(in srgb, var(--color-sky-2) 35%, var(--color-frost-1) 65%) 100%
+  );
   opacity: 0.78;
   z-index: 0;
   pointer-events: none; /* Prevent interaction */
@@ -43,7 +42,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(
       circle at 25% 40%,
       color-mix(in srgb, var(--color-magenta-2) 12%, transparent) 0%,
@@ -86,7 +85,9 @@
   letter-spacing: 0.02em;
   z-index: 10;
   opacity: 0.85;
-  transition: opacity 0.2s ease, color 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -231,7 +232,6 @@
   }
 }
 
-
 .back-home-nav {
   grid-column: 1 / -1;
   margin-top: var(--space-lg);
@@ -356,7 +356,7 @@
   cursor: pointer;
   position: relative;
   will-change: transform, background-color, border-color, border-left-width;
-  transition: 
+  transition:
     transform 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
@@ -380,7 +380,7 @@
   border-left-color: var(--color-magenta-1);
   background-color: var(--color-bg-surface);
   border-color: color-mix(in srgb, var(--color-magenta-2) 30%, var(--color-border-subtle));
-  box-shadow: 
+  box-shadow:
     0 0 0 1px color-mix(in srgb, var(--color-magenta-2) 40%, transparent),
     0 0 12px color-mix(in srgb, var(--color-magenta-1) 25%, transparent),
     0 0 24px color-mix(in srgb, var(--color-magenta-3) 15%, transparent);
@@ -422,7 +422,7 @@
   color: var(--color-text-secondary);
   line-height: var(--line-height-loose);
   opacity: 0.85;
-  transition: 
+  transition:
     color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -458,10 +458,12 @@
 }
 
 @keyframes blink {
-  0%, 60% {
+  0%,
+  60% {
     opacity: 1;
   }
-  61%, 100% {
+  61%,
+  100% {
     opacity: 0.4;
   }
 }
@@ -498,7 +500,7 @@
 .back-home-label {
   opacity: 0;
   visibility: hidden;
-  transition: 
+  transition:
     opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     visibility 0.12s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: var(--font-weight-medium);
@@ -691,7 +693,9 @@
   border-radius: var(--radius-sm);
   overflow: hidden;
   /* Width transition to match text font-size transition speed */
-  transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
+  transition:
+    width 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.15s ease;
   transform-origin: top left;
   will-change: width;
   contain: layout style;
@@ -788,7 +792,9 @@
   border-radius: var(--radius-sm);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   border: var(--divider-subtle);
 }
 
@@ -813,7 +819,9 @@
   padding: var(--space-sm);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   border-top: var(--divider-subtle);
 }
 
@@ -943,7 +951,6 @@
   aspect-ratio: 4 / 5;
 }
 
-
 .interaction-image-container:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
@@ -995,7 +1002,9 @@
   z-index: 3;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   pointer-events: none;
 }
 
@@ -1109,7 +1118,9 @@
   border: var(--divider-subtle);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
   text-align: left;
   width: 100%;
 }
@@ -1562,7 +1573,7 @@
   padding: var(--space-sm) var(--space-md);
   text-align: left;
   cursor: pointer;
-  transition: 
+  transition:
     background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1589,4 +1600,3 @@
 .post-filter-option-active:hover {
   border-color: color-mix(in srgb, var(--color-magenta-2) 40%, var(--color-border-subtle));
 }
-
