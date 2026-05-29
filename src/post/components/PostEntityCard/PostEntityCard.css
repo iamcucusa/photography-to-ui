@@ -1,5 +1,5 @@
 .post-entity-card {
-  background-color: color-mix(in srgb, var(--color-sky-1) 85%, transparent);
+  background-color: var(--color-bg-translucent);
   border-radius: var(--radius-md);
   border: var(--divider-subtle);
   padding: var(--space-md);
@@ -57,7 +57,7 @@
 .post-entity-card-tags {
   padding: var(--space-sm) var(--space-md);
   border-top: var(--divider-subtle);
-  background-color: color-mix(in srgb, var(--color-sky-1) 40%, transparent);
+  background-color: var(--color-bg-inset);
   backdrop-filter: blur(8px);
   border-radius: var(--radius-sm);
   margin-left: calc(var(--space-md) * -1);
@@ -85,7 +85,7 @@
 .post-entity-card-belief-reframe {
   margin-top: var(--space-md);
   padding: var(--space-md);
-  background-color: color-mix(in srgb, var(--color-sky-1) 75%, transparent);
+  background-color: var(--color-bg-recessed);
   border-radius: var(--radius-sm);
   border: var(--divider-subtle);
   display: flex;
@@ -144,7 +144,7 @@
   right: var(--space-xs);
   font-size: var(--text-xs);
   color: var(--color-accent);
-  background-color: color-mix(in srgb, var(--color-bg-canvas) 90%, transparent);
+  background-color: var(--color-overlay-dense);
   padding: var(--space-xs);
   border-radius: var(--radius-sm);
   font-family: var(--font-family-base);
