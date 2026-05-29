@@ -28,25 +28,9 @@
       }
     },
 
-    "border": {
-      "subtle": {
-        "$value": "{color.frost.2}",
-        "$description": "Subtle border base — consumed by derived border tokens at reduced opacity"
-      },
-      "strong": {
-        "$value": "{color.frost.3}",
-        "$description": "Strong border base — consumed by derived border tokens at reduced opacity"
-      }
-    },
-
     "accent": {
       "$value": "{color.magenta.2}",
       "$description": "Primary accent color"
-    },
-
-    "accent-subtle": {
-      "$value": "{color.magenta.2}",
-      "$description": "Accent at 18% opacity — resolved via color-mix in derived tokens"
     }
   }
 }
