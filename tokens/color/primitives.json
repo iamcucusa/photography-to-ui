@@ -1,0 +1,40 @@
+{
+  "color": {
+    "$type": "color",
+    "magenta": {
+      "1": { "$value": "#ff0f8f" },
+      "2": { "$value": "#d60076" },
+      "3": { "$value": "#b30062" },
+      "4": { "$value": "#ff4fb1" },
+      "5": { "$value": "#ffe0f1" }
+    },
+    "sky": {
+      "1": { "$value": "#0d1b2a" },
+      "2": { "$value": "#3a506b" },
+      "3": { "$value": "#5c7a96" },
+      "4": { "$value": "#9bb5c9" },
+      "5": { "$value": "#d6e4ee" }
+    },
+    "frost": {
+      "1": { "$value": "#1c1c1f" },
+      "2": { "$value": "#6b6b73" },
+      "3": { "$value": "#b0b0b8" },
+      "4": { "$value": "#dfdfe6" },
+      "5": { "$value": "#f7f7fb" }
+    },
+    "sand": {
+      "1": { "$value": "#5e4630" },
+      "2": { "$value": "#9e7b5c" },
+      "3": { "$value": "#b28a67" },
+      "4": { "$value": "#e8d8c9" },
+      "5": { "$value": "#f5efea" }
+    },
+    "ink": {
+      "1": { "$value": "#1a1a1a" },
+      "2": { "$value": "#4a4a4a" },
+      "3": { "$value": "#7a7a7a" },
+      "4": { "$value": "#b3b3b3" },
+      "5": { "$value": "#e6e6e6" }
+    }
+  }
+}
