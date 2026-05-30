@@ -226,8 +226,6 @@
     0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent),
     0 0 12px color-mix(in srgb, var(--color-magenta-1) 25%, transparent),
     0 0 24px color-mix(in srgb, var(--color-magenta-3) 15%, transparent); /** Accent glow — interactive focus/hover highlights */
-  --focus-ring-width: 2px;
-  --focus-ring-offset: 2px;
   --duration-micro: 0.12s;
   --duration-fast: 0.15s;
   --duration-normal: 0.2s;
@@ -238,6 +236,8 @@
   --easing-emphasized: cubic-bezier(0.4, 0, 0.2, 1); /** Material-style emphasized easing */
   --radius-sm: 10px;
   --radius-md: 14px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
   --post-card-width: clamp(
     340px,
     32vw,
@@ -273,9 +273,9 @@
   --color-text-secondary: var(--color-ink-4); /** Medium-emphasis text */
   --color-text-muted: var(--color-ink-3); /** Low-emphasis text */
   --color-accent: var(--color-magenta-2); /** Primary accent color */
-  --focus-ring-color: var(--color-magenta-2); /** Focus ring color — matches accent */
   --divider-subtle: 1px solid var(--color-border-subtle); /** Subtle divider line */
   --divider-strong: 1px solid var(--color-border-strong); /** Strong divider line */
+  --focus-ring-color: var(--color-magenta-2); /** Focus ring color — matches accent */
   --post-grid-gap: var(--space-lg); /** Post grid gap */
   --post-safe-zone: var(--space-md); /** Post content safe zone padding */
 }
