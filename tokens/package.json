@@ -1,0 +1,13 @@
+{
+  "name": "@cucusa/tokens",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Cucusa design tokens — W3C DTCG source with Style Dictionary 4 build pipeline",
+  "scripts": {
+    "build": "node sd.config.mjs"
+  },
+  "dependencies": {
+    "style-dictionary": "^4.4.0"
+  }
+}

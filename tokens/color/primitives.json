@@ -1,0 +1,45 @@
+{
+  "color": {
+    "$type": "color",
+    "magenta": {
+      "$description": "Brand accent palette — derived from urban photography, high-energy magenta tones",
+      "1": { "$value": "#ff0f8f", "$description": "Vivid — CTA arrows, glow source" },
+      "2": { "$value": "#d60076", "$description": "Primary accent — default brand color" },
+      "3": { "$value": "#b30062", "$description": "Deep — glow fade, shadow tints" },
+      "4": { "$value": "#ff4fb1", "$description": "Light — emphasized text, hover states" },
+      "5": { "$value": "#ffe0f1", "$description": "Pastel — unused in dark mode" }
+    },
+    "sky": {
+      "$description": "Foundation palette — derived from sky and architectural photography, cool blue-grays",
+      "1": { "$value": "#0d1b2a", "$description": "Deepest — canvas background" },
+      "2": { "$value": "#3a506b", "$description": "Mid — gradient endpoints, overlay base" },
+      "3": { "$value": "#5c7a96", "$description": "Muted — status success, cool glow" },
+      "4": { "$value": "#9bb5c9", "$description": "Light — toggle text, secondary links" },
+      "5": { "$value": "#d6e4ee", "$description": "Pale — unused in dark mode" }
+    },
+    "frost": {
+      "$description": "Neutral palette — cool grays for surfaces, borders, and structural elements",
+      "1": { "$value": "#1c1c1f", "$description": "Near-black — surface background" },
+      "2": { "$value": "#6b6b73", "$description": "Mid — subtle borders, tag backgrounds" },
+      "3": { "$value": "#b0b0b8", "$description": "Light — strong borders" },
+      "4": { "$value": "#dfdfe6", "$description": "Pale — unused in dark mode" },
+      "5": { "$value": "#f7f7fb", "$description": "Near-white — legacy alias target" }
+    },
+    "sand": {
+      "$description": "Warm palette — derived from natural/landscape photography, earthy tones",
+      "1": { "$value": "#5e4630", "$description": "Deep — app background gradient mid" },
+      "2": { "$value": "#9e7b5c", "$description": "Mid — warm glow source" },
+      "3": { "$value": "#b28a67", "$description": "Light — unused" },
+      "4": { "$value": "#e8d8c9", "$description": "Pale — legacy alias target" },
+      "5": { "$value": "#f5efea", "$description": "Near-white — unused in dark mode" }
+    },
+    "ink": {
+      "$description": "Text palette — pure gray scale for content hierarchy",
+      "1": { "$value": "#1a1a1a", "$description": "Deepest — unused in dark mode" },
+      "2": { "$value": "#4a4a4a", "$description": "Dark — unused in dark mode" },
+      "3": { "$value": "#7a7a7a", "$description": "Muted — low-emphasis text" },
+      "4": { "$value": "#b3b3b3", "$description": "Secondary — medium-emphasis text" },
+      "5": { "$value": "#e6e6e6", "$description": "Primary — high-emphasis text" }
+    }
+  }
+}

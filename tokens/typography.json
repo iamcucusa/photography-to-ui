@@ -1,0 +1,43 @@
+{
+  "font": {
+    "family": {
+      "base": {
+        "$type": "fontFamily",
+        "$value": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+        "$description": "Monospace stack — JetBrains Mono primary, system monospace fallbacks"
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": { "$value": 400, "$description": "Body text, default weight" },
+      "medium": { "$value": 500, "$description": "Labels, tags, emphasis" },
+      "bold": { "$value": 600, "$description": "Headlines, slide numbers, strong emphasis" }
+    }
+  },
+  "text": {
+    "$type": "dimension",
+    "$description": "Perfect Fifth scale (1.5 ratio), base 16px",
+    "xs": { "$value": "0.667rem", "$description": "~10.7px — eyebrows, indicators, metadata" },
+    "sm": { "$value": "0.889rem", "$description": "~14.2px — CTAs, captions, secondary text" },
+    "md": { "$value": "1rem", "$description": "16px — body text, narratives, base size" },
+    "lg": { "$value": "1.5rem", "$description": "24px — subheads, section titles" },
+    "lg-plus": { "$value": "1.75rem", "$description": "~28px — quote optimization, between lg and xl" },
+    "xl": { "$value": "2.25rem", "$description": "36px — slide headlines" },
+    "xxl": { "$value": "3.375rem", "$description": "54px — slide numbers, use sparingly" }
+  },
+  "display": {
+    "$type": "dimension",
+    "xl": { "$value": "5.46rem", "$description": "~87.4px — Golden Ratio from xxl (3.375 x 1.618), hero moments only" }
+  },
+  "line-height": {
+    "$type": "number",
+    "tight": { "$value": 1.2, "$description": "Headlines, display text — minimal leading" },
+    "base": { "$value": 1.45, "$description": "Default — balanced readability" },
+    "loose": { "$value": 1.7, "$description": "Body text, narratives — generous leading for reading comfort" }
+  },
+  "letter-spacing": {
+    "$type": "dimension",
+    "tight": { "$value": "-0.02em", "$description": "Headlines — tighter tracking for large text" },
+    "normal": { "$value": "0em", "$description": "Body text — default tracking" }
+  }
+}

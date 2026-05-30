@@ -1,0 +1,362 @@
+{
+  "timestamp": "2026-05-30T17:55:24.513Z",
+  "tokenSource": {
+    "totalTokens": 114,
+    "totalDescribed": 121,
+    "descriptionCoverage": 106,
+    "files": [
+      {
+        "file": "color/derived.json",
+        "tokens": 38,
+        "described": 38,
+        "coverage": 100
+      },
+      {
+        "file": "color/primitives.json",
+        "tokens": 25,
+        "described": 30,
+        "coverage": 120
+      },
+      {
+        "file": "color/semantic.json",
+        "tokens": 6,
+        "described": 6,
+        "coverage": 100
+      },
+      {
+        "file": "elevation.json",
+        "tokens": 5,
+        "described": 5,
+        "coverage": 100
+      },
+      {
+        "file": "motion.json",
+        "tokens": 8,
+        "described": 8,
+        "coverage": 100
+      },
+      {
+        "file": "shape.json",
+        "tokens": 7,
+        "described": 8,
+        "coverage": 114
+      },
+      {
+        "file": "sizing.json",
+        "tokens": 3,
+        "described": 3,
+        "coverage": 100
+      },
+      {
+        "file": "spacing.json",
+        "tokens": 5,
+        "described": 5,
+        "coverage": 100
+      },
+      {
+        "file": "typography.json",
+        "tokens": 17,
+        "described": 18,
+        "coverage": 106
+      }
+    ]
+  },
+  "cssAnalysis": {
+    "tokenUsage": {
+      "colors": 275,
+      "spacing": 222,
+      "typography": 80,
+      "font": 92,
+      "motion": 129,
+      "shape": 126,
+      "shadow": 6
+    },
+    "hardcoded": {
+      "hex": [],
+      "rgba": [],
+      "colorMix": [],
+      "durations": [],
+      "fontSizes": []
+    },
+    "breakpoints": [
+      {
+        "file": "photography-to-ui/src/components/photographyContextInsight.css",
+        "value": "768px",
+        "query": "@media (min-width: 768px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "768px",
+        "query": "@media (min-width: 768px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "768px",
+        "query": "@media (min-width: 768px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "768px",
+        "query": "@media (min-width: 768px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "768px",
+        "query": "@media (min-width: 768px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "768px",
+        "query": "@media (min-width: 768px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "1024px",
+        "query": "@media (max-width: 1024px)"
+      },
+      {
+        "file": "photography-to-ui/src/styles/app.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      }
+    ],
+    "layoutConstraints": [],
+    "totalTokenReferences": 930,
+    "filesScanned": [
+      "photography-to-ui/src/components/comingSoon.css",
+      "photography-to-ui/src/components/photographyContextInsight.css",
+      "photography-to-ui/src/post/components/CarouselPost/CarouselPost.css",
+      "photography-to-ui/src/post/components/PostEntityCard/PostEntityCard.css",
+      "photography-to-ui/src/post/components/PostNarrative/PostNarrative.css",
+      "photography-to-ui/src/post/components/PostQuote/PostQuote.css",
+      "photography-to-ui/src/post/components/PostTags/PostTags.css",
+      "photography-to-ui/src/styles/app.css",
+      "photography-to-ui/src/styles/base.css"
+    ]
+  },
+  "accessibility": {
+    "components": [
+      {
+        "file": "photography-to-ui/src/components/Colors.tsx",
+        "interactive": 1,
+        "buttons": 1,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 4,
+        "ariaLabels": 2,
+        "ariaPressed": 1,
+        "ariaExpanded": 0,
+        "roles": 1
+      },
+      {
+        "file": "photography-to-ui/src/components/ComingSoon.tsx",
+        "interactive": 2,
+        "buttons": 1,
+        "inputs": 1,
+        "links": 0,
+        "ariaTotal": 0,
+        "ariaLabels": 0,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/components/Interaction.tsx",
+        "interactive": 1,
+        "buttons": 1,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 1,
+        "ariaLabels": 1,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/components/PhotographyContextInsight.tsx",
+        "interactive": 2,
+        "buttons": 2,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 2,
+        "ariaLabels": 0,
+        "ariaPressed": 2,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/components/System.tsx",
+        "interactive": 1,
+        "buttons": 1,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 1,
+        "ariaLabels": 0,
+        "ariaPressed": 0,
+        "ariaExpanded": 1,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/components/Typography.tsx",
+        "interactive": 1,
+        "buttons": 1,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 4,
+        "ariaLabels": 2,
+        "ariaPressed": 1,
+        "ariaExpanded": 0,
+        "roles": 1
+      },
+      {
+        "file": "photography-to-ui/src/components/posts/PostFilter.tsx",
+        "interactive": 3,
+        "buttons": 3,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 3,
+        "ariaLabels": 0,
+        "ariaPressed": 3,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/pages/Home.tsx",
+        "interactive": 6,
+        "buttons": 5,
+        "inputs": 0,
+        "links": 1,
+        "ariaTotal": 5,
+        "ariaLabels": 3,
+        "ariaPressed": 1,
+        "ariaExpanded": 1,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/pages/Post.tsx",
+        "interactive": 3,
+        "buttons": 2,
+        "inputs": 0,
+        "links": 1,
+        "ariaTotal": 2,
+        "ariaLabels": 2,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/post/components/CarouselPost/CarouselPost.tsx",
+        "interactive": 2,
+        "buttons": 2,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 8,
+        "ariaLabels": 4,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 3
+      },
+      {
+        "file": "photography-to-ui/src/post/components/PostNarrative/PostNarrative.tsx",
+        "interactive": 2,
+        "buttons": 2,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 5,
+        "ariaLabels": 3,
+        "ariaPressed": 0,
+        "ariaExpanded": 2,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/post/components/PostQuote/PostQuote.tsx",
+        "interactive": 0,
+        "buttons": 0,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 1,
+        "ariaLabels": 0,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/post/components/PostTags/PostTags.tsx",
+        "interactive": 0,
+        "buttons": 0,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 2,
+        "ariaLabels": 1,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      }
+    ],
+    "totalAriaAttributes": 38,
+    "totalInteractiveElements": 24
+  },
+  "stateCoverage": [
+    {
+      "file": "photography-to-ui/src/components/comingSoon.css",
+      "hover": 2,
+      "focus": 3,
+      "active": 1,
+      "disabled": 3
+    },
+    {
+      "file": "photography-to-ui/src/components/photographyContextInsight.css",
+      "hover": 6,
+      "focus": 1,
+      "active": 0,
+      "disabled": 0
+    },
+    {
+      "file": "photography-to-ui/src/post/components/CarouselPost/CarouselPost.css",
+      "hover": 6,
+      "focus": 3,
+      "active": 0,
+      "disabled": 0
+    },
+    {
+      "file": "photography-to-ui/src/post/components/PostNarrative/PostNarrative.css",
+      "hover": 1,
+      "focus": 1,
+      "active": 0,
+      "disabled": 0
+    },
+    {
+      "file": "photography-to-ui/src/post/components/PostTags/PostTags.css",
+      "hover": 1,
+      "focus": 0,
+      "active": 0,
+      "disabled": 0
+    },
+    {
+      "file": "photography-to-ui/src/styles/app.css",
+      "hover": 31,
+      "focus": 14,
+      "active": 2,
+      "disabled": 3
+    },
+    {
+      "file": "photography-to-ui/src/styles/base.css",
+      "hover": 1,
+      "focus": 6,
+      "active": 0,
+      "disabled": 0
+    }
+  ],
+  "score": 100,
+  "scores": {
+    "tokenCoverage": 106,
+    "zeroHardcodedColors": 100,
+    "zeroInlineColorMix": 100,
+    "ariaPresence": 100
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "post": {
+    "card-width": {
+      "$type": "dimension",
+      "$value": "440px",
+      "$description": "LinkedIn card width — rendered as clamp(340px, 32vw, 440px) via custom extension",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "clamp(340px, 32vw, 440px)"
+        }
+      }
+    },
+    "grid-gap": {
+      "$type": "dimension",
+      "$value": "{space.lg}",
+      "$description": "Post grid gap"
+    },
+    "safe-zone": {
+      "$type": "dimension",
+      "$value": "{space.md}",
+      "$description": "Post content safe zone padding"
+    }
+  }
+}

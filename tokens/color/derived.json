@@ -1,0 +1,478 @@
+{
+  "color": {
+    "$type": "color",
+
+    "bg": {
+      "translucent": {
+        "$value": "#0d1b2ad9",
+        "$description": "Canvas at 85% — card backgrounds",
+        "$extensions": {
+          "com.cucusa.colorMix": {
+            "space": "srgb",
+            "color1": "{color.bg.canvas}",
+            "amount1": "85%",
+            "color2": "transparent"
+          }
+        }
+      },
+      "elevated": {
+        "$value": "#141416",
+        "$description": "Surface/canvas 50-50 blend",
+        "$extensions": {
+          "com.cucusa.colorMix": {
+            "space": "srgb",
+            "color1": "{color.bg.surface}",
+            "amount1": "50%",
+            "color2": "{color.bg.canvas}",
+            "amount2": "50%"
+          }
+        }
+      },
+      "overlay": {
+        "$value": "#0d1b2af2",
+        "$description": "Canvas at 95% — modal overlays",
+        "$extensions": {
+          "com.cucusa.colorMix": {
+            "space": "srgb",
+            "color1": "{color.bg.canvas}",
+            "amount1": "95%",
+            "color2": "transparent"
+          }
+        }
+      },
+      "overlay-surface": {
+        "$value": "#1c1c1fe6",
+        "$description": "Surface at 90% — overlay panels",
+        "$extensions": {
+          "com.cucusa.colorMix": {
+            "space": "srgb",
+            "color1": "{color.bg.surface}",
+            "amount1": "90%",
+            "color2": "transparent"
+          }
+        }
+      },
+      "inset": {
+        "$value": "#0d1b2a66",
+        "$description": "Canvas at 40% — recessed areas",
+        "$extensions": {
+          "com.cucusa.colorMix": {
+            "space": "srgb",
+            "color1": "{color.bg.canvas}",
+            "amount1": "40%",
+            "color2": "transparent"
+          }
+        }
+      },
+      "recessed": {
+        "$value": "#0d1b2abf",
+        "$description": "Canvas at 75% — belief/reframe sections",
+        "$extensions": {
+          "com.cucusa.colorMix": {
+            "space": "srgb",
+            "color1": "{color.bg.canvas}",
+            "amount1": "75%",
+            "color2": "transparent"
+          }
+        }
+      }
+    },
+
+    "accent-subtle": {
+      "$value": "#d6007630",
+      "$description": "Accent at 18% — subtle accent background",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "18%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "accent-tint": {
+      "$value": "#1f1120",
+      "$description": "Accent at 10% into canvas",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.accent}",
+          "amount1": "10%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "accent-wash": {
+      "$value": "#191320",
+      "$description": "Accent at 8% into canvas",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.accent}",
+          "amount1": "8%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "accent-highlight": {
+      "$value": "#ff0f8f40",
+      "$description": "Magenta-1 at 25% — CTA arrow background",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.1}",
+          "amount1": "25%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "accent-tint-soft": {
+      "$value": "#ff4fb11a",
+      "$description": "Magenta-4 at 10% — active variant button bg",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.4}",
+          "amount1": "10%",
+          "color2": "transparent"
+        }
+      }
+    },
+
+    "border-subtle": {
+      "$value": "#6b6b7366",
+      "$description": "Frost-2 at 40% — subtle borders",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.2}",
+          "amount1": "40%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "border-strong": {
+      "$value": "#b0b0b899",
+      "$description": "Frost-3 at 60% — strong borders",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.3}",
+          "amount1": "60%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "border-accent": {
+      "$value": "#8a2a5c",
+      "$description": "Accent blended 30% into subtle border",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.accent}",
+          "amount1": "30%",
+          "color2": "{color.border-subtle}"
+        }
+      }
+    },
+    "border-accent-hover": {
+      "$value": "#6b3858",
+      "$description": "Accent blended 20% into subtle border",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.accent}",
+          "amount1": "20%",
+          "color2": "{color.border-subtle}"
+        }
+      }
+    },
+    "border-accent-strong": {
+      "$value": "#9a2261",
+      "$description": "Accent blended 40% into subtle border",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.accent}",
+          "amount1": "40%",
+          "color2": "{color.border-subtle}"
+        }
+      }
+    },
+    "border-accent-highlight": {
+      "$value": "#8b4a78",
+      "$description": "Magenta-4 blended 25% into subtle border",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.4}",
+          "amount1": "25%",
+          "color2": "{color.border-subtle}"
+        }
+      }
+    },
+
+    "status-success": {
+      "$value": "#5c7a964d",
+      "$description": "Sky-3 at 30% — success indicator",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.3}",
+          "amount1": "30%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "status-error": {
+      "$value": "#d6007626",
+      "$description": "Accent at 15% — error indicator",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.accent}",
+          "amount1": "15%",
+          "color2": "transparent"
+        }
+      }
+    },
+
+    "overlay-faint": {
+      "$value": "#0d1b2a33",
+      "$description": "Canvas at 20% — lightest overlay",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.bg.canvas}",
+          "amount1": "20%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-light": {
+      "$value": "#0d1b2a4d",
+      "$description": "Canvas at 30%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.bg.canvas}",
+          "amount1": "30%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-medium": {
+      "$value": "#0d1b2a80",
+      "$description": "Canvas at 50%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.bg.canvas}",
+          "amount1": "50%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-strong": {
+      "$value": "#0d1b2a99",
+      "$description": "Canvas at 60%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.bg.canvas}",
+          "amount1": "60%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-heavy": {
+      "$value": "#0d1b2ab3",
+      "$description": "Canvas at 70%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.bg.canvas}",
+          "amount1": "70%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-dense": {
+      "$value": "#0d1b2ae6",
+      "$description": "Canvas at 90% — densest overlay",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.bg.canvas}",
+          "amount1": "90%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-mid": {
+      "$value": "#3a506b99",
+      "$description": "Sky-2 at 60% — gradient endpoint",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.2}",
+          "amount1": "60%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-mid-heavy": {
+      "$value": "#3a506bb3",
+      "$description": "Sky-2 at 70% — gradient endpoint",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.2}",
+          "amount1": "70%",
+          "color2": "transparent"
+        }
+      }
+    },
+
+    "app-bg-start": {
+      "$value": "#111c27",
+      "$description": "App gradient start — sky-1 70% / frost-1 30%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.1}",
+          "amount1": "70%",
+          "color2": "{color.frost.1}",
+          "amount2": "30%"
+        }
+      }
+    },
+    "app-bg-mid": {
+      "$value": "#3c3228",
+      "$description": "App gradient mid — sand-1 55% / sky-1 45%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sand.1}",
+          "amount1": "55%",
+          "color2": "{color.sky.1}",
+          "amount2": "45%"
+        }
+      }
+    },
+    "app-bg-end": {
+      "$value": "#272a30",
+      "$description": "App gradient end — sky-2 35% / frost-1 65%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.2}",
+          "amount1": "35%",
+          "color2": "{color.frost.1}",
+          "amount2": "65%"
+        }
+      }
+    },
+
+    "slide-base-start": {
+      "$value": "#0f1c29",
+      "$description": "Slide gradient start — sky-1 90% / frost-1 10%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.1}",
+          "amount1": "90%",
+          "color2": "{color.frost.1}",
+          "amount2": "10%"
+        }
+      }
+    },
+    "slide-base-end": {
+      "$value": "#313a44",
+      "$description": "Slide gradient end — sky-2 70% / frost-1 30%",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.2}",
+          "amount1": "70%",
+          "color2": "{color.frost.1}",
+          "amount2": "30%"
+        }
+      }
+    },
+
+    "glow-magenta": {
+      "$value": "#d600761f",
+      "$description": "Magenta-2 at 12% — accent radial glow",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "12%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-magenta-fade": {
+      "$value": "#b300620d",
+      "$description": "Magenta-3 at 5% — faded glow",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.3}",
+          "amount1": "5%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-cool": {
+      "$value": "#5c7a961a",
+      "$description": "Sky-3 at 10% — cool radial glow",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.3}",
+          "amount1": "10%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-warm": {
+      "$value": "#9e7b5c0f",
+      "$description": "Sand-2 at 6% — warm radial glow",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sand.2}",
+          "amount1": "6%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-frost": {
+      "$value": "#1c1c1f1f",
+      "$description": "Frost-1 at 12% — neutral glow",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.1}",
+          "amount1": "12%",
+          "color2": "transparent"
+        }
+      }
+    },
+
+    "tag-bg": {
+      "$value": "#6b6b7333",
+      "$description": "Frost-2 at 20% — tag pill background",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.2}",
+          "amount1": "20%",
+          "color2": "transparent"
+        }
+      }
+    }
+  }
+}

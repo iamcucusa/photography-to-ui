@@ -1,104 +1,109 @@
-# photography-to-ui
+# cucusa
 
 ## What this is
 
-A personal design-in-code platform. Photography inputs inform color, typography, rhythm, and layout decisions — translated into product UI through code, not design tools.
+A personal design-in-code platform with a multi-consumer architecture. Photography inputs inform color, typography, rhythm, and layout decisions — translated into product UI through code, not design tools.
 
 Deployed to GitHub Pages at `/photography-to-ui/`.
 
+### Consumer architecture
+
+```
+cucusa (workspace root — orchestration only)
+│
+├── tokens/                @cucusa/tokens — the design system
+│     DTCG JSON source, SD4 build pipeline, fonts
+│     See tokens/CLAUDE.md
+│
+├── photography-to-ui/     photography-to-ui — brand exploration, art direction
+│     The playground. Interactive component explorers, LinkedIn posts.
+│     See photography-to-ui/CLAUDE.md (future)
+│
+├── docs/                  @cucusa/docs — token catalog + audit dashboard
+│     Visual token reference, design system health page.
+│     See docs/CLAUDE.md
+│
+└── (future consumers)     content-creation, landing pages, blog
+```
+
 ### Active goals
 
-- **Portfolio / design showcase** — the homepage and its interactive component explorers.
-- **LinkedIn content production** — the post domain model (`src/post/`) for coded posts and carousels.
-- **Design system seed** — the token system in `tokens.css` is the foundation. Pending: visual audit and W3C DTCG comparison before deciding extraction approach.
-- **AI-scaffolding pilot** — CLAUDE.md, hooks, skills, and MCP integrations. Being built incrementally.
+- **Portfolio / design showcase** — photography-to-ui homepage and interactive component explorers.
+- **LinkedIn content production** — the post domain model (`photography-to-ui/src/post/`).
+- **Design system seed** — W3C DTCG token source in `tokens/`, consumed by all apps.
+- **Design system docs** — visual token catalog and audit dashboard in `docs/`.
+- **AI-scaffolding pilot** — CLAUDE.md per consumer, hooks, skills, MCP integrations.
 
 ### Future goals (not yet structurally supported — don't build toward these without discussion)
 
+- **Content creation** — dedicated consumer for LinkedIn post production (currently in `photography-to-ui/src/post/`, will be extracted).
 - **Blog / email content** — direction is personal brand, content model undecided.
-- **Landing pages / demos** — architecture (same app vs separate?) and AI workflow (how much autonomy?) both open questions.
+- **Landing pages / demos** — architecture and AI workflow both open questions.
+
+### Deferred decisions
+
+- **Breakpoint tokens**: 3 values (768px, 1024px, 767px) in 8 media queries — not tokenized. Revisit when responsive strategy is defined.
+- **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
+- **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
+- **Token validation + staleness checks**: Planned as Node scripts (no new deps). Not yet implemented — see testing strategy discussion in session history.
 
 ## Stack
 
 - React 19, TypeScript 6 (strict), Vite 8
-- react-router-dom v7 (library mode, BrowserRouter)
+- npm workspaces (3 packages: tokens, photography-to-ui, docs)
 - Plain CSS with custom properties (no CSS modules, no Tailwind, no CSS-in-JS)
 - JetBrains Mono as the sole typeface (monospace everywhere)
+- Style Dictionary 4 (DTCG token pipeline)
 - ESLint 9 (flat config) + Prettier for formatting
 - No test runner. No Storybook.
 
 ## Commands
 
 ```
-npm run dev          # Start dev server (Vite)
-npm run build        # tsc && vite build
-npm run check        # tsc --noEmit && eslint && prettier --check (run before PRs)
+npm run tokens       # Regenerate tokens/dist/tokens.css from tokens/*.json
+npm run audit        # Re-scan codebase, update docs/src/audit-data.json
+npm run dev          # Start photography-to-ui dev server (port 5173)
+npm run dev:docs     # Start docs consumer dev server (port 5174)
+npm run build        # Build photography-to-ui only
+npm run build:all    # tokens → photography-to-ui → docs (full pipeline)
+npm run check        # tsc (all consumers) + eslint + prettier
 npm run lint         # ESLint only
-npm run lint:fix     # ESLint with auto-fix
 npm run format       # Prettier write
-npm run format:check # Prettier check only
 ```
 
 ## Directory structure
 
 ```
-src/
-  styles/
-    tokens.css       # All design tokens (colors, type, spacing, radii, etc.)
-    base.css         # Element resets and global styles
-    fonts.css        # @font-face declarations (JetBrains Mono)
-    app.css          # All component and layout styles
-  components/        # Homepage-level UI: Typography, Colors, Interaction, System,
-                     #   ComingSoon, PhotographyContextInsight
-    posts/           # PostFilter component (filter rail UI)
-  pages/             # Route pages: Home (/), Post (/post)
-  post/              # Post domain model (the active system)
-    model/           # PostEntity, CarouselSlide, SinglePostContent types
-    data/            # mockPosts.ts — post content data
-    components/      # PostEntityCard, CarouselPost, PostQuote, PostNarrative, PostTags
-    utils/           # ID generation, narrative building, Notion integration
-scripts/             # Notion integration helpers
-docs/                # Post ID system docs, Notion integration docs
-public/assets/       # Photography, fonts, patterns (ALL RIGHTS RESERVED — see below)
+tokens/              # @cucusa/tokens — design system (see tokens/CLAUDE.md)
+  color/             # primitives.json, semantic.json, derived.json
+  typography.json, spacing.json, shape.json, elevation.json, motion.json, sizing.json
+  sd.config.mjs      # Style Dictionary 4 build config + custom transforms
+  fonts.css          # @font-face declarations (JetBrains Mono)
+  fonts/             # Self-hosted woff2 files — travels with the package
+  dist/tokens.css    # AUTO-GENERATED — consumed by all apps
+photography-to-ui/   # Art direction consumer (see photography-to-ui/CLAUDE.md future)
+  src/
+    styles/          # base.css, app.css (tokens.css removed — imported from tokens/dist/)
+    components/      # Typography, Colors, Interaction, System, ComingSoon explorers
+    pages/           # Home (/), Post (/post)
+    post/            # LinkedIn content domain (future extraction target)
+  public/assets/     # Photography, patterns, post images (ALL RIGHTS RESERVED)
+  vite.config.ts     # Builds to dist/
+docs/                # @cucusa/docs — token catalog (see docs/CLAUDE.md)
+  src/App.tsx        # Token reference + audit page
+  scripts/audit.mjs  # Automated scanner
+  vite.config.ts     # Builds to dist/docs/
 ```
 
-## Design tokens
+## How to add a new consumer
 
-All tokens are CSS custom properties in `src/styles/tokens.css`. The system:
-
-- **Colors**: Five palettes (Magenta, Sky, Frost, Sand, Ink) × 5 stops each.
-  Semantic roles: `--color-bg-canvas`, `--color-bg-surface`, `--color-text-primary/secondary/muted`, `--color-border-subtle/strong`, `--color-accent`. Dark mode only. Uses `color-mix()`.
-- **Typography**: JetBrains Mono. Weights: 400/500/600. Perfect Fifth scale (1.5 ratio): `--text-xs` through `--text-xxl`, plus `--display-xl`.
-- **Spacing**: `--space-xs` (0.25rem) through `--space-xl` (4rem), doubling progression.
-- **Other**: `--radius-sm/md`, `--divider-subtle/strong`, `--shadow-1/2`, `--focus-ring-*` tokens, LinkedIn post sizing tokens (`--post-card-width`, `--post-grid-gap`).
-
-Use existing tokens. Do not introduce raw hex values, magic px for spacing/font-size, or new custom properties without approval.
-
-## Component conventions
-
-- Function components with hooks only. No class components.
-- BEM-ish class naming: `.component-element-modifier` (e.g., `.post-card-interactive`, `.typography-size-button-active`).
-- Most styles live in `app.css`. Post-domain components have co-located CSS files.
-- Two routes: `/` (Home) and `/post` (Post gallery). react-router-dom v7.
-- Image paths in components use `import.meta.env.BASE_URL`. CSS uses the hardcoded `/photography-to-ui/` base path.
-
-## Post system
-
-The post domain (`src/post/`) models LinkedIn-ready content cards:
-
-- `PostEntity` — single or carousel, with LinkedIn format variants (square/portrait/landscape)
-- `SinglePostContent` — cover image, quote (with variant/category/number), belief/reframe, caption
-- `CarouselPostContent` — slides with eyebrow/headline/subhead/image/footer
-- Post IDs use a Notion-integrated system (see `docs/POST_ID_SYSTEM.md`)
-- Mock data in `src/post/data/mockPosts.ts`
-
-This area is under active development.
-
-## Asset rules
-
-- Photography in `public/assets/` is copyrighted (see `ASSETS_LICENSE.md`). Never generate, replace, or modify image files.
-- Font files are self-hosted in `public/assets/fonts/`. Only JetBrains Mono.
-- Code is MIT licensed. Visual assets are all rights reserved.
+1. Create a directory at the workspace root with its own `package.json`
+2. Add it to root `package.json` `workspaces` array
+3. Import `../../tokens/dist/tokens.css` for CSS custom properties
+4. Import `../../tokens/fonts.css` for @font-face declarations
+5. Add `dev`, `build`, and `check` scripts to the consumer's `package.json`
+6. Add the consumer to root `build:all` and `check` scripts
+7. Create a `CLAUDE.md` in the consumer directory with its domain-specific instructions
 
 ## Working agreements
 
@@ -107,15 +112,28 @@ This area is under active development.
 - Do not add test/linting/formatting infrastructure beyond what exists.
 - Prefer editing existing files over creating new ones.
 - This is a personal creative project — don't sanitize voice or tone in content/copy.
-- Accessibility: use semantic HTML, provide accessible names for interactive elements, preserve the focus-ring system (`--focus-ring-*` tokens). The codebase uses `aria-expanded`, `aria-pressed`, `aria-label`, and `:focus-visible` consistently.
+- Accessibility: use semantic HTML, provide accessible names, preserve the focus-ring system. Use `aria-expanded`, `aria-pressed`, `aria-label`, and `:focus-visible` consistently.
 - When compacting, preserve the list of modified files and current task status.
+- Each consumer has its own CLAUDE.md — check the consumer-level docs before editing consumer code.
+- If you change directory structure, commands, conventions, or architecture, update the relevant CLAUDE.md in the same commit.
 
-## Accessibility baseline
+## Tooling decisions
 
-Every interactive element has a discernible accessible name. Every form input has a label. No `tabindex > 0`. Semantic HTML before ARIA. The existing carousel uses WAI-ARIA carousel pattern (role="region", aria-roledescription="carousel", keyboard arrow navigation).
+### Evaluated and rejected
+
+- **Storybook**: Overhead exceeds value. Interactive component explorers in photography-to-ui serve the same purpose.
+- **Chromatic / Percy**: Not justified until multiple consumers share components.
+- **Tokens Studio / Figma Tokens**: Code-first by design. Figma is not in the workflow.
+
+### Active tooling
+
+- **Style Dictionary 4**: DTCG JSON → CSS. Config in `tokens/sd.config.mjs`.
+- **Claude Preview MCP**: Visual verification during development.
+- **Claude Code + CLAUDE.md**: AI-scaffolding layer. Per-consumer CLAUDE.md files encode domain-specific conventions.
+- **Audit scanner**: `npm run audit` scans CSS for token coverage, hardcoded values, accessibility. `/design-system audit` skill writes strategic insights.
 
 ## ESLint/Prettier notes
 
-- ESLint 9 flat config: `eslint.config.js`. Includes typescript-eslint, react-hooks, react-refresh, jsx-a11y, eslint-config-prettier.
+- ESLint 9 flat config: `eslint.config.js` at workspace root. Shared across all consumers.
 - Prettier: single quotes, no semicolons, trailing commas, 100 char width. Config in `.prettierrc`.
-- Notion integration files (`notionPostId.ts`, `scripts/`) use `eslint-disable` for `no-explicit-any` — Notion API shapes require it.
+- Notion integration files use `eslint-disable` for `no-explicit-any`.

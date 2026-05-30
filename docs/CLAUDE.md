@@ -1,0 +1,80 @@
+# @cucusa/docs
+
+Visual token catalog for the Cucusa design system. A dedicated consumer that renders every token from `tokens/` as an interactive reference.
+
+## What this app is
+
+A living documentation site that reads DTCG JSON directly and renders tokens visually. It serves developers (human and AI) who need to know what tokens exist, what they look like, and how to use them.
+
+This is NOT the playground (that's the root `src/` app). This app documents; the playground explores.
+
+## Target audience
+
+- **You** — quick reference while building in any consumer
+- **AI agents** — can read the page or the JSON to understand available tokens
+- **Future collaborators** — visual proof of the design system's scope and intent
+
+## Commands
+
+```
+npm run dev          # Start dev server (Vite, port 5174)
+npm run build        # tsc && vite build → ../dist/docs/
+```
+
+From the workspace root:
+```
+npm run dev:docs     # Same as above, via workspace
+npm run build:all    # Build tokens → playground → docs
+```
+
+## How it works
+
+The app imports DTCG JSON files directly from `../../tokens/`:
+
+```tsx
+import primitives from '../../tokens/color/primitives.json'
+import derived from '../../tokens/color/derived.json'
+```
+
+A `flattenTokens()` utility walks the JSON tree and extracts every token with its `$value`, `$type`, and `$description`. React components render them as visual specimens.
+
+Tokens CSS and fonts are imported directly from the `@cucusa/tokens` package:
+```css
+@import '../../tokens/dist/tokens.css';  /* generated CSS custom properties */
+@import '../../tokens/fonts.css';         /* @font-face declarations */
+```
+
+## Sections
+
+| Section | What it renders | Token source |
+|---|---|---|
+| Color Palettes | 5 palette strips with photography provenance | `color/primitives.json` |
+| Semantic Colors | Intent alias cards with live swatches | `color/semantic.json` |
+| Derived Colors | 38 color-mix tokens, checkerboard for transparency | `color/derived.json` |
+| Typography | Type scale specimens from display-xl to text-xs | `typography.json` |
+| Spacing | Visual blocks showing the doubling progression | `spacing.json` |
+| Shadows | Elevation cards including glow-accent | `elevation.json` |
+| Motion | Duration cards with hover-to-preview timing | `motion.json` |
+
+## Conventions
+
+- **No custom colors** — every color comes from tokens. The app eats its own dog food.
+- **Click to copy** — every token name is clickable, copies `var(--token-name)` to clipboard.
+- **`$description` is the content** — the JSON descriptions render as documentation text. If a token has no description, the catalog has a blank where context should be.
+- **No routing** — single page, anchor-linked sections. Keep it simple.
+
+## How to add a new section
+
+1. Import the token JSON file in `App.tsx`
+2. Flatten it with `flattenTokens(data as Record<string, unknown>, 'prefix')`
+3. Add a `<section>` with `id` for anchor linking
+4. Add the section to the `sections` array for the nav
+5. Render tokens with appropriate visual treatment (swatch, specimen, block, card)
+
+## Styling
+
+All styles in `src/styles.css`. Uses tokens for everything — the catalog is itself a proof that the design system works. No component CSS files; the app is intentionally simple.
+
+## Deployment
+
+Builds to `../dist/docs/`. Deployed alongside the playground at `/photography-to-ui/docs/` on GitHub Pages. The CI workflow runs `npm run build:all` which includes this consumer.

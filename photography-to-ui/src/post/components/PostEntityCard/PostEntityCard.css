@@ -1,0 +1,152 @@
+.post-entity-card {
+  background-color: var(--color-bg-translucent);
+  border-radius: var(--radius-md);
+  border: var(--divider-subtle);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  break-inside: avoid;
+  margin-bottom: var(--space-lg);
+}
+
+.post-entity-card--single {
+  /* Single post specific styles */
+}
+
+.post-entity-card-cover {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--color-bg-canvas);
+  border-radius: var(--radius-sm);
+  border: var(--divider-subtle);
+}
+
+.post-entity-card-cover img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.post-entity-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.post-entity-card-title {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+  margin: 0;
+}
+
+.post-entity-card-summary {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+  margin: 0;
+}
+
+/* Narrative styles are now in PostNarrative component */
+
+/* Tags component styles - using PostTags component */
+.post-entity-card-tags {
+  padding: var(--space-sm) var(--space-md);
+  border-top: var(--divider-subtle);
+  background-color: var(--color-bg-inset);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-sm);
+  margin-left: calc(var(--space-md) * -1);
+  margin-right: calc(var(--space-md) * -1);
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
+.post-entity-card-primary-line {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent);
+  margin-top: var(--space-xs);
+}
+
+.post-entity-card-secondary-lines {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-tight);
+  margin-top: var(--space-xs);
+}
+
+.post-entity-card-belief-reframe {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-bg-recessed);
+  border-radius: var(--radius-sm);
+  border: var(--divider-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.post-entity-card-belief,
+.post-entity-card-reframe {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.post-entity-card-belief-label,
+.post-entity-card-reframe-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-tight);
+  font-weight: var(--font-weight-medium);
+}
+
+.post-entity-card-belief-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.post-entity-card-reframe-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.post-entity-card-caption {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+  margin: 0;
+  margin-top: var(--space-md);
+}
+
+/* Debug mode (development only) */
+.post-entity-card--debug {
+  outline: 1px dashed var(--color-accent);
+}
+
+.post-entity-card--debug .post-entity-card-cover {
+  outline: 1px dashed var(--color-accent-subtle);
+}
+
+.post-entity-card-debug-label {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  background-color: var(--color-overlay-dense);
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  z-index: 1;
+}

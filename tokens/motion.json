@@ -1,0 +1,22 @@
+{
+  "duration": {
+    "$type": "duration",
+    "micro": { "$value": "120ms", "$description": "Instant feedback — visibility toggles, label reveals" },
+    "fast": { "$value": "150ms", "$description": "Interactive response — hover, focus, color transitions" },
+    "normal": { "$value": "200ms", "$description": "Default — indicator transforms, opacity shifts" },
+    "slow": { "$value": "300ms", "$description": "Deliberate — CTA arrow glow, emphasis transitions" },
+    "crossfade": { "$value": "500ms", "$description": "Content transitions — slide crossfades" },
+    "blink": { "$value": "1800ms", "$description": "Ambient — CTA arrow blink animation cycle" }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "default": {
+      "$value": [0.25, 0.1, 0.25, 1],
+      "$description": "CSS ease keyword equivalent"
+    },
+    "emphasized": {
+      "$value": [0.4, 0, 0.2, 1],
+      "$description": "Material-style emphasized easing — used for most interactive transitions"
+    }
+  }
+}
