@@ -52,7 +52,7 @@ tokens/              # DTCG JSON source files (the single source of truth)
   elevation.json     # Shadows
   motion.json        # Durations, easings
   sizing.json        # LinkedIn post sizing
-sd.config.mjs        # Style Dictionary 4 build config + custom transforms
+  sd.config.mjs      # Style Dictionary 4 build config + custom transforms
 src/
   styles/
     tokens.css       # AUTO-GENERATED — do not edit. Run `npm run tokens` to rebuild.
@@ -80,11 +80,20 @@ public/assets/       # Photography, fonts, patterns (ALL RIGHTS RESERVED — see
 Tokens follow the W3C DTCG specification. The source of truth is `tokens/*.json`. Style Dictionary 4 generates `src/styles/tokens.css` — never edit that file directly.
 
 ```
-tokens/*.json  ──→  npm run tokens (sd.config.mjs)  ──→  src/styles/tokens.css
-  (source)              (build pipeline)                    (auto-generated, consumed by app)
+tokens/                          ← self-contained, extractable design system
+  *.json + sd.config.mjs              │
+                                      ▼
+                              npm run tokens
+                                      │
+                                      ▼
+                            src/styles/tokens.css  ← photography-to-ui (playground / docs)
+                                      │
+                              (future consumers)   ← content-creation, landing pages, etc.
 ```
 
-To add or change a token: edit the JSON source, run `npm run tokens`, then `npm run format`. To add a new custom transform, read the ordering and guard documentation in `sd.config.mjs` first.
+The `tokens/` directory is structured to be extractable as a standalone package when additional consumers justify it. It contains all source JSON, the SD4 build config, and custom transforms — everything needed to generate platform-specific output for any consumer.
+
+To add or change a token: edit the JSON source, run `npm run tokens`, then `npm run format`. To add a new custom transform, read the ordering and guard documentation in `tokens/sd.config.mjs` first.
 
 ### Token files
 

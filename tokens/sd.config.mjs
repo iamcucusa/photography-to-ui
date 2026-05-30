@@ -1,4 +1,8 @@
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import StyleDictionary from 'style-dictionary'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // ── Custom Transforms ──────────────────────────────────────────────
 //
@@ -145,7 +149,7 @@ StyleDictionary.registerTransform({
 
 const sd = new StyleDictionary({
   log: { verbosity: 'default', warnings: 'disabled' },
-  source: ['tokens/**/*.json'],
+  source: [resolve(__dirname, './**/*.json')],
   platforms: {
     css: {
       transforms: [
@@ -165,7 +169,7 @@ const sd = new StyleDictionary({
         // 9. SD4 built-in color format — last so custom transforms take precedence
         'color/css',
       ],
-      buildPath: 'src/styles/',
+      buildPath: resolve(__dirname, '../src/styles') + '/',
       options: {
         usesDtcg: true,
       },
