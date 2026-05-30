@@ -63,7 +63,7 @@ npm run format:check # Prettier check only
 ## Directory structure
 
 ```
-tokens/              # @cucusa/tokens — DTCG JSON source (workspace package)
+tokens/              # @cucusa/tokens — design system (see tokens/CLAUDE.md)
   color/             # primitives.json, semantic.json, derived.json
   typography.json    # Font family, weights, type scale, line-height, letter-spacing
   spacing.json       # Spacing scale
@@ -74,7 +74,7 @@ tokens/              # @cucusa/tokens — DTCG JSON source (workspace package)
   sd.config.mjs      # Style Dictionary 4 build config + custom transforms
   fonts.css          # @font-face declarations (JetBrains Mono)
   fonts/             # Self-hosted font files (woff2) — travels with the package
-docs/                # @cucusa/docs — design system token catalog (workspace package)
+docs/                # @cucusa/docs — token catalog (see docs/CLAUDE.md)
   src/App.tsx        # Visual token reference (reads DTCG JSON directly)
   vite.config.ts     # Builds to dist/docs/
 src/                 # Playground app (root workspace)
@@ -91,96 +91,16 @@ src/                 # Playground app (root workspace)
     data/            # mockPosts.ts — post content data
     components/      # PostEntityCard, CarouselPost, PostQuote, PostNarrative, PostTags
     utils/           # ID generation, narrative building, Notion integration
+    docs/            # Post ID system docs, Notion integration docs
 scripts/             # Notion integration helpers
-docs/                # Post ID system docs, Notion integration docs
-public/assets/       # Photography, fonts, patterns (ALL RIGHTS RESERVED — see below)
+public/assets/       # Photography, patterns (ALL RIGHTS RESERVED — see below)
 ```
 
 ## Design tokens
 
-### Architecture
+See `tokens/CLAUDE.md` for the full token architecture, file reference, extension namespaces, and how to add tokens.
 
-Tokens follow the W3C DTCG specification. The source of truth is `tokens/*.json`. Style Dictionary 4 generates `src/styles/tokens.css` — never edit that file directly.
-
-```
-tokens/                          ← self-contained, extractable design system
-  *.json + sd.config.mjs              │
-                                      ▼
-                              npm run tokens
-                                      │
-                                      ▼
-                            src/styles/tokens.css  ← photography-to-ui (playground / docs)
-                                      │
-                              (future consumers)   ← content-creation, landing pages, etc.
-```
-
-The `tokens/` directory is structured to be extractable as a standalone package when additional consumers justify it. It contains all source JSON, the SD4 build config, and custom transforms — everything needed to generate platform-specific output for any consumer.
-
-To add or change a token: edit the JSON source, run `npm run tokens`, then `npm run format`. To add a new custom transform, read the ordering and guard documentation in `tokens/sd.config.mjs` first.
-
-### Token files
-
-| File | Contents | DTCG types |
-|---|---|---|
-| `color/primitives.json` | 25 hex values (Magenta, Sky, Frost, Sand, Ink × 5 stops) | `color` |
-| `color/semantic.json` | Design intent aliases (bg.canvas, text.primary, accent) | `color` (aliases) |
-| `color/derived.json` | 38 computed colors via `color-mix()` (overlays, tints, glows) | `color` + `colorMix` extension |
-| `typography.json` | Font family, weights, type scale, line-height, letter-spacing | `fontFamily`, `fontWeight`, `dimension`, `number` |
-| `spacing.json` | 5 spacing stops (xs through xl) | `dimension` |
-| `shape.json` | Radii, dividers (border composite), focus ring | `dimension`, `border`, `color` |
-| `elevation.json` | 5 shadows including glow-accent | `shadow` |
-| `motion.json` | 6 durations + 2 easings | `duration`, `cubicBezier` |
-| `sizing.json` | LinkedIn post layout (card width, grid gap, safe zone) | `dimension` |
-
-### Extension namespaces
-
-Two custom extension namespaces handle values that DTCG can't express natively:
-
-**`com.cucusa.colorMix`** — structured color derivation recipe. Generates `color-mix()` CSS for the web platform while keeping a pre-resolved hex `$value` as DTCG-compliant fallback.
-
-```json
-{
-  "$type": "color",
-  "$value": "#0d1b2ad9",
-  "$extensions": {
-    "com.cucusa.colorMix": {
-      "space": "srgb",
-      "color1": "{color.bg.canvas}",
-      "amount1": "85%",
-      "color2": "transparent"
-    }
-  }
-}
-```
-
-**`com.cucusa.platform`** — per-platform value overrides for CSS functions (`clamp()`, `calc()`, `min()`, `max()`) or any value that can't be represented in DTCG. The `$value` must always be a valid DTCG fallback for non-CSS consumers.
-
-```json
-{
-  "$type": "dimension",
-  "$value": "440px",
-  "$extensions": {
-    "com.cucusa.platform": {
-      "css": "clamp(340px, 32vw, 440px)"
-    }
-  }
-}
-```
-
-Rules for platform extensions:
-- `$value` must always be valid DTCG — it's what non-CSS consumers get
-- `com.cucusa.platform.css` is a CSS-only override, used for runtime functions
-- The platform transform runs first, so it takes precedence over type-specific transforms
-- Future platforms (e.g., iOS, Android) would add sibling keys: `{ "css": "...", "ios": "..." }`
-
-### Token values
-
-- **Colors**: Five palettes × 5 stops. Semantic roles map intent to primitives. Derived tokens use `color-mix()` for overlays, tints, borders, glows, and gradients. Dark mode only.
-- **Typography**: JetBrains Mono. Weights: 400/500/600. Perfect Fifth scale (1.5 ratio): `--text-xs` through `--text-xxl`, plus `--display-xl`.
-- **Spacing**: `--space-xs` (0.25rem) through `--space-xl` (4rem), doubling progression.
-- **Other**: `--radius-sm/md`, `--divider-subtle/strong`, `--shadow-1/2/soft/hover/glow-accent`, `--focus-ring-*`, `--duration-*`, `--easing-*`, LinkedIn sizing.
-
-Use existing tokens. Do not introduce raw hex values, magic px for spacing/font-size, or new tokens without approval.
+Quick reference: use existing tokens via `var(--token-name)`. Do not introduce raw hex values, magic px for spacing/font-size, or new tokens without approval.
 
 ## Component conventions
 
@@ -205,7 +125,7 @@ This area is under active development.
 ## Asset rules
 
 - Photography in `public/assets/` is copyrighted (see `ASSETS_LICENSE.md`). Never generate, replace, or modify image files.
-- Font files are self-hosted in `public/assets/fonts/`. Only JetBrains Mono.
+- Font files are in `tokens/fonts/`. Only JetBrains Mono.
 - Code is MIT licensed. Visual assets are all rights reserved.
 
 ## Working agreements
@@ -257,16 +177,6 @@ After any token or style change, verify both routes visually:
    - `/post` (Post gallery) — cards, narratives, tags, carousel slides with image overlays
 4. Inspect key computed styles: card backgrounds (`--color-bg-translucent`), borders (`--divider-subtle`), text colors, shadow elevations
 5. Run `npm run build` to verify production build succeeds
-
-### How to add a new token
-
-1. Choose the right file in `tokens/` based on the token category (see Token files table above)
-2. Add the token with `$value`, `$type` (or inherit from group), and `$description`
-3. If the value needs a CSS function (`clamp()`, `calc()`), add `$extensions.com.cucusa.platform.css`
-4. If the value is a color derivation, add `$extensions.com.cucusa.colorMix`
-5. Run `npm run tokens && npm run format`
-6. Use the new token in component CSS via `var(--token-name)`
-7. Verify visually (see workflow above)
 
 ### How to add a new consumer
 
