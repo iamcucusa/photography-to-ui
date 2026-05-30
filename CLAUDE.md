@@ -72,9 +72,8 @@ tokens/              # @cucusa/tokens — DTCG JSON source (workspace package)
   motion.json        # Durations, easings
   sizing.json        # LinkedIn post sizing
   sd.config.mjs      # Style Dictionary 4 build config + custom transforms
-shared/              # Assets shared across all consumers
   fonts.css          # @font-face declarations (JetBrains Mono)
-  fonts/             # Self-hosted font files (woff2)
+  fonts/             # Self-hosted font files (woff2) — travels with the package
 docs/                # @cucusa/docs — design system token catalog (workspace package)
   src/App.tsx        # Visual token reference (reads DTCG JSON directly)
   vite.config.ts     # Builds to dist/docs/

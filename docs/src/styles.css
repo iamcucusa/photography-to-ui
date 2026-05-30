@@ -1,6 +1,6 @@
 /* Import the generated design tokens and shared fonts */
 @import '../../src/styles/tokens.css';
-@import '../../shared/fonts.css';
+@import '../../tokens/fonts.css';
 
 *,
 *::before,

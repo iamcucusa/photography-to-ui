@@ -1,7 +1,7 @@
-/* JetBrains Mono Font Face Declarations
- * Shared across all consumers. Font files in shared/fonts/jetbrains-mono/.
- * Each consumer's Vite config must set publicDir to include shared/ or
- * copy fonts into its own public directory. URLs use the consumer's base path. */
+/* JetBrains Mono — @font-face declarations for the design system typeface.
+ * Font files co-located in tokens/fonts/jetbrains-mono/.
+ * Consumers import this file alongside tokens.css — Vite resolves the
+ * relative URLs and bundles the woff2 files into each consumer's build. */
 
 @font-face {
   font-family: 'JetBrains Mono';
