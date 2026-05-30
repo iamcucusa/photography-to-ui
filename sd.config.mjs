@@ -134,7 +134,7 @@ const sd = new StyleDictionary({
         'cucusa/font-family-css',
         'color/css',
       ],
-      buildPath: 'build/',
+      buildPath: 'src/styles/',
       options: {
         usesDtcg: true,
       },
