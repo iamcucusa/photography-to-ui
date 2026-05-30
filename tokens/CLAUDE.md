@@ -35,6 +35,7 @@ npm run tokens       # Same as above, via workspace
 | `fonts.css` | @font-face declarations for JetBrains Mono | CSS (not DTCG) |
 | `fonts/` | Self-hosted woff2 files | Binary assets |
 | `sd.config.mjs` | Style Dictionary 4 build config + 7 custom transforms | Build tooling |
+| `dist/tokens.css` | AUTO-GENERATED CSS custom properties — consumed by all apps | Build output |
 
 ## Extension namespaces
 
@@ -90,10 +91,11 @@ Every token MUST have a `$description`. This is consumed by the docs app to gene
 
 ## How to add a new consumer
 
-1. Create a directory with its own `package.json` and add it to root `workspaces`
-2. Import `tokens/fonts.css` for @font-face declarations
-3. Either import the generated `tokens.css` from an existing consumer, or add a `buildPath` entry in `sd.config.mjs` for direct generation
-4. All CSS custom properties are available via `var(--token-name)`
+1. Create a directory at the workspace root with its own `package.json`
+2. Add it to root `package.json` `workspaces` array
+3. Import `../../tokens/dist/tokens.css` for CSS custom properties
+4. Import `../../tokens/fonts.css` for @font-face declarations
+5. All CSS custom properties are available via `var(--token-name)`
 
 For non-CSS platforms, add a new platform block in `sd.config.mjs`. The `$value` fields contain valid DTCG fallbacks. Platform extensions can add sibling keys per platform.
 

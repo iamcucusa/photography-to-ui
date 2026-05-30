@@ -169,7 +169,7 @@ const sd = new StyleDictionary({
         // 9. SD4 built-in color format — last so custom transforms take precedence
         'color/css',
       ],
-      buildPath: resolve(__dirname, '../src/styles') + '/',
+      buildPath: resolve(__dirname, 'dist') + '/',
       options: {
         usesDtcg: true,
       },

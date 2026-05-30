@@ -38,9 +38,9 @@ import derived from '../../tokens/color/derived.json'
 
 A `flattenTokens()` utility walks the JSON tree and extracts every token with its `$value`, `$type`, and `$description`. React components render them as visual specimens.
 
-Tokens CSS and fonts are imported from the same sources as the playground:
+Tokens CSS and fonts are imported directly from the `@cucusa/tokens` package:
 ```css
-@import '../../src/styles/tokens.css';   /* generated CSS custom properties */
+@import '../../tokens/dist/tokens.css';  /* generated CSS custom properties */
 @import '../../tokens/fonts.css';         /* @font-face declarations */
 ```
 

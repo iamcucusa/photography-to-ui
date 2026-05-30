@@ -1,41 +1,29 @@
 {
-  "name": "photography-to-ui",
+  "name": "cucusa",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
-  "workspaces": ["tokens", "docs"],
+  "workspaces": ["tokens", "photography-to-ui", "docs"],
   "scripts": {
     "tokens": "npm run build -w @cucusa/tokens",
     "audit": "node docs/scripts/audit.mjs",
-    "dev": "vite",
+    "dev": "npm run dev -w photography-to-ui",
     "dev:docs": "npm run dev -w @cucusa/docs",
-    "build": "tsc && vite build",
-    "build:all": "npm run tokens && npm run build && npm run build -w @cucusa/docs",
-    "preview": "vite preview",
+    "build": "npm run build -w photography-to-ui",
+    "build:all": "npm run tokens && npm run build -w photography-to-ui && npm run build -w @cucusa/docs",
+    "check": "npm run check -w photography-to-ui && npm run check -w @cucusa/docs && eslint . && prettier --check \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
-    "check": "tsc --noEmit && tsc --noEmit -p docs/tsconfig.json && eslint . && prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\""
-  },
-  "dependencies": {
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "react-router-dom": "^7.15.1"
+    "format": "prettier --write \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@types/react": "^19.2.15",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "prettier": "^3.8.3",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.60.0",
-    "vite": "^8.0.14"
+    "typescript-eslint": "^8.60.0"
   }
 }

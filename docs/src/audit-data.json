@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-30T16:35:01.720Z",
+  "timestamp": "2026-05-30T16:57:17.587Z",
   "tokenSource": {
     "totalTokens": 114,
     "totalDescribed": 121,
@@ -80,47 +80,47 @@
     },
     "breakpoints": [
       {
-        "file": "src/components/photographyContextInsight.css",
+        "file": "photography-to-ui/src/components/photographyContextInsight.css",
         "value": "768px",
         "query": "@media (min-width: 768px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "768px",
         "query": "@media (min-width: 768px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "768px",
         "query": "@media (min-width: 768px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "768px",
         "query": "@media (min-width: 768px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "768px",
         "query": "@media (min-width: 768px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "768px",
         "query": "@media (min-width: 768px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "767px",
         "query": "@media (max-width: 767px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "1024px",
         "query": "@media (max-width: 1024px)"
       },
       {
-        "file": "src/styles/app.css",
+        "file": "photography-to-ui/src/styles/app.css",
         "value": "767px",
         "query": "@media (max-width: 767px)"
       }
@@ -128,21 +128,21 @@
     "layoutConstraints": [],
     "totalTokenReferences": 930,
     "filesScanned": [
-      "src/components/comingSoon.css",
-      "src/components/photographyContextInsight.css",
-      "src/post/components/CarouselPost/CarouselPost.css",
-      "src/post/components/PostEntityCard/PostEntityCard.css",
-      "src/post/components/PostNarrative/PostNarrative.css",
-      "src/post/components/PostQuote/PostQuote.css",
-      "src/post/components/PostTags/PostTags.css",
-      "src/styles/app.css",
-      "src/styles/base.css"
+      "photography-to-ui/src/components/comingSoon.css",
+      "photography-to-ui/src/components/photographyContextInsight.css",
+      "photography-to-ui/src/post/components/CarouselPost/CarouselPost.css",
+      "photography-to-ui/src/post/components/PostEntityCard/PostEntityCard.css",
+      "photography-to-ui/src/post/components/PostNarrative/PostNarrative.css",
+      "photography-to-ui/src/post/components/PostQuote/PostQuote.css",
+      "photography-to-ui/src/post/components/PostTags/PostTags.css",
+      "photography-to-ui/src/styles/app.css",
+      "photography-to-ui/src/styles/base.css"
     ]
   },
   "accessibility": {
     "components": [
       {
-        "file": "src/components/Colors.tsx",
+        "file": "photography-to-ui/src/components/Colors.tsx",
         "interactive": 1,
         "buttons": 1,
         "inputs": 0,
@@ -154,7 +154,7 @@
         "roles": 1
       },
       {
-        "file": "src/components/ComingSoon.tsx",
+        "file": "photography-to-ui/src/components/ComingSoon.tsx",
         "interactive": 2,
         "buttons": 1,
         "inputs": 1,
@@ -166,7 +166,7 @@
         "roles": 0
       },
       {
-        "file": "src/components/Interaction.tsx",
+        "file": "photography-to-ui/src/components/Interaction.tsx",
         "interactive": 1,
         "buttons": 1,
         "inputs": 0,
@@ -178,7 +178,7 @@
         "roles": 0
       },
       {
-        "file": "src/components/PhotographyContextInsight.tsx",
+        "file": "photography-to-ui/src/components/PhotographyContextInsight.tsx",
         "interactive": 2,
         "buttons": 2,
         "inputs": 0,
@@ -190,7 +190,7 @@
         "roles": 0
       },
       {
-        "file": "src/components/System.tsx",
+        "file": "photography-to-ui/src/components/System.tsx",
         "interactive": 1,
         "buttons": 1,
         "inputs": 0,
@@ -202,7 +202,7 @@
         "roles": 0
       },
       {
-        "file": "src/components/Typography.tsx",
+        "file": "photography-to-ui/src/components/Typography.tsx",
         "interactive": 1,
         "buttons": 1,
         "inputs": 0,
@@ -214,7 +214,7 @@
         "roles": 1
       },
       {
-        "file": "src/components/posts/PostFilter.tsx",
+        "file": "photography-to-ui/src/components/posts/PostFilter.tsx",
         "interactive": 3,
         "buttons": 3,
         "inputs": 0,
@@ -226,7 +226,7 @@
         "roles": 0
       },
       {
-        "file": "src/pages/Home.tsx",
+        "file": "photography-to-ui/src/pages/Home.tsx",
         "interactive": 6,
         "buttons": 5,
         "inputs": 0,
@@ -238,7 +238,7 @@
         "roles": 0
       },
       {
-        "file": "src/pages/Post.tsx",
+        "file": "photography-to-ui/src/pages/Post.tsx",
         "interactive": 3,
         "buttons": 2,
         "inputs": 0,
@@ -250,7 +250,7 @@
         "roles": 0
       },
       {
-        "file": "src/post/components/CarouselPost/CarouselPost.tsx",
+        "file": "photography-to-ui/src/post/components/CarouselPost/CarouselPost.tsx",
         "interactive": 2,
         "buttons": 2,
         "inputs": 0,
@@ -262,7 +262,7 @@
         "roles": 3
       },
       {
-        "file": "src/post/components/PostNarrative/PostNarrative.tsx",
+        "file": "photography-to-ui/src/post/components/PostNarrative/PostNarrative.tsx",
         "interactive": 2,
         "buttons": 2,
         "inputs": 0,
@@ -274,7 +274,7 @@
         "roles": 0
       },
       {
-        "file": "src/post/components/PostQuote/PostQuote.tsx",
+        "file": "photography-to-ui/src/post/components/PostQuote/PostQuote.tsx",
         "interactive": 0,
         "buttons": 0,
         "inputs": 0,
@@ -286,7 +286,7 @@
         "roles": 0
       },
       {
-        "file": "src/post/components/PostTags/PostTags.tsx",
+        "file": "photography-to-ui/src/post/components/PostTags/PostTags.tsx",
         "interactive": 0,
         "buttons": 0,
         "inputs": 0,
@@ -303,49 +303,49 @@
   },
   "stateCoverage": [
     {
-      "file": "src/components/comingSoon.css",
+      "file": "photography-to-ui/src/components/comingSoon.css",
       "hover": 2,
       "focus": 3,
       "active": 1,
       "disabled": 3
     },
     {
-      "file": "src/components/photographyContextInsight.css",
+      "file": "photography-to-ui/src/components/photographyContextInsight.css",
       "hover": 6,
       "focus": 1,
       "active": 0,
       "disabled": 0
     },
     {
-      "file": "src/post/components/CarouselPost/CarouselPost.css",
+      "file": "photography-to-ui/src/post/components/CarouselPost/CarouselPost.css",
       "hover": 6,
       "focus": 3,
       "active": 0,
       "disabled": 0
     },
     {
-      "file": "src/post/components/PostNarrative/PostNarrative.css",
+      "file": "photography-to-ui/src/post/components/PostNarrative/PostNarrative.css",
       "hover": 1,
       "focus": 1,
       "active": 0,
       "disabled": 0
     },
     {
-      "file": "src/post/components/PostTags/PostTags.css",
+      "file": "photography-to-ui/src/post/components/PostTags/PostTags.css",
       "hover": 1,
       "focus": 0,
       "active": 0,
       "disabled": 0
     },
     {
-      "file": "src/styles/app.css",
+      "file": "photography-to-ui/src/styles/app.css",
       "hover": 31,
       "focus": 14,
       "active": 2,
       "disabled": 3
     },
     {
-      "file": "src/styles/base.css",
+      "file": "photography-to-ui/src/styles/base.css",
       "hover": 1,
       "focus": 6,
       "active": 0,

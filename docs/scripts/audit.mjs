@@ -77,7 +77,7 @@ function analyzeTokenSource() {
 
 function analyzeCssFiles() {
   const cssFiles = [
-    ...findFiles(resolve(ROOT, 'src'), /\.css$/),
+    ...findFiles(resolve(ROOT, 'photography-to-ui/src'), /\.css$/),
   ].filter(f => !f.includes('tokens.css'))
 
   const results = {
@@ -135,7 +135,7 @@ function analyzeCssFiles() {
 // ── Accessibility scan ─────────────────────────────────────────────
 
 function analyzeAccessibility() {
-  const tsxFiles = findFiles(resolve(ROOT, 'src'), /\.tsx$/)
+  const tsxFiles = findFiles(resolve(ROOT, 'photography-to-ui/src'), /\.tsx$/)
 
   const results = {
     components: [],
@@ -182,7 +182,7 @@ function analyzeAccessibility() {
 // ── CSS state coverage ─────────────────────────────────────────────
 
 function analyzeStateCoverage() {
-  const cssFiles = findFiles(resolve(ROOT, 'src'), /\.css$/).filter(f => !f.includes('tokens.css'))
+  const cssFiles = findFiles(resolve(ROOT, 'photography-to-ui/src'), /\.css$/).filter(f => !f.includes('tokens.css'))
 
   const results = []
 
