@@ -3,44 +3,196 @@
  */
 
 :root {
-  --color-bg-translucent: color-mix(in srgb, var(--color-bg-canvas) 85%, transparent); /** Canvas at 85% — card backgrounds */
-  --color-bg-elevated: color-mix(in srgb, var(--color-bg-surface) 50%, var(--color-bg-canvas) 50%); /** Surface/canvas 50-50 blend */
-  --color-bg-overlay: color-mix(in srgb, var(--color-bg-canvas) 95%, transparent); /** Canvas at 95% — modal overlays */
-  --color-bg-overlay-surface: color-mix(in srgb, var(--color-bg-surface) 90%, transparent); /** Surface at 90% — overlay panels */
-  --color-bg-inset: color-mix(in srgb, var(--color-bg-canvas) 40%, transparent); /** Canvas at 40% — recessed areas */
-  --color-bg-recessed: color-mix(in srgb, var(--color-bg-canvas) 75%, transparent); /** Canvas at 75% — belief/reframe sections */
-  --color-accent-subtle: color-mix(in srgb, var(--color-magenta-2) 18%, transparent); /** Accent at 18% — subtle accent background */
-  --color-accent-tint: color-mix(in srgb, var(--color-accent) 10%, var(--color-bg-canvas)); /** Accent at 10% into canvas */
-  --color-accent-wash: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-canvas)); /** Accent at 8% into canvas */
-  --color-accent-highlight: color-mix(in srgb, var(--color-magenta-1) 25%, transparent); /** Magenta-1 at 25% — CTA arrow background */
-  --color-accent-tint-soft: color-mix(in srgb, var(--color-magenta-4) 10%, transparent); /** Magenta-4 at 10% — active variant button bg */
-  --color-border-subtle: color-mix(in srgb, var(--color-frost-2) 40%, transparent); /** Frost-2 at 40% — subtle borders */
-  --color-border-strong: color-mix(in srgb, var(--color-frost-3) 60%, transparent); /** Frost-3 at 60% — strong borders */
-  --color-border-accent: color-mix(in srgb, var(--color-accent) 30%, var(--color-border-subtle)); /** Accent blended 30% into subtle border */
-  --color-border-accent-hover: color-mix(in srgb, var(--color-accent) 20%, var(--color-border-subtle)); /** Accent blended 20% into subtle border */
-  --color-border-accent-strong: color-mix(in srgb, var(--color-accent) 40%, var(--color-border-subtle)); /** Accent blended 40% into subtle border */
-  --color-border-accent-highlight: color-mix(in srgb, var(--color-magenta-4) 25%, var(--color-border-subtle)); /** Magenta-4 blended 25% into subtle border */
-  --color-status-success: color-mix(in srgb, var(--color-sky-3) 30%, transparent); /** Sky-3 at 30% — success indicator */
-  --color-status-error: color-mix(in srgb, var(--color-accent) 15%, transparent); /** Accent at 15% — error indicator */
-  --color-overlay-faint: color-mix(in srgb, var(--color-bg-canvas) 20%, transparent); /** Canvas at 20% — lightest overlay */
-  --color-overlay-light: color-mix(in srgb, var(--color-bg-canvas) 30%, transparent); /** Canvas at 30% */
-  --color-overlay-medium: color-mix(in srgb, var(--color-bg-canvas) 50%, transparent); /** Canvas at 50% */
-  --color-overlay-strong: color-mix(in srgb, var(--color-bg-canvas) 60%, transparent); /** Canvas at 60% */
-  --color-overlay-heavy: color-mix(in srgb, var(--color-bg-canvas) 70%, transparent); /** Canvas at 70% */
-  --color-overlay-dense: color-mix(in srgb, var(--color-bg-canvas) 90%, transparent); /** Canvas at 90% — densest overlay */
-  --color-overlay-mid: color-mix(in srgb, var(--color-sky-2) 60%, transparent); /** Sky-2 at 60% — gradient endpoint */
-  --color-overlay-mid-heavy: color-mix(in srgb, var(--color-sky-2) 70%, transparent); /** Sky-2 at 70% — gradient endpoint */
-  --color-app-bg-start: color-mix(in srgb, var(--color-sky-1) 70%, var(--color-frost-1) 30%); /** App gradient start — sky-1 70% / frost-1 30% */
-  --color-app-bg-mid: color-mix(in srgb, var(--color-sand-1) 55%, var(--color-sky-1) 45%); /** App gradient mid — sand-1 55% / sky-1 45% */
-  --color-app-bg-end: color-mix(in srgb, var(--color-sky-2) 35%, var(--color-frost-1) 65%); /** App gradient end — sky-2 35% / frost-1 65% */
-  --color-slide-base-start: color-mix(in srgb, var(--color-sky-1) 90%, var(--color-frost-1) 10%); /** Slide gradient start — sky-1 90% / frost-1 10% */
-  --color-slide-base-end: color-mix(in srgb, var(--color-sky-2) 70%, var(--color-frost-1) 30%); /** Slide gradient end — sky-2 70% / frost-1 30% */
-  --color-glow-magenta: color-mix(in srgb, var(--color-magenta-2) 12%, transparent); /** Magenta-2 at 12% — accent radial glow */
-  --color-glow-magenta-fade: color-mix(in srgb, var(--color-magenta-3) 5%, transparent); /** Magenta-3 at 5% — faded glow */
-  --color-glow-cool: color-mix(in srgb, var(--color-sky-3) 10%, transparent); /** Sky-3 at 10% — cool radial glow */
-  --color-glow-warm: color-mix(in srgb, var(--color-sand-2) 6%, transparent); /** Sand-2 at 6% — warm radial glow */
-  --color-glow-frost: color-mix(in srgb, var(--color-frost-1) 12%, transparent); /** Frost-1 at 12% — neutral glow */
-  --color-tag-bg: color-mix(in srgb, var(--color-frost-2) 20%, transparent); /** Frost-2 at 20% — tag pill background */
+  --color-bg-translucent: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 85%,
+    transparent
+  ); /** Canvas at 85% — card backgrounds */
+  --color-bg-elevated: color-mix(
+    in srgb,
+    var(--color-bg-surface) 50%,
+    var(--color-bg-canvas) 50%
+  ); /** Surface/canvas 50-50 blend */
+  --color-bg-overlay: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 95%,
+    transparent
+  ); /** Canvas at 95% — modal overlays */
+  --color-bg-overlay-surface: color-mix(
+    in srgb,
+    var(--color-bg-surface) 90%,
+    transparent
+  ); /** Surface at 90% — overlay panels */
+  --color-bg-inset: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 40%,
+    transparent
+  ); /** Canvas at 40% — recessed areas */
+  --color-bg-recessed: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 75%,
+    transparent
+  ); /** Canvas at 75% — belief/reframe sections */
+  --color-accent-subtle: color-mix(
+    in srgb,
+    var(--color-magenta-2) 18%,
+    transparent
+  ); /** Accent at 18% — subtle accent background */
+  --color-accent-tint: color-mix(
+    in srgb,
+    var(--color-accent) 10%,
+    var(--color-bg-canvas)
+  ); /** Accent at 10% into canvas */
+  --color-accent-wash: color-mix(
+    in srgb,
+    var(--color-accent) 8%,
+    var(--color-bg-canvas)
+  ); /** Accent at 8% into canvas */
+  --color-accent-highlight: color-mix(
+    in srgb,
+    var(--color-magenta-1) 25%,
+    transparent
+  ); /** Magenta-1 at 25% — CTA arrow background */
+  --color-accent-tint-soft: color-mix(
+    in srgb,
+    var(--color-magenta-4) 10%,
+    transparent
+  ); /** Magenta-4 at 10% — active variant button bg */
+  --color-border-subtle: color-mix(
+    in srgb,
+    var(--color-frost-2) 40%,
+    transparent
+  ); /** Frost-2 at 40% — subtle borders */
+  --color-border-strong: color-mix(
+    in srgb,
+    var(--color-frost-3) 60%,
+    transparent
+  ); /** Frost-3 at 60% — strong borders */
+  --color-border-accent: color-mix(
+    in srgb,
+    var(--color-accent) 30%,
+    var(--color-border-subtle)
+  ); /** Accent blended 30% into subtle border */
+  --color-border-accent-hover: color-mix(
+    in srgb,
+    var(--color-accent) 20%,
+    var(--color-border-subtle)
+  ); /** Accent blended 20% into subtle border */
+  --color-border-accent-strong: color-mix(
+    in srgb,
+    var(--color-accent) 40%,
+    var(--color-border-subtle)
+  ); /** Accent blended 40% into subtle border */
+  --color-border-accent-highlight: color-mix(
+    in srgb,
+    var(--color-magenta-4) 25%,
+    var(--color-border-subtle)
+  ); /** Magenta-4 blended 25% into subtle border */
+  --color-status-success: color-mix(
+    in srgb,
+    var(--color-sky-3) 30%,
+    transparent
+  ); /** Sky-3 at 30% — success indicator */
+  --color-status-error: color-mix(
+    in srgb,
+    var(--color-accent) 15%,
+    transparent
+  ); /** Accent at 15% — error indicator */
+  --color-overlay-faint: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 20%,
+    transparent
+  ); /** Canvas at 20% — lightest overlay */
+  --color-overlay-light: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 30%,
+    transparent
+  ); /** Canvas at 30% */
+  --color-overlay-medium: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 50%,
+    transparent
+  ); /** Canvas at 50% */
+  --color-overlay-strong: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 60%,
+    transparent
+  ); /** Canvas at 60% */
+  --color-overlay-heavy: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 70%,
+    transparent
+  ); /** Canvas at 70% */
+  --color-overlay-dense: color-mix(
+    in srgb,
+    var(--color-bg-canvas) 90%,
+    transparent
+  ); /** Canvas at 90% — densest overlay */
+  --color-overlay-mid: color-mix(
+    in srgb,
+    var(--color-sky-2) 60%,
+    transparent
+  ); /** Sky-2 at 60% — gradient endpoint */
+  --color-overlay-mid-heavy: color-mix(
+    in srgb,
+    var(--color-sky-2) 70%,
+    transparent
+  ); /** Sky-2 at 70% — gradient endpoint */
+  --color-app-bg-start: color-mix(
+    in srgb,
+    var(--color-sky-1) 70%,
+    var(--color-frost-1) 30%
+  ); /** App gradient start — sky-1 70% / frost-1 30% */
+  --color-app-bg-mid: color-mix(
+    in srgb,
+    var(--color-sand-1) 55%,
+    var(--color-sky-1) 45%
+  ); /** App gradient mid — sand-1 55% / sky-1 45% */
+  --color-app-bg-end: color-mix(
+    in srgb,
+    var(--color-sky-2) 35%,
+    var(--color-frost-1) 65%
+  ); /** App gradient end — sky-2 35% / frost-1 65% */
+  --color-slide-base-start: color-mix(
+    in srgb,
+    var(--color-sky-1) 90%,
+    var(--color-frost-1) 10%
+  ); /** Slide gradient start — sky-1 90% / frost-1 10% */
+  --color-slide-base-end: color-mix(
+    in srgb,
+    var(--color-sky-2) 70%,
+    var(--color-frost-1) 30%
+  ); /** Slide gradient end — sky-2 70% / frost-1 30% */
+  --color-glow-magenta: color-mix(
+    in srgb,
+    var(--color-magenta-2) 12%,
+    transparent
+  ); /** Magenta-2 at 12% — accent radial glow */
+  --color-glow-magenta-fade: color-mix(
+    in srgb,
+    var(--color-magenta-3) 5%,
+    transparent
+  ); /** Magenta-3 at 5% — faded glow */
+  --color-glow-cool: color-mix(
+    in srgb,
+    var(--color-sky-3) 10%,
+    transparent
+  ); /** Sky-3 at 10% — cool radial glow */
+  --color-glow-warm: color-mix(
+    in srgb,
+    var(--color-sand-2) 6%,
+    transparent
+  ); /** Sand-2 at 6% — warm radial glow */
+  --color-glow-frost: color-mix(
+    in srgb,
+    var(--color-frost-1) 12%,
+    transparent
+  ); /** Frost-1 at 12% — neutral glow */
+  --color-tag-bg: color-mix(
+    in srgb,
+    var(--color-frost-2) 20%,
+    transparent
+  ); /** Frost-2 at 20% — tag pill background */
   --color-magenta-1: #ff0f8f; /** Vivid — CTA arrows, glow source */
   --color-magenta-2: #d60076; /** Primary accent — default brand color */
   --color-magenta-3: #b30062; /** Deep — glow fade, shadow tints */
@@ -70,7 +222,10 @@
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.4); /** High elevation — cards, slides */
   --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.2); /** Soft elevation */
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.3); /** Hover state elevation */
-  --shadow-glow-accent: 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 0 12px color-mix(in srgb, var(--color-magenta-1) 25%, transparent), 0 0 24px color-mix(in srgb, var(--color-magenta-3) 15%, transparent); /** Accent glow — interactive focus/hover highlights */
+  --shadow-glow-accent:
+    0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent),
+    0 0 12px color-mix(in srgb, var(--color-magenta-1) 25%, transparent),
+    0 0 24px color-mix(in srgb, var(--color-magenta-3) 15%, transparent); /** Accent glow — interactive focus/hover highlights */
   --duration-micro: 0.12s; /** Instant feedback — visibility toggles, label reveals */
   --duration-fast: 0.15s; /** Interactive response — hover, focus, color transitions */
   --duration-normal: 0.2s; /** Default — indicator transforms, opacity shifts */
@@ -78,18 +233,29 @@
   --duration-crossfade: 0.5s; /** Content transitions — slide crossfades */
   --duration-blink: 1.8s; /** Ambient — CTA arrow blink animation cycle */
   --easing-default: ease; /** CSS ease keyword equivalent */
-  --easing-emphasized: cubic-bezier(0.4, 0, 0.2, 1); /** Material-style emphasized easing — used for most interactive transitions */
+  --easing-emphasized: cubic-bezier(
+    0.4,
+    0,
+    0.2,
+    1
+  ); /** Material-style emphasized easing — used for most interactive transitions */
   --radius-sm: 10px; /** Cards, slides, tags, input fields */
   --radius-md: 14px; /** Post containers, modal surfaces */
   --focus-ring-width: 2px; /** Ring thickness */
   --focus-ring-offset: 2px; /** Gap between element and ring */
-  --post-card-width: clamp(340px, 32vw, 440px); /** LinkedIn card width — rendered as clamp(340px, 32vw, 440px) via custom extension */
+  --post-card-width: clamp(
+    340px,
+    32vw,
+    440px
+  ); /** LinkedIn card width — rendered as clamp(340px, 32vw, 440px) via custom extension */
   --space-xs: 0.25rem; /** Micro separation */
   --space-sm: 0.5rem; /** Related items */
   --space-md: 1rem; /** Grouping */
   --space-lg: 2rem; /** Breathing room */
   --space-xl: 4rem; /** Structural separation */
-  --font-family-base: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; /** Monospace stack — JetBrains Mono primary, system monospace fallbacks */
+  --font-family-base:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace; /** Monospace stack — JetBrains Mono primary, system monospace fallbacks */
   --font-weight-regular: 400; /** Body text, default weight */
   --font-weight-medium: 500; /** Labels, tags, emphasis */
   --font-weight-bold: 600; /** Headlines, slide numbers, strong emphasis */
@@ -114,7 +280,9 @@
   --color-accent: var(--color-magenta-2); /** Primary accent color */
   --divider-subtle: 1px solid var(--color-border-subtle); /** Low-contrast separator — card borders, section dividers */
   --divider-strong: 1px solid var(--color-border-strong); /** High-contrast separator — active borders, emphasis */
-  --focus-ring-color: var(--color-magenta-2); /** Ring color — matches accent for brand consistency */
+  --focus-ring-color: var(
+    --color-magenta-2
+  ); /** Ring color — matches accent for brand consistency */
   --post-grid-gap: var(--space-lg); /** Post grid gap */
   --post-safe-zone: var(--space-md); /** Post content safe zone padding */
 }
