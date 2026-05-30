@@ -191,7 +191,7 @@ The post domain (`src/post/`) models LinkedIn-ready content cards:
 - `PostEntity` — single or carousel, with LinkedIn format variants (square/portrait/landscape)
 - `SinglePostContent` — cover image, quote (with variant/category/number), belief/reframe, caption
 - `CarouselPostContent` — slides with eyebrow/headline/subhead/image/footer
-- Post IDs use a Notion-integrated system (see `docs/POST_ID_SYSTEM.md`)
+- Post IDs use a Notion-integrated system (see `src/post/docs/POST_ID_SYSTEM.md`)
 - Mock data in `src/post/data/mockPosts.ts`
 
 This area is under active development.
