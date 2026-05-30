@@ -53,18 +53,20 @@ function Typography() {
 
   return (
     <div className="typography-component">
-      <div className="typography-scale-selector">
+      <div className="typography-scale-selector" role="group" aria-label="Type scale selector">
         {typeScale.map((scale) => (
           <button
             key={scale.name}
             className={`typography-size-button ${selectedSize === scale.name ? 'typography-size-button-active' : ''}`}
             onClick={() => setSelectedSize(scale.name)}
+            aria-pressed={selectedSize === scale.name}
+            aria-label={`Select ${scale.label} type size`}
           >
             {scale.label}
           </button>
         ))}
       </div>
-      <div className="typography-preview">
+      <div className="typography-preview" aria-live="polite">
         <div className="typography-preview-content">
           <div className="typography-preview-group">
             <p

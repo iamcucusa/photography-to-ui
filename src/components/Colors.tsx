@@ -127,12 +127,14 @@ function Colors() {
   return (
     <div className="colors-component">
       <div className="colors-carousel">
-        <div className="colors-carousel-nav">
+        <div className="colors-carousel-nav" role="group" aria-label="Palette selector">
           {palettes.map((palette) => (
             <button
               key={palette.id}
               className={`colors-palette-button ${activePalette === palette.id ? 'colors-palette-button-active' : ''}`}
               onClick={() => setActivePalette(palette.id)}
+              aria-pressed={activePalette === palette.id}
+              aria-label={`Select ${palette.name} palette`}
             >
               {palette.name}
             </button>
@@ -140,7 +142,7 @@ function Colors() {
         </div>
       </div>
 
-      <div className="colors-palette-display">
+      <div className="colors-palette-display" aria-live="polite">
         <h3 className="colors-palette-name">{currentPalette.name}</h3>
         <div className="colors-grid">
           {currentPalette.colors.map((color, index) => (
