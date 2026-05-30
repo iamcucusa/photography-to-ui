@@ -9,4 +9,9 @@ export default defineConfig({
     outDir: resolve(__dirname, '../dist'),
     emptyOutDir: true,
   },
+  resolve: {
+    alias: {
+      '@tokens': resolve(__dirname, '../tokens'),
+    },
+  },
 })

@@ -1,13 +1,13 @@
 import { useState, useCallback } from 'react'
 import { AuditPage } from './AuditPage'
-import primitives from '../../tokens/color/primitives.json'
-import semantic from '../../tokens/color/semantic.json'
-import derived from '../../tokens/color/derived.json'
-import typography from '../../tokens/typography.json'
-import spacing from '../../tokens/spacing.json'
-import shape from '../../tokens/shape.json'
-import elevation from '../../tokens/elevation.json'
-import motion from '../../tokens/motion.json'
+import primitives from '@tokens/color/primitives.json'
+import semantic from '@tokens/color/semantic.json'
+import derived from '@tokens/color/derived.json'
+import typography from '@tokens/typography.json'
+import spacing from '@tokens/spacing.json'
+import shape from '@tokens/shape.json'
+import elevation from '@tokens/elevation.json'
+import motion from '@tokens/motion.json'
 
 type TokenEntry = {
   $value?: unknown

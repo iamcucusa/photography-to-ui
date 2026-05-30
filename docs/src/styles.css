@@ -1,6 +1,6 @@
 /* Import the design system — tokens and fonts from @cucusa/tokens */
-@import '../../tokens/dist/tokens.css';
-@import '../../tokens/fonts.css';
+@import '@tokens/dist/tokens.css';
+@import '@tokens/fonts.css';
 
 *,
 *::before,
