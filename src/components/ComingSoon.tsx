@@ -2,12 +2,12 @@ import { useState } from 'react'
 import './comingSoon.css'
 
 const comingSoonItems = [
+  'Design system documentation — dedicated consumer with visual token catalog',
+  'Content creation tooling — LinkedIn post production extracted as standalone consumer',
   'Responsive behavior across breakpoints, without changing hierarchy',
-  'Pattern usage documentation and rationale',
   'Interaction case studies focused on intent and outcome',
   'Design-in-code process insights and decision notes',
-  'Asset optimization for responsive layouts and performance',
-  'Design tokens inspect widget interaction',
+  'AI-scaffolded workflows — hooks, skills, and MCP integrations',
 ]
 
 function ComingSoon() {

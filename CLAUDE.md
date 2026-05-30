@@ -240,6 +240,40 @@ A dedicated documentation consumer will provide:
 
 This is a separate app, not a route in photography-to-ui. Architectural decision: photography-to-ui explores what the system can express; the docs consumer explains what exists and how to use it.
 
+### Visual verification workflow
+
+After any token or style change, verify both routes visually:
+
+1. Run `npm run tokens && npm run format` if token JSON was changed
+2. Run `npm run check` to verify tsc + eslint + prettier pass
+3. Start dev server and screenshot both routes:
+   - `/` (Home) — hero, insights panel, component explorers
+   - `/post` (Post gallery) — cards, narratives, tags, carousel slides with image overlays
+4. Inspect key computed styles: card backgrounds (`--color-bg-translucent`), borders (`--divider-subtle`), text colors, shadow elevations
+5. Run `npm run build` to verify production build succeeds
+
+### How to add a new token
+
+1. Choose the right file in `tokens/` based on the token category (see Token files table above)
+2. Add the token with `$value`, `$type` (or inherit from group), and `$description`
+3. If the value needs a CSS function (`clamp()`, `calc()`), add `$extensions.com.cucusa.platform.css`
+4. If the value is a color derivation, add `$extensions.com.cucusa.colorMix`
+5. Run `npm run tokens && npm run format`
+6. Use the new token in component CSS via `var(--token-name)`
+7. Verify visually (see workflow above)
+
+### How to add a new consumer
+
+The `tokens/` directory is designed to be consumed by multiple apps:
+
+1. The consumer needs `style-dictionary` as a dependency
+2. Copy or reference `tokens/sd.config.mjs` — adjust `buildPath` to point to the consumer's styles directory
+3. The consumer's build step runs `node tokens/sd.config.mjs` (or a modified copy)
+4. Import the generated `tokens.css` in the consumer's entry point
+5. All CSS custom properties are available via `var(--token-name)`
+
+For non-CSS consumers (future iOS, Android), add a new platform in `sd.config.mjs` with platform-specific transforms. The `$value` fields already contain valid DTCG fallbacks. Platform extensions (`com.cucusa.platform`) can add sibling keys: `{ "css": "...", "ios": "...", "android": "..." }`.
+
 ## ESLint/Prettier notes
 
 - ESLint 9 flat config: `eslint.config.js`. Includes typescript-eslint, react-hooks, react-refresh, jsx-a11y, eslint-config-prettier.

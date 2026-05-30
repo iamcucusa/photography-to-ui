@@ -1,8 +1,8 @@
 {
   "radius": {
     "$type": "dimension",
-    "sm": { "$value": "10px" },
-    "md": { "$value": "14px" }
+    "sm": { "$value": "10px", "$description": "Cards, slides, tags, input fields" },
+    "md": { "$value": "14px", "$description": "Post containers, modal surfaces" }
   },
   "divider": {
     "$type": "border",
@@ -12,7 +12,7 @@
         "width": "1px",
         "style": "solid"
       },
-      "$description": "Subtle divider line"
+      "$description": "Low-contrast separator — card borders, section dividers"
     },
     "strong": {
       "$value": {
@@ -20,22 +20,25 @@
         "width": "1px",
         "style": "solid"
       },
-      "$description": "Strong divider line"
+      "$description": "High-contrast separator — active borders, emphasis"
     }
   },
   "focus-ring": {
+    "$description": "Accessibility focus indicator — magenta ring with offset, applied via :focus-visible",
     "width": {
       "$type": "dimension",
-      "$value": "2px"
+      "$value": "2px",
+      "$description": "Ring thickness"
     },
     "offset": {
       "$type": "dimension",
-      "$value": "2px"
+      "$value": "2px",
+      "$description": "Gap between element and ring"
     },
     "color": {
       "$type": "color",
       "$value": "{color.magenta.2}",
-      "$description": "Focus ring color — matches accent"
+      "$description": "Ring color — matches accent for brand consistency"
     }
   }
 }
