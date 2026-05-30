@@ -5,7 +5,9 @@
       "$value": "440px",
       "$description": "LinkedIn card width — rendered as clamp(340px, 32vw, 440px) via custom extension",
       "$extensions": {
-        "com.cucusa.cssValue": "clamp(340px, 32vw, 440px)"
+        "com.cucusa.platform": {
+          "css": "clamp(340px, 32vw, 440px)"
+        }
       }
     },
     "grid-gap": {

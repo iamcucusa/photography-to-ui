@@ -1,6 +1,18 @@
 import StyleDictionary from 'style-dictionary'
 
 // ── Custom Transforms ──────────────────────────────────────────────
+//
+// Extension namespaces:
+//   com.cucusa.colorMix  — structured color derivation recipe (color1, amount1, color2, amount2, space)
+//   com.cucusa.platform  — per-platform value overrides ({ css: "..." })
+//
+// Transform ordering matters:
+//   1. cucusa/platform-css  — must run first; raw override wins over all type-specific transforms
+//   2. cucusa/color-mix     — structured color derivation, generates color-mix() CSS
+//   3. cucusa/shadow-css    — DTCG shadow composite → CSS shorthand (skipped if platform override exists)
+//   4. cucusa/border-css    — DTCG border composite → CSS shorthand
+//   5. type-specific        — duration, easing, fontFamily
+//   6. color/css            — built-in color format (last, so custom transforms take precedence)
 
 function resolveRefToCssVar(ref) {
   if (ref === 'transparent') return 'transparent'
@@ -8,6 +20,17 @@ function resolveRefToCssVar(ref) {
   if (!match) return ref
   return `var(--${match[1].replace(/\./g, '-')})`
 }
+
+// Platform override — uses $extensions.com.cucusa.platform.css when building for CSS.
+// Use for CSS functions (clamp, calc, min/max) or values that can't be expressed in DTCG.
+// The token's $value must still be a valid DTCG fallback for non-CSS consumers.
+StyleDictionary.registerTransform({
+  name: 'cucusa/platform-css',
+  type: 'value',
+  transitive: true,
+  filter: (token) => token.$extensions?.['com.cucusa.platform']?.css,
+  transform: (token) => token.$extensions['com.cucusa.platform'].css,
+})
 
 // color-mix() derived colors — reads $extensions.com.cucusa.colorMix
 StyleDictionary.registerTransform({
@@ -28,31 +51,14 @@ StyleDictionary.registerTransform({
   },
 })
 
-// Raw CSS value override — reads $extensions.com.cucusa.cssValue
-StyleDictionary.registerTransform({
-  name: 'cucusa/css-value',
-  type: 'value',
-  transitive: true,
-  filter: (token) => token.$extensions?.['com.cucusa.cssValue'],
-  transform: (token) => token.$extensions['com.cucusa.cssValue'],
-})
-
-// Raw CSS shadow override — reads $extensions.com.cucusa.cssShadow
-StyleDictionary.registerTransform({
-  name: 'cucusa/css-shadow',
-  type: 'value',
-  transitive: true,
-  filter: (token) => token.$extensions?.['com.cucusa.cssShadow'],
-  transform: (token) => token.$extensions['com.cucusa.cssShadow'],
-})
-
 // DTCG shadow composite → CSS box-shadow shorthand
+// Skipped when a platform override exists (platform-css handles it)
 StyleDictionary.registerTransform({
   name: 'cucusa/shadow-css',
   type: 'value',
   transitive: true,
   filter: (token) =>
-    token.$type === 'shadow' && !token.$extensions?.['com.cucusa.cssShadow'],
+    token.$type === 'shadow' && !token.$extensions?.['com.cucusa.platform']?.css,
   transform: (token) => {
     const toCSS = (s) =>
       `${s.offsetX} ${s.offsetY} ${s.blur}${s.spread && s.spread !== '0' ? ` ${s.spread}` : ''} ${s.color}`
@@ -124,9 +130,9 @@ const sd = new StyleDictionary({
       transforms: [
         'attribute/cti',
         'name/kebab',
+        // Platform override first — raw CSS wins over type-specific transforms
+        'cucusa/platform-css',
         'cucusa/color-mix',
-        'cucusa/css-value',
-        'cucusa/css-shadow',
         'cucusa/shadow-css',
         'cucusa/border-css',
         'cucusa/duration-css',
