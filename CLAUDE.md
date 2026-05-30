@@ -15,8 +15,25 @@ Deployed to GitHub Pages at `/photography-to-ui/`.
 
 ### Future goals (not yet structurally supported — don't build toward these without discussion)
 
+- **Design system docs** — dedicated consumer for token reference, component catalog, and living documentation. Separate from photography-to-ui (which is the playground, not the docs).
+- **Content creation** — dedicated consumer for LinkedIn post production (currently in `src/post/`, will be extracted).
 - **Blog / email content** — direction is personal brand, content model undecided.
 - **Landing pages / demos** — architecture (same app vs separate?) and AI workflow (how much autonomy?) both open questions.
+
+### Consumer architecture
+
+photography-to-ui is one of several consumers of the design system. Each consumer has a distinct purpose:
+
+```
+tokens/                          ← self-contained, extractable design system
+  │
+  ├── → photography-to-ui       brand exploration, art direction, playground
+  ├── → design-system-docs      token reference, component catalog, living docs (future)
+  ├── → content-creation        LinkedIn posts, carousel builder (future)
+  └── → other consumers         landing pages, blog, etc. (future)
+```
+
+photography-to-ui explores *what the design system can express*. The docs consumer explains *what exists and how to use it*. Mixing them dilutes both purposes.
 
 ## Stack
 
@@ -198,6 +215,30 @@ This area is under active development.
 ## Accessibility baseline
 
 Every interactive element has a discernible accessible name. Every form input has a label. No `tabindex > 0`. Semantic HTML before ARIA. The existing carousel uses WAI-ARIA carousel pattern (role="region", aria-roledescription="carousel", keyboard arrow navigation).
+
+## Tooling decisions
+
+### Evaluated and rejected
+
+- **Storybook**: Overhead exceeds value for a solo design-in-code project with one consumer. photography-to-ui already has interactive component explorers (Typography, Colors, Interaction, System, PhotographyContextInsight) that serve as living documentation. Storybook would duplicate this with additional maintenance burden.
+- **Chromatic / Percy**: Visual regression services require Storybook stories or a component isolation layer. Not justified until there are multiple consumers with shared components.
+- **Tokens Studio / Figma Tokens**: The project is code-first by design. Figma is not in the workflow. Token authoring happens in JSON; visual verification happens in Claude Preview.
+
+### Active tooling
+
+- **Style Dictionary 4**: DTCG JSON → CSS pipeline. Custom transforms for `color-mix()`, composites, platform overrides. Config in `tokens/sd.config.mjs`.
+- **Claude Preview MCP**: Visual verification during development. Used for screenshot-based regression checks after token or style changes. No persistent baseline — verification is per-session.
+- **Claude Code + CLAUDE.md**: AI-scaffolding layer. CLAUDE.md encodes project conventions, token architecture, and working agreements. Skills and hooks being built incrementally.
+
+### Deferred — design-system-docs consumer
+
+A dedicated documentation consumer will provide:
+- Visual token catalog (color swatches, type specimens, spacing scale, shadow/elevation demos, motion timing)
+- Component API reference
+- Usage guidelines for each consumer
+- Auto-generated from the same `tokens/` source
+
+This is a separate app, not a route in photography-to-ui. Architectural decision: photography-to-ui explores what the system can express; the docs consumer explains what exists and how to use it.
 
 ## ESLint/Prettier notes
 
