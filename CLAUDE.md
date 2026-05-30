@@ -84,7 +84,7 @@ tokens/*.json  ──→  npm run tokens (sd.config.mjs)  ──→  src/styles/
   (source)              (build pipeline)                    (auto-generated, consumed by app)
 ```
 
-To add or change a token: edit the JSON source, run `npm run tokens`, then `npm run format`.
+To add or change a token: edit the JSON source, run `npm run tokens`, then `npm run format`. To add a new custom transform, read the ordering and guard documentation in `sd.config.mjs` first.
 
 ### Token files
 
