@@ -75,34 +75,31 @@ function StatusBadge({ status }: { status: string }) {
 export function AuditPage() {
   const data = auditData as AuditData
   const insights = auditInsights as Insights
-  const [refreshing, setRefreshing] = useState<false | 'scan' | 'full'>(false)
+  const [refreshing, setRefreshing] = useState(false)
   const [refreshResult, setRefreshResult] = useState<string | null>(null)
 
-  const runAudit = useCallback(async (mode: 'scan' | 'full') => {
-    setRefreshing(mode)
+  const rescan = useCallback(async () => {
+    setRefreshing(true)
     setRefreshResult(null)
-    const endpoint = mode === 'full' ? '/__audit-full' : '/__audit'
-    const label = mode === 'full' ? 'Full audit' : 'Scan'
     try {
-      const res = await fetch(endpoint)
+      const res = await fetch('/__audit')
       if (res.ok) {
-        setRefreshResult(
-          mode === 'full'
-            ? 'Audit complete — metrics + insights updated and committed'
-            : 'Scan complete — page will refresh via HMR',
-        )
+        setRefreshResult('Scan complete — page will refresh via HMR')
       } else {
-        setRefreshResult(
-          `${label} failed — run npm run audit${mode === 'full' ? ':full' : ''} manually`,
-        )
+        setRefreshResult('Scan failed — run npm run audit manually')
       }
     } catch {
-      setRefreshResult(
-        `Dev server only — run npm run audit${mode === 'full' ? ':full' : ''} in terminal`,
-      )
+      setRefreshResult('Dev server only — run npm run audit in terminal')
     } finally {
       setRefreshing(false)
     }
+  }, [])
+
+  const copyFullAudit = useCallback(() => {
+    navigator.clipboard.writeText('npm run audit:full')
+    setRefreshResult(
+      'Copied npm run audit:full — paste in your terminal. This runs the scanner, invokes Claude to update insights, and commits.',
+    )
   }, [])
 
   return (
@@ -125,19 +122,18 @@ export function AuditPage() {
           <div className="audit-actions">
             <button
               className="audit-refresh-btn"
-              onClick={() => runAudit('scan')}
-              disabled={!!refreshing}
+              onClick={rescan}
+              disabled={refreshing}
               aria-label="Re-run metrics scanner"
             >
-              {refreshing === 'scan' ? 'Scanning...' : 'Rescan'}
+              {refreshing ? 'Scanning...' : 'Rescan'}
             </button>
             <button
               className="audit-refresh-btn audit-refresh-btn--full"
-              onClick={() => runAudit('full')}
-              disabled={!!refreshing}
-              aria-label="Full audit — metrics + AI insights + commit"
+              onClick={copyFullAudit}
+              aria-label="Copy full audit command to clipboard"
             >
-              {refreshing === 'full' ? 'Auditing...' : 'Full audit'}
+              Full audit ↗
             </button>
           </div>
         </div>
