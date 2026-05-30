@@ -6,6 +6,7 @@
   "workspaces": ["tokens", "docs"],
   "scripts": {
     "tokens": "npm run build -w @cucusa/tokens",
+    "audit": "node docs/scripts/audit.mjs",
     "dev": "vite",
     "dev:docs": "npm run dev -w @cucusa/docs",
     "build": "tsc && vite build",
