@@ -32,10 +32,10 @@
     "Self-contained token package with fonts — ready for extraction",
     "Pure workspace orchestrator — root has no app dependencies",
     "Each consumer is an independent workspace package",
-    "Token output in tokens/dist/ — no cross-consumer dependency"
+    "Token output in tokens/dist/ — no cross-consumer dependency",
+    "tokens/dist/tokens.css committed to git — always available after clone, no build step needed"
   ],
   "risks": [
-    "docs consumer imports tokens.css from tokens/dist/ which must be generated before dev/build",
     "No automated visual regression baseline — verification is per-session via Claude Preview"
   ]
 }
