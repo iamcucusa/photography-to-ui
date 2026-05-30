@@ -1,7 +1,7 @@
 {
   "lastReviewed": "2026-05-30",
   "reviewer": "Claude Opus 4.6",
-  "summary": "114 tokens with 100% description coverage. Zero hardcoded colors, rgba, or color-mix outside tokens.css — full tokenization achieved. Naming is BEM-consistent across 130 classes. Main gaps: breakpoints not tokenized (3 values across 8 media queries), and 5 layout constraint values are art-directed one-offs.",
+  "summary": "114 tokens with 100% description coverage. Zero hardcoded colors, rgba, or color-mix outside tokens.css — full tokenization achieved. Naming is BEM-consistent across 130 classes. Workspace fully decoupled — root is a pure orchestrator, each consumer is an independent package.",
   "priorities": [
     {
       "priority": 1,
@@ -29,11 +29,13 @@
     "100% token description coverage — every $value has a $description",
     "BEM-consistent naming across 130 CSS classes",
     "ARIA coverage on all interactive insight explorers",
-    "Self-contained token package with fonts — ready for extraction"
+    "Self-contained token package with fonts — ready for extraction",
+    "Pure workspace orchestrator — root has no app dependencies",
+    "Each consumer is an independent workspace package",
+    "Token output in tokens/dist/ — no cross-consumer dependency"
   ],
   "risks": [
-    "Root package.json is both workspace host and playground app — friction at 3+ consumers",
-    "docs consumer imports tokens.css from playground's build output — tight coupling for now",
+    "docs consumer imports tokens.css from tokens/dist/ which must be generated before dev/build",
     "No automated visual regression baseline — verification is per-session via Claude Preview"
   ]
 }
