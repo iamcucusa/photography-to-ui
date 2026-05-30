@@ -18,11 +18,16 @@ function auditApiPlugin() {
           },
           next: () => void,
         ) => {
-          if (req.url === '/__audit') {
+          if (req.url === '/__audit' || req.url === '/__audit-full') {
+            const script =
+              req.url === '/__audit-full'
+                ? 'bash docs/scripts/audit-full.sh'
+                : 'node docs/scripts/audit.mjs'
             try {
-              execSync('node docs/scripts/audit.mjs', {
+              execSync(script, {
                 cwd: resolve(__dirname, '..'),
                 stdio: 'pipe',
+                timeout: 120_000,
               })
               res.writeHead(200, {
                 'Content-Type': 'application/json',

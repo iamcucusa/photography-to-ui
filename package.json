@@ -6,6 +6,7 @@
   "scripts": {
     "tokens": "npm run build -w @cucusa/tokens",
     "audit": "node docs/scripts/audit.mjs",
+    "audit:full": "bash docs/scripts/audit-full.sh",
     "dev": "npm run dev -w photography-to-ui",
     "dev:docs": "npm run dev -w @cucusa/docs",
     "build": "npm run build -w photography-to-ui",

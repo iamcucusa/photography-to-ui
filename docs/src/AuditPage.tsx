@@ -75,21 +75,31 @@ function StatusBadge({ status }: { status: string }) {
 export function AuditPage() {
   const data = auditData as AuditData
   const insights = auditInsights as Insights
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState<false | 'scan' | 'full'>(false)
   const [refreshResult, setRefreshResult] = useState<string | null>(null)
 
-  const refreshAudit = useCallback(async () => {
-    setRefreshing(true)
+  const runAudit = useCallback(async (mode: 'scan' | 'full') => {
+    setRefreshing(mode)
     setRefreshResult(null)
+    const endpoint = mode === 'full' ? '/__audit-full' : '/__audit'
+    const label = mode === 'full' ? 'Full audit' : 'Scan'
     try {
-      const res = await fetch('/__audit')
+      const res = await fetch(endpoint)
       if (res.ok) {
-        setRefreshResult('Scan complete — page will refresh via HMR')
+        setRefreshResult(
+          mode === 'full'
+            ? 'Audit complete — metrics + insights updated and committed'
+            : 'Scan complete — page will refresh via HMR',
+        )
       } else {
-        setRefreshResult('Scan failed — run npm run audit manually')
+        setRefreshResult(
+          `${label} failed — run npm run audit${mode === 'full' ? ':full' : ''} manually`,
+        )
       }
     } catch {
-      setRefreshResult('Dev server only — run npm run audit in terminal')
+      setRefreshResult(
+        `Dev server only — run npm run audit${mode === 'full' ? ':full' : ''} in terminal`,
+      )
     } finally {
       setRefreshing(false)
     }
@@ -112,14 +122,24 @@ export function AuditPage() {
               {insights.lastReviewed} by {insights.reviewer}
             </div>
           </div>
-          <button
-            className="audit-refresh-btn"
-            onClick={refreshAudit}
-            disabled={refreshing}
-            aria-label="Re-run audit scanner"
-          >
-            {refreshing ? 'Scanning...' : 'Rescan'}
-          </button>
+          <div className="audit-actions">
+            <button
+              className="audit-refresh-btn"
+              onClick={() => runAudit('scan')}
+              disabled={!!refreshing}
+              aria-label="Re-run metrics scanner"
+            >
+              {refreshing === 'scan' ? 'Scanning...' : 'Rescan'}
+            </button>
+            <button
+              className="audit-refresh-btn audit-refresh-btn--full"
+              onClick={() => runAudit('full')}
+              disabled={!!refreshing}
+              aria-label="Full audit — metrics + AI insights + commit"
+            >
+              {refreshing === 'full' ? 'Auditing...' : 'Full audit'}
+            </button>
+          </div>
         </div>
         {refreshResult && <div className="audit-refresh-result">{refreshResult}</div>}
         <p className="audit-summary">{insights.summary}</p>
@@ -280,11 +300,13 @@ export function AuditPage() {
             automated; interpretation below is agent-reviewed.
           </p>
           <div className="audit-skill-usage">
-            <span className="audit-skill-label">Update metrics:</span>
+            <span className="audit-skill-label">Rescan:</span>
             <code>npm run audit</code>
             <span className="audit-skill-sep">|</span>
-            <span className="audit-skill-label">Update insights:</span>
-            <code>/design-system audit</code>
+            <span className="audit-skill-label">Full audit:</span>
+            <code>npm run audit:full</code>
+            <span className="audit-skill-sep">—</span>
+            <span className="audit-skill-label">scanner + Claude insights + commit</span>
           </div>
         </div>
         <p className="audit-reviewed">
