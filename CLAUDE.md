@@ -115,6 +115,7 @@ docs/                # @cucusa/docs — token catalog (see docs/CLAUDE.md)
 - Accessibility: use semantic HTML, provide accessible names, preserve the focus-ring system. Use `aria-expanded`, `aria-pressed`, `aria-label`, and `:focus-visible` consistently.
 - When compacting, preserve the list of modified files and current task status.
 - Each consumer has its own CLAUDE.md — check the consumer-level docs before editing consumer code.
+- If you change directory structure, commands, conventions, or architecture, update the relevant CLAUDE.md in the same commit.
 
 ## Tooling decisions
 
