@@ -3,15 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": ["tokens", "docs"],
   "scripts": {
-    "tokens": "node tokens/sd.config.mjs",
+    "tokens": "npm run build -w @cucusa/tokens",
     "dev": "vite",
+    "dev:docs": "npm run dev -w @cucusa/docs",
     "build": "tsc && vite build",
+    "build:all": "npm run tokens && npm run build && npm run build -w @cucusa/docs",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
     "check": "tsc --noEmit && eslint . && prettier --check \"src/**/*.{ts,tsx,css}\""
   },
   "dependencies": {
@@ -30,7 +33,6 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "prettier": "^3.8.3",
-    "style-dictionary": "^4.4.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.0",
     "vite": "^8.0.14"
