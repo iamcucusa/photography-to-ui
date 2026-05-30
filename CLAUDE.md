@@ -40,6 +40,13 @@ cucusa (workspace root — orchestration only)
 - **Blog / email content** — direction is personal brand, content model undecided.
 - **Landing pages / demos** — architecture and AI workflow both open questions.
 
+### Deferred decisions
+
+- **Breakpoint tokens**: 3 values (768px, 1024px, 767px) in 8 media queries — not tokenized. Revisit when responsive strategy is defined.
+- **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
+- **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
+- **Token validation + staleness checks**: Planned as Node scripts (no new deps). Not yet implemented — see testing strategy discussion in session history.
+
 ## Stack
 
 - React 19, TypeScript 6 (strict), Vite 8
