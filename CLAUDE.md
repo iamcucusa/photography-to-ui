@@ -49,9 +49,11 @@ photography-to-ui explores *what the design system can express*. The docs consum
 
 ```
 npm run tokens       # Regenerate src/styles/tokens.css from tokens/*.json
-npm run dev          # Start dev server (Vite)
-npm run build        # tsc && vite build
-npm run check        # tsc --noEmit && eslint && prettier --check (run before PRs)
+npm run dev          # Start playground dev server (Vite, port 5173)
+npm run dev:docs     # Start docs consumer dev server (Vite, port 5174)
+npm run build        # tsc && vite build (playground only)
+npm run build:all    # tokens → playground → docs (full pipeline)
+npm run check        # tsc (both consumers) + eslint + prettier (run before PRs)
 npm run lint         # ESLint only
 npm run lint:fix     # ESLint with auto-fix
 npm run format       # Prettier write
@@ -61,7 +63,7 @@ npm run format:check # Prettier check only
 ## Directory structure
 
 ```
-tokens/              # DTCG JSON source files (the single source of truth)
+tokens/              # @cucusa/tokens — DTCG JSON source (workspace package)
   color/             # primitives.json, semantic.json, derived.json
   typography.json    # Font family, weights, type scale, line-height, letter-spacing
   spacing.json       # Spacing scale
@@ -70,11 +72,16 @@ tokens/              # DTCG JSON source files (the single source of truth)
   motion.json        # Durations, easings
   sizing.json        # LinkedIn post sizing
   sd.config.mjs      # Style Dictionary 4 build config + custom transforms
-src/
+shared/              # Assets shared across all consumers
+  fonts.css          # @font-face declarations (JetBrains Mono)
+  fonts/             # Self-hosted font files (woff2)
+docs/                # @cucusa/docs — design system token catalog (workspace package)
+  src/App.tsx        # Visual token reference (reads DTCG JSON directly)
+  vite.config.ts     # Builds to dist/docs/
+src/                 # Playground app (root workspace)
   styles/
     tokens.css       # AUTO-GENERATED — do not edit. Run `npm run tokens` to rebuild.
     base.css         # Element resets and global styles
-    fonts.css        # @font-face declarations (JetBrains Mono)
     app.css          # All component and layout styles
   components/        # Homepage-level UI: Typography, Colors, Interaction, System,
                      #   ComingSoon, PhotographyContextInsight

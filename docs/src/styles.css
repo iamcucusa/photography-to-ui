@@ -1,6 +1,6 @@
-/* Import the generated design tokens — same source as playground */
+/* Import the generated design tokens and shared fonts */
 @import '../../src/styles/tokens.css';
-@import '../../src/styles/fonts.css';
+@import '../../shared/fonts.css';
 
 *,
 *::before,
