@@ -12,6 +12,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { resolve, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { execSync } from 'node:child_process'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -94,32 +95,61 @@ function scanFile(filePath, relPath) {
   return violations
 }
 
+// ── Incremental mode ───────────────────────────────────────────────
+// Only scan files changed since HEAD. Falls back to full scan if git
+// fails or --full flag is passed. Scales O(changed files) not O(total).
+
+function getChangedFiles() {
+  try {
+    const output = execSync('git diff --name-only HEAD', { cwd: ROOT, encoding: 'utf-8' })
+    return new Set(output.trim().split('\n').filter(Boolean))
+  } catch {
+    return null // git not available — full scan
+  }
+}
+
+const fullMode = process.argv.includes('--full')
+
 // ── Run ────────────────────────────────────────────────────────────
 
 const consumers = getConsumers()
-console.log(`Checking token coverage for ${consumers.length} consumer(s): ${consumers.join(', ')}`)
+const changedFiles = fullMode ? null : getChangedFiles()
+
+if (changedFiles !== null && changedFiles.size === 0) {
+  console.log(`No files changed — skipping coverage check`)
+  process.exit(0)
+}
+
+const mode = changedFiles === null ? 'full' : 'incremental'
+console.log(`Checking token coverage (${mode}) for ${consumers.length} consumer(s): ${consumers.join(', ')}`)
 
 let totalViolations = 0
-const results = []
+let totalFiles = 0
 
 for (const consumer of consumers) {
   const srcDir = resolve(ROOT, consumer, 'src')
-  const cssFiles = findFiles(srcDir, /\.css$/)
+  const allFiles = [
+    ...findFiles(srcDir, /\.css$/),
+    ...findFiles(srcDir, /\.tsx?$/),
+  ]
+
+  // In incremental mode, only scan changed files
+  const filesToScan = changedFiles === null
+    ? allFiles
+    : allFiles.filter((f) => changedFiles.has(relative(ROOT, f)))
+
   const violations = []
-
-  const tsxFiles = findFiles(srcDir, /\.tsx?$/)
-
-  for (const file of [...cssFiles, ...tsxFiles]) {
-    const relPath = relative(ROOT, file)
-    violations.push(...scanFile(file, relPath))
+  for (const file of filesToScan) {
+    violations.push(...scanFile(file, relative(ROOT, file)))
   }
 
-  const fileCount = cssFiles.length + tsxFiles.length
+  totalFiles += filesToScan.length
   totalViolations += violations.length
-  results.push({ consumer, files: fileCount, violations })
 
-  if (violations.length === 0) {
-    console.log(`  ✔ ${consumer}: ${fileCount} files — no violations`)
+  if (filesToScan.length === 0) {
+    console.log(`  ✔ ${consumer}: no changed files`)
+  } else if (violations.length === 0) {
+    console.log(`  ✔ ${consumer}: ${filesToScan.length} files — no violations`)
   } else {
     console.log(`  ✗ ${consumer}: ${violations.length} violation(s)`)
     for (const v of violations) {
@@ -132,5 +162,5 @@ if (totalViolations > 0) {
   console.log(`\n✗ ${totalViolations} total violation(s) — use design tokens instead of hardcoded values`)
   process.exit(1)
 } else {
-  console.log(`\n✔ All ${consumers.length} consumer(s) pass token coverage`)
+  console.log(`\n✔ All ${consumers.length} consumer(s) pass — ${totalFiles} files scanned (${mode})`)
 }
