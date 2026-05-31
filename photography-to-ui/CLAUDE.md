@@ -31,7 +31,7 @@ npm run build        # Same — builds this consumer
 
 ```
 src/
-  main.tsx           # Entry — imports tokens from ../../tokens/
+  main.tsx           # Entry — imports tokens via @tokens alias
   App.tsx            # Router (Home, Post)
   styles/
     base.css         # Element resets
@@ -63,7 +63,7 @@ scripts/             # Notion integration helpers
 - BEM-ish class naming: `.component-element-modifier`.
 - Most styles in `app.css`. Post-domain components have co-located CSS files.
 - Image paths use `import.meta.env.BASE_URL`. CSS uses hardcoded `/photography-to-ui/` base path.
-- Use tokens from `../../tokens/dist/tokens.css` — never hardcode hex, rgba, px for spacing/font-size, or durations.
+- Import tokens via `@tokens/dist/tokens.css` and fonts via `@tokens/fonts.css` — never hardcode hex, rgba, px for spacing/font-size, or durations.
 
 ## Post system
 

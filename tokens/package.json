@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Cucusa design tokens — W3C DTCG source with Style Dictionary 4 build pipeline",
   "scripts": {
-    "build": "node sd.config.mjs"
+    "build": "node sd.config.mjs",
+    "validate": "node validate.mjs"
   },
   "dependencies": {
     "style-dictionary": "^4.4.0"

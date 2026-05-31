@@ -17,7 +17,7 @@ cucusa (workspace root — orchestration only)
 │
 ├── photography-to-ui/     photography-to-ui — brand exploration, art direction
 │     The playground. Interactive component explorers, LinkedIn posts.
-│     See photography-to-ui/CLAUDE.md (future)
+│     See photography-to-ui/CLAUDE.md
 │
 ├── docs/                  @cucusa/docs — token catalog + audit dashboard
 │     Visual token reference, design system health page.
@@ -45,7 +45,8 @@ cucusa (workspace root — orchestration only)
 - **Breakpoint tokens**: 3 values (768px, 1024px, 767px) in 8 media queries — not tokenized. Revisit when responsive strategy is defined.
 - **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
 - **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
-- **Token validation + staleness checks**: Planned as Node scripts (no new deps). Not yet implemented — see testing strategy discussion in session history.
+- **Token staleness check**: Implemented — `npm run check` regenerates tokens and diffs against committed file. CI rejects stale output.
+- **Token coverage threshold**: Implemented — `npm run check:coverage` scans all consumers automatically via workspace discovery. CI rejects hardcoded hex/rgba/color-mix.
 
 ## Stack
 
@@ -61,6 +62,7 @@ cucusa (workspace root — orchestration only)
 
 ```
 npm run tokens       # Regenerate tokens/dist/tokens.css from tokens/*.json
+npm run validate     # Check DTCG integrity — structure, descriptions, refs, extensions
 npm run audit        # Re-scan codebase, update docs/src/audit-data.json
 npm run dev          # Start photography-to-ui dev server (port 5173)
 npm run dev:docs     # Start docs consumer dev server (port 5174)
@@ -81,7 +83,7 @@ tokens/              # @cucusa/tokens — design system (see tokens/CLAUDE.md)
   fonts.css          # @font-face declarations (JetBrains Mono)
   fonts/             # Self-hosted woff2 files — travels with the package
   dist/tokens.css    # AUTO-GENERATED — consumed by all apps
-photography-to-ui/   # Art direction consumer (see photography-to-ui/CLAUDE.md future)
+photography-to-ui/   # Art direction consumer (see photography-to-ui/CLAUDE.md)
   src/
     styles/          # base.css, app.css (tokens.css removed — imported from tokens/dist/)
     components/      # Typography, Colors, Interaction, System, ComingSoon explorers
@@ -99,8 +101,9 @@ docs/                # @cucusa/docs — token catalog (see docs/CLAUDE.md)
 
 1. Create a directory at the workspace root with its own `package.json`
 2. Add it to root `package.json` `workspaces` array
-3. Import `../../tokens/dist/tokens.css` for CSS custom properties
-4. Import `../../tokens/fonts.css` for @font-face declarations
+3. Import `@tokens/dist/tokens.css` for CSS custom properties
+4. Import `@tokens/fonts.css` for @font-face declarations
+5. Add `@tokens` alias to `vite.config.ts` and `tsconfig.json` paths (see existing consumers for example)
 5. Add `dev`, `build`, and `check` scripts to the consumer's `package.json`
 6. Add the consumer to root `build:all` and `check` scripts
 7. Create a `CLAUDE.md` in the consumer directory with its domain-specific instructions

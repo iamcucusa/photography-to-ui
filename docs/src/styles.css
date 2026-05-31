@@ -103,7 +103,10 @@ body {
 }
 
 .color-swatch--checkerboard {
-  background-image: repeating-conic-gradient(#333 0% 25%, #444 0% 50%);
+  background-image: repeating-conic-gradient(
+    var(--color-bg-surface) 0% 25%,
+    var(--color-frost-2) 0% 50%
+  );
   background-size: 12px 12px;
 }
 
