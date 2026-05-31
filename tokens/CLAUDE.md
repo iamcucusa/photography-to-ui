@@ -91,6 +91,8 @@ Rules:
 
 Every token MUST have a `$description`. This is consumed by the docs app to generate the token catalog.
 
+**After any token change, run `npm run validate` before committing.** This is mandatory — CI will reject the push if validation fails.
+
 ## How to add a new consumer
 
 1. Create a directory at the workspace root with its own `package.json`
