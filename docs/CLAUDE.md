@@ -29,19 +29,19 @@ npm run build:all    # Build tokens → playground → docs
 
 ## How it works
 
-The app imports DTCG JSON files directly from `../../tokens/`:
+The app imports DTCG JSON files via the `@tokens` alias:
 
 ```tsx
-import primitives from '../../tokens/color/primitives.json'
-import derived from '../../tokens/color/derived.json'
+import primitives from '@tokens/color/primitives.json'
+import derived from '@tokens/color/derived.json'
 ```
 
 A `flattenTokens()` utility walks the JSON tree and extracts every token with its `$value`, `$type`, and `$description`. React components render them as visual specimens.
 
 Tokens CSS and fonts are imported directly from the `@cucusa/tokens` package:
 ```css
-@import '../../tokens/dist/tokens.css';  /* generated CSS custom properties */
-@import '../../tokens/fonts.css';         /* @font-face declarations */
+@import '@tokens/dist/tokens.css';  /* generated CSS custom properties */
+@import '@tokens/fonts.css';         /* @font-face declarations */
 ```
 
 ## Sections

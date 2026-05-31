@@ -101,8 +101,9 @@ docs/                # @cucusa/docs — token catalog (see docs/CLAUDE.md)
 
 1. Create a directory at the workspace root with its own `package.json`
 2. Add it to root `package.json` `workspaces` array
-3. Import `../../tokens/dist/tokens.css` for CSS custom properties
-4. Import `../../tokens/fonts.css` for @font-face declarations
+3. Import `@tokens/dist/tokens.css` for CSS custom properties
+4. Import `@tokens/fonts.css` for @font-face declarations
+5. Add `@tokens` alias to `vite.config.ts` and `tsconfig.json` paths (see existing consumers for example)
 5. Add `dev`, `build`, and `check` scripts to the consumer's `package.json`
 6. Add the consumer to root `build:all` and `check` scripts
 7. Create a `CLAUDE.md` in the consumer directory with its domain-specific instructions

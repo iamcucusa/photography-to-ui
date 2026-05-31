@@ -97,9 +97,10 @@ Every token MUST have a `$description`. This is consumed by the docs app to gene
 
 1. Create a directory at the workspace root with its own `package.json`
 2. Add it to root `package.json` `workspaces` array
-3. Import `../../tokens/dist/tokens.css` for CSS custom properties
-4. Import `../../tokens/fonts.css` for @font-face declarations
-5. All CSS custom properties are available via `var(--token-name)`
+3. Add `@tokens` alias to `vite.config.ts` and `tsconfig.json` paths (see existing consumers)
+4. Import `@tokens/dist/tokens.css` for CSS custom properties
+5. Import `@tokens/fonts.css` for @font-face declarations
+6. All CSS custom properties are available via `var(--token-name)`
 
 For non-CSS platforms, add a new platform block in `sd.config.mjs`. The `$value` fields contain valid DTCG fallbacks. Platform extensions can add sibling keys per platform.
 
