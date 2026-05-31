@@ -12,11 +12,13 @@ This package is self-contained and extractable. It contains everything needed to
 
 ```
 npm run build        # Generate CSS from DTCG JSON (runs sd.config.mjs)
+npm run validate     # Check DTCG integrity — structure, descriptions, refs, extensions
 ```
 
 From the workspace root:
 ```
-npm run tokens       # Same as above, via workspace
+npm run tokens       # Same as build, via workspace
+npm run validate     # Same as validate, via workspace
 ```
 
 ## Files

@@ -45,7 +45,8 @@ cucusa (workspace root — orchestration only)
 - **Breakpoint tokens**: 3 values (768px, 1024px, 767px) in 8 media queries — not tokenized. Revisit when responsive strategy is defined.
 - **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
 - **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
-- **Token validation + staleness checks**: Planned as Node scripts (no new deps). Not yet implemented — see testing strategy discussion in session history.
+- **Token staleness check**: Planned Node script to diff committed tokens.css against freshly generated output. Not yet implemented.
+- **Token coverage threshold**: Planned extension to audit scanner — fail CI if hardcoded values appear. Not yet implemented.
 
 ## Stack
 
@@ -61,6 +62,7 @@ cucusa (workspace root — orchestration only)
 
 ```
 npm run tokens       # Regenerate tokens/dist/tokens.css from tokens/*.json
+npm run validate     # Check DTCG integrity — structure, descriptions, refs, extensions
 npm run audit        # Re-scan codebase, update docs/src/audit-data.json
 npm run dev          # Start photography-to-ui dev server (port 5173)
 npm run dev:docs     # Start docs consumer dev server (port 5174)
