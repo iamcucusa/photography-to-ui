@@ -6,7 +6,7 @@ Visual token catalog for the Cucusa design system. A dedicated consumer that ren
 
 A living documentation site that reads DTCG JSON directly and renders tokens visually. It serves developers (human and AI) who need to know what tokens exist, what they look like, and how to use them.
 
-This is NOT the playground (that's the root `src/` app). This app documents; the playground explores.
+This is NOT the playground (that's `photography-to-ui/`). This app documents; the playground explores.
 
 ## Target audience
 

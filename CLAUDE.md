@@ -17,7 +17,7 @@ cucusa (workspace root — orchestration only)
 │
 ├── photography-to-ui/     photography-to-ui — brand exploration, art direction
 │     The playground. Interactive component explorers, LinkedIn posts.
-│     See photography-to-ui/CLAUDE.md (future)
+│     See photography-to-ui/CLAUDE.md
 │
 ├── docs/                  @cucusa/docs — token catalog + audit dashboard
 │     Visual token reference, design system health page.
@@ -83,7 +83,7 @@ tokens/              # @cucusa/tokens — design system (see tokens/CLAUDE.md)
   fonts.css          # @font-face declarations (JetBrains Mono)
   fonts/             # Self-hosted woff2 files — travels with the package
   dist/tokens.css    # AUTO-GENERATED — consumed by all apps
-photography-to-ui/   # Art direction consumer (see photography-to-ui/CLAUDE.md future)
+photography-to-ui/   # Art direction consumer (see photography-to-ui/CLAUDE.md)
   src/
     styles/          # base.css, app.css (tokens.css removed — imported from tokens/dist/)
     components/      # Typography, Colors, Interaction, System, ComingSoon explorers
