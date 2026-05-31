@@ -45,7 +45,7 @@ cucusa (workspace root — orchestration only)
 - **Breakpoint tokens**: 3 values (768px, 1024px, 767px) in 8 media queries — not tokenized. Revisit when responsive strategy is defined.
 - **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
 - **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
-- **Token staleness check**: Planned Node script to diff committed tokens.css against freshly generated output. Not yet implemented.
+- **Token staleness check**: Implemented — `npm run check` regenerates tokens and diffs against committed file. CI rejects stale output.
 - **Token coverage threshold**: Planned extension to audit scanner — fail CI if hardcoded values appear. Not yet implemented.
 
 ## Stack
