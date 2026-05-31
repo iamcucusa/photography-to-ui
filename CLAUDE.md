@@ -46,7 +46,7 @@ cucusa (workspace root — orchestration only)
 - **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
 - **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
 - **Token staleness check**: Implemented — `npm run check` regenerates tokens and diffs against committed file. CI rejects stale output.
-- **Token coverage threshold**: Planned extension to audit scanner — fail CI if hardcoded values appear. Not yet implemented.
+- **Token coverage threshold**: Implemented — `npm run check:coverage` scans all consumers automatically via workspace discovery. CI rejects hardcoded hex/rgba/color-mix.
 
 ## Stack
 
