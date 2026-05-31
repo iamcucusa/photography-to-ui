@@ -53,11 +53,12 @@ function scanFile(filePath, relPath) {
   // Skip generated files
   if (content.includes('Do not edit directly')) return violations
 
-  // Hardcoded hex colors (not in comments)
-  // Strip block comments and inline comments before scanning
+  // Strip comments, HTML entities, and import paths before scanning
   const stripped = content
     .replace(/\/\*[\s\S]*?\*\//g, '')  // block comments
     .replace(/\/\/.*$/gm, '')          // line comments
+    .replace(/&#\w+;/g, '')           // HTML entities (&#10003; etc.)
+    .replace(/from\s+['"][^'"]+['"]/g, '') // import paths
 
   const lines = stripped.split('\n')
   lines.forEach((line, i) => {
@@ -65,18 +66,16 @@ function scanFile(filePath, relPath) {
     const trimmed = line.trim()
     if (!trimmed) return
 
-    // Hex colors — skip inside repeating-conic-gradient (checkerboard pattern)
-    if (!trimmed.includes('conic-gradient')) {
-      const hexMatches = trimmed.match(/#[0-9a-fA-F]{3,8}\b/g)
-      if (hexMatches) {
-        for (const hex of hexMatches) {
-          violations.push({ file: relPath, line: lineNum, type: 'hex', value: hex })
-        }
+    // Hex colors
+    const hexMatches = trimmed.match(/#[0-9a-fA-F]{3,8}\b/g)
+    if (hexMatches) {
+      for (const hex of hexMatches) {
+        violations.push({ file: relPath, line: lineNum, type: 'hex', value: hex })
       }
     }
 
-    // rgba/rgb
-    const rgbaMatches = trimmed.match(/rgba?\([^)]+\)/g)
+    // rgba/rgb — only match numeric values, not JSX template expressions
+    const rgbaMatches = trimmed.match(/rgba?\(\s*\d[\d\s,.%/]*\)/g)
     if (rgbaMatches) {
       for (const rgba of rgbaMatches) {
         violations.push({ file: relPath, line: lineNum, type: 'rgba', value: rgba })
@@ -108,16 +107,19 @@ for (const consumer of consumers) {
   const cssFiles = findFiles(srcDir, /\.css$/)
   const violations = []
 
-  for (const file of cssFiles) {
+  const tsxFiles = findFiles(srcDir, /\.tsx?$/)
+
+  for (const file of [...cssFiles, ...tsxFiles]) {
     const relPath = relative(ROOT, file)
     violations.push(...scanFile(file, relPath))
   }
 
+  const fileCount = cssFiles.length + tsxFiles.length
   totalViolations += violations.length
-  results.push({ consumer, files: cssFiles.length, violations })
+  results.push({ consumer, files: fileCount, violations })
 
   if (violations.length === 0) {
-    console.log(`  ✔ ${consumer}: ${cssFiles.length} CSS files — no violations`)
+    console.log(`  ✔ ${consumer}: ${fileCount} files — no violations`)
   } else {
     console.log(`  ✗ ${consumer}: ${violations.length} violation(s)`)
     for (const v of violations) {
