@@ -12,6 +12,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev:docs"],
       "port": 5174
+    },
+    {
+      "name": "switching-brain",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:brain"],
+      "port": 5175
     }
   ]
 }

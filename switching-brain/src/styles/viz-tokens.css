@@ -1,0 +1,50 @@
+/**
+ * viz-tokens — the visualization's categorical color layer.
+ *
+ * The Switching Brain needs a 3-way categorical scale (DMN / FPCN / SN) that a
+ * product design system doesn't ship. Per the brief, we DERIVE it from existing
+ * brand ramps rather than introducing new raw colors — three perceptually
+ * distinct families already exist:
+ *
+ *   DMN  (Default Mode Network)      → sand     — warm, "internal/imaginative"
+ *   FPCN (Frontoparietal Control)    → sky      — cool, "analytical/control"
+ *   SN   (Salience Network)          → magenta  — bright accent, "the switch"
+ *
+ * Every value references a base ramp step via var(); NO raw colors, NO color-mix
+ * here (color-mix in consumer src is rejected by the token-coverage checker —
+ * it belongs in the @cucusa/tokens layer). Alpha/glow is composed at runtime in
+ * the draw layer from these resolved colors (see viz/runtimeTokens.ts).
+ *
+ * Read at runtime via getComputedStyle so the viz stays token-driven and would
+ * re-theme for free if a light theme is ever added upstream. Dark-only today.
+ */
+
+:root {
+  /* DMN — warm (sand). Resting / base / activated-bright. */
+  --viz-dmn-dim: var(--color-sand-1);
+  --viz-dmn: var(--color-sand-2);
+  --viz-dmn-bright: var(--color-sand-3);
+
+  /* FPCN — cool (sky). */
+  --viz-fpcn-dim: var(--color-sky-2);
+  --viz-fpcn: var(--color-sky-3);
+  --viz-fpcn-bright: var(--color-sky-4);
+
+  /* SN — bright accent (magenta). The salience "switch" color. */
+  --viz-sn-dim: var(--color-magenta-3);
+  --viz-sn: var(--color-magenta-2);
+  --viz-sn-bright: var(--color-magenta-1);
+
+  /* Shared draw-layer surfaces, all derived from the canvas. */
+  --viz-edge: var(--color-frost-3);
+  --viz-stage-bg: var(--color-bg-canvas);
+  --viz-node-stroke: var(--color-bg-canvas);
+  --viz-node-label: var(--color-text-primary);
+
+  /* ── Experimental UI tokens (kept in-consumer; candidates for the DS) ──────
+     The inspect tooltip is a focused, single-node reading surface, so it wants a
+     crisper corner than the DS's --radius-sm (10px) and a generous reading width.
+     If these prove out, promote --viz-radius-tight → --radius-xs in @cucusa/tokens. */
+  --viz-radius-tight: 5px;
+  --viz-inspect-width: 320px;
+}

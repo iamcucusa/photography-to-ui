@@ -1,0 +1,83 @@
+# switching-brain
+
+**The Switching Brain** — a data-driven visualization of the design-engineer / UX-engineer brain, built as a consumer of the Cucusa design system. A bilateral brain network of three large-scale systems (DMN, FPCN, Salience) that oscillate; the signature interaction is a switching-rate slider showing creative output peaking at a *balanced* rate (an inverted-U).
+
+Thesis: _the design-engineer brain is not split between hemispheres — it is a normal brain caught in the act of switching._ Motion is the data, not the polish.
+
+This is the experimentation / content-creation consumer. Unlike the other consumers it carries its own viz dependency (`d3-force`); keep app-specific deps here, not in the workspace root.
+
+## Commands
+
+```
+npm run dev:brain    # from workspace root — dev server, port 5175
+npm run dev          # from this dir — same
+npm run build        # tsc && vite build → ../dist/switching-brain/
+npm run check        # tsc --noEmit
+```
+
+Deployed under `/photography-to-ui/switching-brain/`.
+
+## Architecture
+
+Framework-agnostic core (plain TS, portable/testable) feeding a thin React + SVG draw layer:
+
+```
+src/
+  App.tsx              # State model + chrome (DS-styled controls). Owns rate, bias,
+                       # inspect, self-map, play/pause, idle-return.
+  viz/
+    model/types.ts     # BrainGraph / BrainNode / BrainEdge — mirrors data/nodes.json
+    noise.ts           # Looping value noise (seamless export loop, no dep)
+    activation.ts      # phase → per-network activation + motion *quality* (the inverted-U)
+    layout.ts          # d3-force sim: bilateral interleaved, live per-network cohesion
+    geometry.ts        # radius/edge-path/quad-bezier helpers, deterministic jitter
+    runtimeTokens.ts   # reads DS color from CSS vars at RUNTIME (+ alpha/mix compose)
+    BrainStage.tsx     # SVG skeleton + requestAnimationFrame loop (imperative draw)
+    useGraphData.ts    # fetch + validate data/nodes.json (loading / error / ready)
+    useReducedMotion.ts, useIdleReturn.ts
+  components/          # RateControl, SelfMap, InspectCard, Legend (all DS-token styled)
+  styles/
+    base.css           # element reset + focus ring (token-driven)
+    viz-tokens.css     # ← the 3-way categorical scale (see below)
+    app.css            # chrome + overlay styles
+public/data/nodes.json # the seed data — fetched at runtime, swappable with no rebuild
+```
+
+## Design-system consumption (rules)
+
+- **No hardcoded color anywhere in `src`.** The token-coverage checker (`npm run check:coverage`
+  from root) rejects hex / rgba / `color-mix` in `src`. The draw layer reads color at runtime
+  from CSS custom properties via `runtimeTokens.ts` and composes any alpha as a runtime-built
+  rgba string (never a literal). `color-mix` belongs in `@cucusa/tokens`, not here.
+- **The 3-way categorical scale (DMN / FPCN / SN)** is derived in `styles/viz-tokens.css` from
+  three existing brand ramps — **DMN → sand (warm)**, **FPCN → sky (cool)**, **SN → magenta
+  (bright accent)** — using only `var(--color-*)` references. No new raw colors.
+- **Network is never encoded by color alone** — also by vertical band position (DMN top, SN
+  middle, FPCN bottom) + band labels + the legend, so it survives grayscale / color-blindness.
+- **Dark-only, locked** (glow-on-dark is the hero; the DS ships a single dark `:root`). Tokens
+  are still read at runtime, so it would re-theme for free if a light theme is ever added.
+
+## Motion & interaction
+
+- Oscillation is **noise-driven** (not a sine) and loops seamlessly (`CROSSOVER_U` is the both-lit
+  still). Salience **leads** the switch (driven by the near-future phase). Activation drives
+  brightness + scale + force cohesion + callosal particle surges — nothing decorative.
+- The rate slider changes motion **quality** (rigid → flow → noise), not just speed; the output
+  meter peaks at balance (inverted-U).
+- v1 flows: **be-the-brain slider** (primary), **inspect a node**, **self-map**. State model:
+  rate persists across interactions; self-map tilt and the rate slider are mutually exclusive
+  (grabbing the slider dismisses the annotation); inspect coexists with everything; ~20 s idle
+  eases back to ambient watch. Reduced motion rests on the both-lit crossover still + a Play control.
+
+## Data model
+
+Swap `public/data/nodes.json` to change the viz with no code edits. Each node: `id`, `label`,
+`network` (DMN|FPCN|SN), `hemi` (L|R|M), `degree` [0,1], optional `richClub` / `switcher` / `role`.
+Edges: `source`, `target`, `weight` [0,1], `type` (functional|callosal). See `viz/model/types.ts`.
+
+## Conventions
+
+- Function components + hooks only. Match workspace ESLint/Prettier (single quotes, no semi,
+  trailing commas, 100 cols). No test runner, no new tooling.
+- The rAF loop mutates SVG attributes imperatively via refs (33 nodes / 51 edges) — do **not**
+  re-render React per frame. Per-frame state goes through refs, not `setState`.

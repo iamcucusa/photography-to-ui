@@ -2,7 +2,7 @@
   "name": "cucusa",
   "private": true,
   "type": "module",
-  "workspaces": ["tokens", "photography-to-ui", "docs"],
+  "workspaces": ["tokens", "photography-to-ui", "docs", "switching-brain"],
   "scripts": {
     "tokens": "npm run build -w @cucusa/tokens",
     "validate": "npm run validate -w @cucusa/tokens",
@@ -11,14 +11,15 @@
     "audit:full": "bash docs/scripts/audit-full.sh",
     "dev": "npm run dev -w photography-to-ui",
     "dev:docs": "npm run dev -w @cucusa/docs",
+    "dev:brain": "npm run dev -w @cucusa/switching-brain",
     "build": "npm run build -w photography-to-ui",
-    "build:all": "npm run tokens && npm run build -w photography-to-ui && npm run build -w @cucusa/docs",
+    "build:all": "npm run tokens && npm run build -w photography-to-ui && npm run build -w @cucusa/docs && npm run build -w @cucusa/switching-brain",
     "check:staleness": "node -e \"const{execSync}=require('child_process');const changed=execSync('git diff --name-only HEAD -- tokens/').toString().trim();if(!changed){console.log('No token files changed — skipping staleness check');process.exit(0)}console.log('Token files changed — checking staleness...');execSync('npm run tokens',{stdio:'inherit'});try{execSync('git diff --exit-code tokens/dist/tokens.css',{stdio:'inherit'})}catch{console.error('tokens/dist/tokens.css is stale — run: npm run tokens');process.exit(1)}\"",
-    "check": "npm run validate && npm run check:staleness && npm run check:coverage -- --full && npm run check -w photography-to-ui && npm run check -w @cucusa/docs && eslint . && prettier --check \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
+    "check": "npm run validate && npm run check:staleness && npm run check:coverage -- --full && npm run check -w photography-to-ui && npm run check -w @cucusa/docs && npm run check -w @cucusa/switching-brain && eslint . && prettier --check \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"switching-brain/src/**/*.{ts,tsx,css}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\""
+    "format": "prettier --write \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"switching-brain/src/**/*.{ts,tsx,css}\"",
+    "format:check": "prettier --check \"photography-to-ui/src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"switching-brain/src/**/*.{ts,tsx,css}\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

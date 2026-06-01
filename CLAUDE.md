@@ -23,7 +23,11 @@ cucusa (workspace root — orchestration only)
 │     Visual token reference, design system health page.
 │     See docs/CLAUDE.md
 │
-└── (future consumers)     content-creation, landing pages, blog
+├── switching-brain/       @cucusa/switching-brain — "The Switching Brain" data viz
+│     Experimentation + content-creation consumer. SVG/d3-force brain network.
+│     Carries its own viz deps (d3-force). See switching-brain/CLAUDE.md
+│
+└── (future consumers)     landing pages, blog
 ```
 
 ### Active goals
@@ -66,8 +70,9 @@ npm run validate     # Check DTCG integrity — structure, descriptions, refs, e
 npm run audit        # Re-scan codebase, update docs/src/audit-data.json
 npm run dev          # Start photography-to-ui dev server (port 5173)
 npm run dev:docs     # Start docs consumer dev server (port 5174)
+npm run dev:brain    # Start switching-brain dev server (port 5175)
 npm run build        # Build photography-to-ui only
-npm run build:all    # tokens → photography-to-ui → docs (full pipeline)
+npm run build:all    # tokens → photography-to-ui → docs → switching-brain (full pipeline)
 npm run check        # tsc (all consumers) + eslint + prettier
 npm run lint         # ESLint only
 npm run format       # Prettier write
@@ -95,6 +100,11 @@ docs/                # @cucusa/docs — token catalog (see docs/CLAUDE.md)
   src/App.tsx        # Token reference + audit page
   scripts/audit.mjs  # Automated scanner
   vite.config.ts     # Builds to dist/docs/
+switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (see switching-brain/CLAUDE.md)
+  src/viz/           # Framework-agnostic core: noise, activation, d3-force layout, SVG draw layer
+  src/components/    # DS-styled chrome: RateControl, SelfMap, InspectCard, Legend
+  public/data/nodes.json  # Seed data — fetched at runtime, swappable with no rebuild
+  vite.config.ts     # Builds to dist/switching-brain/
 ```
 
 ## How to add a new consumer
