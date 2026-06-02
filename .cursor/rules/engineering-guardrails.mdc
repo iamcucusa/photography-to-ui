@@ -20,12 +20,8 @@ Code must be:
 
 ## Do NOT Introduce
 
-- Storybook
-- token automation
 - theming systems
-- monorepos
 - heavy abstractions
-- experimental libraries
 
 ## Accessibility (Non-Negotiable)
 

@@ -70,7 +70,7 @@ If something is missing, extend *this* rule deliberately.
 - Palette Name: Cucusa Frost
 - Purpose: Pure surfaces for photography-based brand aesthetic
 - Dark Mode: Darker shades (Frost-1, Frost-2) for surfaces and backgrounds
-- Light Mode: Lighter shades (Frost-4, Frost-5) for canvas and clean surfaces
+- Light Mode (pending): Lighter shades (Frost-4, Frost-5) for canvas and clean surfaces
 
 **SAND — Warm Neutrals**
 - From Madrid photos
@@ -78,21 +78,21 @@ If something is missing, extend *this* rule deliberately.
 - Palette Name: Cucusa Sand
 - Purpose: Warm surfaces, grounding elements
 - Dark Mode: Darker shades (Sand-1, Sand-2) for subtle warmth in backgrounds
-- Light Mode: Lighter shades (Sand-4, Sand-5) for warm surface backgrounds
+- Light Mode (pending): Lighter shades (Sand-4, Sand-5) for warm surface backgrounds
 
 **SKY — Cool, Calm Blues**
 - Extracted from snow/forest photos
 - Palette Name: Cucusa Sky
 - Purpose: Backgrounds, calm surfaces, balancing magenta
 - Dark Mode: Darkest shades (Sky-1, Sky-2) for canvas and primary backgrounds
-- Light Mode: Lighter shades (Sky-4, Sky-5) for calm, cool backgrounds
+- Light Mode (pending): Lighter shades (Sky-4, Sky-5) for calm, cool backgrounds
 
 **INK — Neutrals & Text System**
 - Clarity, structure, engineering layer
 - Palette Name: Cucusa Ink
 - Purpose: Text, foregrounds, shadows, contrast surfaces
 - Dark Mode: Lighter shades (Ink-4, Ink-5) for text on dark backgrounds
-- Light Mode: Darker shades (Ink-1, Ink-2) for text on light backgrounds
+- Light Mode (pending): Darker shades (Ink-1, Ink-2) for text on light backgrounds
 
 ### 1.5 Mode-Specific Semantics
 
@@ -102,11 +102,12 @@ If something is missing, extend *this* rule deliberately.
 - Text: Ink-5 (lightest) for primary, Ink-4 for secondary, Ink-3 for muted
 - Borders: White with opacity (12% subtle, 24% strong)
 
-**Light Mode (when implemented):**
+**Light Mode (pending — not yet implemented):**
 - Canvas: Frost-5 or Sky-5 (lightest)
 - Surfaces: Sand-5 or Frost-4 (warm/clean light)
 - Text: Ink-1 (darkest) for primary, Ink-2 for secondary, Ink-3 for muted
 - Borders: Black with opacity (8% subtle, 14% strong)
+- Note: These are directional values, not finalised. Light mode tokens will be defined during the design system evaluation.
 
 ---
 

@@ -132,9 +132,12 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
 
 ## Tooling decisions
 
+### Under evaluation
+
+- **Storybook**: Being assessed as part of the design system evaluation — weighing value for human + agentic engineering workflows against overhead and alternatives.
+
 ### Evaluated and rejected
 
-- **Storybook**: Overhead exceeds value. Interactive component explorers in photography-to-ui serve the same purpose.
 - **Chromatic / Percy**: Not justified until multiple consumers share components.
 - **Tokens Studio / Figma Tokens**: Code-first by design. Figma is not in the workflow.
 
