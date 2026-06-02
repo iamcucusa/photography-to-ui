@@ -55,7 +55,7 @@ cucusa (workspace root — orchestration only)
 ## Stack
 
 - React 19, TypeScript 6 (strict), Vite 8
-- npm workspaces (3 packages: tokens, photography-to-ui, docs)
+- npm workspaces (4 packages: tokens, photography-to-ui, docs, switching-brain)
 - Plain CSS with custom properties (no CSS modules, no Tailwind, no CSS-in-JS)
 - JetBrains Mono as the sole typeface (monospace everywhere)
 - Style Dictionary 4 (DTCG token pipeline)
