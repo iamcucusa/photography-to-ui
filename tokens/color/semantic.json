@@ -25,6 +25,14 @@
       "muted": {
         "$value": "{color.ink.3}",
         "$description": "Low-emphasis text"
+      },
+      "accent": {
+        "$value": "{color.magenta.4}",
+        "$description": "Accent-colored text — AA on dark surfaces (5.8:1 on canvas). Use this for text, never magenta-2 (3.4:1, fills/rings only)"
+      },
+      "on-accent": {
+        "$value": "{color.frost.5}",
+        "$description": "Text on accent fills — 4.8:1 on magenta-2. Replaces hardcoded white"
       }
     },
 

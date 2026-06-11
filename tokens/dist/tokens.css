@@ -111,6 +111,8 @@
   --color-text-primary: var(--color-ink-5); /** High-emphasis text */
   --color-text-secondary: var(--color-ink-4); /** Medium-emphasis text */
   --color-text-muted: var(--color-ink-3); /** Low-emphasis text */
+  --color-text-accent: var(--color-magenta-4); /** Accent-colored text — AA on dark surfaces (5.8:1 on canvas). Use this for text, never magenta-2 (3.4:1, fills/rings only) */
+  --color-text-on-accent: var(--color-frost-5); /** Text on accent fills — 4.8:1 on magenta-2. Replaces hardcoded white */
   --color-accent: var(--color-magenta-2); /** Primary accent color */
   --divider-subtle: 1px solid var(--color-border-subtle); /** Low-contrast separator — card borders, section dividers */
   --divider-strong: 1px solid var(--color-border-strong); /** High-contrast separator — active borders, emphasis */
