@@ -1,8 +1,11 @@
 import { useState, useCallback } from 'react'
 import { AuditPage } from './AuditPage'
+import { useTheme } from './useTheme'
 import primitives from '@tokens/color/primitives.json'
 import semantic from '@tokens/color/semantic.json'
 import derived from '@tokens/color/derived.json'
+import semanticLight from '@tokens/modes/light/semantic.json'
+import derivedLight from '@tokens/modes/light/derived.json'
 import typography from '@tokens/typography.json'
 import spacing from '@tokens/spacing.json'
 import shape from '@tokens/shape.json'
@@ -37,9 +40,19 @@ function flattenTokens(
   return results
 }
 
+// Light-mode overrides keyed by CSS variable name — used to label tokens
+// that flip and show both bindings in the catalog.
+const lightOverrides = new Map(
+  [
+    ...flattenTokens(semanticLight.color as Record<string, unknown>, 'color'),
+    ...flattenTokens(derivedLight.color as Record<string, unknown>, 'color'),
+  ].map(({ name, token }) => [name, token]),
+)
+
 function App() {
   const [activeTab, setActiveTab] = useState<'tokens' | 'audit'>('tokens')
   const [toast, setToast] = useState('')
+  const { mode, toggle } = useTheme()
 
   const copy = useCallback((text: string) => {
     navigator.clipboard.writeText(`var(${text})`)
@@ -75,6 +88,14 @@ function App() {
           Cucusa Tokens<span style={{ color: 'var(--color-accent)' }}>_</span>
         </h1>
         <p className="docs-subtitle">Design token reference and system health dashboard.</p>
+        <button
+          className="mode-toggle"
+          onClick={toggle}
+          aria-pressed={mode === 'light'}
+          aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
+        >
+          mode: {mode}
+        </button>
         <div className="docs-tabs" role="tablist" aria-label="Page sections">
           <button
             className={`docs-tab ${activeTab === 'tokens' ? 'docs-tab--active' : ''}`}
@@ -180,7 +201,11 @@ function App() {
                     >
                       {name}
                     </span>
-                    <span className="color-value">{String(token.$value)}</span>
+                    <span className="color-value">
+                      {String(token.$value)}
+                      {lightOverrides.has(name) &&
+                        ` · light: ${String(lightOverrides.get(name)?.$value)}`}
+                    </span>
                     {token.$description && (
                       <span className="color-description">{token.$description}</span>
                     )}
@@ -223,6 +248,11 @@ function App() {
                       >
                         {name}
                       </span>
+                      {lightOverrides.has(name) && (
+                        <span className="color-value">
+                          light: {String(lightOverrides.get(name)?.$value)}
+                        </span>
+                      )}
                       {token.$description && (
                         <span className="color-description">{token.$description}</span>
                       )}

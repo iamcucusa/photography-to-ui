@@ -8,7 +8,7 @@
     "validate": "npm run validate -w @cucusa/tokens",
     "check:coverage": "node tokens/check-coverage.mjs",
     "check:contrast": "node tokens/check-contrast.mjs",
-    "audit": "node docs/scripts/audit.mjs",
+    "audit": "node docs/scripts/audit.mjs && node tokens/check-contrast.mjs --report docs/src/contrast-data.json",
     "audit:full": "bash docs/scripts/audit-full.sh",
     "dev": "npm run dev -w photography-to-ui",
     "dev:docs": "npm run dev -w @cucusa/docs",

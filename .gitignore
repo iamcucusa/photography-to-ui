@@ -30,3 +30,4 @@ master web jpegs/
 source/
 
 .claude/settings.local.json
+docs/ai-scaffolding-report.md

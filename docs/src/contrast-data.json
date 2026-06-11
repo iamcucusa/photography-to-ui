@@ -1,0 +1,401 @@
+{
+  "generated": "check-contrast.mjs",
+  "checks": [
+    {
+      "mode": "dark",
+      "label": "primary on canvas",
+      "fg": "color.text.primary",
+      "bg": "color.bg.canvas",
+      "ratio": 13.94,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "secondary on canvas",
+      "fg": "color.text.secondary",
+      "bg": "color.bg.canvas",
+      "ratio": 8.3,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "muted on canvas",
+      "fg": "color.text.muted",
+      "bg": "color.bg.canvas",
+      "ratio": 5.17,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "accent on canvas",
+      "fg": "color.text.accent",
+      "bg": "color.bg.canvas",
+      "ratio": 5.8,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "cool on canvas",
+      "fg": "color.text.cool",
+      "bg": "color.bg.canvas",
+      "ratio": 8.16,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "primary on surface",
+      "fg": "color.text.primary",
+      "bg": "color.bg.surface",
+      "ratio": 13.62,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "secondary on surface",
+      "fg": "color.text.secondary",
+      "bg": "color.bg.surface",
+      "ratio": 8.11,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "muted on surface",
+      "fg": "color.text.muted",
+      "bg": "color.bg.surface",
+      "ratio": 5.06,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "accent on surface",
+      "fg": "color.text.accent",
+      "bg": "color.bg.surface",
+      "ratio": 5.67,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "cool on surface",
+      "fg": "color.text.cool",
+      "bg": "color.bg.surface",
+      "ratio": 7.97,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "primary on elevated",
+      "fg": "color.text.primary",
+      "bg": "color.bg.elevated",
+      "ratio": 13.81,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "secondary on elevated",
+      "fg": "color.text.secondary",
+      "bg": "color.bg.elevated",
+      "ratio": 8.22,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "muted on elevated",
+      "fg": "color.text.muted",
+      "bg": "color.bg.elevated",
+      "ratio": 5.13,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "accent on elevated",
+      "fg": "color.text.accent",
+      "bg": "color.bg.elevated",
+      "ratio": 5.75,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "cool on elevated",
+      "fg": "color.text.cool",
+      "bg": "color.bg.elevated",
+      "ratio": 8.08,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "on-accent on accent fill",
+      "fg": "color.text.on-accent",
+      "bg": "color.accent",
+      "ratio": 4.77,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "border-accent vs canvas",
+      "fg": "color.border-accent",
+      "bg": "color.bg.canvas",
+      "ratio": 3.38,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "border-accent-hover vs canvas",
+      "fg": "color.border-accent-hover",
+      "bg": "color.bg.canvas",
+      "ratio": 3.06,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "border-accent-strong vs canvas",
+      "fg": "color.border-accent-strong",
+      "bg": "color.bg.canvas",
+      "ratio": 4.08,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "border-accent-highlight vs canvas",
+      "fg": "color.border-accent-highlight",
+      "bg": "color.bg.canvas",
+      "ratio": 3.71,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "focus-ring vs canvas",
+      "fg": "focus-ring.color",
+      "bg": "color.bg.canvas",
+      "ratio": 3.41,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "focus-ring vs surface",
+      "fg": "focus-ring.color",
+      "bg": "color.bg.surface",
+      "ratio": 3.34,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "primary on canvas",
+      "fg": "color.text.primary",
+      "bg": "color.bg.canvas",
+      "ratio": 16.29,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "secondary on canvas",
+      "fg": "color.text.secondary",
+      "bg": "color.bg.canvas",
+      "ratio": 8.29,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "muted on canvas",
+      "fg": "color.text.muted",
+      "bg": "color.bg.canvas",
+      "ratio": 4.94,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "accent on canvas",
+      "fg": "color.text.accent",
+      "bg": "color.bg.canvas",
+      "ratio": 6.35,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "cool on canvas",
+      "fg": "color.text.cool",
+      "bg": "color.bg.canvas",
+      "ratio": 7.74,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "primary on surface",
+      "fg": "color.text.primary",
+      "bg": "color.bg.surface",
+      "ratio": 15.26,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "secondary on surface",
+      "fg": "color.text.secondary",
+      "bg": "color.bg.surface",
+      "ratio": 7.77,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "muted on surface",
+      "fg": "color.text.muted",
+      "bg": "color.bg.surface",
+      "ratio": 4.63,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "accent on surface",
+      "fg": "color.text.accent",
+      "bg": "color.bg.surface",
+      "ratio": 5.95,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "cool on surface",
+      "fg": "color.text.cool",
+      "bg": "color.bg.surface",
+      "ratio": 7.25,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "primary on elevated",
+      "fg": "color.text.primary",
+      "bg": "color.bg.elevated",
+      "ratio": 15.77,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "secondary on elevated",
+      "fg": "color.text.secondary",
+      "bg": "color.bg.elevated",
+      "ratio": 8.03,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "muted on elevated",
+      "fg": "color.text.muted",
+      "bg": "color.bg.elevated",
+      "ratio": 4.79,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "accent on elevated",
+      "fg": "color.text.accent",
+      "bg": "color.bg.elevated",
+      "ratio": 6.15,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "cool on elevated",
+      "fg": "color.text.cool",
+      "bg": "color.bg.elevated",
+      "ratio": 7.49,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "on-accent on accent fill",
+      "fg": "color.text.on-accent",
+      "bg": "color.accent",
+      "ratio": 4.77,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "border-accent vs canvas",
+      "fg": "color.border-accent",
+      "bg": "color.bg.canvas",
+      "ratio": 3.48,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "border-accent-hover vs canvas",
+      "fg": "color.border-accent-hover",
+      "bg": "color.bg.canvas",
+      "ratio": 3.22,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "border-accent-strong vs canvas",
+      "fg": "color.border-accent-strong",
+      "bg": "color.bg.canvas",
+      "ratio": 4,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "border-accent-highlight vs canvas",
+      "fg": "color.border-accent-highlight",
+      "bg": "color.bg.canvas",
+      "ratio": 3.75,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "focus-ring vs canvas",
+      "fg": "focus-ring.color",
+      "bg": "color.bg.canvas",
+      "ratio": 4.77,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "focus-ring vs surface",
+      "fg": "focus-ring.color",
+      "bg": "color.bg.surface",
+      "ratio": 4.47,
+      "min": 3,
+      "pass": true
+    }
+  ]
+}
