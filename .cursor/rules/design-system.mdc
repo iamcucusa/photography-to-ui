@@ -70,7 +70,7 @@ If something is missing, extend *this* rule deliberately.
 - Palette Name: Cucusa Frost
 - Purpose: Pure surfaces for photography-based brand aesthetic
 - Dark Mode: Darker shades (Frost-1, Frost-2) for surfaces and backgrounds
-- Light Mode (pending): Lighter shades (Frost-4, Frost-5) for canvas and clean surfaces
+- Light Mode: Frost-5 canvas, clean light surfaces
 
 **SAND — Warm Neutrals**
 - From Madrid photos
@@ -78,21 +78,21 @@ If something is missing, extend *this* rule deliberately.
 - Palette Name: Cucusa Sand
 - Purpose: Warm surfaces, grounding elements
 - Dark Mode: Darker shades (Sand-1, Sand-2) for subtle warmth in backgrounds
-- Light Mode (pending): Lighter shades (Sand-4, Sand-5) for warm surface backgrounds
+- Light Mode: Sand-5 surfaces — warm panel backgrounds
 
 **SKY — Cool, Calm Blues**
 - Extracted from snow/forest photos
 - Palette Name: Cucusa Sky
 - Purpose: Backgrounds, calm surfaces, balancing magenta
 - Dark Mode: Darkest shades (Sky-1, Sky-2) for canvas and primary backgrounds
-- Light Mode (pending): Lighter shades (Sky-4, Sky-5) for calm, cool backgrounds
+- Light Mode: Sky-2 for cool text, Sky-4/5 in light gradients
 
 **INK — Neutrals & Text System**
 - Clarity, structure, engineering layer
 - Palette Name: Cucusa Ink
 - Purpose: Text, foregrounds, shadows, contrast surfaces
 - Dark Mode: Lighter shades (Ink-4, Ink-5) for text on dark backgrounds
-- Light Mode (pending): Darker shades (Ink-1, Ink-2) for text on light backgrounds
+- Light Mode: Ink-1 primary, Ink-2 secondary text
 
 ### 1.5 Mode-Specific Semantics
 
@@ -102,12 +102,16 @@ If something is missing, extend *this* rule deliberately.
 - Text: Ink-5 (lightest) for primary, Ink-4 for secondary, Ink-3 for muted
 - Borders: White with opacity (12% subtle, 24% strong)
 
-**Light Mode (pending — not yet implemented):**
-- Canvas: Frost-5 or Sky-5 (lightest)
-- Surfaces: Sand-5 or Frost-4 (warm/clean light)
-- Text: Ink-1 (darkest) for primary, Ink-2 for secondary, Ink-3 for muted
-- Borders: Black with opacity (8% subtle, 14% strong)
-- Note: These are directional values, not finalised. Light mode tokens will be defined during the design system evaluation.
+**Light Mode (shipped — sparse overrides in tokens/modes/light/):**
+- Canvas: Frost-5 #f7f7fb (Frost is the thinking space)
+- Surfaces: Sand-5 #f5efea (Sand warms the panels)
+- Text: Ink-1 primary (16.3:1), Ink-2 secondary (8.3:1), Frost-2 muted (4.9:1 — Ink-3 fails on light)
+- Accent text: Magenta-1 (the deep stop, 6.4:1) — mirrors dark mode's Magenta-4
+- Cool text: Sky-2 (7.7:1) — mirrors dark mode's Sky-4
+- Borders: accent ladder rebuilt on Magenta-2 at 65/70/75/80% into canvas, all ≥3:1
+- Glows at half strength; shadows soften (the glow idiom is dark-only)
+- Mode mechanism: `[data-theme='light']` on `<html>`; dark is the default `:root`
+- Enforced by `npm run check:contrast` — 44 checks across both modes in CI
 
 ---
 

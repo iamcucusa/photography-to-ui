@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-11T13:12:28.568Z",
+  "timestamp": "2026-06-11T15:33:41.252Z",
   "tokenSource": {
-    "totalTokens": 116,
-    "totalDescribed": 123,
-    "descriptionCoverage": 106,
+    "totalTokens": 146,
+    "totalDescribed": 153,
+    "descriptionCoverage": 105,
     "files": [
       {
         "file": "color/derived.json",
@@ -19,14 +19,32 @@
       },
       {
         "file": "color/semantic.json",
-        "tokens": 8,
-        "described": 8,
+        "tokens": 9,
+        "described": 9,
         "coverage": 100
       },
       {
         "file": "elevation.json",
         "tokens": 5,
         "described": 5,
+        "coverage": 100
+      },
+      {
+        "file": "modes/light/derived.json",
+        "tokens": 17,
+        "described": 17,
+        "coverage": 100
+      },
+      {
+        "file": "modes/light/elevation.json",
+        "tokens": 5,
+        "described": 5,
+        "coverage": 100
+      },
+      {
+        "file": "modes/light/semantic.json",
+        "tokens": 7,
+        "described": 7,
         "coverage": 100
       },
       {
@@ -63,12 +81,12 @@
   },
   "cssAnalysis": {
     "tokenUsage": {
-      "colors": 275,
-      "spacing": 222,
-      "typography": 80,
-      "font": 92,
-      "motion": 129,
-      "shape": 126,
+      "colors": 299,
+      "spacing": 237,
+      "typography": 86,
+      "font": 99,
+      "motion": 133,
+      "shape": 133,
       "shadow": 6
     },
     "hardcoded": {
@@ -126,7 +144,7 @@
       }
     ],
     "layoutConstraints": [],
-    "totalTokenReferences": 930,
+    "totalTokenReferences": 993,
     "filesScanned": [
       "photography-to-ui/src/components/comingSoon.css",
       "photography-to-ui/src/components/photographyContextInsight.css",
@@ -142,14 +160,26 @@
   "accessibility": {
     "components": [
       {
-        "file": "photography-to-ui/src/components/Colors.tsx",
+        "file": "photography-to-ui/src/App.tsx",
         "interactive": 1,
         "buttons": 1,
         "inputs": 0,
         "links": 0,
-        "ariaTotal": 4,
-        "ariaLabels": 2,
+        "ariaTotal": 2,
+        "ariaLabels": 1,
         "ariaPressed": 1,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "photography-to-ui/src/components/Colors.tsx",
+        "interactive": 2,
+        "buttons": 2,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 7,
+        "ariaLabels": 3,
+        "ariaPressed": 2,
         "ariaExpanded": 0,
         "roles": 1
       },
@@ -298,8 +328,8 @@
         "roles": 0
       }
     ],
-    "totalAriaAttributes": 38,
-    "totalInteractiveElements": 24
+    "totalAriaAttributes": 43,
+    "totalInteractiveElements": 26
   },
   "stateCoverage": [
     {
@@ -339,7 +369,7 @@
     },
     {
       "file": "photography-to-ui/src/styles/app.css",
-      "hover": 31,
+      "hover": 32,
       "focus": 14,
       "active": 2,
       "disabled": 3
@@ -354,7 +384,7 @@
   ],
   "score": 100,
   "scores": {
-    "tokenCoverage": 106,
+    "tokenCoverage": 105,
     "zeroHardcodedColors": 100,
     "zeroInlineColorMix": 100,
     "ariaPresence": 100

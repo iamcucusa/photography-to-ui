@@ -50,6 +50,7 @@ cucusa (workspace root — orchestration only)
 - **Layout constraint tokens**: 5 hardcoded layout values (280–1600px) are playground-specific art direction. Don't tokenize unless a second consumer needs them.
 - **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
 - **Token staleness check**: Implemented — `npm run check` regenerates tokens and diffs against committed file. CI rejects stale output.
+- **Light mode**: Implemented — sparse DTCG overrides in `tokens/modes/light/`, toggle in playground + docs, switching-brain pinned dark. See `tokens/CLAUDE.md` Modes section.
 - **Token coverage threshold**: Implemented — `npm run check:coverage` scans all consumers automatically via workspace discovery. CI rejects hardcoded hex/rgba/color-mix.
 
 ## Stack
@@ -58,7 +59,7 @@ cucusa (workspace root — orchestration only)
 - npm workspaces (4 packages: tokens, photography-to-ui, docs, switching-brain)
 - Plain CSS with custom properties (no CSS modules, no Tailwind, no CSS-in-JS)
 - JetBrains Mono as the sole typeface (monospace everywhere)
-- Style Dictionary 4 (DTCG token pipeline)
+- Style Dictionary 4 (DTCG token pipeline; dark `:root` default + sparse light overrides under `[data-theme='light']`)
 - ESLint 9 (flat config) + Prettier for formatting
 - No test runner. No Storybook.
 
@@ -66,8 +67,9 @@ cucusa (workspace root — orchestration only)
 
 ```
 npm run tokens       # Regenerate tokens/dist/tokens.css from tokens/*.json
-npm run validate     # Check DTCG integrity — structure, descriptions, refs, extensions
-npm run audit        # Re-scan codebase, update docs/src/audit-data.json
+npm run validate     # Check DTCG integrity — structure, descriptions, refs, extensions, mode parity
+npm run check:contrast # Contrast contract — 44 WCAG checks across dark + light (also in npm run check)
+npm run audit        # Re-scan codebase, update audit-data.json + contrast-data.json
 npm run dev          # Start photography-to-ui dev server (port 5173)
 npm run dev:docs     # Start docs consumer dev server (port 5174)
 npm run dev:brain    # Start switching-brain dev server (port 5175)
@@ -147,6 +149,7 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
 - **Claude Preview MCP**: Visual verification during development.
 - **Claude Code + CLAUDE.md**: AI-scaffolding layer. Per-consumer CLAUDE.md files encode domain-specific conventions.
 - **Audit scanner**: `npm run audit` scans CSS for token coverage, hardcoded values, accessibility. `/design-system audit` skill writes strategic insights.
+- **Contrast checker**: `check-contrast.mjs` enforces the contrast contract per mode in `npm run check` and CI — token edits cannot silently break either mode.
 
 ## ESLint/Prettier notes
 

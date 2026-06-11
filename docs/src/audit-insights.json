@@ -1,7 +1,7 @@
 {
   "lastReviewed": "2026-06-11",
   "reviewer": "Claude Fable 5",
-  "summary": "116 tokens with 100% description coverage. Zero hardcoded colors, rgba, color-mix, or named colors outside tokens.css. Dark-mode contrast pass complete: all text roles AA (text-muted 5.2:1, was 4.05), accent borders ≥3:1 per WCAG 1.4.11, magenta ramp now monotonic dark→light like every other family. New semantic roles text.accent and text.on-accent give accent-colored text an AA-compliant home.",
+  "summary": "117 tokens, 100% description coverage, zero hardcoded colors. Light mode shipped: sparse DTCG overrides (29 tokens across semantic/derived/elevation), dark :root default, [data-theme='light'] opt-in. The contrast contract is now executable — 44 WCAG checks across both modes run in npm run check and CI. Playground and docs carry the toggle; switching-brain is pinned dark by design.",
   "priorities": [
     {
       "priority": 1,
@@ -25,31 +25,40 @@
       "priority": 4,
       "title": "Contrast over photography is unguaranteed",
       "status": "open",
-      "detail": "The playground renders text over a photo behind a 0.78-opacity gradient; translucent panels let ~15% bleed through. Token math passes on solid surfaces but the warm gradient region (~#3c3228) drops some pairings below AA. Mitigation options: raise panel opacity, or keep body text inside solid-surface cards."
+      "detail": "The playground renders text over a photo behind a 0.78-opacity gradient; translucent panels let ~15% bleed through. Both modes pass on solid surfaces, but the photo region is unverifiable by token math. Mitigation options: raise panel opacity, or keep body text inside solid-surface cards."
     },
     {
       "priority": 5,
+      "title": "Light-mode visual regression baseline",
+      "status": "open",
+      "detail": "Light mode doubles the visual surface. Verification is per-session via browser screenshots; a Playwright baseline (deferred earlier) would now cover 2x the states and is worth re-costing."
+    },
+    {
+      "priority": 6,
       "title": "Desaturated dark-mode accent variant",
       "status": "deferred",
-      "detail": "magenta-2 (#d60076) is 100% saturated and can vibrate against the blue canvas. The Material/HIG pattern is a slightly desaturated accent for dark themes. Taste-driven brand decision — explore separately from the accessibility pass."
+      "detail": "magenta-2 (#d60076) is 100% saturated and can vibrate against the blue canvas. The Material/HIG pattern is a slightly desaturated accent for dark themes. Taste-driven brand decision — explore separately."
+    },
+    {
+      "priority": 7,
+      "title": "Switching-brain paper mode",
+      "status": "deferred",
+      "detail": "The brain is pinned dark (glow-on-dark is the piece). A light variant means re-art-directing glow to shadow — a creative exploration, not a toggle."
     }
   ],
   "strengths": [
-    "Zero hardcoded colors in component CSS — complete tokenization (named colors now scanned too)",
-    "All text roles AA on canvas, surface, and elevated (contrast contract documented in tokens/CLAUDE.md)",
-    "Accent borders ≥3:1 vs canvas — interactive boundaries meet WCAG 1.4.11",
-    "All five color ramps monotonic dark→light by index — predictable for humans and agents",
-    "Zero inline color-mix() outside tokens.css",
-    "Zero hardcoded durations or easings — full motion tokenization",
+    "Light mode as sparse overrides — 29 tokens flip, 15 derived tokens re-derive automatically via semantic var() references",
+    "Executable contrast contract: 44 checks per run, both modes, in CI — closed the drift risk",
+    "Deep-stop mirroring: light text.accent = magenta-1 and text.cool = sky-2, the structural mirror of dark's magenta-4/sky-4 — only possible because all five ramps are monotonic",
+    "Mode parity validated: overrides must match base paths, must-flip list enforced",
+    "Zero hardcoded colors in component CSS — including named colors (white/black scanned)",
+    "All text roles AA+ on every surface in both modes; interactive borders ≥3:1 in both modes",
+    "Catalog dogfoods the toggle and shows both bindings per flipping token",
     "100% token description coverage — every $value has a $description",
-    "BEM-consistent naming across 130 CSS classes",
-    "ARIA coverage on all interactive insight explorers",
     "Self-contained token package with fonts — ready for extraction",
-    "Pure workspace orchestrator — root has no app dependencies",
-    "tokens/dist/tokens.css committed to git — always available after clone, no build step needed"
+    "tokens/dist committed to git — both mode files available after clone, no build step"
   ],
   "risks": [
-    "No automated visual regression baseline — verification is per-session via Claude Preview",
-    "No automated contrast check in CI — the WCAG matrix was run manually for this pass; values could drift in future token edits"
+    "No automated visual regression baseline — and light mode doubled the visual surface (tracked as priority 5)"
   ]
 }
