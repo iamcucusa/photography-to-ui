@@ -146,29 +146,53 @@ StyleDictionary.registerTransform({
 })
 
 // ── Build Config ───────────────────────────────────────────────────
+//
+// Two builds share one transform chain:
+//   dark  — base sources only → dist/tokens.css      (:root, the default)
+//   light — base + modes/light sparse overrides → dist/tokens.light.css
+//           emitted under [data-theme='light'], filtered to ONLY the
+//           override tokens so the light file stays sparse. Tokens whose
+//           color-mix() references semantic vars re-derive automatically
+//           in light mode via the cascade — they are not re-emitted.
 
-const sd = new StyleDictionary({
+const TRANSFORMS = [
+  // 1. SD4 built-ins — token path and CSS variable naming
+  'attribute/cti',
+  'name/kebab',
+  // 2. Platform override — must be before type-specific transforms
+  'cucusa/platform-css',
+  // 3. Structured color derivation
+  'cucusa/color-mix',
+  // 4–8. Type-specific transforms (all guarded against platform overrides)
+  'cucusa/shadow-css',
+  'cucusa/border-css',
+  'cucusa/duration-css',
+  'cucusa/easing-css',
+  'cucusa/font-family-css',
+  // 9. SD4 built-in color format — last so custom transforms take precedence
+  'color/css',
+]
+
+// Base sources exclude modes/ — mode overrides reuse the same token paths
+// and would collide inside a single build.
+const BASE_SOURCES = [
+  // Alphabetical by path — matches the original `./**/*.json` glob order so
+  // the dark output stays diff-stable.
+  resolve(__dirname, './color/*.json'),
+  resolve(__dirname, './elevation.json'),
+  resolve(__dirname, './motion.json'),
+  resolve(__dirname, './shape.json'),
+  resolve(__dirname, './sizing.json'),
+  resolve(__dirname, './spacing.json'),
+  resolve(__dirname, './typography.json'),
+]
+
+const darkBuild = new StyleDictionary({
   log: { verbosity: 'default', warnings: 'disabled' },
-  source: [resolve(__dirname, './**/*.json')],
+  source: BASE_SOURCES,
   platforms: {
     css: {
-      transforms: [
-        // 1. SD4 built-ins — token path and CSS variable naming
-        'attribute/cti',
-        'name/kebab',
-        // 2. Platform override — must be before type-specific transforms
-        'cucusa/platform-css',
-        // 3. Structured color derivation
-        'cucusa/color-mix',
-        // 4–8. Type-specific transforms (all guarded against platform overrides)
-        'cucusa/shadow-css',
-        'cucusa/border-css',
-        'cucusa/duration-css',
-        'cucusa/easing-css',
-        'cucusa/font-family-css',
-        // 9. SD4 built-in color format — last so custom transforms take precedence
-        'color/css',
-      ],
+      transforms: TRANSFORMS,
       buildPath: resolve(__dirname, 'dist') + '/',
       options: {
         usesDtcg: true,
@@ -186,4 +210,30 @@ const sd = new StyleDictionary({
   },
 })
 
-await sd.buildAllPlatforms()
+const lightBuild = new StyleDictionary({
+  log: { verbosity: 'default', warnings: 'disabled' },
+  source: [...BASE_SOURCES, resolve(__dirname, './modes/light/**/*.json')],
+  platforms: {
+    css: {
+      transforms: TRANSFORMS,
+      buildPath: resolve(__dirname, 'dist') + '/',
+      options: {
+        usesDtcg: true,
+      },
+      files: [
+        {
+          destination: 'tokens.light.css',
+          format: 'css/variables',
+          filter: (token) => token.filePath.includes('modes/light'),
+          options: {
+            outputReferences: true,
+            selector: "[data-theme='light']",
+          },
+        },
+      ],
+    },
+  },
+})
+
+await darkBuild.buildAllPlatforms()
+await lightBuild.buildAllPlatforms()

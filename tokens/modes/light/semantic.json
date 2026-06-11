@@ -1,0 +1,35 @@
+{
+  "color": {
+    "$type": "color",
+
+    "bg": {
+      "canvas": {
+        "$value": "{color.frost.5}",
+        "$description": "Light canvas — Frost is the thinking space"
+      },
+      "surface": {
+        "$value": "{color.sand.5}",
+        "$description": "Light surface — Sand warms the panels"
+      }
+    },
+
+    "text": {
+      "primary": {
+        "$value": "{color.ink.1}",
+        "$description": "High-emphasis text on light — 16.3:1 on canvas (AAA)"
+      },
+      "secondary": {
+        "$value": "{color.ink.2}",
+        "$description": "Medium-emphasis text on light — 8.3:1 on canvas (AAA)"
+      },
+      "muted": {
+        "$value": "{color.frost.2}",
+        "$description": "Low-emphasis text on light — 4.9:1 on canvas (AA). Cool tint recedes into the frost canvas; ink-3 fails on light (3.15:1)"
+      },
+      "accent": {
+        "$value": "{color.magenta.1}",
+        "$description": "Accent-colored text on light — the deep stop, 6.4:1 on canvas (AA). Mirrors dark mode's use of magenta-4 (the light stop)"
+      }
+    }
+  }
+}

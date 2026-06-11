@@ -34,7 +34,15 @@ function findJsonFiles(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name === 'package.json' || entry.name.startsWith('.')) continue
     const full = resolve(dir, entry.name)
-    if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== 'dist') {
+    if (
+      entry.isDirectory() &&
+      entry.name !== 'node_modules' &&
+      entry.name !== 'dist' &&
+      entry.name !== 'modes'
+    ) {
+      // modes/ holds sparse per-mode overrides of base paths — validated
+      // separately (parity check), never in the base walk where their
+      // duplicate paths would be flagged.
       results.push(...findJsonFiles(full))
     } else if (entry.isFile() && entry.name.endsWith('.json')) {
       results.push(full)
@@ -189,9 +197,88 @@ function checkExtensionRefs(obj, path, file) {
   }
 }
 
+// ── Mode parity ────────────────────────────────────────────────────
+// Sparse overrides in modes/<mode>/ must (1) override only paths that exist
+// in the base source, (2) cover every must-flip path — a missing override
+// means dark values silently leaking into that mode.
+
+const MUST_FLIP = {
+  light: [
+    'color.bg.canvas',
+    'color.bg.surface',
+    'color.text.primary',
+    'color.text.secondary',
+    'color.text.muted',
+    'color.text.accent',
+    // color.accent and color.text.on-accent are constant across modes by design
+  ],
+}
+
+const modesDir = resolve(__dirname, 'modes')
+let modeFileCount = 0
+let modeTokenCount = 0
+
+function walkModeTokens(obj, path, file, modePaths) {
+  for (const [key, val] of Object.entries(obj)) {
+    if (key.startsWith('$')) continue
+    if (typeof val !== 'object' || val === null) continue
+    const tokenPath = path ? `${path}.${key}` : key
+    if (val.$value !== undefined) {
+      modePaths.add(tokenPath)
+      if (!allTokenPaths.has(tokenPath)) {
+        err(file, tokenPath, 'mode override has no matching base token')
+      }
+      if (!val.$description) {
+        err(file, tokenPath, 'missing $description')
+      }
+      if (typeof val.$value === 'string') {
+        const refs = val.$value.matchAll(/\{([^}]+)\}/g)
+        for (const m of refs) {
+          if (!allTokenPaths.has(m[1])) {
+            err(file, tokenPath, `unresolved reference: {${m[1]}}`)
+          }
+        }
+      }
+    } else {
+      walkModeTokens(val, tokenPath, file, modePaths)
+    }
+  }
+}
+
+try {
+  for (const modeEntry of readdirSync(modesDir, { withFileTypes: true })) {
+    if (!modeEntry.isDirectory()) continue
+    const mode = modeEntry.name
+    const modePaths = new Set()
+    for (const file of findJsonFiles(resolve(modesDir, mode))) {
+      const relPath = relative(__dirname, file)
+      modeFileCount++
+      let data
+      try {
+        data = JSON.parse(readFileSync(file, 'utf-8'))
+      } catch (e) {
+        err(relPath, '(root)', `invalid JSON: ${e.message}`)
+        continue
+      }
+      walkModeTokens(data, '', relPath, modePaths)
+    }
+    modeTokenCount += modePaths.size
+    for (const required of MUST_FLIP[mode] || []) {
+      if (!modePaths.has(required)) {
+        err(`modes/${mode}`, required, `must-flip token not overridden in ${mode} mode`)
+      }
+    }
+  }
+} catch {
+  // no modes/ directory — single-mode system, nothing to check
+}
+
 // ── Report ─────────────────────────────────────────────────────────
 
 console.log(`Validated ${tokenCount} tokens across ${jsonFiles.length} files`)
+if (modeFileCount > 0) {
+  console.log(`Validated ${modeTokenCount} mode overrides across ${modeFileCount} mode files`)
+}
 
 if (warnings.length) {
   console.log(`\n⚠ ${warnings.length} warning(s):`)

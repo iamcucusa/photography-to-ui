@@ -37,7 +37,9 @@ npm run validate     # Same as validate, via workspace
 | `fonts.css` | @font-face declarations for JetBrains Mono | CSS (not DTCG) |
 | `fonts/` | Self-hosted woff2 files | Binary assets |
 | `sd.config.mjs` | Style Dictionary 4 build config + 7 custom transforms | Build tooling |
-| `dist/tokens.css` | AUTO-GENERATED CSS custom properties — consumed by all apps | Build output |
+| `modes/light/*.json` | Sparse light-mode overrides (same DTCG paths as base) | Mode source |
+| `dist/tokens.css` | AUTO-GENERATED — dark defaults on `:root`, consumed by all apps | Build output |
+| `dist/tokens.light.css` | AUTO-GENERATED — sparse overrides under `[data-theme='light']` | Build output |
 
 ## Extension namespaces
 
@@ -80,14 +82,38 @@ Rules:
 - The platform transform runs first — takes precedence over type-specific transforms
 - Future platforms add sibling keys: `{ "css": "...", "ios": "..." }`
 
+## Modes (dark default, light override)
+
+Dark is the brand home and lives on `:root`. Light mode is a sparse override set
+in `modes/light/` — same DTCG paths, only what flips — emitted under
+`[data-theme='light']` in `dist/tokens.light.css`. Consumers opt in by importing
+both CSS files and setting `data-theme="light"` on `<html>`.
+
+Rules:
+
+- **Primitives never flip.** Both modes draw from the same five ramps.
+- **The semantic layer is the mode boundary.** `bg.*` and `text.*` flip;
+  `accent` and `text.on-accent` are constant by design (the accent fill is
+  the same in both modes).
+- **Derived tokens whose color-mix references semantic vars auto-flip** via the
+  CSS cascade — do not re-emit them in light. Derived tokens that reference
+  primitives directly need an explicit light override if their dark value is
+  mode-specific (gradients, glows, strong borders). Alpha washes over the
+  canvas (`accent-subtle`, `tag-bg`, `border-subtle`) composite correctly over
+  any canvas and stay constant.
+- `validate.mjs` enforces parity: every light override must match a base path,
+  and the must-flip list (semantic bg/text roles) must be fully covered.
+
 ## How to add a token
 
 1. Choose the right file based on the token category (see table above)
 2. Add the token with `$value`, `$type` (or inherit from group), and `$description`
 3. If the value needs a CSS function, add `$extensions.com.cucusa.platform.css`
 4. If the value is a color derivation, add `$extensions.com.cucusa.colorMix`
-5. Run `npm run tokens && npm run format` from the workspace root
-6. Verify visually in consuming apps
+5. Ask: is the value mode-specific? If yes, add the light override in
+   `modes/light/` in the same change
+6. Run `npm run tokens && npm run format` from the workspace root
+7. Verify visually in consuming apps — both modes if the token flips
 
 Every token MUST have a `$description`. This is consumed by the docs app to generate the token catalog.
 
