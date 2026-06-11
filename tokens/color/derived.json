@@ -16,7 +16,7 @@
         }
       },
       "elevated": {
-        "$value": "#141416",
+        "$value": "#151b24",
         "$description": "Surface/canvas 50-50 blend",
         "$extensions": {
           "com.cucusa.colorMix": {

@@ -210,6 +210,7 @@ const MUST_FLIP = {
     'color.text.secondary',
     'color.text.muted',
     'color.text.accent',
+    'color.text.cool',
     // color.accent and color.text.on-accent are constant across modes by design
   ],
 }

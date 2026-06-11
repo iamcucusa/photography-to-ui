@@ -137,7 +137,13 @@ function contrast(fg, bg) {
 
 // ── Contract ───────────────────────────────────────────────────────
 
-const TEXT_ROLES = ['color.text.primary', 'color.text.secondary', 'color.text.muted', 'color.text.accent']
+const TEXT_ROLES = [
+  'color.text.primary',
+  'color.text.secondary',
+  'color.text.muted',
+  'color.text.accent',
+  'color.text.cool',
+]
 const SURFACES = ['color.bg.canvas', 'color.bg.surface', 'color.bg.elevated']
 const INTERACTIVE_BORDERS = [
   'color.border-accent',

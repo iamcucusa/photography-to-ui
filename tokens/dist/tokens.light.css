@@ -31,4 +31,5 @@
   --color-text-secondary: var(--color-ink-2); /** Medium-emphasis text on light — 8.3:1 on canvas (AAA) */
   --color-text-muted: var(--color-frost-2); /** Low-emphasis text on light — 4.9:1 on canvas (AA). Cool tint recedes into the frost canvas; ink-3 fails on light (3.15:1) */
   --color-text-accent: var(--color-magenta-1); /** Accent-colored text on light — the deep stop, 6.4:1 on canvas (AA). Mirrors dark mode's use of magenta-4 (the light stop) */
+  --color-text-cool: var(--color-sky-2); /** Cool technical tone on light — the deep sky stop, 7.7:1 on canvas (AAA). Mirrors dark mode's sky-4 */
 }

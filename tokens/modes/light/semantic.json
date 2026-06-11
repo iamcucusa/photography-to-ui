@@ -29,6 +29,10 @@
       "accent": {
         "$value": "{color.magenta.1}",
         "$description": "Accent-colored text on light — the deep stop, 6.4:1 on canvas (AA). Mirrors dark mode's use of magenta-4 (the light stop)"
+      },
+      "cool": {
+        "$value": "{color.sky.2}",
+        "$description": "Cool technical tone on light — the deep sky stop, 7.7:1 on canvas (AAA). Mirrors dark mode's sky-4"
       }
     }
   }
