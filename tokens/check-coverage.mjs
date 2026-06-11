@@ -90,6 +90,16 @@ function scanFile(filePath, relPath) {
         violations.push({ file: relPath, line: lineNum, type: 'color-mix', value: mix.substring(0, 60) })
       }
     }
+
+    // Named CSS colors in color-bearing declarations (white, black sneak past hex checks)
+    const namedMatches = trimmed.match(
+      /(?:color|background|background-color|border(?:-\w+)?-color|fill|stroke|stop-color)\s*:\s*['"]?(?:white|black)\b/g,
+    )
+    if (namedMatches) {
+      for (const named of namedMatches) {
+        violations.push({ file: relPath, line: lineNum, type: 'named-color', value: named })
+      }
+    }
   })
 
   return violations
