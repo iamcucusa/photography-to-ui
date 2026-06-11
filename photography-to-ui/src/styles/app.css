@@ -839,6 +839,121 @@
   margin-bottom: var(--space-xs);
 }
 
+/* Colors — structure view (semantic roles with measured contrast) */
+.structure-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+  margin: 0 0 var(--space-md);
+}
+
+.structure-surfaces {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.structure-surface {
+  border: var(--divider-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.structure-surface-canvas {
+  background-color: var(--color-bg-canvas);
+}
+
+.structure-surface-surface {
+  background-color: var(--color-bg-surface);
+}
+
+.structure-surface-elevated {
+  background-color: var(--color-bg-elevated);
+}
+
+.structure-surface-name {
+  font-size: var(--text-xs);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  padding-bottom: var(--space-sm);
+  border-bottom: var(--divider-subtle);
+}
+
+.structure-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  font-family: var(--font-family-base);
+}
+
+.structure-text-primary {
+  color: var(--color-text-primary);
+}
+
+.structure-text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.structure-text-muted {
+  color: var(--color-text-muted);
+}
+
+.structure-text-accent {
+  color: var(--color-text-accent);
+}
+
+.structure-ratio {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.structure-accent-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.structure-chip {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  font-family: var(--font-family-base);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+}
+
+.structure-chip-accent {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+.structure-chip-border-accent {
+  background-color: var(--color-bg-canvas);
+  border: 1px solid var(--color-border-accent);
+  color: var(--color-text-secondary);
+}
+
+.structure-chip-border-strong {
+  background-color: var(--color-bg-canvas);
+  border: 1px solid var(--color-border-accent-strong);
+  color: var(--color-text-secondary);
+}
+
+.structure-chip-border-subtle {
+  background-color: var(--color-bg-canvas);
+  border: var(--divider-subtle);
+  color: var(--color-text-muted);
+}
+
 /* Credit */
 .credit {
   position: fixed;
