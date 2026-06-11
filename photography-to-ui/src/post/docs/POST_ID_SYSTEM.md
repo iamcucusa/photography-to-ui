@@ -31,6 +31,7 @@ post-001-frontend-best-practices
 ## Rules
 
 ### ✅ DO
+
 - Use all lowercase
 - Use hyphens as separators
 - Include descriptive slug (3-4 words max)
@@ -38,6 +39,7 @@ post-001-frontend-best-practices
 - Keep it URL-safe and code-friendly
 
 ### ❌ DON'T
+
 - Use spaces or underscores
 - Use special characters
 - Make slugs too long (> 4 words)
@@ -62,22 +64,22 @@ When syncing from Notion, use the `generatePostIdFromNotion()` utility:
 import { generatePostIdFromNotion } from '../post/utils/postId'
 
 const postId = generatePostIdFromNotion({
-  type: 'single-quote',        // From Notion "Type" field
-  series: 'System Invariant',   // From Notion "Series" field
-  number: '01',                 // From Notion or auto-increment
+  type: 'single-quote', // From Notion "Type" field
+  series: 'System Invariant', // From Notion "Series" field
+  number: '01', // From Notion or auto-increment
   title: 'If your UX depends...', // From Notion "Name" field
-  category: 'quote'            // Optional override
+  category: 'quote', // Optional override
 })
 ```
 
 ### Mapping Notion Fields
 
-| Notion Field | Maps To | Example |
-|-------------|---------|---------|
-| `Name` | `slug` | `"If your UX depends..."` → `ux-depends-explanation` |
-| Custom `Number` or `POST X` | `number` | `01`, `02`, etc. |
-| `Type` | **Not used in ID** | Type can change without affecting ID |
-| `Series` | **Not used in ID** | Series can change without affecting ID |
+| Notion Field                | Maps To            | Example                                              |
+| --------------------------- | ------------------ | ---------------------------------------------------- |
+| `Name`                      | `slug`             | `"If your UX depends..."` → `ux-depends-explanation` |
+| Custom `Number` or `POST X` | `number`           | `01`, `02`, etc.                                     |
+| `Type`                      | **Not used in ID** | Type can change without affecting ID                 |
+| `Series`                    | **Not used in ID** | Series can change without affecting ID               |
 
 ## Migration Guide
 
@@ -103,7 +105,7 @@ const oldId = 'post-07-career-systems-not-speed'
 const newId = generatePostId({
   type: 'single',
   number: '07',
-  slug: 'career-systems-not-speed' // Already in correct format
+  slug: 'career-systems-not-speed', // Already in correct format
 })
 ```
 
@@ -126,7 +128,7 @@ import { generatePostId, parsePostId, isValidPostId } from '../post/utils/postId
 // Generate
 const id = generatePostId({
   number: '10',
-  slug: 'ux-explanation-system-failure'
+  slug: 'ux-explanation-system-failure',
 })
 // → 'post-10-ux-explanation-system-failure'
 

@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import '@tokens/fonts.css'
 import '@tokens/dist/tokens.css'
+import '@tokens/dist/tokens.light.css'
 import './styles/base.css'
 import './styles/app.css'
 

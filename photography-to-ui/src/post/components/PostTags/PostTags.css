@@ -25,6 +25,6 @@
 }
 
 .post-tag-hash {
-  color: var(--color-magenta-4);
+  color: var(--color-text-accent);
   font-weight: var(--font-weight-medium);
 }

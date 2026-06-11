@@ -17,9 +17,11 @@ There are several ways to update Post IDs in your Notion database. Choose the me
 You can use me (the AI assistant) to generate IDs for your posts:
 
 **Just ask me:**
+
 > "Generate post IDs for my Notion posts"
 
 I'll:
+
 1. Fetch your posts from Notion
 2. Generate IDs following the format: `{type}-{category?}-{number}-{slug}`
 3. Show you the list
@@ -28,6 +30,7 @@ I'll:
 ### Step 3: Copy-Paste IDs
 
 Once generated, you can:
+
 - Copy the ID I provide
 - Paste it into the "Post ID" field in Notion
 - Or let me update it directly via the Notion API
@@ -41,12 +44,14 @@ I can update your Notion posts directly! Just ask:
 > "Update all post IDs in my Notion database"
 
 I will:
+
 1. ✅ Fetch all posts from your Notion database
 2. ✅ Generate proper IDs for each post
 3. ✅ Update the "Post ID" property in Notion
 4. ✅ Show you a summary of changes
 
 **Example workflow:**
+
 ```
 You: "Update post IDs for POST 10, POST 11, and POST 12"
 Me: [Fetches posts, generates IDs, updates Notion]
@@ -67,19 +72,20 @@ If you want Notion to auto-generate IDs, you can use a formula:
 1. Add a new property: `Post ID (Auto)`
 2. Type: **Formula**
 3. Formula:
+
 ```notion
 concat(
-  if(prop("Type") == "single-quote", "single-quote", 
+  if(prop("Type") == "single-quote", "single-quote",
   if(prop("Type") == "single-image", "single-image",
   if(prop("Type") == "carrousel", "carousel",
   "single"))),
   "-",
-  if(prop("Series") != empty(), 
-    lower(replaceAll(prop("Series"), " ", "-")), 
+  if(prop("Series") != empty(),
+    lower(replaceAll(prop("Series"), " ", "-")),
     ""),
   if(prop("Series") != empty(), "-", ""),
-  if(prop("Base") != empty(), 
-    format(prop("Base")), 
+  if(prop("Base") != empty(),
+    format(prop("Base")),
     "01"),
   "-",
   lower(replaceAll(
@@ -109,19 +115,19 @@ import { mcp_Notion_notion_fetch, mcp_Notion_notion_update_page } from '@mcp/not
 async function updatePostId(pageId: string) {
   // 1. Fetch the page
   const page = await mcp_Notion_notion_fetch({ id: pageId })
-  
+
   // 2. Generate ID
   const newPostId = generatePostIdFromNotionPage(page)
-  
+
   // 3. Update the page
   await mcp_Notion_notion_update_page({
     page_id: pageId,
     command: 'update_properties',
     properties: {
-      'Post ID': newPostId
-    }
+      'Post ID': newPostId,
+    },
   })
-  
+
   return newPostId
 }
 ```
@@ -135,6 +141,7 @@ async function updatePostId(pageId: string) {
 ```
 
 **Examples:**
+
 - `single-07-career-systems-not-speed`
 - `single-quote-10-ux-explanation-system-failure`
 - `carousel-fe-scale-001-frontend-best-practices`
@@ -156,6 +163,7 @@ async function updatePostId(pageId: string) {
 ## Need Help?
 
 Just ask me:
+
 - "Update post IDs for [specific posts]"
 - "Generate post ID for POST 15"
 - "Show me what post IDs would look like for my posts"

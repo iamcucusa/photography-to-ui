@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react'
 import primitives from '@tokens/color/primitives.json'
-import semantic from '@tokens/color/semantic.json'
-import derived from '@tokens/color/derived.json'
+import { useTheme } from '../hooks/useTheme'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TokenGroup = Record<string, any>
@@ -52,40 +51,71 @@ const rgbToHsl = (r: number, g: number, b: number): { h: number; s: number; l: n
   }
 }
 
-// WCAG 2.1 relative luminance + contrast ratio, computed from token source so the
-// displayed numbers can never drift from the shipped values.
+// WCAG 2.1 relative luminance + contrast ratio, computed from the RESOLVED
+// values of the active mode (read from the live cascade), so the displayed
+// numbers track whichever theme is on screen and can never drift.
+type Rgba = { r: number; g: number; b: number; a: number }
+
 const channelLin = (c: number): number => {
   const s = c / 255
   return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
 }
 
-const luminance = (hex: string): number => {
-  const { r, g, b } = hexToRgb(hex)
-  return 0.2126 * channelLin(r) + 0.7152 * channelLin(g) + 0.0722 * channelLin(b)
-}
+const luminance = ({ r, g, b }: Rgba): number =>
+  0.2126 * channelLin(r) + 0.7152 * channelLin(g) + 0.0722 * channelLin(b)
 
-const contrast = (fg: string, bg: string): number => {
-  const [hi, lo] = [luminance(fg), luminance(bg)].sort((a, b) => b - a)
+const compositeOver = (fg: Rgba, bg: Rgba): Rgba => ({
+  r: fg.r * fg.a + bg.r * (1 - fg.a),
+  g: fg.g * fg.a + bg.g * (1 - fg.a),
+  b: fg.b * fg.a + bg.b * (1 - fg.a),
+  a: 1,
+})
+
+const contrast = (fg: Rgba, bg: Rgba): number => {
+  const f = fg.a < 1 ? compositeOver(fg, bg) : fg
+  const [hi, lo] = [luminance(f), luminance(bg)].sort((a, b) => b - a)
   return (hi + 0.05) / (lo + 0.05)
 }
 
-// Resolve a DTCG alias like {color.sky.1} against the primitives source
-const resolveRef = (value: string): string => {
-  const match = value.match(/^\{color\.([a-z]+)\.(\d)\}$/)
-  if (!match) return value
-  const colorData = primitives.color as TokenGroup
-  return (colorData[match[1]]?.[match[2]]?.$value as string) ?? value
+// Parse what getComputedStyle returns for a resolved color: rgb()/rgba(),
+// or color(srgb r g b [/ a]) with 0–1 channels (how Chromium serializes
+// color-mix results).
+const parseCssColor = (value: string): Rgba => {
+  const srgb = value.match(/color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/)
+  if (srgb) {
+    return {
+      r: parseFloat(srgb[1]) * 255,
+      g: parseFloat(srgb[2]) * 255,
+      b: parseFloat(srgb[3]) * 255,
+      a: srgb[4] !== undefined ? parseFloat(srgb[4]) : 1,
+    }
+  }
+  const nums = value.match(/[\d.]+/g)
+  if (nums && nums.length >= 3) {
+    return {
+      r: parseFloat(nums[0]),
+      g: parseFloat(nums[1]),
+      b: parseFloat(nums[2]),
+      a: nums.length >= 4 ? parseFloat(nums[3]) : 1,
+    }
+  }
+  return { r: 0, g: 0, b: 0, a: 1 }
 }
 
-const semanticHex = (group: 'bg' | 'text', key: string): string => {
-  const colorData = semantic.color as TokenGroup
-  return resolveRef(colorData[group][key].$value as string)
+// Resolve a custom property to its concrete color through a probe element —
+// the browser computes the full var()/color-mix() chain for the ACTIVE mode.
+const resolveCssVar = (varName: string): Rgba => {
+  const probe = document.createElement('div')
+  probe.style.display = 'none'
+  probe.style.color = `var(${varName})`
+  document.body.appendChild(probe)
+  const resolved = getComputedStyle(probe).color
+  probe.remove()
+  return parseCssColor(resolved)
 }
 
-const derivedHex = (key: string): string => {
-  const colorData = derived.color as TokenGroup
-  return colorData[key].$value as string
-}
+const rgbaToHex = ({ r, g, b }: Rgba): string =>
+  '#' + [r, g, b].map((c) => Math.round(c).toString(16).padStart(2, '0')).join('')
 
 interface ColorInfo {
   name: string
@@ -138,41 +168,44 @@ interface Structure {
 }
 
 function buildStructure(): Structure {
-  const canvas = semanticHex('bg', 'canvas')
-  const surfaceHex = semanticHex('bg', 'surface')
-  const elevated = (derived.color as TokenGroup).bg.elevated.$value as string
+  const canvas = resolveCssVar('--color-bg-canvas')
+  const surfaceColor = resolveCssVar('--color-bg-surface')
+  const elevated = resolveCssVar('--color-bg-elevated')
 
   const roles = [
-    { id: 'primary', label: 'text-primary', hex: semanticHex('text', 'primary') },
-    { id: 'secondary', label: 'text-secondary', hex: semanticHex('text', 'secondary') },
-    { id: 'muted', label: 'text-muted', hex: semanticHex('text', 'muted') },
-    { id: 'accent', label: 'text-accent', hex: semanticHex('text', 'accent') },
+    { id: 'primary', label: 'text-primary', color: resolveCssVar('--color-text-primary') },
+    { id: 'secondary', label: 'text-secondary', color: resolveCssVar('--color-text-secondary') },
+    { id: 'muted', label: 'text-muted', color: resolveCssVar('--color-text-muted') },
+    { id: 'accent', label: 'text-accent', color: resolveCssVar('--color-text-accent') },
+    { id: 'cool', label: 'text-cool', color: resolveCssVar('--color-text-cool') },
   ]
 
   const surfaces = [
-    { id: 'canvas', label: 'bg-canvas', hex: canvas },
-    { id: 'surface', label: 'bg-surface', hex: surfaceHex },
-    { id: 'elevated', label: 'bg-elevated', hex: elevated },
+    { id: 'canvas', label: 'bg-canvas', color: canvas },
+    { id: 'surface', label: 'bg-surface', color: surfaceColor },
+    { id: 'elevated', label: 'bg-elevated', color: elevated },
   ].map((s) => ({
-    ...s,
-    rows: roles.map((r) => ({ id: r.id, label: r.label, ratio: contrast(r.hex, s.hex) })),
+    id: s.id,
+    label: s.label,
+    hex: rgbaToHex(s.color),
+    rows: roles.map((r) => ({ id: r.id, label: r.label, ratio: contrast(r.color, s.color) })),
   }))
 
-  const accentHex = resolveRef((semantic.color as TokenGroup).accent.$value as string)
+  const accent = resolveCssVar('--color-accent')
 
   return {
     surfaces,
-    onAccent: contrast(semanticHex('text', 'on-accent'), accentHex),
+    onAccent: contrast(resolveCssVar('--color-text-on-accent'), accent),
     borders: [
       {
         id: 'accent',
         label: 'border-accent',
-        ratio: contrast(derivedHex('border-accent'), canvas),
+        ratio: contrast(resolveCssVar('--color-border-accent'), canvas),
       },
       {
         id: 'strong',
         label: 'border-accent-strong',
-        ratio: contrast(derivedHex('border-accent-strong'), canvas),
+        ratio: contrast(resolveCssVar('--color-border-accent-strong'), canvas),
       },
     ],
   }
@@ -180,8 +213,10 @@ function buildStructure(): Structure {
 
 function Colors() {
   const [activePalette, setActivePalette] = useState<string>('magenta')
+  const { mode } = useTheme()
   const palettes = useMemo(() => buildPalettes(), [])
-  const structure = useMemo(() => buildStructure(), [])
+  // Recompute when the mode flips — the probe reads the live cascade
+  const structure = useMemo(() => buildStructure(), [mode])
 
   const showStructure = activePalette === 'structure'
   const currentPalette = palettes.find((p) => p.id === activePalette) || palettes[0]
@@ -214,10 +249,10 @@ function Colors() {
 
       {showStructure ? (
         <div className="colors-palette-display" aria-live="polite">
-          <h3 className="colors-palette-name">Structure</h3>
+          <h3 className="colors-palette-name">Structure · {mode}</h3>
           <p className="structure-note">
             Roles, not colors. Every pairing renders in its own tokens and carries its measured
-            contrast.
+            contrast — resolved live from the active mode.
           </p>
           <div className="structure-surfaces">
             {structure.surfaces.map((surface) => (

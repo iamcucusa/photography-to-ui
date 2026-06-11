@@ -50,7 +50,7 @@
   margin-left: 4px;
   font-size: var(--text-md);
   font-family: var(--font-family-base);
-  color: var(--color-sky-4);
+  color: var(--color-text-cool);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   text-decoration: underline;
@@ -60,7 +60,7 @@
 }
 
 .post-narrative-toggle:hover {
-  color: var(--color-magenta-4);
+  color: var(--color-text-accent);
 }
 
 .post-narrative-toggle:focus-visible {
