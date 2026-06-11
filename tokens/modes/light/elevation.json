@@ -1,0 +1,76 @@
+{
+  "shadow": {
+    "$type": "shadow",
+    "1": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.06)",
+        "offsetX": "0",
+        "offsetY": "1px",
+        "blur": "0",
+        "spread": "0"
+      },
+      "$description": "Hairline bottom shadow — light-mode replacement for the dark top highlight"
+    },
+    "soft": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.08)",
+        "offsetX": "0",
+        "offsetY": "2px",
+        "blur": "8px",
+        "spread": "0"
+      },
+      "$description": "Soft elevation on light — shadows soften, they do not carry mood"
+    },
+    "hover": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.1)",
+        "offsetX": "0",
+        "offsetY": "4px",
+        "blur": "12px",
+        "spread": "0"
+      },
+      "$description": "Hover state elevation on light"
+    },
+    "2": {
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.12)",
+        "offsetX": "0",
+        "offsetY": "8px",
+        "blur": "24px",
+        "spread": "0"
+      },
+      "$description": "High elevation on light — cards, slides"
+    },
+    "glow-accent": {
+      "$value": [
+        {
+          "color": "rgba(214, 0, 118, 0.4)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "0",
+          "spread": "1px"
+        },
+        {
+          "color": "rgba(179, 0, 98, 0.18)",
+          "offsetX": "0",
+          "offsetY": "2px",
+          "blur": "8px",
+          "spread": "0"
+        },
+        {
+          "color": "rgba(179, 0, 98, 0.1)",
+          "offsetX": "0",
+          "offsetY": "4px",
+          "blur": "16px",
+          "spread": "0"
+        }
+      ],
+      "$description": "Accent emphasis on light — ring plus magenta-tinted soft shadow; the radial glow idiom is dark-only",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 2px 8px color-mix(in srgb, var(--color-magenta-1) 18%, transparent), 0 4px 16px color-mix(in srgb, var(--color-magenta-1) 10%, transparent)"
+        }
+      }
+    }
+  }
+}

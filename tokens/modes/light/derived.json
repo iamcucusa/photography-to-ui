@@ -1,0 +1,220 @@
+{
+  "color": {
+    "$type": "color",
+
+    "border-strong": {
+      "$value": "#6b6b73cc",
+      "$description": "Frost-2 at 80% — strong separator on light (3.3:1 composite vs canvas)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.2}",
+          "amount1": "80%",
+          "color2": "transparent"
+        }
+      }
+    },
+
+    "border-accent": {
+      "$value": "#e04a9e",
+      "$description": "Magenta-2 at 70% into canvas — interactive border on light, 3.5:1 (same ladder as dark, one ramp step down)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "70%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "border-accent-hover": {
+      "$value": "#e256a5",
+      "$description": "Magenta-2 at 65% into canvas — hover state on light, 3.2:1",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "65%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "border-accent-strong": {
+      "$value": "#dd3191",
+      "$description": "Magenta-2 at 80% into canvas — active/selected border on light, 4.0:1",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "80%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "border-accent-highlight": {
+      "$value": "#de3e97",
+      "$description": "Magenta-2 at 75% into canvas — highlighted border on light, 3.8:1",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "75%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+
+    "overlay-mid": {
+      "$value": "#9bb5c999",
+      "$description": "Sky-4 at 60% — light gradient endpoint (mirror of dark sky-2)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.4}",
+          "amount1": "60%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "overlay-mid-heavy": {
+      "$value": "#9bb5c9b3",
+      "$description": "Sky-4 at 70% — light gradient endpoint (mirror of dark sky-2)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.4}",
+          "amount1": "70%",
+          "color2": "transparent"
+        }
+      }
+    },
+
+    "app-bg-start": {
+      "$value": "#e0eaf2",
+      "$description": "Light app gradient start — sky-5 70% / frost-5 30% (dark recipe with mirrored stops)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.5}",
+          "amount1": "70%",
+          "color2": "{color.frost.5}",
+          "amount2": "30%"
+        }
+      }
+    },
+    "app-bg-mid": {
+      "$value": "#e0ddda",
+      "$description": "Light app gradient mid — sand-4 55% / sky-5 45% (dark recipe with mirrored stops)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sand.4}",
+          "amount1": "55%",
+          "color2": "{color.sky.5}",
+          "amount2": "45%"
+        }
+      }
+    },
+    "app-bg-end": {
+      "$value": "#c7d0dc",
+      "$description": "Light app gradient end — sky-4 35% / frost-4 65% (dark recipe with mirrored stops)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.4}",
+          "amount1": "35%",
+          "color2": "{color.frost.4}",
+          "amount2": "65%"
+        }
+      }
+    },
+
+    "slide-base-start": {
+      "$value": "#d9e6ef",
+      "$description": "Light slide gradient start — sky-5 90% / frost-5 10% (mirrored stops)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.5}",
+          "amount1": "90%",
+          "color2": "{color.frost.5}",
+          "amount2": "10%"
+        }
+      }
+    },
+    "slide-base-end": {
+      "$value": "#b7c9d8",
+      "$description": "Light slide gradient end — sky-4 70% / frost-5 30% (mirrored stops)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.4}",
+          "amount1": "70%",
+          "color2": "{color.frost.5}",
+          "amount2": "30%"
+        }
+      }
+    },
+
+    "glow-magenta": {
+      "$value": "#d600760f",
+      "$description": "Magenta-2 at 6% — glows run at half strength on light (tint wash, not light source)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.2}",
+          "amount1": "6%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-magenta-fade": {
+      "$value": "#b3006208",
+      "$description": "Magenta-1 at 3% — faded glow on light",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.1}",
+          "amount1": "3%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-cool": {
+      "$value": "#7191ae0d",
+      "$description": "Sky-3 at 5% — cool wash on light",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sky.3}",
+          "amount1": "5%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-warm": {
+      "$value": "#9e7b5c08",
+      "$description": "Sand-2 at 3% — warm wash on light",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.sand.2}",
+          "amount1": "3%",
+          "color2": "transparent"
+        }
+      }
+    },
+    "glow-frost": {
+      "$value": "#6b6b730f",
+      "$description": "Frost-2 at 6% — neutral wash on light (frost-1 reads as dirt on light surfaces)",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.2}",
+          "amount1": "6%",
+          "color2": "transparent"
+        }
+      }
+    }
+  }
+}

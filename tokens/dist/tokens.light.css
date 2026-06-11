@@ -3,6 +3,28 @@
  */
 
 [data-theme='light'] {
+  --color-border-strong: color-mix(in srgb, var(--color-frost-2) 80%, transparent); /** Frost-2 at 80% — strong separator on light (3.3:1 composite vs canvas) */
+  --color-border-accent: color-mix(in srgb, var(--color-magenta-2) 70%, var(--color-bg-canvas)); /** Magenta-2 at 70% into canvas — interactive border on light, 3.5:1 (same ladder as dark, one ramp step down) */
+  --color-border-accent-hover: color-mix(in srgb, var(--color-magenta-2) 65%, var(--color-bg-canvas)); /** Magenta-2 at 65% into canvas — hover state on light, 3.2:1 */
+  --color-border-accent-strong: color-mix(in srgb, var(--color-magenta-2) 80%, var(--color-bg-canvas)); /** Magenta-2 at 80% into canvas — active/selected border on light, 4.0:1 */
+  --color-border-accent-highlight: color-mix(in srgb, var(--color-magenta-2) 75%, var(--color-bg-canvas)); /** Magenta-2 at 75% into canvas — highlighted border on light, 3.8:1 */
+  --color-overlay-mid: color-mix(in srgb, var(--color-sky-4) 60%, transparent); /** Sky-4 at 60% — light gradient endpoint (mirror of dark sky-2) */
+  --color-overlay-mid-heavy: color-mix(in srgb, var(--color-sky-4) 70%, transparent); /** Sky-4 at 70% — light gradient endpoint (mirror of dark sky-2) */
+  --color-app-bg-start: color-mix(in srgb, var(--color-sky-5) 70%, var(--color-frost-5) 30%); /** Light app gradient start — sky-5 70% / frost-5 30% (dark recipe with mirrored stops) */
+  --color-app-bg-mid: color-mix(in srgb, var(--color-sand-4) 55%, var(--color-sky-5) 45%); /** Light app gradient mid — sand-4 55% / sky-5 45% (dark recipe with mirrored stops) */
+  --color-app-bg-end: color-mix(in srgb, var(--color-sky-4) 35%, var(--color-frost-4) 65%); /** Light app gradient end — sky-4 35% / frost-4 65% (dark recipe with mirrored stops) */
+  --color-slide-base-start: color-mix(in srgb, var(--color-sky-5) 90%, var(--color-frost-5) 10%); /** Light slide gradient start — sky-5 90% / frost-5 10% (mirrored stops) */
+  --color-slide-base-end: color-mix(in srgb, var(--color-sky-4) 70%, var(--color-frost-5) 30%); /** Light slide gradient end — sky-4 70% / frost-5 30% (mirrored stops) */
+  --color-glow-magenta: color-mix(in srgb, var(--color-magenta-2) 6%, transparent); /** Magenta-2 at 6% — glows run at half strength on light (tint wash, not light source) */
+  --color-glow-magenta-fade: color-mix(in srgb, var(--color-magenta-1) 3%, transparent); /** Magenta-1 at 3% — faded glow on light */
+  --color-glow-cool: color-mix(in srgb, var(--color-sky-3) 5%, transparent); /** Sky-3 at 5% — cool wash on light */
+  --color-glow-warm: color-mix(in srgb, var(--color-sand-2) 3%, transparent); /** Sand-2 at 3% — warm wash on light */
+  --color-glow-frost: color-mix(in srgb, var(--color-frost-2) 6%, transparent); /** Frost-2 at 6% — neutral wash on light (frost-1 reads as dirt on light surfaces) */
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.06); /** Hairline bottom shadow — light-mode replacement for the dark top highlight */
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.12); /** High elevation on light — cards, slides */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08); /** Soft elevation on light — shadows soften, they do not carry mood */
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1); /** Hover state elevation on light */
+  --shadow-glow-accent: 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 2px 8px color-mix(in srgb, var(--color-magenta-1) 18%, transparent), 0 4px 16px color-mix(in srgb, var(--color-magenta-1) 10%, transparent); /** Accent emphasis on light — ring plus magenta-tinted soft shadow; the radial glow idiom is dark-only */
   --color-bg-canvas: var(--color-frost-5); /** Light canvas — Frost is the thinking space */
   --color-bg-surface: var(--color-sand-5); /** Light surface — Sand warms the panels */
   --color-text-primary: var(--color-ink-1); /** High-emphasis text on light — 16.3:1 on canvas (AAA) */
