@@ -1,7 +1,7 @@
 {
-  "lastReviewed": "2026-05-30",
-  "reviewer": "Claude Opus 4.6",
-  "summary": "114 tokens with 100% description coverage. Zero hardcoded colors, rgba, or color-mix outside tokens.css — full tokenization achieved. Naming is BEM-consistent across 130 classes. Workspace fully decoupled — root is a pure orchestrator, each consumer is an independent package.",
+  "lastReviewed": "2026-06-11",
+  "reviewer": "Claude Fable 5",
+  "summary": "116 tokens with 100% description coverage. Zero hardcoded colors, rgba, color-mix, or named colors outside tokens.css. Dark-mode contrast pass complete: all text roles AA (text-muted 5.2:1, was 4.05), accent borders ≥3:1 per WCAG 1.4.11, magenta ramp now monotonic dark→light like every other family. New semantic roles text.accent and text.on-accent give accent-colored text an AA-compliant home.",
   "priorities": [
     {
       "priority": 1,
@@ -20,10 +20,25 @@
       "title": "Small structural px are intentional",
       "status": "accepted",
       "detail": "17 instances of 1-6px values (border-radius tweaks, padding adjustments). These are micro-adjustments below the spacing scale — tokenizing them would add overhead without design benefit."
+    },
+    {
+      "priority": 4,
+      "title": "Contrast over photography is unguaranteed",
+      "status": "open",
+      "detail": "The playground renders text over a photo behind a 0.78-opacity gradient; translucent panels let ~15% bleed through. Token math passes on solid surfaces but the warm gradient region (~#3c3228) drops some pairings below AA. Mitigation options: raise panel opacity, or keep body text inside solid-surface cards."
+    },
+    {
+      "priority": 5,
+      "title": "Desaturated dark-mode accent variant",
+      "status": "deferred",
+      "detail": "magenta-2 (#d60076) is 100% saturated and can vibrate against the blue canvas. The Material/HIG pattern is a slightly desaturated accent for dark themes. Taste-driven brand decision — explore separately from the accessibility pass."
     }
   ],
   "strengths": [
-    "Zero hardcoded colors in component CSS — complete tokenization",
+    "Zero hardcoded colors in component CSS — complete tokenization (named colors now scanned too)",
+    "All text roles AA on canvas, surface, and elevated (contrast contract documented in tokens/CLAUDE.md)",
+    "Accent borders ≥3:1 vs canvas — interactive boundaries meet WCAG 1.4.11",
+    "All five color ramps monotonic dark→light by index — predictable for humans and agents",
     "Zero inline color-mix() outside tokens.css",
     "Zero hardcoded durations or easings — full motion tokenization",
     "100% token description coverage — every $value has a $description",
@@ -31,11 +46,10 @@
     "ARIA coverage on all interactive insight explorers",
     "Self-contained token package with fonts — ready for extraction",
     "Pure workspace orchestrator — root has no app dependencies",
-    "Each consumer is an independent workspace package",
-    "Token output in tokens/dist/ — no cross-consumer dependency",
     "tokens/dist/tokens.css committed to git — always available after clone, no build step needed"
   ],
   "risks": [
-    "No automated visual regression baseline — verification is per-session via Claude Preview"
+    "No automated visual regression baseline — verification is per-session via Claude Preview",
+    "No automated contrast check in CI — the WCAG matrix was run manually for this pass; values could drift in future token edits"
   ]
 }

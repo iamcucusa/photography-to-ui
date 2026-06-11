@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-05-30T17:55:24.513Z",
+  "timestamp": "2026-06-11T13:12:28.568Z",
   "tokenSource": {
-    "totalTokens": 114,
-    "totalDescribed": 121,
+    "totalTokens": 116,
+    "totalDescribed": 123,
     "descriptionCoverage": 106,
     "files": [
       {
@@ -19,8 +19,8 @@
       },
       {
         "file": "color/semantic.json",
-        "tokens": 6,
-        "described": 6,
+        "tokens": 8,
+        "described": 8,
         "coverage": 100
       },
       {
