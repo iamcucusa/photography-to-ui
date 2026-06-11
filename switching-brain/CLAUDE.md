@@ -54,8 +54,12 @@ public/data/nodes.json # the seed data — fetched at runtime, swappable with no
   (bright accent)** — using only `var(--color-*)` references. No new raw colors.
 - **Network is never encoded by color alone** — also by vertical band position (DMN top, SN
   middle, FPCN bottom) + band labels + the legend, so it survives grayscale / color-blindness.
-- **Dark-only, locked** (glow-on-dark is the hero; the DS ships a single dark `:root`). Tokens
-  are still read at runtime, so it would re-theme for free if a light theme is ever added.
+- **Dark-only, pinned.** Glow-on-dark is the hero of this piece. The DS now ships a light mode
+  (`@tokens/dist/tokens.light.css` under `[data-theme='light']`), but this consumer deliberately
+  does NOT import it, and `index.html` pins `data-theme="dark"` so a shared theme preference on
+  the deployed origin can never flip it. A light variant ("paper mode" — shadows instead of
+  glows) is a tracked exploration, not a toggle: it needs re-art-direction. If ever unpinned,
+  note `runtimeTokens.ts` caches resolved colors — call `readTokens()` again on theme change.
 
 ## Motion & interaction
 
