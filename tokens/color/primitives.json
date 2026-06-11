@@ -3,9 +3,9 @@
     "$type": "color",
     "magenta": {
       "$description": "Brand accent palette — derived from urban photography, high-energy magenta tones",
-      "1": { "$value": "#ff0f8f", "$description": "Vivid — CTA arrows, glow source" },
+      "1": { "$value": "#b30062", "$description": "Deep — glow fade, shadow tints" },
       "2": { "$value": "#d60076", "$description": "Primary accent — default brand color" },
-      "3": { "$value": "#b30062", "$description": "Deep — glow fade, shadow tints" },
+      "3": { "$value": "#ff0f8f", "$description": "Vivid — CTA arrows, glow source" },
       "4": { "$value": "#ff4fb1", "$description": "Light — emphasized text, hover states" },
       "5": { "$value": "#ffe0f1", "$description": "Pastel — unused in dark mode" }
     },

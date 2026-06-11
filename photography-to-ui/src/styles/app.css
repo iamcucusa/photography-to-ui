@@ -127,7 +127,7 @@
 
 .page-title-arrow {
   display: block;
-  color: var(--color-magenta-3);
+  color: var(--color-magenta-1);
   opacity: 0.9;
   font-size: var(--text-lg);
   line-height: 1;
@@ -373,14 +373,14 @@
 
 .insight-item-active {
   border-left-width: 4px;
-  border-left-color: var(--color-magenta-1);
+  border-left-color: var(--color-magenta-3);
   background-color: var(--color-bg-surface);
   border-color: var(--color-border-accent);
   box-shadow: var(--shadow-glow-accent);
 }
 
 .insight-item-active .insight-item-title {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
 }
 
 .insight-item-active .insight-item-text {
@@ -436,7 +436,7 @@
 }
 
 .headline-cursor {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   background-color: var(--color-accent-highlight);
   padding: 0 2px;
   margin-left: 2px;
@@ -479,7 +479,7 @@
 }
 
 .back-home-arrow {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   background-color: var(--color-accent-highlight);
   padding: 0 6px;
   font-weight: var(--font-weight-bold);
@@ -622,7 +622,7 @@
 }
 
 .typography-size-button-active {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   border-color: var(--color-magenta-2);
   background-color: var(--color-accent-tint);
   font-weight: var(--font-weight-bold);
@@ -754,7 +754,7 @@
 }
 
 .colors-palette-button-active {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   border-color: var(--color-magenta-2);
   background-color: var(--color-accent-tint);
   font-weight: var(--font-weight-bold);
@@ -869,12 +869,12 @@
 }
 
 .credit-handle {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   font-weight: var(--font-weight-medium);
 }
 
 .credit-link:hover .credit-handle {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
 }
 
 /* Responsive: Collapse rail below on narrow screens */
@@ -1028,7 +1028,7 @@
 .interaction-image-container:hover .interaction-click-hint {
   background-color: var(--color-bg-overlay-surface);
   border-color: var(--color-magenta-2);
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   transform: scale(1.05);
   box-shadow: var(--shadow-hover);
 }

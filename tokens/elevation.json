@@ -68,7 +68,7 @@
       "$description": "Accent glow — interactive focus/hover highlights",
       "$extensions": {
         "com.cucusa.platform": {
-          "css": "0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 0 12px color-mix(in srgb, var(--color-magenta-1) 25%, transparent), 0 0 24px color-mix(in srgb, var(--color-magenta-3) 15%, transparent)"
+          "css": "0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 0 12px color-mix(in srgb, var(--color-magenta-3) 25%, transparent), 0 0 24px color-mix(in srgb, var(--color-magenta-1) 15%, transparent)"
         }
       }
     }

@@ -172,7 +172,7 @@
 }
 
 .dial__handle {
-  fill: var(--color-magenta-1);
+  fill: var(--color-magenta-3);
   stroke: var(--color-bg-canvas);
   stroke-width: 2.5;
   filter: drop-shadow(0 0 3px var(--color-magenta-2));
@@ -186,7 +186,7 @@
 }
 
 .dial__glow-stop--in {
-  stop-color: var(--color-magenta-1);
+  stop-color: var(--color-magenta-3);
   stop-opacity: 0.95;
 }
 
@@ -299,7 +299,7 @@
 }
 
 .play-toggle:hover {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   transform: scale(1.08);
 }
 
@@ -358,7 +358,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--color-magenta-1);
+  background: var(--color-magenta-3);
   box-shadow:
     0 0 0 3px var(--color-bg-canvas),
     var(--shadow-glow-accent);
@@ -370,7 +370,7 @@
   height: 18px;
   border: none;
   border-radius: 50%;
-  background: var(--color-magenta-1);
+  background: var(--color-magenta-3);
   box-shadow:
     0 0 0 3px var(--color-bg-canvas),
     var(--shadow-glow-accent);
@@ -604,7 +604,7 @@
 }
 
 .credit-handle {
-  color: var(--color-magenta-1);
+  color: var(--color-magenta-3);
   font-weight: var(--font-weight-medium);
 }
 

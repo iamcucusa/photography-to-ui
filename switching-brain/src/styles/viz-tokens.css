@@ -31,9 +31,9 @@
   --viz-fpcn-bright: var(--color-sky-4);
 
   /* SN — bright accent (magenta). The salience "switch" color. */
-  --viz-sn-dim: var(--color-magenta-3);
+  --viz-sn-dim: var(--color-magenta-1);
   --viz-sn: var(--color-magenta-2);
-  --viz-sn-bright: var(--color-magenta-1);
+  --viz-sn-bright: var(--color-magenta-3);
 
   /* Shared draw-layer surfaces, all derived from the canvas. */
   --viz-edge: var(--color-frost-3);

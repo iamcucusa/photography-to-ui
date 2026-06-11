@@ -116,11 +116,11 @@
     },
     "accent-highlight": {
       "$value": "#ff0f8f40",
-      "$description": "Magenta-1 at 25% — CTA arrow background",
+      "$description": "Magenta-3 at 25% — CTA arrow background",
       "$extensions": {
         "com.cucusa.colorMix": {
           "space": "srgb",
-          "color1": "{color.magenta.1}",
+          "color1": "{color.magenta.3}",
           "amount1": "25%",
           "color2": "transparent"
         }
@@ -415,11 +415,11 @@
     },
     "glow-magenta-fade": {
       "$value": "#b300620d",
-      "$description": "Magenta-3 at 5% — faded glow",
+      "$description": "Magenta-1 at 5% — faded glow",
       "$extensions": {
         "com.cucusa.colorMix": {
           "space": "srgb",
-          "color1": "{color.magenta.3}",
+          "color1": "{color.magenta.1}",
           "amount1": "5%",
           "color2": "transparent"
         }
