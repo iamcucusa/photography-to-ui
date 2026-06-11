@@ -114,6 +114,7 @@ Read the ordering and guard documentation in `sd.config.mjs` before adding trans
 ## Token values at a glance
 
 - **Colors**: Five palettes × 5 stops. Semantic roles map intent to primitives. Derived tokens use `color-mix()`. Dark mode only.
+- **Contrast contract**: `text.primary/secondary/muted` are AA (≥4.5:1) on canvas, surface, and elevated. `border-accent*` tokens are ≥3:1 vs canvas (WCAG 1.4.11 — they signal interactivity). `border-subtle`/`border-strong` are decorative separators — do not use them as the only boundary of an interactive element.
 - **Typography**: JetBrains Mono. Weights: 400/500/600. Perfect Fifth scale (1.5 ratio): `--text-xs` through `--text-xxl`, plus `--display-xl`.
 - **Spacing**: `--space-xs` (0.25rem) through `--space-xl` (4rem), doubling progression.
 - **Shape**: `--radius-sm/md`, `--divider-subtle/strong`, `--focus-ring-*`.

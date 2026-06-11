@@ -13,7 +13,7 @@
       "$description": "Foundation palette — derived from sky and architectural photography, cool blue-grays",
       "1": { "$value": "#0d1b2a", "$description": "Deepest — canvas background" },
       "2": { "$value": "#3a506b", "$description": "Mid — gradient endpoints, overlay base" },
-      "3": { "$value": "#5c7a96", "$description": "Muted — status success, cool glow" },
+      "3": { "$value": "#7191ae", "$description": "Muted — status success, cool glow. AA text on canvas (5.2:1)" },
       "4": { "$value": "#9bb5c9", "$description": "Light — toggle text, secondary links" },
       "5": { "$value": "#d6e4ee", "$description": "Pale — unused in dark mode" }
     },
@@ -29,7 +29,7 @@
       "$description": "Warm palette — derived from natural/landscape photography, earthy tones",
       "1": { "$value": "#5e4630", "$description": "Deep — app background gradient mid" },
       "2": { "$value": "#9e7b5c", "$description": "Mid — warm glow source" },
-      "3": { "$value": "#b28a67", "$description": "Light — unused" },
+      "3": { "$value": "#c69c75", "$description": "Light — warm emphasis, viz bright states" },
       "4": { "$value": "#e8d8c9", "$description": "Pale — legacy alias target" },
       "5": { "$value": "#f5efea", "$description": "Near-white — unused in dark mode" }
     },
@@ -37,7 +37,7 @@
       "$description": "Text palette — pure gray scale for content hierarchy",
       "1": { "$value": "#1a1a1a", "$description": "Deepest — unused in dark mode" },
       "2": { "$value": "#4a4a4a", "$description": "Dark — unused in dark mode" },
-      "3": { "$value": "#7a7a7a", "$description": "Muted — low-emphasis text" },
+      "3": { "$value": "#8c8c8c", "$description": "Muted — low-emphasis text. AA on all dark surfaces (5.2:1 canvas)" },
       "4": { "$value": "#b3b3b3", "$description": "Secondary — medium-emphasis text" },
       "5": { "$value": "#e6e6e6", "$description": "Primary — high-emphasis text" }
     }

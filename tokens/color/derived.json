@@ -164,56 +164,56 @@
       }
     },
     "border-accent": {
-      "$value": "#8a2a5c",
-      "$description": "Accent blended 30% into subtle border",
-      "$extensions": {
-        "com.cucusa.colorMix": {
-          "space": "srgb",
-          "color1": "{color.accent}",
-          "amount1": "30%",
-          "color2": "{color.border-subtle}"
-        }
-      }
-    },
-    "border-accent-hover": {
-      "$value": "#6b3858",
-      "$description": "Accent blended 20% into subtle border",
-      "$extensions": {
-        "com.cucusa.colorMix": {
-          "space": "srgb",
-          "color1": "{color.accent}",
-          "amount1": "20%",
-          "color2": "{color.border-subtle}"
-        }
-      }
-    },
-    "border-accent-strong": {
-      "$value": "#9a2261",
-      "$description": "Accent blended 40% into subtle border",
-      "$extensions": {
-        "com.cucusa.colorMix": {
-          "space": "srgb",
-          "color1": "{color.accent}",
-          "amount1": "40%",
-          "color2": "{color.border-subtle}"
-        }
-      }
-    },
-    "border-accent-highlight": {
-      "$value": "#8b4a78",
-      "$description": "Magenta-4 blended 25% into subtle border",
+      "$value": "#b63f89",
+      "$description": "Magenta-4 at 70% into canvas — interactive border, 3.4:1 vs canvas (WCAG 1.4.11)",
       "$extensions": {
         "com.cucusa.colorMix": {
           "space": "srgb",
           "color1": "{color.magenta.4}",
-          "amount1": "25%",
-          "color2": "{color.border-subtle}"
+          "amount1": "70%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "border-accent-hover": {
+      "$value": "#aa3d82",
+      "$description": "Magenta-4 at 65% into canvas — hover state, 3.1:1 vs canvas",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.4}",
+          "amount1": "65%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "border-accent-strong": {
+      "$value": "#cf4596",
+      "$description": "Magenta-4 at 80% into canvas — active/selected border, 4.1:1 vs canvas",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.4}",
+          "amount1": "80%",
+          "color2": "{color.bg.canvas}"
+        }
+      }
+    },
+    "border-accent-highlight": {
+      "$value": "#c3428f",
+      "$description": "Magenta-4 at 75% into canvas — highlighted border, 3.7:1 vs canvas",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.magenta.4}",
+          "amount1": "75%",
+          "color2": "{color.bg.canvas}"
         }
       }
     },
 
     "status-success": {
-      "$value": "#5c7a964d",
+      "$value": "#7191ae4d",
       "$description": "Sky-3 at 30% — success indicator",
       "$extensions": {
         "com.cucusa.colorMix": {
@@ -426,7 +426,7 @@
       }
     },
     "glow-cool": {
-      "$value": "#5c7a961a",
+      "$value": "#7191ae1a",
       "$description": "Sky-3 at 10% — cool radial glow",
       "$extensions": {
         "com.cucusa.colorMix": {
