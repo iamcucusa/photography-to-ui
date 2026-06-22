@@ -5,6 +5,36 @@
   flex-direction: column;
   gap: var(--space-lg);
   margin-top: var(--space-md);
+
+  /*
+   * Mode-aware image recede treatment.
+   * Dark: images recede by DARKENING into the near-black canvas.
+   * Light: darkening makes muddy grey blocks, so images recede by
+   * DESATURATING + sitting at higher opacity (low opacity over white
+   * washes to grey). Hover relaxes the filter and lifts opacity by a
+   * consistent delta across every image type.
+   */
+  --img-filter: contrast(0.85) brightness(0.9) saturate(0.95);
+  --img-filter-muted: contrast(0.62) brightness(0.72) saturate(0.85) blur(1px);
+  --img-filter-hover: contrast(0.95) brightness(1) saturate(1);
+  --img-rest: 0.7;
+  --img-rest-soft: 0.45;
+  --img-rest-faint: 0.32;
+  --img-hover: 0.9;
+  --img-hover-soft: 0.65;
+  --img-hover-faint: 0.55;
+}
+
+[data-theme='light'] .photography-context-insight {
+  --img-filter: saturate(0.9) brightness(1.02) contrast(1.02);
+  --img-filter-muted: saturate(0.72) brightness(1.04) contrast(0.98) blur(1.5px);
+  --img-filter-hover: saturate(1) brightness(1.02) contrast(1.04);
+  --img-rest: 0.92;
+  --img-rest-soft: 0.62;
+  --img-rest-faint: 0.5;
+  --img-hover: 1;
+  --img-hover-soft: 0.82;
+  --img-hover-faint: 0.7;
 }
 
 .photography-context-header {
@@ -104,12 +134,12 @@
 .photography-context-image {
   width: 100%;
   max-width: 280px;
-  opacity: 0.65;
+  opacity: var(--img-rest);
   transition: opacity var(--duration-normal) var(--easing-default);
 }
 
 .photography-context-image:hover {
-  opacity: 0.85;
+  opacity: var(--img-hover);
 }
 
 .photography-context-image--left {
@@ -125,7 +155,12 @@
   height: auto;
   border-radius: var(--radius-sm);
   object-fit: cover;
-  filter: contrast(0.85) brightness(0.9);
+  filter: var(--img-filter);
+  transition: filter var(--duration-normal) var(--easing-default);
+}
+
+.photography-context-image:hover .photography-context-img {
+  filter: var(--img-filter-hover);
 }
 
 .photography-context-text-block {
@@ -165,38 +200,48 @@
   width: 100%;
   max-width: 100%;
   height: 300px;
-  opacity: 0.4;
+  opacity: var(--img-rest-soft);
   margin-bottom: var(--space-lg);
 }
 
 .photography-context-plane--background:hover {
-  opacity: 0.65;
+  opacity: var(--img-hover-soft);
 }
 
 .photography-context-plane--counter {
   width: 180px;
   height: 180px;
   align-self: flex-end;
-  opacity: 0.7;
+  opacity: var(--img-rest);
   margin-top: var(--space-lg);
 }
 
 .photography-context-plane--counter:hover {
-  opacity: 0.9;
+  opacity: var(--img-hover);
 }
 
 .photography-context-img--muted {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: contrast(0.6) brightness(0.7) blur(1px);
+  filter: var(--img-filter-muted);
+  transition: filter var(--duration-normal) var(--easing-default);
+}
+
+.photography-context-plane--background:hover .photography-context-img--muted {
+  filter: var(--img-filter-hover);
 }
 
 .photography-context-img--small {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: contrast(0.8) brightness(0.85);
+  filter: var(--img-filter);
+  transition: filter var(--duration-normal) var(--easing-default);
+}
+
+.photography-context-plane--counter:hover .photography-context-img--small {
+  filter: var(--img-filter-hover);
 }
 
 .photography-context-text-block--overlay {
@@ -212,7 +257,7 @@
   width: 120px;
   height: 120px;
   align-self: flex-start;
-  opacity: 0.3;
+  opacity: var(--img-rest-faint);
   margin-top: var(--space-lg);
   transition: opacity var(--duration-normal) var(--easing-default);
   border-radius: var(--radius-sm);
@@ -220,19 +265,19 @@
 }
 
 .photography-context-pattern:hover {
-  opacity: 0.6;
+  opacity: var(--img-hover-faint);
 }
 
 .photography-context-pattern-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: contrast(0.8) brightness(0.85);
+  filter: var(--img-filter);
   transition: filter var(--duration-normal) var(--easing-default);
 }
 
 .photography-context-pattern:hover .photography-context-pattern-img {
-  filter: contrast(0.9) brightness(0.95);
+  filter: var(--img-filter-hover);
 }
 
 /* Responsive adjustments */
