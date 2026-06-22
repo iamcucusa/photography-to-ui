@@ -44,19 +44,19 @@
 }
 
 .photography-context-variant-btn:hover {
-  border-color: var(--color-magenta-4);
-  color: var(--color-magenta-4);
+  border-color: var(--color-border-accent);
+  color: var(--color-text-accent);
 }
 
 .photography-context-variant-btn:focus {
   outline: none;
-  border-color: var(--color-magenta-4);
+  border-color: var(--color-border-accent);
   box-shadow: 0 0 0 var(--focus-ring-width) var(--color-accent-subtle);
 }
 
 .photography-context-variant-btn--active {
-  border-color: var(--color-magenta-4);
-  color: var(--color-magenta-4);
+  border-color: var(--color-border-accent);
+  color: var(--color-text-accent);
   background-color: var(--color-accent-tint-soft);
 }
 

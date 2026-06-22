@@ -360,7 +360,7 @@
 }
 
 .carousel-slide-cta-arrow {
-  color: var(--color-magenta-3);
+  color: var(--color-text-accent);
   background-color: var(--color-accent-highlight);
   padding: 0 6px;
   font-weight: var(--font-weight-bold);
