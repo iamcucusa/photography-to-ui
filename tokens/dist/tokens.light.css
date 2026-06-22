@@ -5,6 +5,7 @@
 [data-theme='light'] {
   --backdrop-photo-opacity: 0.14; /** Light: photo recedes to texture so the dark source reads as a light surface, not a dark image bleeding through */
   --backdrop-tint-opacity: 0.72; /** Light: lighter tint over the receded photo */
+  --color-border-subtle: color-mix(in srgb, var(--color-frost-2) 55%, transparent); /** Frost-2 at 55% — subtle borders on light. Stronger than dark's 40% because a faint line on a near-white canvas needs more presence to define panel edges */
   --color-border-strong: color-mix(in srgb, var(--color-frost-2) 80%, transparent); /** Frost-2 at 80% — strong separator on light (3.3:1 composite vs canvas) */
   --color-border-accent: color-mix(in srgb, var(--color-magenta-2) 70%, var(--color-bg-canvas)); /** Magenta-2 at 70% into canvas — interactive border on light, 3.5:1 (same ladder as dark, one ramp step down) */
   --color-border-accent-hover: color-mix(in srgb, var(--color-magenta-2) 65%, var(--color-bg-canvas)); /** Magenta-2 at 65% into canvas — hover state on light, 3.2:1 */
@@ -22,6 +23,7 @@
   --color-glow-cool: color-mix(in srgb, var(--color-sky-3) 5%, transparent); /** Sky-3 at 5% — cool wash on light */
   --color-glow-warm: color-mix(in srgb, var(--color-sand-2) 3%, transparent); /** Sand-2 at 3% — warm wash on light */
   --color-glow-frost: color-mix(in srgb, var(--color-frost-2) 6%, transparent); /** Frost-2 at 6% — neutral wash on light (frost-1 reads as dirt on light surfaces) */
+  --color-text-cool: #2160a8; /** Cool technical tone on light — a tuned saturated blue (5.95:1 on canvas, AA). The sky ramp is intentionally desaturated and its only AA-on-light stop (sky-2) reads as near-black navy with no pop; links and code-syntax need a confident blue that's clearly distinct from the near-black body text. Dark mode's cool is sky-4 (airy light blue); each mode tunes cool for its ground */
   --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.06); /** Hairline bottom shadow — light-mode replacement for the dark top highlight */
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.12); /** High elevation on light — cards, slides */
   --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08); /** Soft elevation on light — shadows soften, they do not carry mood */
@@ -33,5 +35,4 @@
   --color-text-secondary: var(--color-ink-2); /** Medium-emphasis text on light — 8.3:1 on canvas (AAA) */
   --color-text-muted: var(--color-frost-2); /** Low-emphasis text on light — 4.9:1 on canvas (AA). Cool tint recedes into the frost canvas; ink-3 fails on light (3.15:1) */
   --color-text-accent: var(--color-magenta-1); /** Accent-colored text on light — the deep stop, 6.4:1 on canvas (AA). Mirrors dark mode's use of magenta-4 (the light stop) */
-  --color-text-cool: var(--color-sky-2); /** Cool technical tone on light — the deep sky stop, 7.7:1 on canvas (AAA). Mirrors dark mode's sky-4 */
 }

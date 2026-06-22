@@ -2,6 +2,18 @@
   "color": {
     "$type": "color",
 
+    "border-subtle": {
+      "$value": "#6b6b738c",
+      "$description": "Frost-2 at 55% — subtle borders on light. Stronger than dark's 40% because a faint line on a near-white canvas needs more presence to define panel edges",
+      "$extensions": {
+        "com.cucusa.colorMix": {
+          "space": "srgb",
+          "color1": "{color.frost.2}",
+          "amount1": "55%",
+          "color2": "transparent"
+        }
+      }
+    },
     "border-strong": {
       "$value": "#6b6b73cc",
       "$description": "Frost-2 at 80% — strong separator on light (3.3:1 composite vs canvas)",

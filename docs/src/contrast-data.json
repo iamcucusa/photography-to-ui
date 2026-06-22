@@ -285,7 +285,7 @@
       "label": "cool on canvas",
       "fg": "color.text.cool",
       "bg": "color.bg.canvas",
-      "ratio": 7.74,
+      "ratio": 5.95,
       "min": 4.5,
       "pass": true
     },
@@ -330,7 +330,7 @@
       "label": "cool on surface",
       "fg": "color.text.cool",
       "bg": "color.bg.surface",
-      "ratio": 7.25,
+      "ratio": 5.58,
       "min": 4.5,
       "pass": true
     },
@@ -375,7 +375,7 @@
       "label": "cool on elevated",
       "fg": "color.text.cool",
       "bg": "color.bg.elevated",
-      "ratio": 7.49,
+      "ratio": 5.76,
       "min": 4.5,
       "pass": true
     },
@@ -483,7 +483,7 @@
       "label": "cool on panel over photo",
       "fg": "color.text.cool",
       "bg": "bounded-backdrop",
-      "ratio": 7.46,
+      "ratio": 5.73,
       "min": 4.5,
       "pass": true
     }

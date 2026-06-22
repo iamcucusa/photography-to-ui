@@ -192,6 +192,9 @@
   flex-direction: column;
   gap: var(--space-lg);
   border: var(--divider-subtle);
+  /* Elevation reads as depth on light, is near-invisible on dark — so it
+     gives light mode the lift that dark gets from glow + translucency. */
+  box-shadow: var(--shadow-soft);
 }
 
 .primary-panel--posts {
@@ -363,6 +366,7 @@
   background-color: var(--color-bg-canvas);
   border-radius: var(--radius-sm);
   border: var(--divider-subtle);
+  box-shadow: var(--shadow-soft);
   text-align: left;
   cursor: pointer;
   position: relative;
@@ -371,7 +375,8 @@
     transform var(--duration-micro) var(--easing-emphasized),
     background-color var(--duration-micro) var(--easing-emphasized),
     border-color var(--duration-micro) var(--easing-emphasized),
-    border-left-width var(--duration-micro) var(--easing-emphasized);
+    border-left-width var(--duration-micro) var(--easing-emphasized),
+    box-shadow var(--duration-micro) var(--easing-emphasized);
 }
 
 .insight-item:hover {
@@ -379,6 +384,7 @@
   border-left-color: var(--color-border-accent);
   background-color: var(--color-bg-elevated);
   border-color: var(--color-border-accent-hover);
+  box-shadow: var(--shadow-hover);
   transform: translate3d(2px, 0, 0);
 }
 
