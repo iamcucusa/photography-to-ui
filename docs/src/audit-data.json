@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-22T18:16:23.458Z",
+  "timestamp": "2026-06-22T19:02:38.053Z",
   "tokenSource": {
-    "totalTokens": 150,
-    "totalDescribed": 158,
+    "totalTokens": 151,
+    "totalDescribed": 159,
     "descriptionCoverage": 105,
     "files": [
       {
@@ -43,8 +43,8 @@
       },
       {
         "file": "modes/light/derived.json",
-        "tokens": 17,
-        "described": 17,
+        "tokens": 18,
+        "described": 18,
         "coverage": 100
       },
       {
@@ -97,9 +97,9 @@
       "spacing": 237,
       "typography": 86,
       "font": 99,
-      "motion": 193,
-      "shape": 133,
-      "shadow": 6
+      "motion": 201,
+      "shape": 134,
+      "shadow": 10
     },
     "hardcoded": {
       "hex": [],
@@ -156,7 +156,7 @@
       }
     ],
     "layoutConstraints": [],
-    "totalTokenReferences": 1053,
+    "totalTokenReferences": 1066,
     "filesScanned": [
       "photography-to-ui/src/components/comingSoon.css",
       "photography-to-ui/src/components/photographyContextInsight.css",
@@ -353,7 +353,7 @@
     },
     {
       "file": "photography-to-ui/src/components/photographyContextInsight.css",
-      "hover": 6,
+      "hover": 9,
       "focus": 1,
       "active": 0,
       "disabled": 0

@@ -1,7 +1,7 @@
 {
   "lastReviewed": "2026-06-11",
   "reviewer": "Claude Fable 5",
-  "summary": "117 tokens, 100% description coverage, zero hardcoded colors. Light mode shipped: sparse DTCG overrides (29 tokens across semantic/derived/elevation), dark :root default, [data-theme='light'] opt-in. The contrast contract is now executable — 44 WCAG checks across both modes run in npm run check and CI. Playground and docs carry the toggle; switching-brain is pinned dark by design.",
+  "summary": "118 tokens, 100% description coverage, zero hardcoded colors. Light mode shipped and art-directed: sparse DTCG overrides, dark :root default, [data-theme='light'] opt-in. Contrast is executable — 54 WCAG checks across both modes (incl. worst-case backdrop) run in npm run check and CI. Light mode got a dedicated art-direction pass: mode-aware image treatment (no more muddy veils), elevation-based depth, stronger borders, and a tuned link blue. Playground and docs carry the toggle; switching-brain is pinned dark by design.",
   "priorities": [
     {
       "priority": 1,
@@ -64,7 +64,10 @@
     "Self-contained token package with fonts — ready for extraction",
     "tokens/dist committed to git — both mode files available after clone, no build step",
     "Bounded backdrop: text contrast over the photograph is now provable in both modes (canvas scrim floor + capped photo opacity), verified by the worst-case backdrop gate",
-    "Below-fold images lazy-loaded; reduced-motion honored; transitions narrowed off transition:all"
+    "Below-fold images lazy-loaded; reduced-motion honored; transitions narrowed off transition:all",
+    "Mode-aware image treatment: images recede by darkening on dark, by desaturating + higher opacity on light — no muddy dark veils on the light canvas",
+    "Light mode has real depth: elevation (shadow) replaces dark's glow, borders strengthened, panels separate from canvas",
+    "Consistent image-hover language across all four image types (relax filter + uniform opacity lift)"
   ],
   "risks": [
     "No automated visual regression baseline — and light mode doubled the visual surface (tracked as priority 5)"
