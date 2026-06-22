@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-22T17:43:57.457Z",
+  "timestamp": "2026-06-22T18:16:23.458Z",
   "tokenSource": {
     "totalTokens": 150,
     "totalDescribed": 158,
@@ -97,7 +97,7 @@
       "spacing": 237,
       "typography": 86,
       "font": 99,
-      "motion": 133,
+      "motion": 193,
       "shape": 133,
       "shadow": 6
     },
@@ -156,7 +156,7 @@
       }
     ],
     "layoutConstraints": [],
-    "totalTokenReferences": 993,
+    "totalTokenReferences": 1053,
     "filesScanned": [
       "photography-to-ui/src/components/comingSoon.css",
       "photography-to-ui/src/components/photographyContextInsight.css",

@@ -44,6 +44,12 @@
       "title": "Switching-brain paper mode",
       "status": "deferred",
       "detail": "The brain is pinned dark (glow-on-dark is the piece). A light variant means re-art-directing glow to shadow — a creative exploration, not a toggle."
+    },
+    {
+      "priority": 8,
+      "title": "Image asset optimization pipeline",
+      "status": "deferred",
+      "detail": "14MB of raster assets, no AVIF/WebP, no responsive srcset. Below-fold images are now lazy-loaded + decoding=async (initial-load impact addressed) and the backdrop dropped background-attachment:fixed. Full AVIF/WebP pipeline deferred: the approved vite-imagetools needs assets in src/ but they live in public/ — needs an assets-management-flow decision and photographic-quality QA. Scoped in a dedicated follow-up prompt."
     }
   ],
   "strengths": [
@@ -56,7 +62,9 @@
     "Catalog dogfoods the toggle and shows both bindings per flipping token",
     "100% token description coverage — every $value has a $description",
     "Self-contained token package with fonts — ready for extraction",
-    "tokens/dist committed to git — both mode files available after clone, no build step"
+    "tokens/dist committed to git — both mode files available after clone, no build step",
+    "Bounded backdrop: text contrast over the photograph is now provable in both modes (canvas scrim floor + capped photo opacity), verified by the worst-case backdrop gate",
+    "Below-fold images lazy-loaded; reduced-motion honored; transitions narrowed off transition:all"
   ],
   "risks": [
     "No automated visual regression baseline — and light mode doubled the visual surface (tracked as priority 5)"
