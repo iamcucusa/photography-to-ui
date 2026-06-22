@@ -627,7 +627,12 @@
   border-radius: var(--radius-sm);
   padding: var(--space-xs) var(--space-sm);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--easing-default);
+  transition:
+    color var(--duration-normal) var(--easing-default),
+    background-color var(--duration-normal) var(--easing-default),
+    border-color var(--duration-normal) var(--easing-default),
+    box-shadow var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
 }
 
 .typography-size-button:hover {
@@ -759,7 +764,12 @@
   border-radius: var(--radius-sm);
   padding: var(--space-xs) var(--space-md);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--easing-default);
+  transition:
+    color var(--duration-normal) var(--easing-default),
+    background-color var(--duration-normal) var(--easing-default),
+    border-color var(--duration-normal) var(--easing-default),
+    box-shadow var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
 }
 
 .colors-palette-button:hover {
@@ -1015,7 +1025,12 @@
   backdrop-filter: blur(8px);
   border-radius: var(--radius-sm);
   border: var(--divider-subtle);
-  transition: all var(--duration-normal) var(--easing-default);
+  transition:
+    color var(--duration-normal) var(--easing-default),
+    background-color var(--duration-normal) var(--easing-default),
+    border-color var(--duration-normal) var(--easing-default),
+    box-shadow var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
   display: inline-block;
 }
 
@@ -1080,7 +1095,10 @@
   overflow: hidden;
   cursor: pointer;
   padding: 0;
-  transition: all var(--duration-slow) var(--easing-default);
+  transition:
+    border-color var(--duration-slow) var(--easing-default),
+    box-shadow var(--duration-slow) var(--easing-default),
+    transform var(--duration-slow) var(--easing-default);
 }
 
 .interaction-image-banner {
@@ -1180,7 +1198,12 @@
   border-radius: var(--radius-sm);
   border: var(--divider-subtle);
   box-shadow: var(--shadow-soft);
-  transition: all var(--duration-normal) var(--easing-default);
+  transition:
+    color var(--duration-normal) var(--easing-default),
+    background-color var(--duration-normal) var(--easing-default),
+    border-color var(--duration-normal) var(--easing-default),
+    box-shadow var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
 }
 
 .interaction-image-container:hover .interaction-click-hint {
@@ -1482,7 +1505,12 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--easing-default);
+  transition:
+    color var(--duration-normal) var(--easing-default),
+    background-color var(--duration-normal) var(--easing-default),
+    border-color var(--duration-normal) var(--easing-default),
+    box-shadow var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
   white-space: nowrap;
 }
 

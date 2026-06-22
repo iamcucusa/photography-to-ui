@@ -136,7 +136,12 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--easing-default);
+  transition:
+    color var(--duration-normal) var(--easing-default),
+    background-color var(--duration-normal) var(--easing-default),
+    border-color var(--duration-normal) var(--easing-default),
+    box-shadow var(--duration-normal) var(--easing-default),
+    transform var(--duration-normal) var(--easing-default);
   white-space: nowrap;
 }
 
