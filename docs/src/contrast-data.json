@@ -200,6 +200,51 @@
       "pass": true
     },
     {
+      "mode": "dark",
+      "label": "primary on panel over photo",
+      "fg": "color.text.primary",
+      "bg": "bounded-backdrop",
+      "ratio": 13,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "secondary on panel over photo",
+      "fg": "color.text.secondary",
+      "bg": "bounded-backdrop",
+      "ratio": 7.74,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "muted on panel over photo",
+      "fg": "color.text.muted",
+      "bg": "bounded-backdrop",
+      "ratio": 4.83,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "accent on panel over photo",
+      "fg": "color.text.accent",
+      "bg": "bounded-backdrop",
+      "ratio": 5.41,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "cool on panel over photo",
+      "fg": "color.text.cool",
+      "bg": "bounded-backdrop",
+      "ratio": 7.61,
+      "min": 4.5,
+      "pass": true
+    },
+    {
       "mode": "light",
       "label": "primary on canvas",
       "fg": "color.text.primary",
@@ -395,6 +440,51 @@
       "bg": "color.bg.surface",
       "ratio": 4.47,
       "min": 3,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "primary on panel over photo",
+      "fg": "color.text.primary",
+      "bg": "bounded-backdrop",
+      "ratio": 15.69,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "secondary on panel over photo",
+      "fg": "color.text.secondary",
+      "bg": "bounded-backdrop",
+      "ratio": 7.99,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "muted on panel over photo",
+      "fg": "color.text.muted",
+      "bg": "bounded-backdrop",
+      "ratio": 4.76,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "accent on panel over photo",
+      "fg": "color.text.accent",
+      "bg": "bounded-backdrop",
+      "ratio": 6.12,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "light",
+      "label": "cool on panel over photo",
+      "fg": "color.text.cool",
+      "bg": "bounded-backdrop",
+      "ratio": 7.46,
+      "min": 4.5,
       "pass": true
     }
   ]

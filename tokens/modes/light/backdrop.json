@@ -1,0 +1,13 @@
+{
+  "backdrop": {
+    "$type": "number",
+    "photo-opacity": {
+      "$value": 0.14,
+      "$description": "Light: photo recedes to texture so the dark source reads as a light surface, not a dark image bleeding through"
+    },
+    "tint-opacity": {
+      "$value": 0.72,
+      "$description": "Light: lighter tint over the receded photo"
+    }
+  }
+}

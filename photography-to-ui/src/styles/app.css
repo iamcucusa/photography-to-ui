@@ -1,47 +1,60 @@
 /* App Layout Primitives */
 
+/*
+ * Bounded backdrop system (works in both modes).
+ *
+ * Three stacked layers, back to front:
+ *   1. .app background-color  — a SOLID canvas scrim floor. This bounds the
+ *      backdrop: nothing behind content can be lighter (light mode) or darker
+ *      (dark mode) than the canvas, so contrast over translucent panels is
+ *      provable instead of left to the photo.
+ *   2. .app::before           — the photograph, filtered and opacity-capped per
+ *      mode. filter lives on the pseudo, so it never touches content. In light
+ *      mode the photo is brightened and dialed back to read as texture.
+ *   3. .app::after            — the brand tint (gradient + radial glows).
+ *
+ * Backdrop control vars are playground art direction, not cross-consumer
+ * tokens (docs has no photo, brain is pinned dark) — so they live here,
+ * mode-gated, per the "don't tokenize playground-specific art direction" rule.
+ */
 .app {
+  /* Photo treatment is per-mode art direction; opacity caps come from tokens
+     (--backdrop-*) because they are contrast-load-bearing, see check-contrast. */
+  --photo-filter: none;
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url('/photography-to-ui/assets/banner.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* Keep background fixed during scroll/content changes */
+  background-color: var(--color-bg-canvas);
   position: relative;
-  /* Isolate background from content reflows */
   isolation: isolate;
+}
+
+[data-theme='light'] .app {
+  /* Photo recedes to texture; brighten + soften so the dark source reads as
+     a light surface rather than a dark image bleeding through. */
+  --photo-filter: brightness(1.4) contrast(0.9) saturate(0.8);
 }
 
 .app::before {
   content: '';
-  position: fixed; /* Fixed instead of absolute to prevent movement */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-app-bg-start) 0%,
-    var(--color-app-bg-mid) 50%,
-    var(--color-app-bg-end) 100%
-  );
-  opacity: 0.78;
-  z-index: 0;
-  pointer-events: none; /* Prevent interaction */
-  /* Optimize for performance */
-  will-change: transform;
-  transform: translateZ(0); /* Force GPU layer */
+  position: fixed;
+  inset: 0;
+  background-image: url('/photography-to-ui/assets/banner.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: var(--backdrop-photo-opacity);
+  filter: var(--photo-filter);
+  z-index: -1;
+  pointer-events: none;
+  transform: translateZ(0); /* own GPU layer — fixed without attachment:fixed jank */
 }
 
 .app::after {
   content: '';
-  position: fixed; /* Fixed instead of absolute to prevent movement */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed;
+  inset: 0;
   background:
     radial-gradient(
       circle at 25% 40%,
@@ -55,18 +68,21 @@
       var(--color-glow-warm) 25%,
       transparent 55%
     ),
-    linear-gradient(180deg, var(--color-glow-frost) 0%, transparent 25%);
-  opacity: 0.85;
-  z-index: 0;
-  pointer-events: none; /* Prevent interaction */
-  /* Optimize for performance */
-  will-change: transform;
-  transform: translateZ(0); /* Force GPU layer */
+    linear-gradient(
+      135deg,
+      var(--color-app-bg-start) 0%,
+      var(--color-app-bg-mid) 50%,
+      var(--color-app-bg-end) 100%
+    );
+  opacity: var(--backdrop-tint-opacity);
+  z-index: -1;
+  pointer-events: none;
+  transform: translateZ(0);
 }
 
 .app > * {
   position: relative;
-  z-index: 1;
+  z-index: 0;
 }
 
 /* Page Title */

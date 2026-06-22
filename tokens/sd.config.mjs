@@ -178,6 +178,7 @@ const TRANSFORMS = [
 const BASE_SOURCES = [
   // Alphabetical by path — matches the original `./**/*.json` glob order so
   // the dark output stays diff-stable.
+  resolve(__dirname, './backdrop.json'),
   resolve(__dirname, './color/*.json'),
   resolve(__dirname, './elevation.json'),
   resolve(__dirname, './motion.json'),

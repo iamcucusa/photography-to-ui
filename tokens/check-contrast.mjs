@@ -29,6 +29,7 @@ const BASE_FILES = [
   'color/semantic.json',
   'color/derived.json',
   'shape.json',
+  'backdrop.json',
 ]
 
 function walk(obj, path, out) {
@@ -176,6 +177,54 @@ function runMode(mode) {
   return results
 }
 
+// Text roles that appear on translucent panels over the photographic backdrop.
+const PANEL_TEXT_ROLES = [
+  'color.text.primary',
+  'color.text.secondary',
+  'color.text.muted',
+  'color.text.accent',
+  'color.text.cool',
+]
+
+// Worst-case backdrop check: a translucent panel sits over the bounded backdrop
+// (canvas scrim floor -> photo capped at backdrop.photo-opacity -> tint). The
+// photo is a photograph, so treat it as either pure black or pure white at its
+// cap; if text stays AA in both extremes, contrast is photo-INDEPENDENT.
+// Mirrors the .app layer stack in photography-to-ui/src/styles/app.css.
+function runBackdrop(mode) {
+  const tokens = loadTokens(mode)
+  const canvas = resolveColor('color.bg.canvas', tokens)
+  const tintMid = resolveColor('color.app-bg-mid', tokens)
+  const panel = resolveColor('color.bg.translucent', tokens) // canvas-based, carries the panel alpha
+  const photoA = tokens.get('backdrop.photo-opacity').$value
+  const tintA = tokens.get('backdrop.tint-opacity').$value
+
+  const BLACK = { r: 0, g: 0, b: 0, a: 1 }
+  const WHITE = { r: 255, g: 255, b: 255, a: 1 }
+  const results = []
+
+  for (const role of PANEL_TEXT_ROLES) {
+    const text = resolveColor(role, tokens)
+    let worst = Infinity
+    for (const photo of [BLACK, WHITE]) {
+      let bd = composite({ ...photo, a: photoA }, canvas) // photo over canvas floor
+      bd = composite({ ...tintMid, a: tintA }, bd) // brand tint over the photo
+      const panelBg = composite({ r: panel.r, g: panel.g, b: panel.b, a: panel.a }, bd)
+      worst = Math.min(worst, contrast(text, panelBg))
+    }
+    results.push({
+      mode,
+      label: `${role.split('.').pop()} on panel over photo`,
+      fg: role,
+      bg: 'bounded-backdrop',
+      ratio: +worst.toFixed(2),
+      min: 4.5,
+      pass: worst >= 4.5,
+    })
+  }
+  return results
+}
+
 // ── Run ────────────────────────────────────────────────────────────
 
 const MODES = ['dark', 'light']
@@ -183,7 +232,7 @@ const all = []
 let failures = 0
 
 for (const mode of MODES) {
-  const results = runMode(mode)
+  const results = [...runMode(mode), ...runBackdrop(mode)]
   all.push(...results)
   const failed = results.filter((r) => !r.pass)
   failures += failed.length

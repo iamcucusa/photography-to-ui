@@ -1,10 +1,16 @@
 {
-  "timestamp": "2026-06-11T15:33:41.252Z",
+  "timestamp": "2026-06-22T17:43:57.457Z",
   "tokenSource": {
-    "totalTokens": 146,
-    "totalDescribed": 153,
+    "totalTokens": 150,
+    "totalDescribed": 158,
     "descriptionCoverage": 105,
     "files": [
+      {
+        "file": "backdrop.json",
+        "tokens": 2,
+        "described": 3,
+        "coverage": 150
+      },
       {
         "file": "color/derived.json",
         "tokens": 38,
@@ -27,6 +33,12 @@
         "file": "elevation.json",
         "tokens": 5,
         "described": 5,
+        "coverage": 100
+      },
+      {
+        "file": "modes/light/backdrop.json",
+        "tokens": 2,
+        "described": 2,
         "coverage": 100
       },
       {

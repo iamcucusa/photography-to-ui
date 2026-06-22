@@ -23,9 +23,9 @@
     },
     {
       "priority": 4,
-      "title": "Contrast over photography is unguaranteed",
-      "status": "open",
-      "detail": "The playground renders text over a photo behind a 0.78-opacity gradient; translucent panels let ~15% bleed through. Both modes pass on solid surfaces, but the photo region is unverifiable by token math. Mitigation options: raise panel opacity, or keep body text inside solid-surface cards."
+      "title": "Contrast over photography",
+      "status": "resolved",
+      "detail": "Resolved by the bounded backdrop system: a solid canvas scrim floor + photo capped at backdrop.photo-opacity (0.55 dark / 0.14 light) + tint. check-contrast.mjs now verifies every panel text role against the worst-case backdrop (photo treated as pure black AND pure white) in both modes — text stays AA regardless of photo content. The bleed aesthetic is preserved; the guarantee is photo-independent."
     },
     {
       "priority": 5,

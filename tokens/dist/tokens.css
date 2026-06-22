@@ -3,6 +3,8 @@
  */
 
 :root {
+  --backdrop-photo-opacity: 0.55; /** Dark: photograph is prominent over the canvas scrim floor */
+  --backdrop-tint-opacity: 0.82; /** Dark: brand gradient + glow tint strength over the photo */
   --color-bg-translucent: color-mix(in srgb, var(--color-bg-canvas) 85%, transparent); /** Canvas at 85% — card backgrounds */
   --color-bg-elevated: color-mix(in srgb, var(--color-bg-surface) 50%, var(--color-bg-canvas) 50%); /** Surface/canvas 50-50 blend */
   --color-bg-overlay: color-mix(in srgb, var(--color-bg-canvas) 95%, transparent); /** Canvas at 95% — modal overlays */

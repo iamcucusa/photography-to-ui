@@ -211,6 +211,8 @@ const MUST_FLIP = {
     'color.text.muted',
     'color.text.accent',
     'color.text.cool',
+    'backdrop.photo-opacity',
+    'backdrop.tint-opacity',
     // color.accent and color.text.on-accent are constant across modes by design
   ],
 }
