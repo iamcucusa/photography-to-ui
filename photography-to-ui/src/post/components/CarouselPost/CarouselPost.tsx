@@ -187,7 +187,7 @@ function CarouselSlide({ slide, aspect, slideIndex, totalSlides, onNavigate }: C
     >
       {slide.image && (
         <div className={`carousel-slide-image carousel-slide-image--${slide.image.mode}`}>
-          <img src={slide.image.src} alt={slide.image.alt} />
+          <img src={slide.image.src} alt={slide.image.alt} loading="lazy" decoding="async" />
         </div>
       )}
       <div

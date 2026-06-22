@@ -54,10 +54,18 @@ function Interaction() {
               aria-label={isRevealed ? 'Hide original image' : 'Reveal original image'}
             >
               <div className="interaction-image-overlay">
-                <img src={image.legoSrc} alt={image.alt} className="interaction-image-lego" />
+                <img
+                  src={image.legoSrc}
+                  alt={image.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="interaction-image-lego"
+                />
                 <img
                   src={image.originalSrc}
                   alt={image.alt}
+                  loading="lazy"
+                  decoding="async"
                   className={`interaction-image-original ${isRevealed ? 'interaction-image-visible' : ''}`}
                 />
                 {!isRevealed && (

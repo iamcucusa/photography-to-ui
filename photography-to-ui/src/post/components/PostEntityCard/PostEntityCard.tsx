@@ -69,7 +69,7 @@ export function PostEntityCard({ post, onOpen, debug = false }: PostEntityCardPr
       )}
       {content.cover?.src && (
         <div className="post-entity-card-cover" style={{ aspectRatio }}>
-          <img src={content.cover.src} alt={content.cover.alt} />
+          <img src={content.cover.src} alt={content.cover.alt} loading="lazy" decoding="async" />
           {debug && (
             <div className="post-entity-card-debug-label">
               {post.linkedinFormat} ({aspectRatio})

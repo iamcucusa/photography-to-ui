@@ -84,7 +84,7 @@ function Typography() {
                 maxWidth: '100%',
               }}
             >
-              <img src={imageSource} alt="" />
+              <img src={imageSource} alt="" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>

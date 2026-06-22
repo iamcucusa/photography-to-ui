@@ -58,6 +58,8 @@ function PeripheralVariant() {
         <img
           src={`${baseUrl}assets/magnific/magnific-photo-01_1x1_master.jpeg`}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="photography-context-img"
         />
       </div>
@@ -77,6 +79,8 @@ function PeripheralVariant() {
         <img
           src={`${baseUrl}assets/magnific/magnific-photo-02_2x3_master.jpeg`}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="photography-context-img"
         />
       </div>
@@ -92,6 +96,8 @@ function PeripheralVariant() {
         <img
           src={`${baseUrl}assets/magnific/magnific-photo-03_3x2_master.jpeg`}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="photography-context-img"
         />
       </div>
@@ -108,6 +114,8 @@ function AsymmetricVariant() {
         <img
           src={`${baseUrl}assets/magnific/magnific-photo-02_1x1_master.jpeg`}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="photography-context-img photography-context-img--muted"
         />
       </div>
@@ -124,6 +132,8 @@ function AsymmetricVariant() {
         <img
           src={`${baseUrl}assets/magnific/magnific-photo-03_3x2_master.jpeg`}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="photography-context-img photography-context-img--small"
         />
       </div>
@@ -143,6 +153,8 @@ function AsymmetricVariant() {
         <img
           src={`${baseUrl}assets/magnific/magnific-photo-01_1x1_master.jpeg`}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="photography-context-pattern-img"
         />
       </div>
