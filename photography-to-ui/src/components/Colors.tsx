@@ -215,7 +215,10 @@ function Colors() {
   const [activePalette, setActivePalette] = useState<string>('magenta')
   const { mode } = useTheme()
   const palettes = useMemo(() => buildPalettes(), [])
-  // Recompute when the mode flips — the probe reads the live cascade
+  // `mode` is the recompute trigger, not a value dependency: buildStructure
+  // reads resolved colors from the live CSS cascade (getComputedStyle), which
+  // changes when the theme flips. ESLint can't see that DOM dependency.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const structure = useMemo(() => buildStructure(), [mode])
 
   const showStructure = activePalette === 'structure'
