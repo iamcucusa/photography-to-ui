@@ -12,6 +12,15 @@ html[data-theme='light'] {
   color-scheme: light;
 }
 
+/* Theme switch: kill transitions for the frame the mode flips (set + removed
+   by useTheme) so the recolor is instant rather than an animated morph. */
+[data-theme-switching],
+[data-theme-switching] *,
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+  transition: none !important;
+}
+
 /* Mode toggle */
 .mode-toggle {
   position: fixed;

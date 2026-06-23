@@ -22,17 +22,29 @@ export function useTheme(): { mode: ThemeMode; toggle: () => void } {
   const mode = useSyncExternalStore(subscribe, readMode)
 
   const toggle = useCallback(() => {
+    const root = document.documentElement
     const next: ThemeMode = readMode() === 'light' ? 'dark' : 'light'
+
+    // Suppress transitions for the switch itself, so colors/borders/shadows
+    // change instantly instead of animating (which reads as a laggy morph,
+    // worst on the menu cards that transition the most properties). Hover
+    // transitions are unaffected — the suppressor is dropped next frame.
+    root.setAttribute('data-theme-switching', '')
+
     if (next === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light')
+      root.setAttribute('data-theme', 'light')
     } else {
-      document.documentElement.removeAttribute('data-theme')
+      root.removeAttribute('data-theme')
     }
     try {
       localStorage.setItem(STORAGE_KEY, next)
     } catch {
       // storage unavailable — mode still applies for this session
     }
+
+    // Commit the suppressed paint, then re-enable transitions next frame.
+    void root.offsetHeight
+    requestAnimationFrame(() => root.removeAttribute('data-theme-switching'))
   }, [])
 
   return { mode, toggle }

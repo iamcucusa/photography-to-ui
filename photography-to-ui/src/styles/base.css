@@ -116,3 +116,12 @@ img {
     scroll-behavior: auto !important;
   }
 }
+
+/* Theme switch: kill transitions for the single frame the mode flips, so the
+   recolor is instant rather than a staggered morph. Set + removed by useTheme. */
+[data-theme-switching],
+[data-theme-switching] *,
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+  transition: none !important;
+}
