@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Picture } from './Picture'
 import './photographyContextInsight.css'
 
 const baseUrl = import.meta.env.BASE_URL
@@ -55,12 +56,11 @@ function PeripheralVariant() {
   return (
     <div className="photography-context-variant photography-context-variant--peripheral">
       <div className="photography-context-image photography-context-image--left">
-        <img
+        <Picture
           src={`${baseUrl}assets/magnific/magnific-photo-01_1x1_master.jpeg`}
           alt=""
-          loading="lazy"
-          decoding="async"
           className="photography-context-img"
+          sizes="(min-width: 768px) 320px, 280px"
         />
       </div>
 
@@ -76,12 +76,11 @@ function PeripheralVariant() {
       </div>
 
       <div className="photography-context-image photography-context-image--right">
-        <img
+        <Picture
           src={`${baseUrl}assets/magnific/magnific-photo-02_2x3_master.jpeg`}
           alt=""
-          loading="lazy"
-          decoding="async"
           className="photography-context-img"
+          sizes="(min-width: 768px) 320px, 280px"
         />
       </div>
 
@@ -93,12 +92,11 @@ function PeripheralVariant() {
       </div>
 
       <div className="photography-context-image photography-context-image--left">
-        <img
+        <Picture
           src={`${baseUrl}assets/magnific/magnific-photo-03_3x2_master.jpeg`}
           alt=""
-          loading="lazy"
-          decoding="async"
           className="photography-context-img"
+          sizes="(min-width: 768px) 320px, 280px"
         />
       </div>
     </div>
@@ -111,12 +109,11 @@ function AsymmetricVariant() {
   return (
     <div className="photography-context-variant photography-context-variant--asymmetric">
       <div className="photography-context-plane photography-context-plane--background">
-        <img
+        <Picture
           src={`${baseUrl}assets/magnific/magnific-photo-02_1x1_master.jpeg`}
           alt=""
-          loading="lazy"
-          decoding="async"
           className="photography-context-img photography-context-img--muted"
+          sizes="(min-width: 768px) 600px, 100vw"
         />
       </div>
 
@@ -129,12 +126,11 @@ function AsymmetricVariant() {
       </div>
 
       <div className="photography-context-plane photography-context-plane--counter">
-        <img
+        <Picture
           src={`${baseUrl}assets/magnific/magnific-photo-03_3x2_master.jpeg`}
           alt=""
-          loading="lazy"
-          decoding="async"
           className="photography-context-img photography-context-img--small"
+          sizes="220px"
         />
       </div>
 
@@ -150,12 +146,11 @@ function AsymmetricVariant() {
       </div>
 
       <div className="photography-context-pattern">
-        <img
+        <Picture
           src={`${baseUrl}assets/magnific/magnific-photo-01_1x1_master.jpeg`}
           alt=""
-          loading="lazy"
-          decoding="async"
           className="photography-context-pattern-img"
+          sizes="120px"
         />
       </div>
     </div>

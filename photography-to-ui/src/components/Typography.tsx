@@ -1,4 +1,10 @@
 import { useState, useMemo } from 'react'
+import { Picture } from './Picture'
+
+const baseUrl = import.meta.env.BASE_URL
+// Single master; the responsive <Picture> serves the right width for the box.
+// Replaces the old hand-made _120px…_400px variants (one mechanism, not two).
+const previewImage = `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_master.jpeg`
 
 const typeScale = [
   { name: 'xs', token: '--text-xs', label: 'XS' },
@@ -11,21 +17,6 @@ const typeScale = [
 ]
 
 const phrase = 'A beautiful face that codes and design.'
-
-// Pre-sized image sources
-const getImageSource = (selectedSize: string): string => {
-  const baseUrl = import.meta.env.BASE_URL
-  const imageMap: Record<string, string> = {
-    xs: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_120px.jpg`,
-    sm: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_150px.jpg`,
-    md: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_200px.jpg`,
-    lg: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_250px.jpg`,
-    xl: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_300px.jpg`,
-    xxl: `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_350px.jpg`,
-    'display-xl': `${baseUrl}assets/magnific/magnific-photo-01_3x2_1_400px.jpg`,
-  }
-  return imageMap[selectedSize] || imageMap['md']
-}
 
 const getImageWidth = (selectedSize: string): string => {
   const sizeMap: Record<string, string> = {
@@ -48,7 +39,6 @@ function Typography() {
     () => typeScale.find((scale) => scale.name === selectedSize),
     [selectedSize],
   )
-  const imageSource = useMemo(() => getImageSource(selectedSize), [selectedSize])
   const imageWidth = useMemo(() => getImageWidth(selectedSize), [selectedSize])
 
   return (
@@ -84,7 +74,7 @@ function Typography() {
                 maxWidth: '100%',
               }}
             >
-              <img src={imageSource} alt="" loading="lazy" decoding="async" />
+              <Picture src={previewImage} alt="" sizes={imageWidth} />
             </div>
           </div>
         </div>

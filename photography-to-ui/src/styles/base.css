@@ -105,6 +105,12 @@ img {
   display: block;
 }
 
+/* <picture> wraps responsive <img>s — keep it layout-transparent so the img
+   stays the effective flex/grid child and existing `.x img` styles apply. */
+picture {
+  display: contents;
+}
+
 /* Respect reduced-motion: neutralize animations and transitions, keep state changes instant */
 @media (prefers-reduced-motion: reduce) {
   *,

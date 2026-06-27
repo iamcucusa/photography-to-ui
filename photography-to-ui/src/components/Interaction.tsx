@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Picture } from './Picture'
 
 const baseUrl = import.meta.env.BASE_URL
 
@@ -54,19 +55,17 @@ function Interaction() {
               aria-label={isRevealed ? 'Hide original image' : 'Reveal original image'}
             >
               <div className="interaction-image-overlay">
-                <img
+                <Picture
                   src={image.legoSrc}
                   alt={image.alt}
-                  loading="lazy"
-                  decoding="async"
                   className="interaction-image-lego"
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
-                <img
+                <Picture
                   src={image.originalSrc}
                   alt={image.alt}
-                  loading="lazy"
-                  decoding="async"
                   className={`interaction-image-original ${isRevealed ? 'interaction-image-visible' : ''}`}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
                 {!isRevealed && (
                   <div className="interaction-image-hint">

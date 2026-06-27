@@ -3,6 +3,8 @@ import type React from 'react'
 import type { PostEntity, CarouselSlide } from '../../model'
 import { PostNarrative } from '../PostNarrative/PostNarrative'
 import { PostTags } from '../PostTags/PostTags'
+import { Picture } from '../../../components/Picture'
+import { imageSetCss } from '../../../assets'
 import './CarouselPost.css'
 
 export type CarouselPostProps = {
@@ -187,7 +189,11 @@ function CarouselSlide({ slide, aspect, slideIndex, totalSlides, onNavigate }: C
     >
       {slide.image && (
         <div className={`carousel-slide-image carousel-slide-image--${slide.image.mode}`}>
-          <img src={slide.image.src} alt={slide.image.alt} loading="lazy" decoding="async" />
+          <Picture
+            src={slide.image.src}
+            alt={slide.image.alt}
+            sizes="(min-width: 768px) 440px, 100vw"
+          />
         </div>
       )}
       <div
@@ -195,7 +201,8 @@ function CarouselSlide({ slide, aspect, slideIndex, totalSlides, onNavigate }: C
         style={
           slide.image?.mode === 'full'
             ? ({
-                '--carousel-slide-full-bg-image': `url('${slide.image.src}')`,
+                '--carousel-slide-full-bg-image':
+                  imageSetCss(slide.image.src) ?? `url('${slide.image.src}')`,
               } as React.CSSProperties)
             : undefined
         }

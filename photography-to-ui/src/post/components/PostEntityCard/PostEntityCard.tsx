@@ -5,6 +5,7 @@ import { PostNarrative } from '../PostNarrative/PostNarrative'
 import { PostTags } from '../PostTags/PostTags'
 import { PostQuote } from '../PostQuote/PostQuote'
 import { buildNarrativeText } from '../../utils/narrative'
+import { Picture } from '../../../components/Picture'
 import './PostEntityCard.css'
 
 export type PostEntityCardProps = {
@@ -69,7 +70,11 @@ export function PostEntityCard({ post, onOpen, debug = false }: PostEntityCardPr
       )}
       {content.cover?.src && (
         <div className="post-entity-card-cover" style={{ aspectRatio }}>
-          <img src={content.cover.src} alt={content.cover.alt} loading="lazy" decoding="async" />
+          <Picture
+            src={content.cover.src}
+            alt={content.cover.alt}
+            sizes="(min-width: 768px) 440px, 100vw"
+          />
           {debug && (
             <div className="post-entity-card-debug-label">
               {post.linkedinFormat} ({aspectRatio})

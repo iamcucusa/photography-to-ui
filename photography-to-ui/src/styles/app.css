@@ -40,7 +40,15 @@
   content: '';
   position: fixed;
   inset: 0;
+  /* Fallback first, then AVIF/WebP via image-set for supporting browsers.
+     1920w covers the full-screen backdrop (low opacity + filtered, so a single
+     large width is enough). Derivatives from scripts/optimize-assets.mjs. */
   background-image: url('/photography-to-ui/assets/banner.jpg');
+  background-image: image-set(
+    url('/photography-to-ui/assets/banner-1920w.avif') type('image/avif'),
+    url('/photography-to-ui/assets/banner-1920w.webp') type('image/webp'),
+    url('/photography-to-ui/assets/banner.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
