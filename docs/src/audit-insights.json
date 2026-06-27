@@ -1,7 +1,7 @@
 {
-  "lastReviewed": "2026-06-11",
+  "lastReviewed": "2026-06-27",
   "reviewer": "Claude Fable 5",
-  "summary": "118 tokens, 100% description coverage, zero hardcoded colors. Light mode shipped and art-directed: sparse DTCG overrides, dark :root default, [data-theme='light'] opt-in. Contrast is executable — 54 WCAG checks across both modes (incl. worst-case backdrop) run in npm run check and CI. Light mode got a dedicated art-direction pass: mode-aware image treatment (no more muddy veils), elevation-based depth, stronger borders, and a tuned link blue. Playground and docs carry the toggle; switching-brain is pinned dark by design.",
+  "summary": "118 tokens, 100% description coverage, zero hardcoded colors. Light mode shipped and art-directed: sparse DTCG overrides, dark :root default, [data-theme='light'] opt-in. Contrast is executable — 54 WCAG checks across both modes (incl. worst-case backdrop) run in npm run check and CI. Light mode got a dedicated art-direction pass: mode-aware image treatment (no more muddy veils), elevation-based depth, stronger borders, and a tuned link blue. Images now ship responsive AVIF/WebP via a sharp build pipeline (manifest + <Picture>/image-set), post-gallery payload down ~95%. Playground and docs carry the toggle; switching-brain is pinned dark by design.",
   "priorities": [
     {
       "priority": 1,
@@ -48,8 +48,8 @@
     {
       "priority": 8,
       "title": "Image asset optimization pipeline",
-      "status": "deferred",
-      "detail": "14MB of raster assets, no AVIF/WebP, no responsive srcset. Below-fold images are now lazy-loaded + decoding=async (initial-load impact addressed) and the backdrop dropped background-attachment:fixed. Full AVIF/WebP pipeline deferred: the approved vite-imagetools needs assets in src/ but they live in public/ — needs an assets-management-flow decision and photographic-quality QA. Scoped in a dedicated follow-up prompt."
+      "status": "resolved",
+      "detail": "Shipped. scripts/optimize-assets.mjs (sharp) generates responsive AVIF/WebP from the public/assets originals (AVIF q50 / WebP q75, quality approved against samples) + a committed manifest; the <Picture> helper and imageSetCss() consume them with exact srcset and graceful <img> fallback. Originals untouched, derivatives gitignored + regenerated on predev/prebuild. Legacy hand-made _NNNpx variants removed (one mechanism). Measured: post-gallery image payload 4.9MB to 260KB (~95%); the 3MB PNG to a few KB AVIF; banner + carousel backgrounds via image-set()."
     }
   ],
   "strengths": [
@@ -67,7 +67,8 @@
     "Below-fold images lazy-loaded; reduced-motion honored; transitions narrowed off transition:all",
     "Mode-aware image treatment: images recede by darkening on dark, by desaturating + higher opacity on light — no muddy dark veils on the light canvas",
     "Light mode has real depth: elevation (shadow) replaces dark's glow, borders strengthened, panels separate from canvas",
-    "Consistent image-hover language across all four image types (relax filter + uniform opacity lift)"
+    "Consistent image-hover language across all four image types (relax filter + uniform opacity lift)",
+    "Responsive AVIF/WebP pipeline: one mechanism (manifest + <Picture>/image-set), originals pristine, post-gallery payload down ~95%"
   ],
   "risks": [
     "No automated visual regression baseline — and light mode doubled the visual surface (tracked as priority 5)"

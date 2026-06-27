@@ -150,6 +150,7 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
 - **Claude Code + CLAUDE.md**: AI-scaffolding layer. Per-consumer CLAUDE.md files encode domain-specific conventions.
 - **Audit scanner**: `npm run audit` scans CSS for token coverage, hardcoded values, accessibility. `/design-system audit` skill writes strategic insights.
 - **Contrast checker**: `check-contrast.mjs` enforces the contrast contract per mode in `npm run check` and CI — token edits cannot silently break either mode.
+- **Image pipeline** (photography-to-ui): `scripts/optimize-assets.mjs` (sharp) generates responsive AVIF/WebP from `public/assets` originals + a committed manifest; the `<Picture>` helper and `imageSetCss()` consume them. Derivatives gitignored, regenerated on predev/prebuild. See `photography-to-ui/CLAUDE.md` → Images.
 
 ## ESLint/Prettier notes
 

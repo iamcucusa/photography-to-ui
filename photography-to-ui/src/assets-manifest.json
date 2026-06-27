@@ -1,106 +1,200 @@
 {
   "assets/banner.jpg": {
-    "widths": [400, 800, 1280, 1920],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920
+    ],
     "w": 1920,
     "h": 1280
   },
   "assets/magnific/magnific-linkedin_banner_bg_lego.png": {
-    "widths": [400, 800, 1280, 1295],
+    "widths": [
+      400,
+      800,
+      1280,
+      1295
+    ],
     "w": 1295,
     "h": 860
   },
   "assets/magnific/magnific-linkedin_banner_bg.jpeg": {
-    "widths": [400, 800, 1280, 1920],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920
+    ],
     "w": 1920,
     "h": 1275
   },
   "assets/magnific/magnific-photo-01_1x1_master.jpeg": {
-    "widths": [400, 800, 1280, 1920],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920
+    ],
     "w": 1920,
     "h": 1920
   },
   "assets/magnific/magnific-photo-01_3x2_1_master.jpeg": {
-    "widths": [400, 800, 1275],
+    "widths": [
+      400,
+      800,
+      1275
+    ],
     "w": 1275,
     "h": 1920
   },
   "assets/magnific/magnific-photo-02_1x1_master.jpeg": {
-    "widths": [400, 800, 1280, 1920],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920
+    ],
     "w": 1920,
     "h": 1920
   },
   "assets/magnific/magnific-photo-02_2x3_master.jpeg": {
-    "widths": [400, 800, 1280, 1920],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920
+    ],
     "w": 1920,
     "h": 1275
   },
   "assets/magnific/magnific-photo-02_3x2_1_master_lego.png": {
-    "widths": [400, 571],
+    "widths": [
+      400,
+      571
+    ],
     "w": 571,
     "h": 860
   },
   "assets/magnific/magnific-photo-02_3x2_1_master.jpeg": {
-    "widths": [400, 800, 1275],
+    "widths": [
+      400,
+      800,
+      1275
+    ],
     "w": 1275,
     "h": 1920
   },
   "assets/magnific/magnific-photo-02_4x5_master_lego.png": {
-    "widths": [400, 685],
+    "widths": [
+      400,
+      685
+    ],
     "w": 685,
     "h": 860
   },
   "assets/magnific/magnific-photo-02_4x5_master.jpeg": {
-    "widths": [400, 800, 1280, 1530],
+    "widths": [
+      400,
+      800,
+      1280,
+      1530
+    ],
     "w": 1530,
     "h": 1920
   },
   "assets/magnific/magnific-photo-03_3x2_master.jpeg": {
-    "widths": [400, 800, 1280, 1920],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920
+    ],
     "w": 1920,
     "h": 1275
   },
   "assets/patterns/linkedin_profile_ovals.png": {
-    "widths": [400, 800, 1280, 1290],
+    "widths": [
+      400,
+      800,
+      1280,
+      1290
+    ],
     "w": 1290,
     "h": 860
   },
   "assets/posts/architectural-system-constraints-enforced-design.jpeg": {
-    "widths": [400, 800, 1080],
+    "widths": [
+      400,
+      800,
+      1080
+    ],
     "w": 1080,
     "h": 1080
   },
   "assets/posts/design-systems-vs-individual-effort-platform-thinking.png": {
-    "widths": [400, 800, 1280, 1920, 3072],
+    "widths": [
+      400,
+      800,
+      1280,
+      1920,
+      3072
+    ],
     "w": 3072,
     "h": 2048
   },
   "assets/posts/emergent-patterns-frost-local-deviations2.jpeg": {
-    "widths": [400, 800, 1080],
+    "widths": [
+      400,
+      800,
+      1080
+    ],
     "w": 1080,
     "h": 1080
   },
   "assets/posts/frontend-design-system-multi-team-entropy.jpeg": {
-    "widths": [400, 800, 1080],
+    "widths": [
+      400,
+      800,
+      1080
+    ],
     "w": 1080,
     "h": 1080
   },
   "assets/posts/frontend-systems-modular-grid-pre-entropy-background.jpeg": {
-    "widths": [400, 800, 1080],
+    "widths": [
+      400,
+      800,
+      1080
+    ],
     "w": 1080,
     "h": 1080
   },
   "assets/posts/local-fixes-global-entropy-engineering-systems.jpeg": {
-    "widths": [400, 800, 1080],
+    "widths": [
+      400,
+      800,
+      1080
+    ],
     "w": 1080,
     "h": 1080
   },
   "assets/posts/senior-engineer-mentorship-scaling-trust-workshop-barcelona.jpg": {
-    "widths": [400, 800, 1280, 1500],
+    "widths": [
+      400,
+      800,
+      1280,
+      1500
+    ],
     "w": 1500,
     "h": 1200
   },
   "assets/posts/staff-engineer-trust-systems-career-leadership-bw.jpg": {
-    "widths": [400, 800, 1199],
+    "widths": [
+      400,
+      800,
+      1199
+    ],
     "w": 1199,
     "h": 628
   }
