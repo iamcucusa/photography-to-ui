@@ -102,6 +102,21 @@ const derivedTableGroups = [
 ]
 const tagTokens = derivedTokens.filter(({ name }) => name.startsWith('--color-tag-'))
 
+// The canvas-scrim ramp collapses into ONE annotated gradient bar. The two
+// sky-2 overlay endpoints are a different base color — they keep table rows
+// (putting them on the canvas bar would misstate the ramp).
+const overlayRampTokens = derivedTokens.filter(({ name }) =>
+  ['faint', 'light', 'medium', 'strong', 'heavy', 'dense'].some(
+    (step) => name === `--color-overlay-${step}`,
+  ),
+)
+const overlayEndpointTokens = derivedTokens.filter(
+  ({ name }) => name === '--color-overlay-mid' || name === '--color-overlay-mid-heavy',
+)
+
+const mixAmount = (token: TokenEntry) =>
+  (token.$extensions?.['com.cucusa.colorMix'] as ColorMixRecipe | undefined)?.amount1 ?? ''
+
 const sections = [
   { id: 'palettes', label: 'Color Palettes' },
   { id: 'semantic', label: 'Semantic Colors' },
@@ -601,19 +616,49 @@ function App() {
               </div>
             ))}
 
-            {/* Overlays / gradients / glows: interim grid — each gets its own
-                compositional treatment (ramp bar, full-bleed fields) next */}
+            <div className="derived-group">
+              <div className="docs-inset">
+                <h3 className="derived-group-title">Overlays</h3>
+                <p className="derived-group-note">
+                  One canvas scrim, six strengths — 20% to 90% over whatever sits beneath. The two
+                  sky-2 endpoints below serve the gradients, not the ramp.
+                </p>
+                <div
+                  className="overlay-ramp checkerboard"
+                  role="img"
+                  aria-label="The six overlay strengths as one continuous scrim gradient, shown over a checkerboard so the transparency reads"
+                >
+                  <div className="overlay-ramp-fill" />
+                </div>
+                <div className="overlay-ramp-stops">
+                  {overlayRampTokens.map(({ name, token }) => (
+                    <button
+                      key={name}
+                      type="button"
+                      className="overlay-ramp-stop"
+                      onClick={() => copy(name)}
+                      aria-label={`Copy ${name}`}
+                    >
+                      <span className="overlay-ramp-stop-name">
+                        {name.replace('--color-overlay-', '')}
+                      </span>
+                      <span className="overlay-ramp-stop-amount">{mixAmount(token)}</span>
+                    </button>
+                  ))}
+                </div>
+                {derivedTable(overlayEndpointTokens)}
+              </div>
+            </div>
+
+            {/* Gradients / glows: interim grid — full-bleed fields land next */}
             <div className="derived-group">
               <div className="docs-inset">
                 <div className="color-grid">
                   {derivedTokens
                     .filter(({ name }) =>
-                      [
-                        '--color-overlay-',
-                        '--color-app-bg-',
-                        '--color-slide-base-',
-                        '--color-glow-',
-                      ].some((p) => name.startsWith(p)),
+                      ['--color-app-bg-', '--color-slide-base-', '--color-glow-'].some((p) =>
+                        name.startsWith(p),
+                      ),
                     )
                     .map(({ name, token }) => (
                       <div key={name} className="color-card">

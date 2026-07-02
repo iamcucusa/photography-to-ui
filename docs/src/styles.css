@@ -396,6 +396,67 @@ body {
   max-width: 70ch;
 }
 
+/* Overlays: one annotated scrim bar — six strengths on a shared ruler */
+.overlay-ramp {
+  height: 56px;
+  border: var(--divider-subtle);
+}
+
+.overlay-ramp-fill {
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    var(--color-overlay-faint),
+    var(--color-overlay-light),
+    var(--color-overlay-medium),
+    var(--color-overlay-strong),
+    var(--color-overlay-heavy),
+    var(--color-overlay-dense)
+  );
+}
+
+.overlay-ramp-stops {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-bottom: var(--space-md);
+}
+
+/* Each stop label carries a hairline tick aligning it to the bar above */
+.overlay-ramp-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-xs);
+  background: none;
+  border: none;
+  border-left: var(--divider-subtle);
+  font-family: var(--font-family-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.overlay-ramp-stop-name {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.overlay-ramp-stop:hover .overlay-ramp-stop-name {
+  color: var(--color-accent);
+}
+
+.overlay-ramp-stop-amount {
+  font-size: var(--text-xs);
+  color: var(--color-text-cool);
+}
+
+@media (max-width: 767px) {
+  .overlay-ramp-stops {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .token-table-hex {
   white-space: nowrap;
 }
