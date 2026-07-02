@@ -548,6 +548,9 @@ body {
 
 .palette-band-strip {
   display: flex;
+  /* The darkest stops match the canvas (sky-1 IS the canvas) — a hairline
+     above/below keeps the band's edge legible without boxing it */
+  border-block: var(--divider-subtle);
 }
 
 .palette-stop {
