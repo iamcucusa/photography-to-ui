@@ -929,37 +929,34 @@ function App() {
             id="shadows"
             num="06"
             title="Shadows"
-            description="Elevation hierarchy for dark mode. From subtle highlights to accent glows."
+            description="Elevation for a dark canvas — where shadows barely read, so we lean on top-highlights and, at the top of the stack, a magenta glow."
+            bleed
           >
-            <div className="shadow-demo">
-              {flattenTokens(elevation.shadow as Record<string, unknown>, 'shadow').map(
-                ({ name, token }) => (
-                  <div
-                    key={name}
-                    className="shadow-card"
-                    style={{ boxShadow: `var(${name})` }}
-                    onClick={() => copy(name)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                  >
-                    <span className="shadow-card-name">{name.replace('--shadow-', '')}</span>
-                    {token.$description && (
-                      <span
-                        style={{
-                          fontSize: 'var(--text-sm)',
-                          color: 'var(--color-text-secondary)',
-                          textAlign: 'center',
-                          padding: '0 var(--space-sm)',
-                        }}
+            {/* Chips lift off the band by their actual shadow tokens; radius
+                is sanctioned here — the chips demonstrate card-like surfaces */}
+            <div className="shadow-band">
+              <div className="docs-inset shadow-band-row">
+                {flattenTokens(elevation.shadow as Record<string, unknown>, 'shadow').map(
+                  ({ name, token }) => (
+                    <figure key={name} className="shadow-fig">
+                      <div
+                        className="shadow-chip"
+                        style={{ boxShadow: `var(${name})` }}
+                        onClick={() => copy(name)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Copy ${name}`}
+                        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                       >
-                        {token.$description}
-                      </span>
-                    )}
-                  </div>
-                ),
-              )}
+                        {name.replace('--shadow-', '')}
+                      </div>
+                      {token.$description && (
+                        <figcaption className="shadow-fig-caption">{token.$description}</figcaption>
+                      )}
+                    </figure>
+                  ),
+                )}
+              </div>
             </div>
           </SectionBand>
 

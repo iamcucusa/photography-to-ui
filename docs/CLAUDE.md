@@ -68,7 +68,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Derived Colors | Functional groups: alpha-swatch tables, one annotated overlay ramp bar, full-bleed gradient fields, radial glow fields — recipes as code-tone captions | `color/derived.json` |
 | Typography | Living specimens: display-xl hero row, descending scale with right-margin sidenotes, manifesto line-height paragraphs, per-fallback font stack | `typography.json` |
 | Spacing | Measured rhythm ladder — bar width IS the token value, shared baseline rule | `spacing.json` |
-| Shadows | Elevation cards including glow-accent | `elevation.json` |
+| Shadows | Elevation chips on a full-bleed band, hairline role captions, real magenta glow | `elevation.json` |
 | Motion | Duration cards with hover-to-preview timing + easing | `motion.json` |
 | Shape | Radius swatches, dividers, focus-ring | `shape.json` |
 | Sizing | LinkedIn post layout tokens | `sizing.json` |
