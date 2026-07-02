@@ -56,6 +56,51 @@ const lightOverrides = new Map(
 const semanticTokens = flattenTokens(semantic.color as Record<string, unknown>, 'color')
 const derivedTokens = flattenTokens(derived.color as Record<string, unknown>, 'color')
 
+const sections = [
+  { id: 'palettes', label: 'Color Palettes' },
+  { id: 'semantic', label: 'Semantic Colors' },
+  { id: 'derived', label: 'Derived Colors' },
+  { id: 'typography', label: 'Typography' },
+  { id: 'spacing', label: 'Spacing' },
+  { id: 'shadows', label: 'Shadows' },
+  { id: 'motion', label: 'Motion' },
+  { id: 'shape', label: 'Shape' },
+  { id: 'sizing', label: 'Sizing' },
+  { id: 'backdrop', label: 'Backdrop' },
+]
+
+// Full-bleed section band: sections are separated by full-width hairline
+// rules and negative space (dividers-not-boxes); content re-insets to the
+// reading column. The numbered title doubles as a typographic divider.
+function SectionBand({
+  id,
+  num,
+  title,
+  description,
+  children,
+}: {
+  id: string
+  num: string
+  title: string
+  description: string
+  children: ReactNode
+}) {
+  return (
+    <section className="token-section" id={id}>
+      <div className="docs-inset">
+        <h2 className="token-section-title">
+          <span className="token-section-number" aria-hidden="true">
+            {num}
+          </span>
+          {title}
+        </h2>
+        <p className="token-section-description">{description}</p>
+        {children}
+      </div>
+    </section>
+  )
+}
+
 // A token gets a contrast badge only against the obligation that actually
 // governs it (mirrors check-contrast.mjs): text roles ≥4.5:1 (WCAG 1.4.3),
 // fills/rings/interactive borders ≥3:1 (WCAG 1.4.11 non-text). Surfaces,
@@ -164,89 +209,83 @@ function App() {
     </div>
   )
 
-  const sections = [
-    { id: 'palettes', label: 'Color Palettes' },
-    { id: 'semantic', label: 'Semantic Colors' },
-    { id: 'derived', label: 'Derived Colors' },
-    { id: 'typography', label: 'Typography' },
-    { id: 'spacing', label: 'Spacing' },
-    { id: 'shadows', label: 'Shadows' },
-    { id: 'motion', label: 'Motion' },
-    { id: 'shape', label: 'Shape' },
-    { id: 'sizing', label: 'Sizing' },
-    { id: 'backdrop', label: 'Backdrop' },
-  ]
-
   return (
     <div className="docs">
       <header className="docs-header">
-        <h1 className="docs-title">
-          Cucusa Tokens<span style={{ color: 'var(--color-accent)' }}>_</span>
-        </h1>
-        <p className="docs-subtitle">Design token reference and system health dashboard.</p>
-        <ul className="docs-usage" aria-label="How to use this catalog">
-          <li>
-            <strong>Click any token</strong> to copy its <code>var(--name)</code>
-          </li>
-          <li>
-            <strong>Toggle mode</strong> (top-right) — values that differ show{' '}
-            <code>dark · light</code>
-          </li>
-          <li>
-            Each token's{' '}
-            <strong>
-              description is its DTCG <code>$description</code>
-            </strong>{' '}
-            — the source of truth for humans and agents
-          </li>
-        </ul>
-        <button
-          className="mode-toggle"
-          onClick={toggle}
-          aria-pressed={mode === 'light'}
-          aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
-        >
-          mode: {mode}
-        </button>
-        <div className="docs-tabs" role="tablist" aria-label="Page sections">
+        <div className="docs-inset">
+          <h1 className="docs-title">
+            Cucusa Tokens<span style={{ color: 'var(--color-accent)' }}>_</span>
+          </h1>
+          <p className="docs-subtitle">Design token reference and system health dashboard.</p>
+          <ul className="docs-usage" aria-label="How to use this catalog">
+            <li>
+              <strong>Click any token</strong> to copy its <code>var(--name)</code>
+            </li>
+            <li>
+              <strong>Toggle mode</strong> (top-right) — values that differ show{' '}
+              <code>dark · light</code>
+            </li>
+            <li>
+              Each token's{' '}
+              <strong>
+                description is its DTCG <code>$description</code>
+              </strong>{' '}
+              — the source of truth for humans and agents
+            </li>
+          </ul>
           <button
-            className={`docs-tab ${activeTab === 'tokens' ? 'docs-tab--active' : ''}`}
-            role="tab"
-            aria-selected={activeTab === 'tokens'}
-            onClick={() => setActiveTab('tokens')}
+            className="mode-toggle"
+            onClick={toggle}
+            aria-pressed={mode === 'light'}
+            aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
           >
-            Tokens
+            mode: {mode}
           </button>
-          <button
-            className={`docs-tab ${activeTab === 'audit' ? 'docs-tab--active' : ''}`}
-            role="tab"
-            aria-selected={activeTab === 'audit'}
-            onClick={() => setActiveTab('audit')}
-          >
-            Audit
-          </button>
+          <div className="docs-tabs" role="tablist" aria-label="Page sections">
+            <button
+              className={`docs-tab ${activeTab === 'tokens' ? 'docs-tab--active' : ''}`}
+              role="tab"
+              aria-selected={activeTab === 'tokens'}
+              onClick={() => setActiveTab('tokens')}
+            >
+              Tokens
+            </button>
+            <button
+              className={`docs-tab ${activeTab === 'audit' ? 'docs-tab--active' : ''}`}
+              role="tab"
+              aria-selected={activeTab === 'audit'}
+              onClick={() => setActiveTab('audit')}
+            >
+              Audit
+            </button>
+          </div>
         </div>
       </header>
 
-      {activeTab === 'audit' && <AuditPage />}
+      {activeTab === 'audit' && (
+        <div className="docs-inset">
+          <AuditPage />
+        </div>
+      )}
 
       {activeTab === 'tokens' && (
         <>
           <nav className="docs-nav" aria-label="Token sections">
-            {sections.map((s) => (
-              <a key={s.id} href={`#${s.id}`} className="docs-nav-link">
-                {s.label}
-              </a>
-            ))}
+            <div className="docs-inset docs-nav-row">
+              {sections.map((s) => (
+                <a key={s.id} href={`#${s.id}`} className="docs-nav-link">
+                  {s.label}
+                </a>
+              ))}
+            </div>
           </nav>
 
-          {/* ── Color Palettes ──────────────────────────────── */}
-          <section className="token-section" id="palettes">
-            <h2 className="token-section-title">Color Palettes</h2>
-            <p className="token-section-description">
-              Five palettes derived from photography. Each palette has 5 stops from darkest to
-              lightest.
-            </p>
+          <SectionBand
+            id="palettes"
+            num="01"
+            title="Color Palettes"
+            description="Five palettes derived from photography. Each palette has 5 stops from darkest to lightest."
+          >
             {palettes.map((palette) => {
               const group = colorPrimitives[palette] as Record<string, TokenEntry>
               const desc = group.$description as unknown as string | undefined
@@ -285,14 +324,14 @@ function App() {
                 </div>
               )
             })}
-          </section>
+          </SectionBand>
 
-          {/* ── Semantic Colors ──────────────────────────────── */}
-          <section className="token-section" id="semantic">
-            <h2 className="token-section-title">Semantic Colors</h2>
-            <p className="token-section-description">
-              Design intent aliases. These map meaning to palette primitives.
-            </p>
+          <SectionBand
+            id="semantic"
+            num="02"
+            title="Semantic Colors"
+            description="Design intent aliases. These map meaning to palette primitives."
+          >
             <div className="color-grid">
               {semanticTokens.map(({ name, token }) => {
                 const aa = badgeFor(name)
@@ -337,15 +376,14 @@ function App() {
                 )
               })}
             </div>
-          </section>
+          </SectionBand>
 
-          {/* ── Derived Colors ──────────────────────────────── */}
-          <section className="token-section" id="derived">
-            <h2 className="token-section-title">Derived Colors</h2>
-            <p className="token-section-description">
-              Computed via color-mix() from primitives. Overlays, tints, borders, glows, and
-              gradients.
-            </p>
+          <SectionBand
+            id="derived"
+            num="03"
+            title="Derived Colors"
+            description="Computed via color-mix() from primitives. Overlays, tints, borders, glows, and gradients."
+          >
             <div className="color-grid">
               {derivedTokens.map(({ name, token }) => {
                 const isTransparent =
@@ -395,14 +433,14 @@ function App() {
                 )
               })}
             </div>
-          </section>
+          </SectionBand>
 
-          {/* ── Typography ──────────────────────────────────── */}
-          <section className="token-section" id="typography">
-            <h2 className="token-section-title">Typography</h2>
-            <p className="token-section-description">
-              JetBrains Mono. Perfect Fifth scale (1.5 ratio), base 16px.
-            </p>
+          <SectionBand
+            id="typography"
+            num="04"
+            title="Typography"
+            description="JetBrains Mono. Perfect Fifth scale (1.5 ratio), base 16px."
+          >
             {[...displayTokens, ...typeScaleTokens].map(({ name, token }) => (
               <div key={name} className="type-specimen">
                 <div
@@ -428,9 +466,7 @@ function App() {
               </div>
             ))}
 
-            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
-              Weights
-            </h3>
+            <h3 className="token-subsection-title">Weights</h3>
             {weightTokens.map(({ name, token }) => (
               <div key={name} className="type-specimen">
                 <div
@@ -460,9 +496,7 @@ function App() {
               </div>
             ))}
 
-            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
-              Line height
-            </h3>
+            <h3 className="token-subsection-title">Line height</h3>
             {lineHeightTokens.map(({ name, token }) =>
               tokenRow(
                 name,
@@ -478,9 +512,7 @@ function App() {
               ),
             )}
 
-            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
-              Letter spacing
-            </h3>
+            <h3 className="token-subsection-title">Letter spacing</h3>
             {letterSpacingTokens.map(({ name, token }) =>
               tokenRow(
                 name,
@@ -492,9 +524,7 @@ function App() {
               ),
             )}
 
-            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
-              Font family
-            </h3>
+            <h3 className="token-subsection-title">Font family</h3>
             {familyTokens.map(({ name, token }) =>
               tokenRow(
                 name,
@@ -504,12 +534,14 @@ function App() {
                 token.$description,
               ),
             )}
-          </section>
+          </SectionBand>
 
-          {/* ── Spacing ─────────────────────────────────────── */}
-          <section className="token-section" id="spacing">
-            <h2 className="token-section-title">Spacing</h2>
-            <p className="token-section-description">Doubling progression from 0.25rem to 4rem.</p>
+          <SectionBand
+            id="spacing"
+            num="05"
+            title="Spacing"
+            description="Doubling progression from 0.25rem to 4rem."
+          >
             {spacingTokens.map(({ name, token }) => {
               const rem = parseFloat(String(token.$value))
               const px = rem * 16
@@ -534,14 +566,14 @@ function App() {
                 </div>
               )
             })}
-          </section>
+          </SectionBand>
 
-          {/* ── Shadows ──────────────────────────────────────── */}
-          <section className="token-section" id="shadows">
-            <h2 className="token-section-title">Shadows</h2>
-            <p className="token-section-description">
-              Elevation hierarchy for dark mode. From subtle highlights to accent glows.
-            </p>
+          <SectionBand
+            id="shadows"
+            num="06"
+            title="Shadows"
+            description="Elevation hierarchy for dark mode. From subtle highlights to accent glows."
+          >
             <div className="shadow-demo">
               {flattenTokens(elevation.shadow as Record<string, unknown>, 'shadow').map(
                 ({ name, token }) => (
@@ -572,14 +604,14 @@ function App() {
                 ),
               )}
             </div>
-          </section>
+          </SectionBand>
 
-          {/* ── Motion ───────────────────────────────────────── */}
-          <section className="token-section" id="motion">
-            <h2 className="token-section-title">Motion</h2>
-            <p className="token-section-description">
-              Duration scale and easing curves. Hover each card to preview the timing.
-            </p>
+          <SectionBand
+            id="motion"
+            num="07"
+            title="Motion"
+            description="Duration scale and easing curves. Hover each card to preview the timing."
+          >
             <div className="motion-demo">
               {durationTokens.map(({ name, token }) => {
                 const ms = parseInt(String(token.$value), 10)
@@ -609,9 +641,7 @@ function App() {
               })}
             </div>
 
-            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
-              Easing
-            </h3>
+            <h3 className="token-subsection-title">Easing</h3>
             {flattenTokens(motion.easing as Record<string, unknown>, 'easing').map(
               ({ name, token }) => (
                 <div
@@ -636,10 +666,14 @@ function App() {
                 </div>
               ),
             )}
+          </SectionBand>
 
-            <h3 id="shape" className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
-              Shape
-            </h3>
+          <SectionBand
+            id="shape"
+            num="08"
+            title="Shape"
+            description="This system defines both radius and divider tokens. This page rations the radius and leans on the rules — honest structure over default corners."
+          >
             {flattenTokens(shape.radius as Record<string, unknown>, 'radius').map(
               ({ name, token }) => (
                 <div
@@ -685,27 +719,25 @@ function App() {
             {focusRingTokens.map(({ name, token }) =>
               tokenRow(name, String(token.$value), token.$description),
             )}
-          </section>
+          </SectionBand>
 
-          {/* ── Sizing ───────────────────────────────────────── */}
-          <section className="token-section" id="sizing">
-            <h2 className="token-section-title">Sizing</h2>
-            <p className="token-section-description">
-              Layout sizing for the LinkedIn post consumer. card-width renders as a clamp() via a
-              platform extension.
-            </p>
+          <SectionBand
+            id="sizing"
+            num="09"
+            title="Sizing"
+            description="Layout sizing for the LinkedIn post consumer. card-width renders as a clamp() via a platform extension."
+          >
             {sizingTokens.map(({ name, token }) =>
               tokenRow(name, String(token.$value), token.$description),
             )}
-          </section>
+          </SectionBand>
 
-          {/* ── Backdrop ─────────────────────────────────────── */}
-          <section className="token-section" id="backdrop">
-            <h2 className="token-section-title">Backdrop</h2>
-            <p className="token-section-description">
-              Photographic-backdrop opacity caps (photography-to-ui). Contrast-load-bearing — they
-              bound the worst-case backdrop behind translucent panels; flip per mode.
-            </p>
+          <SectionBand
+            id="backdrop"
+            num="10"
+            title="Backdrop"
+            description="Photographic-backdrop opacity caps (photography-to-ui). Contrast-load-bearing — they bound the worst-case backdrop behind translucent panels; flip per mode."
+          >
             {backdropTokens.map(({ name, token }) =>
               tokenRow(
                 name,
@@ -725,7 +757,7 @@ function App() {
                 />,
               ),
             )}
-          </section>
+          </SectionBand>
         </>
       )}
 
