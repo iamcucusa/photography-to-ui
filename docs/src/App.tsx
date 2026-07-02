@@ -330,6 +330,25 @@ function App() {
     )
   }
 
+  // Right-margin sidenote for a living specimen (Gwern): token name to copy,
+  // value in the code tone, usage from the DTCG $description.
+  const specimenNote = (name: string, value: string, desc?: string) => (
+    <div className="type-specimen-note">
+      <span
+        className="token-table-name"
+        onClick={() => copy(name)}
+        role="button"
+        tabIndex={0}
+        aria-label={`Copy ${name}`}
+        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+      >
+        {name}
+      </span>
+      {value && <span className="type-specimen-value">{value}</span>}
+      {desc && <span className="type-specimen-desc">{desc}</span>}
+    </div>
+  )
+
   // Alpha-swatch table for a functional group of derived tokens. Same
   // editorial-table skeleton as §2 (and the same mobile collapse); alpha
   // values sit on the checkerboard, recipes are first-class content in the
@@ -761,101 +780,109 @@ function App() {
             id="typography"
             num="04"
             title="Typography"
-            description="JetBrains Mono. Perfect Fifth scale (1.5 ratio), base 16px."
+            description="JetBrains Mono, sized on a Perfect Fifth (1.5) from a 16px base. One typeface does everything — body, code, and the 87px hero."
+            bleed
           >
-            {[...displayTokens, ...typeScaleTokens].map(({ name, token }) => (
-              <div key={name} className="type-specimen">
-                <div
-                  className="type-specimen-sample"
-                  style={{ fontSize: `var(${name})`, lineHeight: 'var(--line-height-tight)' }}
-                >
-                  The quick brown fox
-                </div>
-                <div className="type-specimen-meta">
-                  <span
-                    className="type-specimen-token"
-                    onClick={() => copy(name)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                  >
-                    {name}
-                  </span>
-                  <span>{String(token.$value)}</span>
-                  {token.$description && <span>{token.$description}</span>}
+            {/* --display-xl gets the full-bleed hero row; the scale then
+                descends so --text-xs sits quietly at the bottom */}
+            {displayTokens.map(({ name, token }) => (
+              <div key={name} className="type-hero">
+                <div className="docs-inset">
+                  <div className="type-hero-sample" style={{ fontSize: `var(${name})` }}>
+                    The quick brown fox
+                  </div>
+                  {specimenNote(name, String(token.$value), token.$description)}
                 </div>
               </div>
             ))}
 
-            <h3 className="token-subsection-title">Weights</h3>
-            {weightTokens.map(({ name, token }) => (
-              <div key={name} className="type-specimen">
-                <div
-                  className="type-specimen-sample"
-                  style={{
-                    fontSize: 'var(--text-lg)',
-                    fontWeight: `var(${name})`,
-                    lineHeight: 'var(--line-height-tight)',
-                  }}
-                >
-                  The quick brown fox
-                </div>
-                <div className="type-specimen-meta">
-                  <span
-                    className="type-specimen-token"
-                    onClick={() => copy(name)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+            <div className="docs-inset">
+              {[...typeScaleTokens].reverse().map(({ name, token }) => (
+                <div key={name} className="type-specimen">
+                  <div
+                    className="type-specimen-sample"
+                    style={{ fontSize: `var(${name})`, lineHeight: 'var(--line-height-tight)' }}
                   >
-                    {name}
-                  </span>
-                  <span>{String(token.$value)}</span>
-                  {token.$description && <span>{token.$description}</span>}
+                    The quick brown fox
+                  </div>
+                  {specimenNote(name, String(token.$value), token.$description)}
                 </div>
-              </div>
-            ))}
+              ))}
 
-            <h3 className="token-subsection-title">Line height</h3>
-            {lineHeightTokens.map(({ name, token }) =>
-              tokenRow(
-                name,
-                String(token.$value),
-                token.$description,
-                <div
-                  className="type-lh-demo"
-                  style={{ lineHeight: `var(${name})` }}
-                  aria-hidden="true"
-                >
-                  Typography leads the interface. Layout follows reading, not decoration.
-                </div>,
-              ),
-            )}
+              <h3 className="token-subsection-title">Weights</h3>
+              {weightTokens.map(({ name, token }) => (
+                <div key={name} className="type-specimen">
+                  <div
+                    className="type-specimen-sample"
+                    style={{
+                      fontSize: 'var(--text-lg)',
+                      fontWeight: `var(${name})`,
+                      lineHeight: 'var(--line-height-tight)',
+                    }}
+                  >
+                    The quick brown fox
+                  </div>
+                  {specimenNote(name, String(token.$value), token.$description)}
+                </div>
+              ))}
 
-            <h3 className="token-subsection-title">Letter spacing</h3>
-            {letterSpacingTokens.map(({ name, token }) =>
-              tokenRow(
-                name,
-                String(token.$value),
-                token.$description,
-                <span style={{ letterSpacing: `var(${name})` }} aria-hidden="true">
-                  Tracking sample
-                </span>,
-              ),
-            )}
+              <h3 className="token-subsection-title">Line height</h3>
+              {/* The manifesto IS the specimen — the section performs its thesis */}
+              {lineHeightTokens.map(({ name, token }) => (
+                <div key={name} className="type-specimen">
+                  <p
+                    className="type-specimen-paragraph"
+                    style={{ lineHeight: `var(${name})` }}
+                    aria-hidden="true"
+                  >
+                    Typography leads the interface. Layout follows reading, not decoration.
+                    Typography leads the interface. Layout follows reading, not decoration.
+                    Typography leads the interface. Layout follows reading, not decoration.
+                  </p>
+                  {specimenNote(name, String(token.$value), token.$description)}
+                </div>
+              ))}
 
-            <h3 className="token-subsection-title">Font family</h3>
-            {familyTokens.map(({ name, token }) =>
-              tokenRow(
-                name,
-                Array.isArray(token.$value)
-                  ? (token.$value as string[]).join(', ')
-                  : String(token.$value),
-                token.$description,
-              ),
-            )}
+              <h3 className="token-subsection-title">Letter spacing</h3>
+              {letterSpacingTokens.map(({ name, token }) => (
+                <div key={name} className="type-specimen">
+                  <div
+                    className="type-specimen-sample"
+                    style={{
+                      fontSize: 'var(--text-lg)',
+                      letterSpacing: `var(${name})`,
+                      lineHeight: 'var(--line-height-tight)',
+                    }}
+                  >
+                    The quick brown fox
+                  </div>
+                  {specimenNote(name, String(token.$value), token.$description)}
+                </div>
+              ))}
+
+              <h3 className="token-subsection-title">Font family</h3>
+              {/* One line per stack entry, each set in that font — graceful
+                  degradation made visible */}
+              {familyTokens.map(({ name, token }) => (
+                <div key={name} className="type-specimen">
+                  <div className="type-family-stack">
+                    {(Array.isArray(token.$value)
+                      ? (token.$value as string[])
+                      : [String(token.$value)]
+                    ).map((family) => (
+                      <code
+                        key={family}
+                        className="type-family-line"
+                        style={{ fontFamily: family }}
+                      >
+                        {family}
+                      </code>
+                    ))}
+                  </div>
+                  {specimenNote(name, '', token.$description)}
+                </div>
+              ))}
+            </div>
           </SectionBand>
 
           <SectionBand

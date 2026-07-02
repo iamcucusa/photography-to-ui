@@ -66,7 +66,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Color Palettes | 5 gapless full-bleed swatch bands with origin captions | `color/primitives.json` |
 | Semantic Colors | Editorial data table: swatch · dark·light refs · resolved hex · contrast badge · $description | `color/semantic.json` |
 | Derived Colors | Functional groups: alpha-swatch tables, one annotated overlay ramp bar, full-bleed gradient fields, radial glow fields — recipes as code-tone captions | `color/derived.json` |
-| Typography | Type scale, weights, line-height, letter-spacing, font family | `typography.json` |
+| Typography | Living specimens: display-xl hero row, descending scale with right-margin sidenotes, manifesto line-height paragraphs, per-fallback font stack | `typography.json` |
 | Spacing | Visual blocks showing the doubling progression | `spacing.json` |
 | Shadows | Elevation cards including glow-accent | `elevation.json` |
 | Motion | Duration cards with hover-to-preview timing + easing | `motion.json` |
