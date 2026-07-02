@@ -196,29 +196,57 @@ body {
   }
 }
 
+/* Section index: a sticky numbered table-of-contents row — an index, not
+   buttons. Active section reads as underline rule + magenta, no filled pill. */
 .docs-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-bg-canvas);
   border-bottom: var(--divider-subtle);
 }
 
 .docs-nav-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
+  gap: var(--space-md);
+  overflow-x: auto;
+  min-height: 44px; /* tap target (WCAG 2.5.8) */
+  /* Clear the fixed mode-toggle pill so the last index items stay reachable */
+  padding-right: calc(var(--space-xl) * 2);
 }
 
 .docs-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   text-decoration: none;
-  padding: var(--space-sm) var(--space-xs);
+  padding: var(--space-sm) 0;
+  white-space: nowrap;
   background: none;
   font-family: var(--font-family-base);
   cursor: pointer;
+  border-bottom: 2px solid transparent;
   transition: color var(--duration-fast) var(--easing-emphasized);
+}
+
+.docs-nav-num {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
 }
 
 .docs-nav-link:hover {
   color: var(--color-text-primary);
+}
+
+.docs-nav-link--active {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-accent);
+}
+
+.docs-nav-link--active .docs-nav-num {
+  color: var(--color-text-accent);
 }
 
 /* Sections are full-bleed bands separated by full-width hairline rules —

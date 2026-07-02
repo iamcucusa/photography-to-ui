@@ -1,4 +1,11 @@
-import { useState, useCallback, useMemo, type KeyboardEvent, type ReactNode } from 'react'
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react'
 import { AuditPage } from './AuditPage'
 import { useTheme } from './useTheme'
 import { resolveVarToHex, contrastRatio, grade } from './resolve'
@@ -117,7 +124,27 @@ function badgeSpec(name: string): { bg: string; min: number; kind: BadgeKind } |
 function App() {
   const [activeTab, setActiveTab] = useState<'tokens' | 'audit'>('tokens')
   const [toast, setToast] = useState('')
+  const [activeSection, setActiveSection] = useState('')
   const { mode, toggle } = useTheme()
+
+  // Scroll-spy for the section index: the section crossing the upper third
+  // of the viewport is the active one (underline + magenta in the nav).
+  useEffect(() => {
+    if (activeTab !== 'tokens') return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
+        }
+      },
+      { rootMargin: '-25% 0px -65% 0px' },
+    )
+    for (const { id } of sections) {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    }
+    return () => observer.disconnect()
+  }, [activeTab])
 
   const copy = useCallback((text: string) => {
     navigator.clipboard.writeText(`var(${text})`)
@@ -281,8 +308,18 @@ function App() {
         <>
           <nav className="docs-nav" aria-label="Token sections">
             <div className="docs-inset docs-nav-row">
-              {sections.map((s) => (
-                <a key={s.id} href={`#${s.id}`} className="docs-nav-link">
+              {sections.map((s, i) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className={`docs-nav-link ${
+                    activeSection === s.id ? 'docs-nav-link--active' : ''
+                  }`}
+                  aria-current={activeSection === s.id ? 'true' : undefined}
+                >
+                  <span className="docs-nav-num" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
                   {s.label}
                 </a>
               ))}
