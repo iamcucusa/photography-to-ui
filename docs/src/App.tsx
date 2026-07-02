@@ -79,17 +79,21 @@ const sections = [
 // Full-bleed section band: sections are separated by full-width hairline
 // rules and negative space (dividers-not-boxes); content re-insets to the
 // reading column. The numbered title doubles as a typographic divider.
+// `bleed` lets a section's content run edge-to-edge (palette bands,
+// gradients, glows) while title + description stay in the reading column.
 function SectionBand({
   id,
   num,
   title,
   description,
+  bleed = false,
   children,
 }: {
   id: string
   num: string
   title: string
   description: string
+  bleed?: boolean
   children: ReactNode
 }) {
   return (
@@ -102,8 +106,9 @@ function SectionBand({
           {title}
         </h2>
         <p className="token-section-description">{description}</p>
-        {children}
+        {!bleed && children}
       </div>
+      {bleed && children}
     </section>
   )
 }
@@ -341,23 +346,19 @@ function App() {
             id="palettes"
             num="01"
             title="Color Palettes"
-            description="Five palettes derived from photography. Each palette has 5 stops from darkest to lightest."
+            description="Five palettes, each lifted from a photograph — urban magenta, architectural sky, structural frost, landscape sand, and a pure ink gray. Five stops each, darkest to lightest."
+            bleed
           >
             {palettes.map((palette) => {
               const group = colorPrimitives[palette] as Record<string, TokenEntry>
               const desc = group.$description as unknown as string | undefined
               return (
-                <div key={palette} className="palette-group">
-                  <h3 className="palette-group-title">
-                    {palette}{' '}
-                    {desc && (
-                      <span style={{ fontWeight: 400, color: 'var(--color-text-secondary)' }}>
-                        {' '}
-                        — {desc}
-                      </span>
-                    )}
-                  </h3>
-                  <div className="palette-strip">
+                <div key={palette} className="palette-band">
+                  <div className="docs-inset palette-band-caption">
+                    <h3 className="palette-band-name">{palette}</h3>
+                    {desc && <span className="palette-band-role">{desc}</span>}
+                  </div>
+                  <div className="palette-band-strip">
                     {['1', '2', '3', '4', '5'].map((stop) => {
                       const token = group[stop] as TokenEntry
                       const name = `--color-${palette}-${stop}`
