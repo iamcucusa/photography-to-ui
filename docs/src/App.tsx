@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, type KeyboardEvent } from 'react'
+import { useState, useCallback, useMemo, type KeyboardEvent, type ReactNode } from 'react'
 import { AuditPage } from './AuditPage'
 import { useTheme } from './useTheme'
 import { resolveVarToHex, contrastRatio, grade } from './resolve'
@@ -12,6 +12,8 @@ import spacing from '@tokens/spacing.json'
 import shape from '@tokens/shape.json'
 import elevation from '@tokens/elevation.json'
 import motion from '@tokens/motion.json'
+import sizing from '@tokens/sizing.json'
+import backdrop from '@tokens/backdrop.json'
 
 type TokenEntry = {
   $value?: unknown
@@ -118,8 +120,49 @@ function App() {
 
   const typeScaleTokens = flattenTokens(typography.text as Record<string, unknown>, 'text')
   const displayTokens = flattenTokens(typography.display as Record<string, unknown>, 'display')
+  const fontTokens = flattenTokens(typography.font as Record<string, unknown>, 'font')
+  const weightTokens = fontTokens.filter(({ name }) => name.startsWith('--font-weight'))
+  const familyTokens = fontTokens.filter(({ name }) => name.startsWith('--font-family'))
+  const lineHeightTokens = flattenTokens(
+    typography['line-height'] as Record<string, unknown>,
+    'line-height',
+  )
+  const letterSpacingTokens = flattenTokens(
+    typography['letter-spacing'] as Record<string, unknown>,
+    'letter-spacing',
+  )
   const spacingTokens = flattenTokens(spacing.space as Record<string, unknown>, 'space')
   const durationTokens = flattenTokens(motion.duration as Record<string, unknown>, 'duration')
+  const dividerTokens = flattenTokens(shape.divider as Record<string, unknown>, 'divider')
+  const focusRingTokens = flattenTokens(
+    shape['focus-ring'] as Record<string, unknown>,
+    'focus-ring',
+  )
+  const sizingTokens = flattenTokens(sizing.post as Record<string, unknown>, 'post')
+  const backdropTokens = flattenTokens(backdrop.backdrop as Record<string, unknown>, 'backdrop')
+
+  // Compact copyable row (label + optional demo + value/description) for the
+  // non-visual token families.
+  const tokenRow = (name: string, value: string, desc?: string, demo?: ReactNode) => (
+    <div key={name} className="spacing-demo">
+      <span
+        className="spacing-label"
+        style={{ color: 'var(--color-accent)', cursor: 'pointer' }}
+        role="button"
+        tabIndex={0}
+        aria-label={`Copy ${name}`}
+        onClick={() => copy(name)}
+        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+      >
+        {name}
+      </span>
+      {demo}
+      <span className="spacing-value">
+        {value}
+        {desc ? ` — ${desc}` : ''}
+      </span>
+    </div>
+  )
 
   const sections = [
     { id: 'palettes', label: 'Color Palettes' },
@@ -129,6 +172,9 @@ function App() {
     { id: 'spacing', label: 'Spacing' },
     { id: 'shadows', label: 'Shadows' },
     { id: 'motion', label: 'Motion' },
+    { id: 'shape', label: 'Shape' },
+    { id: 'sizing', label: 'Sizing' },
+    { id: 'backdrop', label: 'Backdrop' },
   ]
 
   return (
@@ -381,6 +427,83 @@ function App() {
                 </div>
               </div>
             ))}
+
+            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
+              Weights
+            </h3>
+            {weightTokens.map(({ name, token }) => (
+              <div key={name} className="type-specimen">
+                <div
+                  className="type-specimen-sample"
+                  style={{
+                    fontSize: 'var(--text-lg)',
+                    fontWeight: `var(${name})`,
+                    lineHeight: 'var(--line-height-tight)',
+                  }}
+                >
+                  The quick brown fox
+                </div>
+                <div className="type-specimen-meta">
+                  <span
+                    className="type-specimen-token"
+                    onClick={() => copy(name)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Copy ${name}`}
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                  >
+                    {name}
+                  </span>
+                  <span>{String(token.$value)}</span>
+                  {token.$description && <span>{token.$description}</span>}
+                </div>
+              </div>
+            ))}
+
+            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
+              Line height
+            </h3>
+            {lineHeightTokens.map(({ name, token }) =>
+              tokenRow(
+                name,
+                String(token.$value),
+                token.$description,
+                <div
+                  className="type-lh-demo"
+                  style={{ lineHeight: `var(${name})` }}
+                  aria-hidden="true"
+                >
+                  Typography leads the interface. Layout follows reading, not decoration.
+                </div>,
+              ),
+            )}
+
+            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
+              Letter spacing
+            </h3>
+            {letterSpacingTokens.map(({ name, token }) =>
+              tokenRow(
+                name,
+                String(token.$value),
+                token.$description,
+                <span style={{ letterSpacing: `var(${name})` }} aria-hidden="true">
+                  Tracking sample
+                </span>,
+              ),
+            )}
+
+            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
+              Font family
+            </h3>
+            {familyTokens.map(({ name, token }) =>
+              tokenRow(
+                name,
+                Array.isArray(token.$value)
+                  ? (token.$value as string[]).join(', ')
+                  : String(token.$value),
+                token.$description,
+              ),
+            )}
           </section>
 
           {/* ── Spacing ─────────────────────────────────────── */}
@@ -514,7 +637,7 @@ function App() {
               ),
             )}
 
-            <h3 className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
+            <h3 id="shape" className="token-section-title" style={{ marginTop: 'var(--space-lg)' }}>
               Shape
             </h3>
             {flattenTokens(shape.radius as Record<string, unknown>, 'radius').map(
@@ -545,6 +668,61 @@ function App() {
                     {String(token.$value)} {token.$description && `— ${token.$description}`}
                   </span>
                 </div>
+              ),
+            )}
+
+            {dividerTokens.map(({ name, token }) =>
+              tokenRow(
+                name,
+                `${(token.$value as { width: string }).width} ${(token.$value as { style: string }).style}`,
+                token.$description,
+                <div
+                  style={{ width: '48px', borderTop: `var(${name})`, flexShrink: 0 }}
+                  aria-hidden="true"
+                />,
+              ),
+            )}
+            {focusRingTokens.map(({ name, token }) =>
+              tokenRow(name, String(token.$value), token.$description),
+            )}
+          </section>
+
+          {/* ── Sizing ───────────────────────────────────────── */}
+          <section className="token-section" id="sizing">
+            <h2 className="token-section-title">Sizing</h2>
+            <p className="token-section-description">
+              Layout sizing for the LinkedIn post consumer. card-width renders as a clamp() via a
+              platform extension.
+            </p>
+            {sizingTokens.map(({ name, token }) =>
+              tokenRow(name, String(token.$value), token.$description),
+            )}
+          </section>
+
+          {/* ── Backdrop ─────────────────────────────────────── */}
+          <section className="token-section" id="backdrop">
+            <h2 className="token-section-title">Backdrop</h2>
+            <p className="token-section-description">
+              Photographic-backdrop opacity caps (photography-to-ui). Contrast-load-bearing — they
+              bound the worst-case backdrop behind translucent panels; flip per mode.
+            </p>
+            {backdropTokens.map(({ name, token }) =>
+              tokenRow(
+                name,
+                String(token.$value),
+                token.$description,
+                <div
+                  style={{
+                    width: '48px',
+                    height: '24px',
+                    borderRadius: '3px',
+                    border: 'var(--divider-subtle)',
+                    backgroundColor: 'var(--color-accent)',
+                    opacity: Number(token.$value),
+                    flexShrink: 0,
+                  }}
+                  aria-hidden="true"
+                />,
               ),
             )}
           </section>

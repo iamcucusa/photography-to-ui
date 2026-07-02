@@ -325,6 +325,12 @@ body {
   line-height: 1;
 }
 
+.type-lh-demo {
+  max-width: 44ch;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
 /* Typography tokens */
 .type-specimen {
   margin-bottom: var(--space-md);
