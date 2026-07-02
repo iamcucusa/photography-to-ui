@@ -394,6 +394,12 @@ body {
   color: var(--color-text-secondary);
 }
 
+/* Row rules separate rows from each other — after the last row the group
+   or section divider takes over. One line per boundary (Linear's lesson). */
+.token-table tr:last-child td {
+  border-bottom: none;
+}
+
 /* Hairline keeps near-canvas swatches legible; sharp corners (no card) */
 .token-table-swatch {
   position: relative;
