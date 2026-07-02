@@ -889,32 +889,40 @@ function App() {
             id="spacing"
             num="05"
             title="Spacing"
-            description="Doubling progression from 0.25rem to 4rem."
+            description="A pure doubling scale — 4, 8, 16, 32, 64px. Five steps, no in-between. Rhythm you can predict."
           >
-            {spacingTokens.map(({ name, token }) => {
-              const rem = parseFloat(String(token.$value))
-              const px = rem * 16
-              return (
-                <div key={name} className="spacing-demo">
-                  <span
-                    className="spacing-label"
-                    onClick={() => copy(name)}
-                    role="button"
-                    tabIndex={0}
-                    style={{ cursor: 'pointer', color: 'var(--color-accent)' }}
-                    aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                  >
-                    {name}
-                  </span>
-                  <div className="spacing-block" style={{ width: `${px}px`, height: '24px' }} />
-                  <span className="spacing-value">
-                    {String(token.$value)} ({px}px){' '}
-                    {token.$description && `— ${String(token.$description)}`}
-                  </span>
-                </div>
-              )
-            })}
+            {/* Rhythm ladder: every bar is the token's actual width, grown
+                from one shared baseline rule — the doubling reads at a glance */}
+            <div className="space-ladder">
+              {spacingTokens.map(({ name, token }) => {
+                const px = parseFloat(String(token.$value)) * 16
+                return (
+                  <div key={name} className="space-rung">
+                    <span
+                      className="token-table-name"
+                      onClick={() => copy(name)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Copy ${name}`}
+                      onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                    >
+                      {name}
+                    </span>
+                    <div className="space-rung-track">
+                      <div
+                        className="space-rung-bar"
+                        style={{ width: `${px}px` }}
+                        aria-hidden="true"
+                      />
+                      <span className="space-rung-value">
+                        {String(token.$value)} · {px}px
+                        {token.$description && ` — ${String(token.$description)}`}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </SectionBand>
 
           <SectionBand

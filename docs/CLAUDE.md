@@ -67,7 +67,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Semantic Colors | Editorial data table: swatch · dark·light refs · resolved hex · contrast badge · $description | `color/semantic.json` |
 | Derived Colors | Functional groups: alpha-swatch tables, one annotated overlay ramp bar, full-bleed gradient fields, radial glow fields — recipes as code-tone captions | `color/derived.json` |
 | Typography | Living specimens: display-xl hero row, descending scale with right-margin sidenotes, manifesto line-height paragraphs, per-fallback font stack | `typography.json` |
-| Spacing | Visual blocks showing the doubling progression | `spacing.json` |
+| Spacing | Measured rhythm ladder — bar width IS the token value, shared baseline rule | `spacing.json` |
 | Shadows | Elevation cards including glow-accent | `elevation.json` |
 | Motion | Duration cards with hover-to-preview timing + easing | `motion.json` |
 | Shape | Radius swatches, dividers, focus-ring | `shape.json` |

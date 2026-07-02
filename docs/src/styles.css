@@ -766,7 +766,50 @@ body {
   }
 }
 
-/* Spacing tokens */
+/* §5 Spacing: measured rhythm ladder — bar width IS the token value,
+   every bar grows from one shared baseline rule. No boxes. */
+.space-ladder {
+  display: flex;
+  flex-direction: column;
+}
+
+.space-rung {
+  display: grid;
+  grid-template-columns: 10ch 1fr;
+  gap: var(--space-md);
+  align-items: center;
+  padding-block: var(--space-sm);
+}
+
+.space-rung-track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  border-left: var(--divider-strong);
+  min-height: var(--space-lg);
+}
+
+.space-rung-bar {
+  height: var(--space-md);
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.space-rung-value {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 767px) {
+  /* Labels move above; bars stay proportional */
+  .space-rung {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+}
+
+/* Compact copyable row for the non-visual token families (shape, sizing,
+   backdrop) — replaced per-section as the redesign reaches them. */
 .spacing-demo {
   display: flex;
   align-items: center;
