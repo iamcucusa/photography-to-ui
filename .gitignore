@@ -29,6 +29,11 @@ JetBrainsMono-2.304/
 master web jpegs/
 source/
 
+# Local Claude state — never commit. Worktrees hold full repo copies +
+# machine-local settings (absolute paths); local settings hold command
+# allowlists. .claude/launch.json (shared config) stays tracked.
+.claude/worktrees/
+**/settings.local.json
 .claude/settings.local.json
 docs/ai-scaffolding-report.md
 
