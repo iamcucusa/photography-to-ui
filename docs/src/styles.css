@@ -433,14 +433,11 @@ body {
   color: var(--color-text-cool);
 }
 
-/* §3 Derived Colors: functional groups separated by rules + typographic
-   dividers — never a uniform grid of equal tiles. */
+/* §3 Derived Colors: functional groups separated by typographic dividers
+   and negative space — the bold group titles carry the structure, no rules
+   (and never a uniform grid of equal tiles). */
 .derived-group {
   padding-block: var(--space-lg);
-}
-
-.derived-group + .derived-group {
-  border-top: var(--divider-subtle);
 }
 
 .derived-group-title {
