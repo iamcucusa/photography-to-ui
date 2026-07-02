@@ -88,14 +88,22 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 
 1. Import the token JSON file in `App.tsx`
 2. Flatten it with `flattenTokens(data as Record<string, unknown>, 'prefix')`
-3. Add a `<section>` with `id` for anchor linking
-4. Add the section to the `sections` array for the nav
-5. Render tokens with appropriate visual treatment (swatch, specimen, block, card)
+3. Add a `<SectionBand id num title description>` — sections are full-bleed bands
+   with numbered typographic titles, separated by 1px rules
+4. Add the section to the module-level `sections` array (drives the numbered
+   scroll-spy index — keep `num` and array order in sync)
+5. Render tokens with appropriate visual treatment (swatch, specimen, table, band)
 6. Run `npm run check:docs-coverage` — it must stay green (every source group rendered)
 
 ## Styling
 
 All styles in `src/styles.css`. Uses tokens for everything — the catalog is itself a proof that the design system works. No component CSS files; the app is intentionally simple.
+
+Art direction (redesign in progress, see the ArtDirection v2 brief): **dividers, not
+boxes**. Sections are full-bleed bands separated by 1px `--divider-*` rules and
+negative space — never nested rounded containers. Radius is rationed to interactive
+inputs (mode toggle) and demos that demonstrate radius itself. `tabular-nums` is
+global so hex/ratio/px columns align. Typography leads; layout follows reading.
 
 ## Deployment
 
