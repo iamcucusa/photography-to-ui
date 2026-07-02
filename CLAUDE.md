@@ -51,7 +51,7 @@ cucusa (workspace root — orchestration only)
 - **Visual regression testing**: Playwright screenshot comparison deferred. Current verification is per-session via Claude Preview MCP.
 - **Token staleness check**: Implemented — `npm run check` regenerates tokens and diffs against committed file. CI rejects stale output.
 - **Light mode**: Implemented — sparse DTCG overrides in `tokens/modes/light/`, toggle in playground + docs, switching-brain pinned dark. See `tokens/CLAUDE.md` Modes section.
-- **Token coverage threshold**: Implemented — `npm run check:coverage` scans all consumers automatically via workspace discovery. CI rejects hardcoded hex/rgba/color-mix.
+- **Token coverage threshold**: Implemented — `npm run check:coverage` scans all consumers automatically via workspace discovery. CI rejects hardcoded hex/rgba/color-mix. Lines that render token values AS documentation content (e.g. the docs catalog printing `color-mix()` recipes) opt out with a same-line `token-coverage-ignore` comment.
 
 ## Stack
 

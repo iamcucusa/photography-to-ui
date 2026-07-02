@@ -56,6 +56,7 @@ function scanFile(filePath, relPath) {
 
   // Strip comments, HTML entities, and import paths before scanning
   const stripped = content
+    .replace(/^.*token-coverage-ignore.*$/gm, '') // explicit opt-out (docs rendering values AS content)
     .replace(/\/\*[\s\S]*?\*\//g, '')  // block comments
     .replace(/\/\/.*$/gm, '')          // line comments
     .replace(/&#\w+;/g, '')           // HTML entities (&#10003; etc.)
