@@ -569,9 +569,25 @@ body {
   min-width: 0;
 }
 
+/* The field stacks the token six times so the tint reads in both modes
+   (annotated in the group note); relative strength between tokens is
+   preserved because every field uses the same multiplier. */
 .glow-field-orb {
-  width: clamp(96px, 12vw, 160px);
-  aspect-ratio: 1;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+/* Ground truth: one single layer of the token over the checkerboard */
+.glow-strip {
+  position: relative;
+  width: 100%;
+  height: var(--space-md);
+  border: var(--divider-subtle);
+}
+
+.glow-strip-fill {
+  position: absolute;
+  inset: 0;
 }
 
 @media (max-width: 767px) {

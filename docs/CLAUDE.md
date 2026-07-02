@@ -65,7 +65,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 |---|---|---|
 | Color Palettes | 5 gapless full-bleed swatch bands with origin captions | `color/primitives.json` |
 | Semantic Colors | Editorial data table: swatch · dark·light refs · resolved hex · contrast badge · $description | `color/semantic.json` |
-| Derived Colors | Functional groups: alpha-swatch tables, one annotated overlay ramp bar, full-bleed gradient fields, radial glow fields — recipes as code-tone captions | `color/derived.json` |
+| Derived Colors | Functional groups: alpha-swatch tables, one annotated overlay ramp bar, full-bleed gradient fields, radial glow blooms (annotated 6-layer stack + single-layer checkerboard strip) — recipes as code-tone captions | `color/derived.json` |
 | Typography | Living specimens: display-xl hero row, descending scale with right-margin sidenotes, manifesto line-height paragraphs, per-fallback font stack | `typography.json` |
 | Spacing | Measured rhythm ladder — bar width IS the token value, shared baseline rule | `spacing.json` |
 | Shadows | Elevation chips on a full-bleed band, hairline role captions, real magenta glow | `elevation.json` |

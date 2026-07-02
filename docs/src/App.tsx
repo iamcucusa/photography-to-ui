@@ -793,7 +793,10 @@ function App() {
               <div className="docs-inset">
                 <h3 className="derived-group-title">Glows</h3>
                 <p className="derived-group-note">
-                  Soft radial fields over the canvas: ambient light, not surfaces.
+                  Soft radial fields over the canvas: ambient light, not surfaces. These tokens are
+                  3 to 12% washes, so each field here stacks its token six times to make the tint
+                  readable on screen (stacking is also how the playground really uses them). The
+                  strip under each field is one single layer over the checkerboard: the exact value.
                 </p>
               </div>
               <div className="glow-field-row">
@@ -802,10 +805,22 @@ function App() {
                     <div
                       className="glow-field-orb"
                       style={{
-                        background: `radial-gradient(closest-side, var(${name}), transparent)`,
+                        // Staggered falloffs so the six layers compound into a
+                        // smooth bloom instead of coincident banding rings
+                        background: Array.from(
+                          { length: 6 },
+                          (_, i) =>
+                            `radial-gradient(closest-side, var(${name}), transparent ${100 - i * 12}%)`,
+                        ).join(', '),
                       }}
                       aria-hidden="true"
                     />
+                    <div className="glow-strip checkerboard" aria-hidden="true">
+                      <div
+                        className="glow-strip-fill"
+                        style={{ backgroundColor: `var(${name})` }}
+                      />
+                    </div>
                     <span
                       className="token-table-name"
                       onClick={() => copy(name)}
