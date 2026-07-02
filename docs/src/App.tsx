@@ -1125,11 +1125,45 @@ function App() {
             id="sizing"
             num="09"
             title="Sizing"
-            description="Layout sizing for the LinkedIn post consumer. card-width renders as a clamp() via a platform extension."
+            description="These tokens leave this page — they size LinkedIn post cards. --post-card-width ships as clamp(340px, 32vw, 440px). Proof the system feeds real consumers, not just its own docs."
           >
-            {sizingTokens.map(({ name, token }) =>
-              tokenRow(name, String(token.$value), token.$description),
-            )}
+            {/* Live clamp() demo: the bar IS var(--post-card-width) — resize
+                the viewport and it moves between its floor and ceiling */}
+            <div className="sizing-ruler">
+              <div className="sizing-clamp-bar">
+                <span className="sizing-clamp-bar-label">var(--post-card-width)</span>
+              </div>
+              <div className="sizing-ruler-mark" style={{ left: '340px' }} aria-hidden="true">
+                <span>340px floor</span>
+              </div>
+              <div className="sizing-ruler-mark" style={{ left: '440px' }} aria-hidden="true">
+                <span>440px ceiling</span>
+              </div>
+            </div>
+
+            {/* Mock post frames: safe zone and grid gap measured in place */}
+            <div className="post-mock" aria-hidden="true">
+              <div className="post-mock-frame">
+                <div className="post-mock-safe">
+                  <span className="post-mock-label">--post-safe-zone</span>
+                </div>
+              </div>
+              <div className="post-mock-gap">
+                <span className="post-mock-label">--post-grid-gap</span>
+              </div>
+              <div className="post-mock-frame post-mock-frame--ghost" />
+            </div>
+
+            {sizingTokens.map(({ name, token }) => {
+              const platformCss = (
+                token.$extensions?.['com.cucusa.platform'] as { css?: string } | undefined
+              )?.css
+              return defRow(
+                name,
+                platformCss ? `${String(token.$value)} → ${platformCss}` : String(token.$value),
+                token.$description,
+              )
+            })}
           </SectionBand>
 
           <SectionBand

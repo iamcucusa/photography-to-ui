@@ -71,7 +71,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Shadows | Elevation chips on a full-bleed band, hairline role captions, real magenta glow | `elevation.json` |
 | Motion | Hover-to-play timeline tracks (dot travels at the token's real duration) + plotted easing curves with offset-path dots | `motion.json` |
 | Shape | Self-demonstrating: sample corners, real full-width rules, live focus-ring target | `shape.json` |
-| Sizing | LinkedIn post layout tokens | `sizing.json` |
+| Sizing | Live clamp() ruler (bar IS the token) + mock post frame with measured safe-zone/gap overlays | `sizing.json` |
 | Backdrop | Photo/tint opacity caps with opacity demos | `backdrop.json` |
 
 ## Conventions

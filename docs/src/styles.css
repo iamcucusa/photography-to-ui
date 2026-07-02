@@ -1117,6 +1117,108 @@ body {
   margin-bottom: var(--space-md);
 }
 
+/* §9 Sizing: the clamp() demo is live — the bar IS the token */
+.sizing-ruler {
+  position: relative;
+  padding-bottom: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-left: var(--divider-strong);
+}
+
+.sizing-clamp-bar {
+  width: var(--post-card-width);
+  max-width: 100%;
+  height: var(--space-lg);
+  background-color: var(--color-accent-subtle);
+  border-right: var(--focus-ring-width) solid var(--color-accent);
+  display: flex;
+  align-items: center;
+  padding-left: var(--space-sm);
+}
+
+.sizing-clamp-bar-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.sizing-ruler-mark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: var(--divider-subtle);
+}
+
+.sizing-ruler-mark span {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateY(calc(-1 * var(--space-md)));
+  padding-left: var(--space-xs);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Mock post frames: the tokens measured in place */
+.post-mock {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: var(--space-lg);
+  min-height: 160px;
+}
+
+.post-mock-frame {
+  width: var(--post-card-width);
+  max-width: 100%;
+  flex-shrink: 1;
+  border: var(--divider-strong);
+  padding: var(--post-safe-zone);
+}
+
+.post-mock-frame--ghost {
+  border: var(--divider-subtle);
+}
+
+.post-mock-safe {
+  height: 100%;
+  border: var(--divider-subtle);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-xs);
+}
+
+.post-mock-gap {
+  width: var(--post-grid-gap);
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-mock-gap .post-mock-label {
+  writing-mode: vertical-rl;
+}
+
+.post-mock-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-cool);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  /* The clamp demo is most compelling here — the bar sits on its 340px
+     floor; the ghost frame yields */
+  .post-mock-frame--ghost {
+    display: none;
+  }
+
+  .post-mock-gap .post-mock-label {
+    display: none;
+  }
+}
+
 /* Copy feedback */
 .copy-toast {
   position: fixed;
