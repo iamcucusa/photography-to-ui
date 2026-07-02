@@ -808,34 +808,67 @@ body {
   }
 }
 
-/* Compact copyable row for the non-visual token families (shape, sizing,
-   backdrop) — replaced per-section as the redesign reaches them. */
-.spacing-demo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-sm);
-  padding: var(--space-sm);
+/* §10 Backdrop: the origin payoff — a real photograph under the live caps.
+   Photo at var(--backdrop-photo-opacity) over the canvas floor, brand tint
+   at var(--backdrop-tint-opacity) over the photo, translucent panel on top. */
+.backdrop-stage {
+  position: relative;
+  overflow: hidden;
+  border-block: var(--divider-subtle);
+  background-color: var(--color-bg-canvas);
+}
+
+.backdrop-stage-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: var(--backdrop-photo-opacity);
+}
+
+.backdrop-stage-tint {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 75% 20%, var(--color-glow-magenta), transparent 60%),
+    linear-gradient(
+      135deg,
+      var(--color-app-bg-start),
+      var(--color-app-bg-mid),
+      var(--color-app-bg-end)
+    );
+  opacity: var(--backdrop-tint-opacity);
+}
+
+.backdrop-stage-inset {
+  position: relative;
+  padding-block: var(--space-xl);
+}
+
+.backdrop-stage-panel {
+  max-width: 44ch;
+  background-color: var(--color-bg-translucent);
   border: var(--divider-subtle);
-  border-radius: var(--radius-sm);
+  padding: var(--space-md);
 }
 
-.spacing-block {
-  background-color: var(--color-accent);
-  opacity: 0.6;
-  border-radius: 2px;
-  flex-shrink: 0;
+.backdrop-stage-panel-title {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
 }
 
-.spacing-label {
+.backdrop-stage-panel-text {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  min-width: 120px;
+  line-height: var(--line-height-loose);
+  margin: 0;
 }
 
-.spacing-value {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
+.backdrop-defs {
+  padding-top: var(--space-lg);
 }
 
 /* §6 Shadows: elevation chips lifted off a full-bleed band by the actual

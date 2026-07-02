@@ -21,6 +21,11 @@ import elevation from '@tokens/elevation.json'
 import motion from '@tokens/motion.json'
 import sizing from '@tokens/sizing.json'
 import backdrop from '@tokens/backdrop.json'
+import backdropLight from '@tokens/modes/light/backdrop.json'
+// The actual photographic backdrop from photography-to-ui — the origin of the
+// palettes. Bundled into the docs build by Vite (the committed original, not
+// a gitignored derivative).
+import bannerPhoto from '../../photography-to-ui/public/assets/banner.jpg'
 
 type TokenEntry = {
   $value?: unknown
@@ -135,6 +140,13 @@ const gradientFields = [
   },
 ]
 const glowTokens = derivedTokens.filter(({ name }) => name.startsWith('--color-glow-'))
+
+// Backdrop caps flip per mode — both bindings shown, like the color tables.
+const backdropLightTokens = new Map(
+  flattenTokens(backdropLight.backdrop as Record<string, unknown>, 'backdrop').map(
+    ({ name, token }) => [name, token],
+  ),
+)
 
 const sections = [
   { id: 'palettes', label: 'Color Palettes' },
@@ -290,29 +302,6 @@ function App() {
   )
   const sizingTokens = flattenTokens(sizing.post as Record<string, unknown>, 'post')
   const backdropTokens = flattenTokens(backdrop.backdrop as Record<string, unknown>, 'backdrop')
-
-  // Compact copyable row (label + optional demo + value/description) for the
-  // non-visual token families.
-  const tokenRow = (name: string, value: string, desc?: string, demo?: ReactNode) => (
-    <div key={name} className="spacing-demo">
-      <span
-        className="spacing-label"
-        style={{ color: 'var(--color-accent)', cursor: 'pointer' }}
-        role="button"
-        tabIndex={0}
-        aria-label={`Copy ${name}`}
-        onClick={() => copy(name)}
-        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-      >
-        {name}
-      </span>
-      {demo}
-      <span className="spacing-value">
-        {value}
-        {desc ? ` — ${desc}` : ''}
-      </span>
-    </div>
-  )
 
   // A token's recipe (plus its light override when one exists) in the code
   // tone — first-class content, never tooltips.
@@ -1170,27 +1159,41 @@ function App() {
             id="backdrop"
             num="10"
             title="Backdrop"
-            description="Photographic-backdrop opacity caps (photography-to-ui). Contrast-load-bearing — they bound the worst-case backdrop behind translucent panels; flip per mode."
+            description="photography-to-ui, closing the loop. Every palette here came from a photograph; these two opacity caps are what keep text legible over those photographs. Contrast-load-bearing: they bound the worst case behind translucent panels, and flip per mode."
+            bleed
           >
-            {backdropTokens.map(({ name, token }) =>
-              tokenRow(
-                name,
-                String(token.$value),
-                token.$description,
-                <div
-                  style={{
-                    width: '48px',
-                    height: '24px',
-                    borderRadius: '3px',
-                    border: 'var(--divider-subtle)',
-                    backgroundColor: 'var(--color-accent)',
-                    opacity: Number(token.$value),
-                    flexShrink: 0,
-                  }}
-                  aria-hidden="true"
-                />,
-              ),
-            )}
+            {/* The live stack: photo at its capped opacity, brand tint over
+                it at its cap, a translucent panel on top — the exact worst
+                case the caps bound. Flip the mode: both caps move. */}
+            <div className="backdrop-stage">
+              <img
+                className="backdrop-stage-photo"
+                src={bannerPhoto}
+                alt="The photographic backdrop behind photography-to-ui — the photograph the five palettes were lifted from"
+              />
+              <div className="backdrop-stage-tint" aria-hidden="true" />
+              <div className="docs-inset backdrop-stage-inset">
+                <div className="backdrop-stage-panel">
+                  <p className="backdrop-stage-panel-title">Worst case, bounded.</p>
+                  <p className="backdrop-stage-panel-text">
+                    This panel is --color-bg-translucent over the tint over the photo — the exact
+                    stack the caps protect. Flip the mode: both caps move.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="docs-inset backdrop-defs">
+              {backdropTokens.map(({ name, token }) => {
+                const light = backdropLightTokens.get(name)
+                return defRow(
+                  name,
+                  light
+                    ? `${String(token.$value)} · light: ${String(light.$value)}`
+                    : String(token.$value),
+                  token.$description,
+                )
+              })}
+            </div>
           </SectionBand>
         </>
       )}

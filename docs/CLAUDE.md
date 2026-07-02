@@ -72,7 +72,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Motion | Hover-to-play timeline tracks (dot travels at the token's real duration) + plotted easing curves with offset-path dots | `motion.json` |
 | Shape | Self-demonstrating: sample corners, real full-width rules, live focus-ring target | `shape.json` |
 | Sizing | Live clamp() ruler (bar IS the token) + mock post frame with measured safe-zone/gap overlays | `sizing.json` |
-| Backdrop | Photo/tint opacity caps with opacity demos | `backdrop.json` |
+| Backdrop | Full-bleed origin stage: the real banner photo under the live opacity caps, translucent panel on top; both mode bindings printed | `backdrop.json` |
 
 ## Conventions
 
