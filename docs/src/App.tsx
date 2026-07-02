@@ -63,6 +63,45 @@ const lightOverrides = new Map(
 const semanticTokens = flattenTokens(semantic.color as Record<string, unknown>, 'color')
 const derivedTokens = flattenTokens(derived.color as Record<string, unknown>, 'color')
 
+type ColorMixRecipe = {
+  space: string
+  color1: string
+  amount1?: string
+  color2: string
+  amount2?: string
+}
+
+// The com.cucusa.colorMix recipe rendered as CSS-source color-mix() with the
+// DTCG refs kept — "the formula IS the value; read it like source".
+function colorMixFormula(token: TokenEntry): string | null {
+  const ext = token.$extensions?.['com.cucusa.colorMix'] as ColorMixRecipe | undefined
+  if (!ext) return null
+  const part = (color: string, amount?: string) => (amount ? `${color} ${amount}` : color)
+  const mixed = [part(ext.color1, ext.amount1), part(ext.color2, ext.amount2)].join(', ')
+  return `color-mix(in ${ext.space}, ${mixed})` // token-coverage-ignore — docs content, not styling
+}
+
+// True for tokens whose value has an alpha channel — they render over the
+// checkerboard so the transparency reads.
+function hasAlpha(token: TokenEntry): boolean {
+  const value = String(token.$value)
+  return value.includes('transparent') || /^#[0-9a-fA-F]{8}$/.test(value)
+}
+
+// Derived tokens grouped by function (the anti-uniform-grid move). Overlays,
+// gradients and glows get their own compositional treatments, not tables.
+const derivedTableGroups = [
+  { key: 'backgrounds', title: 'Backgrounds', match: (n: string) => n.startsWith('--color-bg-') },
+  {
+    key: 'tints',
+    title: 'Accent tints',
+    match: (n: string) => n.startsWith('--color-accent-'),
+  },
+  { key: 'borders', title: 'Borders', match: (n: string) => n.startsWith('--color-border-') },
+  { key: 'status', title: 'Status', match: (n: string) => n.startsWith('--color-status-') },
+]
+const tagTokens = derivedTokens.filter(({ name }) => name.startsWith('--color-tag-'))
+
 const sections = [
   { id: 'palettes', label: 'Color Palettes' },
   { id: 'semantic', label: 'Semantic Colors' },
@@ -238,6 +277,92 @@ function App() {
         {value}
         {desc ? ` — ${desc}` : ''}
       </span>
+    </div>
+  )
+
+  // Alpha-swatch table for a functional group of derived tokens. Same
+  // editorial-table skeleton as §2 (and the same mobile collapse); alpha
+  // values sit on the checkerboard, recipes are first-class content in the
+  // code tone — never tooltips.
+  const derivedTable = (tokens: Array<{ name: string; token: TokenEntry }>) => (
+    <div className="token-table-wrap">
+      <table className="token-table">
+        <thead>
+          <tr>
+            <th scope="col" aria-label="Swatch" />
+            <th scope="col">Token</th>
+            <th scope="col">Recipe</th>
+            <th scope="col">Resolved ({mode})</th>
+            <th scope="col">Contrast</th>
+            <th scope="col">$description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tokens.map(({ name, token }) => {
+            const aa = badgeFor(name)
+            const light = lightOverrides.get(name)
+            const formula = colorMixFormula(token)
+            const lightFormula = light ? colorMixFormula(light) : null
+            return (
+              <tr key={name}>
+                <td className="token-table-swatch-cell">
+                  <div
+                    className={`token-table-swatch ${hasAlpha(token) ? 'checkerboard' : ''}`}
+                    onClick={() => copy(name)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Copy ${name}`}
+                    title={
+                      hasAlpha(token) ? `${name} — translucent, shown over a checkerboard` : name
+                    }
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                  >
+                    <div
+                      className="token-table-swatch-fill"
+                      style={{ backgroundColor: `var(${name})` }}
+                    />
+                  </div>
+                </td>
+                <td data-label="token">
+                  <span
+                    className="token-table-name"
+                    onClick={() => copy(name)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Copy ${name}`}
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                  >
+                    {name}
+                  </span>
+                </td>
+                <td data-label="recipe">
+                  <code className="token-table-ref">{formula ?? String(token.$value)}</code>
+                  {light && (
+                    <code className="token-table-ref">
+                      light: {lightFormula ?? String(light.$value)}
+                    </code>
+                  )}
+                </td>
+                <td data-label={`resolved (${mode})`} className="token-table-hex">
+                  {resolvedHex.get(name)}
+                </td>
+                <td data-label="contrast">
+                  {aa ? (
+                    <span className={`aa-badge aa-badge--${aa.pass ? aa.kind : 'fail'}`}>
+                      {aa.ratio.toFixed(1)}:1 {aa.label}
+                    </span>
+                  ) : (
+                    <span className="token-table-na">—</span>
+                  )}
+                </td>
+                <td data-label="$description" className="token-table-desc">
+                  {token.$description}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
 
@@ -464,56 +589,72 @@ function App() {
             id="derived"
             num="03"
             title="Derived Colors"
-            description="Computed via color-mix() from primitives. Overlays, tints, borders, glows, and gradients."
+            description="Forty-odd tokens, none hand-picked — each is a color-mix() recipe over a primitive. The formula is the value; read it like source."
+            bleed
           >
-            <div className="color-grid">
-              {derivedTokens.map(({ name, token }) => {
-                const isTransparent =
-                  String(token.$value).includes('transparent') ||
-                  (String(token.$value).length === 9 && String(token.$value).startsWith('#'))
-                const aa = badgeFor(name)
-                return (
-                  <div key={name} className="color-card">
-                    <div
-                      className={`color-swatch ${isTransparent ? 'color-swatch--checkerboard' : ''}`}
-                    >
-                      <div
-                        className="color-swatch-fill"
-                        style={{ backgroundColor: `var(${name})` }}
-                      />
-                    </div>
-                    <div className="color-info">
-                      <span
-                        className="color-name"
-                        onClick={() => copy(name)}
-                        role="button"
-                        tabIndex={0}
-                        aria-label={`Copy ${name}`}
-                        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                      >
-                        {name}
-                      </span>
-                      {lightOverrides.has(name) && (
-                        <span className="color-value">
-                          light: {String(lightOverrides.get(name)?.$value)}
-                        </span>
-                      )}
-                      <span className="color-resolved">
-                        = {resolvedHex.get(name)}{' '}
-                        <span className="color-resolved-mode">({mode})</span>
-                        {aa && (
-                          <span className={`aa-badge aa-badge--${aa.pass ? aa.kind : 'fail'}`}>
-                            {aa.ratio.toFixed(1)}:1 {aa.label}
+            {derivedTableGroups.map((g) => (
+              <div key={g.key} className="derived-group">
+                <div className="docs-inset">
+                  <h3 className="derived-group-title">{g.title}</h3>
+                  {derivedTable(derivedTokens.filter(({ name }) => g.match(name)))}
+                </div>
+              </div>
+            ))}
+
+            {/* Overlays / gradients / glows: interim grid — each gets its own
+                compositional treatment (ramp bar, full-bleed fields) next */}
+            <div className="derived-group">
+              <div className="docs-inset">
+                <div className="color-grid">
+                  {derivedTokens
+                    .filter(({ name }) =>
+                      [
+                        '--color-overlay-',
+                        '--color-app-bg-',
+                        '--color-slide-base-',
+                        '--color-glow-',
+                      ].some((p) => name.startsWith(p)),
+                    )
+                    .map(({ name, token }) => (
+                      <div key={name} className="color-card">
+                        <div
+                          className={`color-swatch ${hasAlpha(token) ? 'color-swatch--checkerboard' : ''}`}
+                        >
+                          <div
+                            className="color-swatch-fill"
+                            style={{ backgroundColor: `var(${name})` }}
+                          />
+                        </div>
+                        <div className="color-info">
+                          <span
+                            className="color-name"
+                            onClick={() => copy(name)}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Copy ${name}`}
+                            onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                          >
+                            {name}
                           </span>
-                        )}
-                      </span>
-                      {token.$description && (
-                        <span className="color-description">{token.$description}</span>
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
+                          <span className="color-resolved">
+                            = {resolvedHex.get(name)}{' '}
+                            <span className="color-resolved-mode">({mode})</span>
+                          </span>
+                          {token.$description && (
+                            <span className="color-description">{token.$description}</span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="derived-group">
+              <div className="docs-inset">
+                <h3 className="derived-group-title">Tag</h3>
+                {derivedTable(tagTokens)}
+              </div>
             </div>
           </SectionBand>
 

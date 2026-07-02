@@ -341,10 +341,17 @@ body {
 
 /* Hairline keeps near-canvas swatches legible; sharp corners (no card) */
 .token-table-swatch {
+  position: relative;
   width: 48px;
   height: 28px;
   border: var(--divider-subtle);
   cursor: pointer;
+}
+
+/* Alpha swatches paint over the checkerboard via a separate fill layer */
+.token-table-swatch-fill {
+  position: absolute;
+  inset: 0;
 }
 
 .token-table-name {
@@ -359,9 +366,34 @@ body {
 }
 
 .token-table-ref {
+  display: block;
   font-family: var(--font-family-base);
   font-size: var(--text-xs);
   color: var(--color-text-cool);
+}
+
+/* §3 Derived Colors: functional groups separated by rules + typographic
+   dividers — never a uniform grid of equal tiles. */
+.derived-group {
+  padding-block: var(--space-lg);
+}
+
+.derived-group + .derived-group {
+  border-top: var(--divider-subtle);
+}
+
+.derived-group-title {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.derived-group-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  max-width: 70ch;
 }
 
 .token-table-hex {
@@ -439,7 +471,9 @@ body {
 
 /* Four-linear-gradient checkerboard with an even background-size —
    repeating-conic-gradient shows seams at some zoom levels, breaks on
-   iOS Safari 14, and draws a faint diagonal in Firefox. */
+   iOS Safari 14, and draws a faint diagonal in Firefox.
+   (.color-swatch--checkerboard is the legacy-grid alias, removed with it.) */
+.checkerboard,
 .color-swatch--checkerboard {
   background-color: var(--color-bg-surface);
   background-image:
