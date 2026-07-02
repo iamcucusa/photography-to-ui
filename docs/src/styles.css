@@ -347,12 +347,20 @@ body {
   color: var(--color-text-accent);
 }
 
+/* Groups separate more than their items: a subsection break is a full
+   structural pause, well above the ~32px specimen rhythm inside it */
 .token-subsection-title {
   font-size: var(--text-md);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin-top: var(--space-lg);
+  margin-top: var(--space-xl);
   margin-bottom: var(--space-sm);
+}
+
+/* When a subsection opens the section (Shape), the description's own
+   margin already provides the pause */
+.token-section-description + .token-subsection-title {
+  margin-top: 0;
 }
 
 .token-section-description {
@@ -444,7 +452,7 @@ body {
   font-size: var(--text-md);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
 .derived-group-note {
@@ -516,8 +524,10 @@ body {
 }
 
 /* Gradients: the real thing, full-bleed, stops labeled beneath the field */
+/* Two full-bleed fields must not read as one — a full breathing-room step
+   between the app field's labels and the slide field */
 .gradient-field-block {
-  margin-top: var(--space-md);
+  margin-top: var(--space-lg);
 }
 
 .gradient-field {
@@ -1354,7 +1364,7 @@ body {
 .docs-tabs {
   display: flex;
   gap: 0;
-  margin-top: var(--space-md);
+  margin-top: var(--space-lg);
   border-bottom: var(--divider-subtle);
 }
 
