@@ -206,13 +206,28 @@ body {
   border-bottom: var(--divider-subtle);
 }
 
+.docs-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
 .docs-nav-row {
+  flex: 1 1 auto;
   display: flex;
   gap: var(--space-md);
   overflow-x: auto;
   min-height: 44px; /* tap target (WCAG 2.5.8) */
-  /* Clear the fixed mode-toggle pill so the last index items stay reachable */
-  padding-right: calc(var(--space-xl) * 2);
+  /* Edge-fade signals more items off-screen; the padding keeps the last
+     item clear of the fade at scroll end */
+  padding-right: var(--space-lg);
+  mask-image: linear-gradient(to right, black calc(100% - var(--space-lg)), transparent);
+}
+
+/* Docked in the sticky index (tokens tab) instead of fixed to the viewport */
+.mode-toggle--docked {
+  position: static;
+  flex-shrink: 0;
 }
 
 .docs-nav-link {
