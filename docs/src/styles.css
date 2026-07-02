@@ -457,6 +457,84 @@ body {
   }
 }
 
+/* Gradients: the real thing, full-bleed, stops labeled beneath the field */
+.gradient-field-block {
+  margin-top: var(--space-md);
+}
+
+.gradient-field {
+  height: 96px;
+  border-block: var(--divider-subtle);
+}
+
+.gradient-stops {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: var(--space-sm);
+}
+
+.gradient-stop {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.gradient-stop:nth-child(2):not(:last-child) {
+  align-items: center;
+  text-align: center;
+}
+
+.gradient-stop:last-child {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.gradient-stop-hex {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+/* Glows: soft radial fields directly on the canvas — no chips, no cards */
+.glow-field-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+  padding-block: var(--space-md);
+  padding-inline: var(--space-lg);
+}
+
+.glow-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+  min-width: 0;
+}
+
+.glow-field-orb {
+  width: clamp(96px, 12vw, 160px);
+  aspect-ratio: 1;
+}
+
+@media (max-width: 767px) {
+  .gradient-stops {
+    flex-direction: column;
+  }
+
+  .gradient-stop:nth-child(2):not(:last-child),
+  .gradient-stop:last-child {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .glow-field-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .token-table-hex {
   white-space: nowrap;
 }
@@ -512,30 +590,10 @@ body {
   }
 }
 
-/* Color tokens */
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--space-md);
-}
-
-.color-card {
-  border: var(--divider-subtle);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.color-swatch {
-  height: 80px;
-  position: relative;
-}
-
 /* Four-linear-gradient checkerboard with an even background-size —
    repeating-conic-gradient shows seams at some zoom levels, breaks on
-   iOS Safari 14, and draws a faint diagonal in Firefox.
-   (.color-swatch--checkerboard is the legacy-grid alias, removed with it.) */
-.checkerboard,
-.color-swatch--checkerboard {
+   iOS Safari 14, and draws a faint diagonal in Firefox. */
+.checkerboard {
   background-color: var(--color-bg-surface);
   background-image:
     linear-gradient(45deg, var(--color-frost-2) 25%, transparent 25%),
@@ -548,49 +606,6 @@ body {
     0 6px,
     6px -6px,
     -6px 0;
-}
-
-.color-swatch-fill {
-  position: absolute;
-  inset: 0;
-}
-
-.color-info {
-  padding: var(--space-sm);
-  background-color: var(--color-bg-translucent);
-}
-
-.color-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-
-.color-name:hover {
-  color: var(--color-accent);
-}
-
-.color-value {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  display: block;
-}
-
-.color-resolved {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  margin-top: 2px;
-}
-
-.color-resolved-mode {
-  color: var(--color-text-muted);
 }
 
 .aa-badge {
@@ -617,12 +632,6 @@ body {
 .aa-badge--fail {
   color: var(--color-text-accent);
   border-color: var(--color-border-accent);
-}
-
-.color-description {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-  margin-top: var(--space-xs);
 }
 
 /* §1 Color Palettes: five gapless edge-to-edge swatch bands (continuous

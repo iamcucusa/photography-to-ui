@@ -117,6 +117,25 @@ const overlayEndpointTokens = derivedTokens.filter(
 const mixAmount = (token: TokenEntry) =>
   (token.$extensions?.['com.cucusa.colorMix'] as ColorMixRecipe | undefined)?.amount1 ?? ''
 
+// Gradient tokens shown as the gradients they compose, full-bleed, with
+// start/mid/end stops labeled beneath the field.
+const derivedByName = new Map(derivedTokens.map(({ name, token }) => [name, token]))
+const gradientFields = [
+  {
+    key: 'app',
+    label: 'app-bg',
+    css: 'linear-gradient(90deg, var(--color-app-bg-start), var(--color-app-bg-mid), var(--color-app-bg-end))',
+    stops: ['--color-app-bg-start', '--color-app-bg-mid', '--color-app-bg-end'],
+  },
+  {
+    key: 'slide',
+    label: 'slide-base',
+    css: 'linear-gradient(90deg, var(--color-slide-base-start), var(--color-slide-base-end))',
+    stops: ['--color-slide-base-start', '--color-slide-base-end'],
+  },
+]
+const glowTokens = derivedTokens.filter(({ name }) => name.startsWith('--color-glow-'))
+
 const sections = [
   { id: 'palettes', label: 'Color Palettes' },
   { id: 'semantic', label: 'Semantic Colors' },
@@ -295,6 +314,22 @@ function App() {
     </div>
   )
 
+  // A token's recipe (plus its light override when one exists) in the code
+  // tone — first-class content, never tooltips.
+  const recipeLines = (name: string, token: TokenEntry) => {
+    const light = lightOverrides.get(name)
+    return (
+      <>
+        <code className="token-table-ref">{colorMixFormula(token) ?? String(token.$value)}</code>
+        {light && (
+          <code className="token-table-ref">
+            light: {colorMixFormula(light) ?? String(light.$value)}
+          </code>
+        )}
+      </>
+    )
+  }
+
   // Alpha-swatch table for a functional group of derived tokens. Same
   // editorial-table skeleton as §2 (and the same mobile collapse); alpha
   // values sit on the checkerboard, recipes are first-class content in the
@@ -315,9 +350,6 @@ function App() {
         <tbody>
           {tokens.map(({ name, token }) => {
             const aa = badgeFor(name)
-            const light = lightOverrides.get(name)
-            const formula = colorMixFormula(token)
-            const lightFormula = light ? colorMixFormula(light) : null
             return (
               <tr key={name}>
                 <td className="token-table-swatch-cell">
@@ -350,14 +382,7 @@ function App() {
                     {name}
                   </span>
                 </td>
-                <td data-label="recipe">
-                  <code className="token-table-ref">{formula ?? String(token.$value)}</code>
-                  {light && (
-                    <code className="token-table-ref">
-                      light: {lightFormula ?? String(light.$value)}
-                    </code>
-                  )}
-                </td>
+                <td data-label="recipe">{recipeLines(name, token)}</td>
                 <td data-label={`resolved (${mode})`} className="token-table-hex">
                   {resolvedHex.get(name)}
                 </td>
@@ -650,29 +675,29 @@ function App() {
               </div>
             </div>
 
-            {/* Gradients / glows: interim grid — full-bleed fields land next */}
             <div className="derived-group">
               <div className="docs-inset">
-                <div className="color-grid">
-                  {derivedTokens
-                    .filter(({ name }) =>
-                      ['--color-app-bg-', '--color-slide-base-', '--color-glow-'].some((p) =>
-                        name.startsWith(p),
-                      ),
-                    )
-                    .map(({ name, token }) => (
-                      <div key={name} className="color-card">
-                        <div
-                          className={`color-swatch ${hasAlpha(token) ? 'color-swatch--checkerboard' : ''}`}
-                        >
-                          <div
-                            className="color-swatch-fill"
-                            style={{ backgroundColor: `var(${name})` }}
-                          />
-                        </div>
-                        <div className="color-info">
+                <h3 className="derived-group-title">Gradients</h3>
+                <p className="derived-group-note">
+                  App and slide backgrounds, shown as the gradients they compose — stops labeled
+                  beneath the field.
+                </p>
+              </div>
+              {gradientFields.map((g) => (
+                <div key={g.key} className="gradient-field-block">
+                  <div
+                    className="gradient-field"
+                    style={{ background: g.css }}
+                    role="img"
+                    aria-label={`${g.label} gradient — ${g.stops.join(' → ')}`}
+                  />
+                  <div className="docs-inset gradient-stops">
+                    {g.stops.map((name) => {
+                      const token = derivedByName.get(name)
+                      return (
+                        <div key={name} className="gradient-stop">
                           <span
-                            className="color-name"
+                            className="token-table-name"
                             onClick={() => copy(name)}
                             role="button"
                             tabIndex={0}
@@ -681,17 +706,46 @@ function App() {
                           >
                             {name}
                           </span>
-                          <span className="color-resolved">
-                            = {resolvedHex.get(name)}{' '}
-                            <span className="color-resolved-mode">({mode})</span>
-                          </span>
-                          {token.$description && (
-                            <span className="color-description">{token.$description}</span>
-                          )}
+                          <span className="gradient-stop-hex">{resolvedHex.get(name)}</span>
+                          {token && recipeLines(name, token)}
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            <div className="derived-group">
+              <div className="docs-inset">
+                <h3 className="derived-group-title">Glows</h3>
+                <p className="derived-group-note">
+                  Soft radial fields over the canvas — ambient light, not surfaces.
+                </p>
+              </div>
+              <div className="glow-field-row">
+                {glowTokens.map(({ name, token }) => (
+                  <div key={name} className="glow-field">
+                    <div
+                      className="glow-field-orb"
+                      style={{
+                        background: `radial-gradient(closest-side, var(${name}), transparent)`,
+                      }}
+                      aria-hidden="true"
+                    />
+                    <span
+                      className="token-table-name"
+                      onClick={() => copy(name)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Copy ${name}`}
+                      onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                    >
+                      {name.replace('--color-glow-', '')}
+                    </span>
+                    {recipeLines(name, token)}
+                  </div>
+                ))}
               </div>
             </div>
 
