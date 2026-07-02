@@ -54,11 +54,18 @@ const lightOverrides = new Map(
 const semanticTokens = flattenTokens(semantic.color as Record<string, unknown>, 'color')
 const derivedTokens = flattenTokens(derived.color as Record<string, unknown>, 'color')
 
-// Text roles get an AA badge against the surface they're read on.
-const textRoleBg: Record<string, string> = {
-  '--color-text-on-accent': '--color-accent',
+// A token gets a contrast badge only against the obligation that actually
+// governs it (mirrors check-contrast.mjs): text roles ≥4.5:1 (WCAG 1.4.3),
+// fills/rings/interactive borders ≥3:1 (WCAG 1.4.11 non-text). Surfaces,
+// overlays, tints, glows and decorative borders carry no obligation — no badge.
+type BadgeKind = 'text' | 'ui'
+function badgeSpec(name: string): { bg: string; min: number; kind: BadgeKind } | null {
+  if (name === '--color-text-on-accent') return { bg: '--color-accent', min: 4.5, kind: 'text' }
+  if (name.startsWith('--color-text-')) return { bg: '--color-bg-canvas', min: 4.5, kind: 'text' }
+  if (name === '--color-accent' || name.startsWith('--color-border-accent'))
+    return { bg: '--color-bg-canvas', min: 3, kind: 'ui' }
+  return null
 }
-const isTextRole = (name: string) => name.startsWith('--color-text-')
 
 function App() {
   const [activeTab, setActiveTab] = useState<'tokens' | 'audit'>('tokens')
@@ -94,14 +101,17 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode])
 
-  // AA badge for text roles: ratio of the resolved role vs its surface.
-  const textRoleAA = useCallback(
+  // Contrast badge for a token against the surface its obligation governs.
+  const badgeFor = useCallback(
     (name: string) => {
+      const spec = badgeSpec(name)
       const fg = resolvedHex.get(name)
-      const bg = resolveVarToHex(textRoleBg[name] ?? '--color-bg-canvas')
-      if (!fg) return null
-      const r = contrastRatio(fg, bg)
-      return { ratio: r, grade: grade(r) }
+      if (!spec || !fg) return null
+      const ratio = contrastRatio(fg, resolveVarToHex(spec.bg))
+      const pass = ratio >= spec.min
+      // text → AA/AAA grade; ui (non-text 1.4.11) → "≥3" pass/fail
+      const label = spec.kind === 'text' ? (pass ? grade(ratio) : '✗') : pass ? '≥3' : '✗'
+      return { ratio, kind: spec.kind, pass, label }
     },
     [resolvedHex],
   )
@@ -239,7 +249,7 @@ function App() {
             </p>
             <div className="color-grid">
               {semanticTokens.map(({ name, token }) => {
-                const aa = isTextRole(name) ? textRoleAA(name) : null
+                const aa = badgeFor(name)
                 return (
                   <div key={name} className="color-card">
                     <div className="color-swatch">
@@ -268,8 +278,8 @@ function App() {
                         = {resolvedHex.get(name)}{' '}
                         <span className="color-resolved-mode">({mode})</span>
                         {aa && (
-                          <span className={`aa-badge aa-badge--${aa.grade}`}>
-                            {aa.ratio.toFixed(1)}:1 {aa.grade === 'fail' ? '✗' : aa.grade}
+                          <span className={`aa-badge aa-badge--${aa.pass ? aa.kind : 'fail'}`}>
+                            {aa.ratio.toFixed(1)}:1 {aa.label}
                           </span>
                         )}
                       </span>
@@ -295,6 +305,7 @@ function App() {
                 const isTransparent =
                   String(token.$value).includes('transparent') ||
                   (String(token.$value).length === 9 && String(token.$value).startsWith('#'))
+                const aa = badgeFor(name)
                 return (
                   <div key={name} className="color-card">
                     <div
@@ -324,6 +335,11 @@ function App() {
                       <span className="color-resolved">
                         = {resolvedHex.get(name)}{' '}
                         <span className="color-resolved-mode">({mode})</span>
+                        {aa && (
+                          <span className={`aa-badge aa-badge--${aa.pass ? aa.kind : 'fail'}`}>
+                            {aa.ratio.toFixed(1)}:1 {aa.label}
+                          </span>
+                        )}
                       </span>
                       {token.$description && (
                         <span className="color-description">{token.$description}</span>

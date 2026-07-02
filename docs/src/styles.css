@@ -259,10 +259,17 @@ body {
   border: var(--divider-subtle);
 }
 
-.aa-badge--AAA,
-.aa-badge--AA {
+/* Passing text obligation (>=4.5:1) */
+.aa-badge--text {
   color: var(--color-text-cool);
   border-color: var(--color-border-accent-hover);
+}
+
+/* Passing non-text obligation (>=3:1, WCAG 1.4.11) — distinct tone so the
+   threshold reads as a different kind of requirement. */
+.aa-badge--ui {
+  color: var(--color-text-secondary);
+  border-color: var(--color-border-strong);
 }
 
 .aa-badge--fail {
