@@ -330,6 +330,25 @@ function App() {
     )
   }
 
+  // Boxless definition row: token name to copy | value in the code tone |
+  // $description. Hairline between rows, never a card.
+  const defRow = (name: string, value: string, desc?: string) => (
+    <div key={name} className="def-row">
+      <span
+        className="token-table-name"
+        onClick={() => copy(name)}
+        role="button"
+        tabIndex={0}
+        aria-label={`Copy ${name}`}
+        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+      >
+        {name}
+      </span>
+      <code className="token-table-ref">{value}</code>
+      <span className="def-row-desc">{desc}</span>
+    </div>
+  )
+
   // Right-margin sidenote for a living specimen (Gwern): token name to copy,
   // value in the code tone, usage from the DTCG $description.
   const specimenNote = (name: string, value: string, desc?: string) => (
@@ -1049,50 +1068,56 @@ function App() {
             title="Shape"
             description="This system defines both radius and divider tokens. This page rations the radius and leans on the rules — honest structure over default corners."
           >
-            {flattenTokens(shape.radius as Record<string, unknown>, 'radius').map(
-              ({ name, token }) => (
-                <div
-                  key={name}
-                  className="spacing-demo"
-                  onClick={() => copy(name)}
-                  role="button"
-                  tabIndex={0}
-                  style={{ cursor: 'pointer' }}
-                  aria-label={`Copy ${name}`}
-                  onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                >
-                  <span className="spacing-label" style={{ color: 'var(--color-accent)' }}>
-                    {name}
-                  </span>
-                  <div
-                    style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: `var(${name})`,
-                      border: 'var(--divider-strong)',
-                      flexShrink: 0,
-                    }}
-                  />
-                  <span className="spacing-value">
-                    {String(token.$value)} {token.$description && `— ${token.$description}`}
-                  </span>
-                </div>
-              ),
-            )}
+            {/* The section demonstrates itself: sample corners, real rules at
+                real contrast, a live focus target */}
+            <h3 className="token-subsection-title">Radius — rationed</h3>
+            <div className="shape-corner-row">
+              {flattenTokens(shape.radius as Record<string, unknown>, 'radius').map(
+                ({ name, token }) => (
+                  <figure key={name} className="shape-fig">
+                    <div
+                      className="shape-corner"
+                      style={{ borderRadius: `var(${name})` }}
+                      onClick={() => copy(name)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Copy ${name}`}
+                      onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                    />
+                    <figcaption className="shape-fig-caption">
+                      <span className="token-table-name">{name}</span>
+                      <code className="token-table-ref">{String(token.$value)}</code>
+                      {token.$description && (
+                        <span className="def-row-desc">{token.$description}</span>
+                      )}
+                    </figcaption>
+                  </figure>
+                ),
+              )}
+            </div>
 
-            {dividerTokens.map(({ name, token }) =>
-              tokenRow(
-                name,
-                `${(token.$value as { width: string }).width} ${(token.$value as { style: string }).style}`,
-                token.$description,
+            <h3 className="token-subsection-title">Dividers — leaned on</h3>
+            {dividerTokens.map(({ name, token }) => (
+              <div key={name} className="shape-rule-demo">
                 <div
-                  style={{ width: '48px', borderTop: `var(${name})`, flexShrink: 0 }}
+                  className="shape-rule"
+                  style={{ borderTop: `var(${name})` }}
                   aria-hidden="true"
-                />,
-              ),
-            )}
+                />
+                {defRow(
+                  name,
+                  `${(token.$value as { width: string }).width} ${(token.$value as { style: string }).style}`,
+                  token.$description,
+                )}
+              </div>
+            ))}
+
+            <h3 className="token-subsection-title">Focus ring — live</h3>
+            <button type="button" className="shape-focus-target">
+              Tab to me — the ring is the demo
+            </button>
             {focusRingTokens.map(({ name, token }) =>
-              tokenRow(name, String(token.$value), token.$description),
+              defRow(name, String(token.$value), token.$description),
             )}
           </SectionBand>
 

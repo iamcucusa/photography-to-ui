@@ -70,7 +70,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Spacing | Measured rhythm ladder — bar width IS the token value, shared baseline rule | `spacing.json` |
 | Shadows | Elevation chips on a full-bleed band, hairline role captions, real magenta glow | `elevation.json` |
 | Motion | Hover-to-play timeline tracks (dot travels at the token's real duration) + plotted easing curves with offset-path dots | `motion.json` |
-| Shape | Radius swatches, dividers, focus-ring | `shape.json` |
+| Shape | Self-demonstrating: sample corners, real full-width rules, live focus-ring target | `shape.json` |
 | Sizing | LinkedIn post layout tokens | `sizing.json` |
 | Backdrop | Photo/tint opacity caps with opacity demos | `backdrop.json` |
 

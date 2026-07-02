@@ -1034,6 +1034,89 @@ body {
   }
 }
 
+/* Boxless definition rows for the non-visual token families */
+.def-row {
+  display: grid;
+  grid-template-columns: 24ch 22ch 1fr;
+  gap: var(--space-md);
+  align-items: baseline;
+  padding-block: var(--space-sm);
+}
+
+.def-row + .def-row {
+  border-top: var(--divider-subtle);
+}
+
+.def-row-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 767px) {
+  .def-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* §8 Shape: the section demonstrates itself */
+.shape-corner-row {
+  display: flex;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.shape-fig {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Sanctioned radius demo — the corner IS the token */
+.shape-corner {
+  width: 96px;
+  height: 96px;
+  border: var(--divider-strong);
+  cursor: pointer;
+}
+
+.shape-corner:hover {
+  border-color: var(--color-border-accent-hover);
+}
+
+.shape-fig-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  max-width: 26ch;
+}
+
+.shape-rule-demo {
+  margin-top: var(--space-md);
+}
+
+/* The rule shown at real width, real contrast, full width */
+.shape-rule {
+  width: 100%;
+  margin-bottom: var(--space-xs);
+}
+
+.shape-focus-target {
+  font-family: var(--font-family-base);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  background: none;
+  border: var(--divider-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  margin-bottom: var(--space-md);
+}
+
 /* Copy feedback */
 .copy-toast {
   position: fixed;
