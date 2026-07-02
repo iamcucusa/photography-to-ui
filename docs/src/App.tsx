@@ -96,6 +96,22 @@ function App() {
           Cucusa Tokens<span style={{ color: 'var(--color-accent)' }}>_</span>
         </h1>
         <p className="docs-subtitle">Design token reference and system health dashboard.</p>
+        <ul className="docs-usage" aria-label="How to use this catalog">
+          <li>
+            <strong>Click any token</strong> to copy its <code>var(--name)</code>
+          </li>
+          <li>
+            <strong>Toggle mode</strong> (top-right) — values that differ show{' '}
+            <code>dark · light</code>
+          </li>
+          <li>
+            Each token's{' '}
+            <strong>
+              description is its DTCG <code>$description</code>
+            </strong>{' '}
+            — the source of truth for humans and agents
+          </li>
+        </ul>
         <button
           className="mode-toggle"
           onClick={toggle}
@@ -151,7 +167,7 @@ function App() {
                   <h3 className="palette-group-title">
                     {palette}{' '}
                     {desc && (
-                      <span style={{ fontWeight: 400, color: 'var(--color-text-muted)' }}>
+                      <span style={{ fontWeight: 400, color: 'var(--color-text-secondary)' }}>
                         {' '}
                         — {desc}
                       </span>
@@ -356,8 +372,8 @@ function App() {
                     {token.$description && (
                       <span
                         style={{
-                          fontSize: 'var(--text-xs)',
-                          color: 'var(--color-text-muted)',
+                          fontSize: 'var(--text-sm)',
+                          color: 'var(--color-text-secondary)',
                           textAlign: 'center',
                           padding: '0 var(--space-sm)',
                         }}
