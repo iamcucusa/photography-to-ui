@@ -3,48 +3,47 @@ description: "Visual system tokens + usage rules for photography-to-ui (single s
 alwaysApply: true
 ---
 
-# Design System Rules — photography-to-ui (MVP)
+# Design System Rules — photography-to-ui
 
-This rule defines the **visual primitives** for the project:
-tokens + semantics + strict usage constraints.
+This rule defines the **usage constraints** for the visual system. It does NOT
+define token values — those live in the W3C DTCG source and would drift if
+duplicated here.
 
-Cursor must **not invent** additional scales, token namespaces, or one-off visual constants.
-If something is missing, extend *this* rule deliberately.
+> **Source of truth for token VALUES:** `tokens/` (DTCG JSON) → generated
+> `tokens/dist/tokens.css` (dark on `:root`) + `tokens/dist/tokens.light.css`
+> (`[data-theme='light']`). Browse them in the docs catalog
+> (`/photography-to-ui/docs/`, Tokens tab: name, ref, resolved hex per mode, AA).
+> The authoritative agent docs are `tokens/CLAUDE.md` and each consumer's
+> `CLAUDE.md`. Note: Cursor loads *these* `.cursor/rules`; Claude Code loads the
+> `CLAUDE.md` files instead — keep both pointing at `tokens/` so they agree.
+
+Do **not invent** scales, token namespaces, or one-off visual constants. Consume
+tokens via `var(--…)`; never hardcode hex/rgba/px for color, spacing, or type
+(the coverage checker rejects it). If a token is missing, add it in `tokens/`.
 
 ---
 
 ## 1) Color System
 
-### 1.1 Brand Palette (Fixed)
-- Cucusa Frost = base canvas
-- Cucusa Sand = warm surfaces
-- Cucusa Magenta = identity accent (reserved)
+### 1.1 Brand palette (five ramps × 5 stops)
 
-```css
-:root{
-  --color-frost: #F3F5F7;
-  --color-sand:  #E8DFD2;
-  --color-magenta: #C0185D;
-}
-```
+Magenta (accent), Sky, Frost, Sand, Ink — all derived from photography. Dark is
+the default; light is a sparse override. Concrete stop values are in
+`tokens/color/primitives.json`; consume the semantic roles below, not raw stops.
 
-### 1.2 Semantic Roles (Use these in components)
-```css
-:root{
-  --color-bg-canvas: var(--color-frost);
-  --color-bg-surface: var(--color-sand);
+### 1.2 Semantic roles (use these in components)
 
-  --color-text-primary: #1A1A1A;
-  --color-text-secondary: #4A4A4A;
-  --color-text-muted: #7A7A7A;
+Reference by name; values resolve per mode from the DTCG source:
 
-  --color-border-subtle: rgba(0,0,0,0.08);
-  --color-border-strong: rgba(0,0,0,0.14);
+- `--color-bg-canvas`, `--color-bg-surface` — backgrounds
+- `--color-text-primary` / `-secondary` / `-muted` — text hierarchy (all AA+)
+- `--color-text-accent` — accent-colored text; `--color-text-cool` — cool/links/code
+- `--color-text-on-accent` — text on accent fills
+- `--color-accent` — the accent fill/ring (never a large text color)
+- `--color-border-subtle` / `-strong` (decorative), `--color-border-accent*` (interactive, ≥3:1)
 
-  --color-accent: var(--color-magenta);
-  --color-accent-subtle: color-mix(in srgb, var(--color-magenta) 18%, transparent);
-}
-```
+Contrast obligations are enforced by `check-contrast.mjs` (text ≥4.5:1, non-text
+UI ≥3:1) in both modes — see the docs Audit tab.
 
 ### 1.3 Color Usage Rules (Strict)
 - **Magenta is never a large background fill.**

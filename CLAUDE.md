@@ -120,6 +120,23 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
 6. Add the consumer to root `build:all` and `check` scripts
 7. Create a `CLAUDE.md` in the consumer directory with its domain-specific instructions
 
+## Local dev, git & deploy
+
+How this repo is actually worked on locally — not obvious from the tree:
+
+- **Verify before done**: run the dev servers (`npm run dev` / `dev:docs` / `dev:brain`) and check any visual change in **both modes** (toggle top-right). A green `npm run check` is necessary but not sufficient.
+- **Quality gate before merge**: `npm run check` (the full chain) and, for anything shipping to the site, `npm run build:all`.
+- **Branch + approval**: do work on a feature branch; **merge only when the maintainer explicitly says so.**
+- **Merge = fast-forward.** The working tree is often on a feature branch and `master` is not checked out in it, so don't `git checkout master`. Land a validated branch with:
+  ```
+  git push <https-remote-url> <branch>:master      # FF the remote
+  git update-ref refs/heads/master <branch>         # sync the local ref
+  ```
+  Keep history linear (no `--no-ff`) unless asked.
+- **Push over HTTPS, not SSH.** `git push` over the SSH remote fails in this environment — push using the repository's `https://github.com/…` URL. (`gh` uses its token and works for API/run status.)
+- **Deploy is automatic on push to `master`.** GitHub Actions (`.github/workflows/deploy.yml`) runs `npm ci → npm run check → npm run build:all → deploy` to GitHub Pages. CI installs `sharp` and regenerates image derivatives during the build. Confirm with `gh run watch` / `gh run list --branch master`.
+- **Generated files**: image derivatives (`public/assets/**/*.{avif,webp}`) and `tokens/dist` are regenerated, not hand-edited; the assets manifest and `tokens/dist` are committed. See consumer CLAUDE.md files.
+
 ## Working agreements
 
 - Do not add features beyond what was asked. Surface assumptions explicitly.
