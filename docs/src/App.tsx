@@ -148,6 +148,18 @@ const backdropLightTokens = new Map(
   ),
 )
 
+// One real token, verbatim, for the { } reveal: the raw JSON is the same
+// object this catalog renders from.
+const dtcgSample = JSON.stringify(
+  {
+    color: {
+      text: { accent: ((semantic.color as Record<string, unknown>).text as TokenEntry).accent },
+    },
+  },
+  null,
+  2,
+)
+
 const sections = [
   { id: 'palettes', label: 'Color Palettes' },
   { id: 'semantic', label: 'Semantic Colors' },
@@ -215,6 +227,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<'tokens' | 'audit'>('tokens')
   const [toast, setToast] = useState('')
   const [activeSection, setActiveSection] = useState('')
+  const [showSource, setShowSource] = useState(false)
   const { mode, toggle } = useTheme()
 
   // Scroll-spy for the section index: the section crossing the upper third
@@ -239,6 +252,13 @@ function App() {
   const copy = useCallback((text: string) => {
     navigator.clipboard.writeText(`var(${text})`)
     setToast(`Copied var(${text})`)
+    setTimeout(() => setToast(''), 1500)
+  }, [])
+
+  // Verbatim copy (raw JSON, not a var() reference)
+  const copyRaw = useCallback((text: string, label: string) => {
+    navigator.clipboard.writeText(text)
+    setToast(label)
     setTimeout(() => setToast(''), 1500)
   }, [])
 
@@ -478,8 +498,33 @@ function App() {
                 <code>$description</code> fields: one W3C DTCG source of truth, read by you and by
                 the agents that build with this system.
               </span>
+              <button
+                type="button"
+                className="dtcg-reveal-toggle"
+                aria-expanded={showSource}
+                onClick={() => setShowSource(!showSource)}
+              >
+                {'{ }'} {showSource ? 'hide the raw source' : 'view the raw source'}
+              </button>
             </li>
           </ul>
+          {showSource && (
+            <div className="dtcg-reveal">
+              <div className="dtcg-reveal-head">
+                <span>tokens/color/semantic.json · color.text.accent, verbatim</span>
+                <button
+                  type="button"
+                  className="dtcg-reveal-copy"
+                  onClick={() => copyRaw(dtcgSample, 'Copied raw DTCG JSON')}
+                >
+                  copy JSON
+                </button>
+              </div>
+              <pre className="dtcg-reveal-code">
+                <code>{dtcgSample}</code>
+              </pre>
+            </div>
+          )}
           {/* On the tokens tab the toggle docks into the sticky index instead
               (a fixed pill would sit on top of the scrolling nav items) */}
           {activeTab === 'audit' && modeToggle}
