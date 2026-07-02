@@ -1,7 +1,7 @@
 {
   "backdrop": {
     "$type": "number",
-    "$description": "Backdrop layer controls for the photographic app surface. Load-bearing for contrast: they cap how much of the photo reaches content, which bounds the worst-case backdrop behind translucent panels. check-contrast.mjs verifies text stays AA over the bounded backdrop in both modes. Consumed by photography-to-ui only (docs has no photo, brain is pinned dark).",
+    "$description": "Backdrop layer controls for the photographic app surface. Load-bearing for contrast: they cap how much of the photo reaches content, which bounds the worst-case backdrop behind translucent panels. check-contrast.mjs verifies text stays AA over the bounded backdrop in both modes. Consumed by photography-to-ui; the docs catalog demonstrates the caps live over the banner photo (brain is pinned dark).",
     "photo-opacity": {
       "$value": 0.55,
       "$description": "Dark: photograph is prominent over the canvas scrim floor"
