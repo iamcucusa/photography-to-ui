@@ -64,7 +64,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Section | What it renders | Token source |
 |---|---|---|
 | Color Palettes | 5 gapless full-bleed swatch bands with origin captions | `color/primitives.json` |
-| Semantic Colors | Intent alias cards: ref + resolved hex + AA badge | `color/semantic.json` |
+| Semantic Colors | Editorial data table: swatch · dark·light refs · resolved hex · contrast badge · $description | `color/semantic.json` |
 | Derived Colors | color-mix tokens: recipe + resolved hex, checkerboard for transparency | `color/derived.json` |
 | Typography | Type scale, weights, line-height, letter-spacing, font family | `typography.json` |
 | Spacing | Visual blocks showing the doubling progression | `spacing.json` |

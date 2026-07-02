@@ -388,51 +388,75 @@ function App() {
             id="semantic"
             num="02"
             title="Semantic Colors"
-            description="Design intent aliases. These map meaning to palette primitives."
+            description="Intent, not pigment. Each alias points at a palette primitive so meaning survives a re-theme — change magenta.2 and everything that means 'accent' moves with it."
           >
-            <div className="color-grid">
-              {semanticTokens.map(({ name, token }) => {
-                const aa = badgeFor(name)
-                return (
-                  <div key={name} className="color-card">
-                    <div className="color-swatch">
-                      <div
-                        className="color-swatch-fill"
-                        style={{ backgroundColor: `var(${name})` }}
-                      />
-                    </div>
-                    <div className="color-info">
-                      <span
-                        className="color-name"
-                        onClick={() => copy(name)}
-                        role="button"
-                        tabIndex={0}
-                        aria-label={`Copy ${name}`}
-                        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                      >
-                        {name}
-                      </span>
-                      <span className="color-value">
-                        {String(token.$value)}
-                        {lightOverrides.has(name) &&
-                          ` · light: ${String(lightOverrides.get(name)?.$value)}`}
-                      </span>
-                      <span className="color-resolved">
-                        = {resolvedHex.get(name)}{' '}
-                        <span className="color-resolved-mode">({mode})</span>
-                        {aa && (
-                          <span className={`aa-badge aa-badge--${aa.pass ? aa.kind : 'fail'}`}>
-                            {aa.ratio.toFixed(1)}:1 {aa.label}
+            <div className="token-table-wrap">
+              <table className="token-table">
+                <thead>
+                  <tr>
+                    <th scope="col" aria-label="Swatch" />
+                    <th scope="col">Token</th>
+                    <th scope="col">dark · light</th>
+                    <th scope="col">Resolved ({mode})</th>
+                    <th scope="col">Contrast</th>
+                    <th scope="col">$description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {semanticTokens.map(({ name, token }) => {
+                    const aa = badgeFor(name)
+                    const lightRef = lightOverrides.get(name)?.$value
+                    return (
+                      <tr key={name}>
+                        <td className="token-table-swatch-cell">
+                          <div
+                            className="token-table-swatch"
+                            style={{ backgroundColor: `var(${name})` }}
+                            onClick={() => copy(name)}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Copy ${name}`}
+                            onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                          />
+                        </td>
+                        <td data-label="token">
+                          <span
+                            className="token-table-name"
+                            onClick={() => copy(name)}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Copy ${name}`}
+                            onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                          >
+                            {name}
                           </span>
-                        )}
-                      </span>
-                      {token.$description && (
-                        <span className="color-description">{token.$description}</span>
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
+                        </td>
+                        <td data-label="dark · light">
+                          <code className="token-table-ref">
+                            {String(token.$value)}
+                            {lightRef ? ` · ${String(lightRef)}` : ''}
+                          </code>
+                        </td>
+                        <td data-label={`resolved (${mode})`} className="token-table-hex">
+                          {resolvedHex.get(name)}
+                        </td>
+                        <td data-label="contrast">
+                          {aa ? (
+                            <span className={`aa-badge aa-badge--${aa.pass ? aa.kind : 'fail'}`}>
+                              {aa.ratio.toFixed(1)}:1 {aa.label}
+                            </span>
+                          ) : (
+                            <span className="token-table-na">—</span>
+                          )}
+                        </td>
+                        <td data-label="$description" className="token-table-desc">
+                          {token.$description}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </div>
           </SectionBand>
 
