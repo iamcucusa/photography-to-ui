@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, type KeyboardEvent } from 'react'
 import { AuditPage } from './AuditPage'
 import { useTheme } from './useTheme'
 import primitives from '@tokens/color/primitives.json'
@@ -58,6 +58,14 @@ function App() {
     navigator.clipboard.writeText(`var(${text})`)
     setToast(`Copied var(${text})`)
     setTimeout(() => setToast(''), 1500)
+  }, [])
+
+  // role="button" cells must activate on Enter AND Space (2.1.1).
+  const onKeyActivate = useCallback((e: KeyboardEvent, fn: () => void) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      fn()
+    }
   }, [])
 
   const palettes = ['magenta', 'sky', 'frost', 'sand', 'ink'] as const
@@ -163,7 +171,7 @@ function App() {
                           role="button"
                           tabIndex={0}
                           aria-label={`Copy ${name}`}
-                          onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                          onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                         >
                           <span className="palette-stop-label">{stop}</span>
                         </div>
@@ -197,7 +205,7 @@ function App() {
                       role="button"
                       tabIndex={0}
                       aria-label={`Copy ${name}`}
-                      onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                      onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                     >
                       {name}
                     </span>
@@ -244,7 +252,7 @@ function App() {
                         role="button"
                         tabIndex={0}
                         aria-label={`Copy ${name}`}
-                        onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                       >
                         {name}
                       </span>
@@ -284,7 +292,7 @@ function App() {
                     role="button"
                     tabIndex={0}
                     aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                   >
                     {name}
                   </span>
@@ -311,7 +319,7 @@ function App() {
                     tabIndex={0}
                     style={{ cursor: 'pointer', color: 'var(--color-accent)' }}
                     aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                   >
                     {name}
                   </span>
@@ -342,7 +350,7 @@ function App() {
                     role="button"
                     tabIndex={0}
                     aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                   >
                     <span className="shadow-card-name">{name.replace('--shadow-', '')}</span>
                     {token.$description && (
@@ -380,7 +388,7 @@ function App() {
                     role="button"
                     tabIndex={0}
                     aria-label={`Copy ${name}`}
-                    onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                    onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                   >
                     <div className="motion-bar-track">
                       <div
@@ -411,7 +419,7 @@ function App() {
                   role="button"
                   tabIndex={0}
                   aria-label={`Copy ${name}`}
-                  onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                  onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                 >
                   <span className="spacing-label" style={{ color: 'var(--color-accent)' }}>
                     {name}
@@ -439,7 +447,7 @@ function App() {
                   tabIndex={0}
                   style={{ cursor: 'pointer' }}
                   aria-label={`Copy ${name}`}
-                  onKeyDown={(e) => e.key === 'Enter' && copy(name)}
+                  onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                 >
                   <span className="spacing-label" style={{ color: 'var(--color-accent)' }}>
                     {name}
