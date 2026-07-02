@@ -964,31 +964,33 @@ function App() {
             id="motion"
             num="07"
             title="Motion"
-            description="Duration scale and easing curves. Hover each card to preview the timing."
+            description="Six durations, two curves. Hover a track to feel the timing — from a 120ms micro-tick to the 1,800ms CTA blink."
           >
-            <div className="motion-demo">
+            {/* Timeline strip: hover (or focus) a track and the dot traverses
+                it in exactly that token's duration */}
+            <div className="motion-track-list">
               {durationTokens.map(({ name, token }) => {
                 const ms = parseInt(String(token.$value), 10)
                 return (
                   <div
                     key={name}
-                    className="motion-card"
+                    className="motion-track"
                     onClick={() => copy(name)}
                     role="button"
                     tabIndex={0}
                     aria-label={`Copy ${name}`}
                     onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                   >
-                    <div className="motion-bar-track">
+                    <span className="motion-track-name">{name.replace('--duration-', '')}</span>
+                    <div className="motion-track-rail" aria-hidden="true">
                       <div
-                        className="motion-bar"
-                        style={{ transition: `width ${ms}ms var(--easing-emphasized)` }}
+                        className="motion-track-dot"
+                        style={{ transitionDuration: `var(${name})` }}
                       />
                     </div>
-                    <div className="motion-card-name">{name.replace('--duration-', '')}</div>
-                    <div className="motion-card-value">{ms}ms</div>
+                    <span className="motion-track-ms">{ms}ms</span>
                     {token.$description && (
-                      <div className="motion-card-desc">{token.$description}</div>
+                      <span className="motion-track-desc">{token.$description}</span>
                     )}
                   </div>
                 )
@@ -996,30 +998,49 @@ function App() {
             </div>
 
             <h3 className="token-subsection-title">Easing</h3>
-            {flattenTokens(motion.easing as Record<string, unknown>, 'easing').map(
-              ({ name, token }) => (
-                <div
-                  key={name}
-                  className="spacing-demo"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => copy(name)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Copy ${name}`}
-                  onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                >
-                  <span className="spacing-label" style={{ color: 'var(--color-accent)' }}>
-                    {name}
-                  </span>
-                  <span className="spacing-value">
-                    {Array.isArray(token.$value)
-                      ? `cubic-bezier(${(token.$value as number[]).join(', ')})`
-                      : String(token.$value)}
-                    {token.$description && ` — ${token.$description}`}
-                  </span>
-                </div>
-              ),
-            )}
+            {/* Each cubic-bezier plotted as a curve; on hover a dot rides the
+                curve with that easing (offset-path) */}
+            <div className="easing-row">
+              {flattenTokens(motion.easing as Record<string, unknown>, 'easing').map(
+                ({ name, token }) => {
+                  const [x1, y1, x2, y2] = token.$value as number[]
+                  const d = `M 0,100 C ${x1 * 100},${100 - y1 * 100} ${x2 * 100},${100 - y2 * 100} 100,0`
+                  return (
+                    <div
+                      key={name}
+                      className="easing-fig"
+                      onClick={() => copy(name)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Copy ${name}`}
+                      onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                    >
+                      <div className="easing-plot" aria-hidden="true">
+                        <svg viewBox="0 0 100 100" width="100" height="100">
+                          <path className="easing-curve" d={d} />
+                        </svg>
+                        <div
+                          className="easing-dot"
+                          style={{
+                            offsetPath: `path('${d}')`,
+                            transitionTimingFunction: `var(${name})`,
+                          }}
+                        />
+                      </div>
+                      <div className="easing-fig-note">
+                        <span className="token-table-name">{name}</span>
+                        <code className="token-table-ref">
+                          cubic-bezier({(token.$value as number[]).join(', ')})
+                        </code>
+                        {token.$description && (
+                          <span className="type-specimen-desc">{token.$description}</span>
+                        )}
+                      </div>
+                    </div>
+                  )
+                },
+              )}
+            </div>
           </SectionBand>
 
           <SectionBand

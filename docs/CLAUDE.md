@@ -69,7 +69,7 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 | Typography | Living specimens: display-xl hero row, descending scale with right-margin sidenotes, manifesto line-height paragraphs, per-fallback font stack | `typography.json` |
 | Spacing | Measured rhythm ladder — bar width IS the token value, shared baseline rule | `spacing.json` |
 | Shadows | Elevation chips on a full-bleed band, hairline role captions, real magenta glow | `elevation.json` |
-| Motion | Duration cards with hover-to-preview timing + easing | `motion.json` |
+| Motion | Hover-to-play timeline tracks (dot travels at the token's real duration) + plotted easing curves with offset-path dots | `motion.json` |
 | Shape | Radius swatches, dividers, focus-ring | `shape.json` |
 | Sizing | LinkedIn post layout tokens | `sizing.json` |
 | Backdrop | Photo/tint opacity caps with opacity demos | `backdrop.json` |
