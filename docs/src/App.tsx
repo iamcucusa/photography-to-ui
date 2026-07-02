@@ -1,6 +1,7 @@
-import { useState, useCallback, type KeyboardEvent } from 'react'
+import { useState, useCallback, useMemo, type KeyboardEvent } from 'react'
 import { AuditPage } from './AuditPage'
 import { useTheme } from './useTheme'
+import { resolveVarToHex, contrastRatio, grade } from './resolve'
 import primitives from '@tokens/color/primitives.json'
 import semantic from '@tokens/color/semantic.json'
 import derived from '@tokens/color/derived.json'
@@ -49,6 +50,16 @@ const lightOverrides = new Map(
   ].map(({ name, token }) => [name, token]),
 )
 
+// Stable token lists (from static JSON) so the resolved-hex memo can key on mode alone.
+const semanticTokens = flattenTokens(semantic.color as Record<string, unknown>, 'color')
+const derivedTokens = flattenTokens(derived.color as Record<string, unknown>, 'color')
+
+// Text roles get an AA badge against the surface they're read on.
+const textRoleBg: Record<string, string> = {
+  '--color-text-on-accent': '--color-accent',
+}
+const isTextRole = (name: string) => name.startsWith('--color-text-')
+
 function App() {
   const [activeTab, setActiveTab] = useState<'tokens' | 'audit'>('tokens')
   const [toast, setToast] = useState('')
@@ -72,8 +83,29 @@ function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const colorPrimitives = primitives.color as any as Record<string, TokenEntry>
 
-  const semanticTokens = flattenTokens(semantic.color as Record<string, unknown>, 'color')
-  const derivedTokens = flattenTokens(derived.color as Record<string, unknown>, 'color')
+  // Resolve every semantic + derived token to a concrete #hex for the active
+  // mode (probe reads the live cascade). Recompute when the mode flips.
+  const resolvedHex = useMemo(() => {
+    const map = new Map<string, string>()
+    for (const { name } of [...semanticTokens, ...derivedTokens]) {
+      map.set(name, resolveVarToHex(name))
+    }
+    return map
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode])
+
+  // AA badge for text roles: ratio of the resolved role vs its surface.
+  const textRoleAA = useCallback(
+    (name: string) => {
+      const fg = resolvedHex.get(name)
+      const bg = resolveVarToHex(textRoleBg[name] ?? '--color-bg-canvas')
+      if (!fg) return null
+      const r = contrastRatio(fg, bg)
+      return { ratio: r, grade: grade(r) }
+    },
+    [resolvedHex],
+  )
+
   const typeScaleTokens = flattenTokens(typography.text as Record<string, unknown>, 'text')
   const displayTokens = flattenTokens(typography.display as Record<string, unknown>, 'display')
   const spacingTokens = flattenTokens(spacing.space as Record<string, unknown>, 'space')
@@ -206,36 +238,48 @@ function App() {
               Design intent aliases. These map meaning to palette primitives.
             </p>
             <div className="color-grid">
-              {semanticTokens.map(({ name, token }) => (
-                <div key={name} className="color-card">
-                  <div className="color-swatch">
-                    <div
-                      className="color-swatch-fill"
-                      style={{ backgroundColor: `var(${name})` }}
-                    />
+              {semanticTokens.map(({ name, token }) => {
+                const aa = isTextRole(name) ? textRoleAA(name) : null
+                return (
+                  <div key={name} className="color-card">
+                    <div className="color-swatch">
+                      <div
+                        className="color-swatch-fill"
+                        style={{ backgroundColor: `var(${name})` }}
+                      />
+                    </div>
+                    <div className="color-info">
+                      <span
+                        className="color-name"
+                        onClick={() => copy(name)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Copy ${name}`}
+                        onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
+                      >
+                        {name}
+                      </span>
+                      <span className="color-value">
+                        {String(token.$value)}
+                        {lightOverrides.has(name) &&
+                          ` · light: ${String(lightOverrides.get(name)?.$value)}`}
+                      </span>
+                      <span className="color-resolved">
+                        = {resolvedHex.get(name)}{' '}
+                        <span className="color-resolved-mode">({mode})</span>
+                        {aa && (
+                          <span className={`aa-badge aa-badge--${aa.grade}`}>
+                            {aa.ratio.toFixed(1)}:1 {aa.grade === 'fail' ? '✗' : aa.grade}
+                          </span>
+                        )}
+                      </span>
+                      {token.$description && (
+                        <span className="color-description">{token.$description}</span>
+                      )}
+                    </div>
                   </div>
-                  <div className="color-info">
-                    <span
-                      className="color-name"
-                      onClick={() => copy(name)}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Copy ${name}`}
-                      onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
-                    >
-                      {name}
-                    </span>
-                    <span className="color-value">
-                      {String(token.$value)}
-                      {lightOverrides.has(name) &&
-                        ` · light: ${String(lightOverrides.get(name)?.$value)}`}
-                    </span>
-                    {token.$description && (
-                      <span className="color-description">{token.$description}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </section>
 
@@ -277,6 +321,10 @@ function App() {
                           light: {String(lightOverrides.get(name)?.$value)}
                         </span>
                       )}
+                      <span className="color-resolved">
+                        = {resolvedHex.get(name)}{' '}
+                        <span className="color-resolved-mode">({mode})</span>
+                      </span>
                       {token.$description && (
                         <span className="color-description">{token.$description}</span>
                       )}
