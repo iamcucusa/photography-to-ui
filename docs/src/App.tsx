@@ -214,23 +214,32 @@ function App() {
       <header className="docs-header">
         <div className="docs-inset">
           <h1 className="docs-title">
-            Cucusa Tokens<span style={{ color: 'var(--color-accent)' }}>_</span>
+            Cucusa Tokens
+            <span className="docs-title-cursor" aria-hidden="true">
+              _
+            </span>
           </h1>
           <p className="docs-subtitle">Design token reference and system health dashboard.</p>
-          <ul className="docs-usage" aria-label="How to use this catalog">
+          <p className="docs-subtitle-note">
+            Every value here is live, copyable, and the same source your agents read.
+          </p>
+          <ul className="docs-legend" aria-label="How to use this catalog">
             <li>
-              <strong>Click any token</strong> to copy its <code>var(--name)</code>
+              <strong>Click any token</strong>
+              <span>
+                copies its <code>var(--name)</code>
+              </span>
             </li>
             <li>
-              <strong>Toggle mode</strong> (top-right) — values that differ show{' '}
-              <code>dark · light</code>
+              <strong>dark · light</strong>
+              <span>toggle top-right — values that differ show both bindings, live</span>
             </li>
             <li>
-              Each token's{' '}
-              <strong>
-                description is its DTCG <code>$description</code>
-              </strong>{' '}
-              — the source of truth for humans and agents
+              <strong>{'{ }'} DTCG $description</strong>
+              <span>
+                not docs <em>about</em> the tokens — the tokens' own <code>$description</code>{' '}
+                fields, one source of truth for humans and agents
+              </span>
             </li>
           </ul>
           <button
