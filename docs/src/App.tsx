@@ -387,7 +387,7 @@ function App() {
                     tabIndex={0}
                     aria-label={`Copy ${name}`}
                     title={
-                      hasAlpha(token) ? `${name} — translucent, shown over a checkerboard` : name
+                      hasAlpha(token) ? `${name}, translucent, shown over a checkerboard` : name
                     }
                     onKeyDown={(e) => onKeyActivate(e, () => copy(name))}
                   >
@@ -419,7 +419,7 @@ function App() {
                       {aa.ratio.toFixed(1)}:1 {aa.label}
                     </span>
                   ) : (
-                    <span className="token-table-na">—</span>
+                    <span className="token-table-na">n/a</span>
                   )}
                 </td>
                 <td data-label="$description" className="token-table-desc">
@@ -469,13 +469,14 @@ function App() {
             </li>
             <li>
               <strong>dark · light</strong>
-              <span>toggle top-right — values that differ show both bindings, live</span>
+              <span>toggle top right; every value that differs shows both bindings, live</span>
             </li>
             <li>
               <strong>{'{ }'} DTCG $description</strong>
               <span>
-                not docs <em>about</em> the tokens — the tokens' own <code>$description</code>{' '}
-                fields, one source of truth for humans and agents
+                These aren't docs <em>about</em> the tokens. They are the tokens' own{' '}
+                <code>$description</code> fields: one W3C DTCG source of truth, read by you and by
+                the agents that build with this system.
               </span>
             </li>
           </ul>
@@ -538,7 +539,7 @@ function App() {
             id="palettes"
             num="01"
             title="Color Palettes"
-            description="Five palettes, each lifted from a photograph — urban magenta, architectural sky, structural frost, landscape sand, and a pure ink gray. Five stops each, darkest to lightest."
+            description="Five palettes, each lifted from a photograph: urban magenta, architectural sky, structural frost, landscape sand, and a pure ink gray. Five stops each, from darkest to lightest."
             bleed
           >
             {palettes.map((palette) => {
@@ -580,7 +581,7 @@ function App() {
             id="semantic"
             num="02"
             title="Semantic Colors"
-            description="Intent, not pigment. Each alias points at a palette primitive so meaning survives a re-theme — change magenta.2 and everything that means 'accent' moves with it."
+            description="Intent, not pigment. Each alias points at a palette primitive so meaning survives a re-theme: change magenta.2 and everything that means 'accent' moves with it."
           >
             <div className="token-table-wrap">
               <table className="token-table">
@@ -638,7 +639,7 @@ function App() {
                               {aa.ratio.toFixed(1)}:1 {aa.label}
                             </span>
                           ) : (
-                            <span className="token-table-na">—</span>
+                            <span className="token-table-na">n/a</span>
                           )}
                         </td>
                         <td data-label="$description" className="token-table-desc">
@@ -656,7 +657,7 @@ function App() {
             id="derived"
             num="03"
             title="Derived Colors"
-            description="Forty-odd tokens, none hand-picked — each is a color-mix() recipe over a primitive. The formula is the value; read it like source."
+            description="Forty-odd tokens, none of them hand-picked. Each is a color-mix() recipe over a primitive, and the formula is the value. Read it like source."
             bleed
           >
             {derivedTableGroups.map((g) => (
@@ -672,8 +673,8 @@ function App() {
               <div className="docs-inset">
                 <h3 className="derived-group-title">Overlays</h3>
                 <p className="derived-group-note">
-                  One canvas scrim, six strengths — 20% to 90% over whatever sits beneath. The two
-                  sky-2 endpoints below serve the gradients, not the ramp.
+                  One canvas scrim, six strengths, from 20% to 90% over whatever sits beneath. The
+                  two sky-2 endpoints below serve the gradients, not the ramp.
                 </p>
                 <div
                   className="overlay-ramp checkerboard"
@@ -706,8 +707,8 @@ function App() {
               <div className="docs-inset">
                 <h3 className="derived-group-title">Gradients</h3>
                 <p className="derived-group-note">
-                  App and slide backgrounds, shown as the gradients they compose — stops labeled
-                  beneath the field.
+                  App and slide backgrounds, shown as the gradients they compose. Each stop is
+                  labeled beneath the field.
                 </p>
               </div>
               {gradientFields.map((g) => (
@@ -716,7 +717,7 @@ function App() {
                     className="gradient-field"
                     style={{ background: g.css }}
                     role="img"
-                    aria-label={`${g.label} gradient — ${g.stops.join(' → ')}`}
+                    aria-label={`${g.label} gradient from ${g.stops[0]} to ${g.stops[g.stops.length - 1]}`}
                   />
                   <div className="docs-inset gradient-stops">
                     {g.stops.map((name) => {
@@ -747,7 +748,7 @@ function App() {
               <div className="docs-inset">
                 <h3 className="derived-group-title">Glows</h3>
                 <p className="derived-group-note">
-                  Soft radial fields over the canvas — ambient light, not surfaces.
+                  Soft radial fields over the canvas: ambient light, not surfaces.
                 </p>
               </div>
               <div className="glow-field-row">
@@ -788,7 +789,7 @@ function App() {
             id="typography"
             num="04"
             title="Typography"
-            description="JetBrains Mono, sized on a Perfect Fifth (1.5) from a 16px base. One typeface does everything — body, code, and the 87px hero."
+            description="JetBrains Mono, sized on a Perfect Fifth (1.5) from a 16px base. One typeface does everything: body, code, and the 87px hero."
             bleed
           >
             {/* --display-xl gets the full-bleed hero row; the scale then
@@ -897,7 +898,7 @@ function App() {
             id="spacing"
             num="05"
             title="Spacing"
-            description="A pure doubling scale — 4, 8, 16, 32, 64px. Five steps, no in-between. Rhythm you can predict."
+            description="A pure doubling scale: 4, 8, 16, 32, 64px. Five steps, nothing in between. Rhythm you can predict."
           >
             {/* Rhythm ladder: every bar is the token's actual width, grown
                 from one shared baseline rule — the doubling reads at a glance */}
@@ -924,7 +925,7 @@ function App() {
                       />
                       <span className="space-rung-value">
                         {String(token.$value)} · {px}px
-                        {token.$description && ` — ${String(token.$description)}`}
+                        {token.$description && ` · ${String(token.$description)}`}
                       </span>
                     </div>
                   </div>
@@ -937,7 +938,7 @@ function App() {
             id="shadows"
             num="06"
             title="Shadows"
-            description="Elevation for a dark canvas — where shadows barely read, so we lean on top-highlights and, at the top of the stack, a magenta glow."
+            description="Elevation for a dark canvas, where shadows barely read. So we lean on top highlights and, at the top of the stack, a magenta glow."
             bleed
           >
             {/* Chips lift off the band by their actual shadow tokens; radius
@@ -972,7 +973,7 @@ function App() {
             id="motion"
             num="07"
             title="Motion"
-            description="Six durations, two curves. Hover a track to feel the timing — from a 120ms micro-tick to the 1,800ms CTA blink."
+            description="Six durations, two curves. Hover a track to feel the timing, from the 120ms micro tick to the 1,800ms CTA blink."
           >
             {/* Timeline strip: hover (or focus) a track and the dot traverses
                 it in exactly that token's duration */}
@@ -1055,11 +1056,11 @@ function App() {
             id="shape"
             num="08"
             title="Shape"
-            description="This system defines both radius and divider tokens. This page rations the radius and leans on the rules — honest structure over default corners."
+            description="This system defines both radius and divider tokens. This page rations the radius and leans on the rules: honest structure over default corners."
           >
             {/* The section demonstrates itself: sample corners, real rules at
                 real contrast, a live focus target */}
-            <h3 className="token-subsection-title">Radius — rationed</h3>
+            <h3 className="token-subsection-title">Radius, rationed</h3>
             <div className="shape-corner-row">
               {flattenTokens(shape.radius as Record<string, unknown>, 'radius').map(
                 ({ name, token }) => (
@@ -1085,7 +1086,7 @@ function App() {
               )}
             </div>
 
-            <h3 className="token-subsection-title">Dividers — leaned on</h3>
+            <h3 className="token-subsection-title">Dividers, leaned on</h3>
             {dividerTokens.map(({ name, token }) => (
               <div key={name} className="shape-rule-demo">
                 <div
@@ -1101,9 +1102,9 @@ function App() {
               </div>
             ))}
 
-            <h3 className="token-subsection-title">Focus ring — live</h3>
+            <h3 className="token-subsection-title">Focus ring, live</h3>
             <button type="button" className="shape-focus-target">
-              Tab to me — the ring is the demo
+              Tab to me. The ring is the demo.
             </button>
             {focusRingTokens.map(({ name, token }) =>
               defRow(name, String(token.$value), token.$description),
@@ -1114,7 +1115,7 @@ function App() {
             id="sizing"
             num="09"
             title="Sizing"
-            description="These tokens leave this page — they size LinkedIn post cards. --post-card-width ships as clamp(340px, 32vw, 440px). Proof the system feeds real consumers, not just its own docs."
+            description="These tokens leave this page: they size LinkedIn post cards. --post-card-width ships as clamp(340px, 32vw, 440px). Proof that the system feeds real consumers, not just its own docs."
           >
             {/* Live clamp() demo: the bar IS var(--post-card-width) — resize
                 the viewport and it moves between its floor and ceiling */}
@@ -1159,7 +1160,7 @@ function App() {
             id="backdrop"
             num="10"
             title="Backdrop"
-            description="photography-to-ui, closing the loop. Every palette here came from a photograph; these two opacity caps are what keep text legible over those photographs. Contrast-load-bearing: they bound the worst case behind translucent panels, and flip per mode."
+            description="photography-to-ui, closing the loop. Every palette here came from a photograph, and these two opacity caps are what keep text legible over those photographs. They carry the contrast load: they bound the worst case behind translucent panels, and they flip per mode."
             bleed
           >
             {/* The live stack: photo at its capped opacity, brand tint over
@@ -1169,15 +1170,15 @@ function App() {
               <img
                 className="backdrop-stage-photo"
                 src={bannerPhoto}
-                alt="The photographic backdrop behind photography-to-ui — the photograph the five palettes were lifted from"
+                alt="The photographic backdrop behind photography-to-ui, the photograph the five palettes were lifted from"
               />
               <div className="backdrop-stage-tint" aria-hidden="true" />
               <div className="docs-inset backdrop-stage-inset">
                 <div className="backdrop-stage-panel">
                   <p className="backdrop-stage-panel-title">Worst case, bounded.</p>
                   <p className="backdrop-stage-panel-text">
-                    This panel is --color-bg-translucent over the tint over the photo — the exact
-                    stack the caps protect. Flip the mode: both caps move.
+                    This panel is --color-bg-translucent over the tint over the photo, the exact
+                    stack the caps protect. Flip the mode and both caps move.
                   </p>
                 </div>
               </div>
