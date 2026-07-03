@@ -21,12 +21,9 @@ html[data-theme='light'] {
   transition: none !important;
 }
 
-/* Mode toggle */
+/* Mode toggle: a hairline pill at the right end of the instrument bar
+   (radius sanctioned — it's an input) */
 .mode-toggle {
-  position: fixed;
-  top: var(--space-md);
-  right: var(--space-md);
-  z-index: 100;
   font-family: var(--font-family-base);
   font-size: var(--text-xs);
   font-weight: var(--font-weight-medium);
@@ -36,6 +33,7 @@ html[data-theme='light'] {
   border-radius: var(--radius-sm);
   padding: var(--space-xs) var(--space-sm);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .mode-toggle:hover {
@@ -92,7 +90,7 @@ body {
 }
 
 .docs-header {
-  padding-block: var(--space-xl) 0;
+  padding-block: var(--space-xl) var(--space-lg);
 }
 
 /* Hero: maximalist display type on the bare canvas — no card, no band.
@@ -251,9 +249,10 @@ body {
   overflow-x: auto;
 }
 
-/* Section index: a sticky numbered table-of-contents row — an index, not
-   buttons. Active section reads as underline rule + magenta, no filled pill. */
-.docs-nav {
+/* Instrument bar: one sticky strip, three grammars — bracketed view switch,
+   underlined position index, pill input — in hairline-separated zones,
+   echoing the terminal legend. */
+.docs-bar {
   position: sticky;
   top: 0;
   z-index: 50;
@@ -261,10 +260,51 @@ body {
   border-bottom: var(--divider-subtle);
 }
 
-.docs-nav-bar {
+.docs-bar-inner {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  min-height: 44px; /* tap target (WCAG 2.5.8) */
+}
+
+.docs-bar-views {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  align-self: stretch;
+  padding-right: var(--space-md);
+  border-right: var(--divider-subtle);
+  flex-shrink: 0;
+}
+
+.docs-bar-view {
+  background: none;
+  border: none;
+  padding: var(--space-sm) 0;
+  font-family: var(--font-family-base);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.docs-bar-view:hover {
+  color: var(--color-text-primary);
+}
+
+.docs-bar-view--active {
+  color: var(--color-text-primary);
+}
+
+/* Bracket grammar: the active view sits in accent brackets; inactive
+   brackets keep their width so the bar never shifts */
+.docs-bar-bracket {
+  color: var(--color-text-accent);
+  opacity: 0;
+}
+
+.docs-bar-view--active .docs-bar-bracket {
+  opacity: 1;
 }
 
 .docs-nav-row {
@@ -274,15 +314,51 @@ body {
   overflow-x: auto;
   min-height: 44px; /* tap target (WCAG 2.5.8) */
   /* Edge-fade signals more items off-screen; the padding keeps the last
-     item clear of the fade at scroll end */
+     item clear of the fade at scroll end. The fade replaces the scrollbar
+     as the scroll affordance — no track in the chrome strip. */
   padding-right: var(--space-lg);
   mask-image: linear-gradient(to right, black calc(100% - var(--space-lg)), transparent);
+  scrollbar-width: none;
 }
 
-/* Docked in the sticky index (tokens tab) instead of fixed to the viewport */
-.mode-toggle--docked {
-  position: static;
+.docs-nav-row::-webkit-scrollbar {
+  display: none;
+}
+
+.docs-bar-end {
+  margin-left: auto;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding-left: var(--space-md);
+  border-left: var(--divider-subtle);
   flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  /* The fixed zones would starve the index at phone widths — the bar
+     wraps into two lines of one instrument: views + input above, the
+     full-width index below its own hairline */
+  .docs-bar-inner {
+    flex-wrap: wrap;
+    gap: 0 var(--space-md);
+  }
+
+  .docs-bar-views {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .docs-bar-end {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .docs-nav-row {
+    order: 3;
+    flex-basis: 100%;
+    border-top: var(--divider-subtle);
+  }
 }
 
 .docs-nav-link {
@@ -1358,42 +1434,6 @@ body {
 .copy-toast--visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* ── Page tabs ──────────────────────────────────────── */
-.docs-tabs {
-  display: flex;
-  gap: 0;
-  margin-top: var(--space-lg);
-  border-bottom: var(--divider-subtle);
-}
-
-.docs-tab {
-  font-size: var(--text-sm);
-  font-family: var(--font-family-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-  background: none;
-  border: none;
-  padding: var(--space-sm) var(--space-md);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all var(--duration-fast) var(--easing-emphasized);
-}
-
-.docs-tab:hover {
-  color: var(--color-text-primary);
-}
-
-.docs-tab--active {
-  color: var(--color-text-primary);
-  border-bottom-color: var(--color-accent);
-}
-
-.docs-tab:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-  border-radius: 2px;
 }
 
 /* ── Audit page ─────────────────────────────────────── */

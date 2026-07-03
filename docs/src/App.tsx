@@ -453,16 +453,39 @@ function App() {
     </div>
   )
 
-  // One toggle, two homes: docked at the right end of the sticky index on the
-  // tokens tab; a fixed top-right pill on the audit tab (no sticky bar there).
   const modeToggle = (
     <button
-      className={`mode-toggle ${activeTab === 'tokens' ? 'mode-toggle--docked' : ''}`}
+      className="mode-toggle"
       onClick={toggle}
       aria-pressed={mode === 'light'}
       aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
     >
       mode: {mode}
+    </button>
+  )
+
+  // View switch in bracket grammar: the active view sits in accent brackets.
+  // Inactive brackets keep their width so the bar never shifts. Distinct from
+  // the index's underline grammar — underline means scroll position only.
+  const viewTab = (view: 'tokens' | 'audit') => (
+    <button
+      className={`docs-bar-view ${activeTab === view ? 'docs-bar-view--active' : ''}`}
+      role="tab"
+      aria-selected={activeTab === view}
+      onClick={() => {
+        setActiveTab(view)
+        // A view switch is a page change, not a scroll — start at the top
+        window.scrollTo(0, 0)
+      }}
+    >
+      <span className="docs-bar-bracket" aria-hidden="true">
+        [{' '}
+      </span>
+      {view}
+      <span className="docs-bar-bracket" aria-hidden="true">
+        {' '}
+        ]
+      </span>
     </button>
   )
 
@@ -525,29 +548,40 @@ function App() {
               </pre>
             </div>
           )}
-          {/* On the tokens tab the toggle docks into the sticky index instead
-              (a fixed pill would sit on top of the scrolling nav items) */}
-          {activeTab === 'audit' && modeToggle}
-          <div className="docs-tabs" role="tablist" aria-label="Page sections">
-            <button
-              className={`docs-tab ${activeTab === 'tokens' ? 'docs-tab--active' : ''}`}
-              role="tab"
-              aria-selected={activeTab === 'tokens'}
-              onClick={() => setActiveTab('tokens')}
-            >
-              Tokens
-            </button>
-            <button
-              className={`docs-tab ${activeTab === 'audit' ? 'docs-tab--active' : ''}`}
-              role="tab"
-              aria-selected={activeTab === 'audit'}
-              onClick={() => setActiveTab('audit')}
-            >
-              Audit
-            </button>
-          </div>
         </div>
       </header>
+
+      {/* Instrument bar: one sticky strip, three grammars — bracketed view
+          switch, underlined position index, pill input — in hairline-
+          separated zones, always reachable at any scroll depth */}
+      <div className="docs-bar">
+        <div className="docs-inset docs-bar-inner">
+          <div className="docs-bar-views" role="tablist" aria-label="Page views">
+            {viewTab('tokens')}
+            {viewTab('audit')}
+          </div>
+          {activeTab === 'tokens' && (
+            <nav className="docs-nav-row" aria-label="Token sections">
+              {sections.map((s, i) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className={`docs-nav-link ${
+                    activeSection === s.id ? 'docs-nav-link--active' : ''
+                  }`}
+                  aria-current={activeSection === s.id ? 'true' : undefined}
+                >
+                  <span className="docs-nav-num" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {s.label}
+                </a>
+              ))}
+            </nav>
+          )}
+          <div className="docs-bar-end">{modeToggle}</div>
+        </div>
+      </div>
 
       {activeTab === 'audit' && (
         <div className="docs-inset">
@@ -557,29 +591,6 @@ function App() {
 
       {activeTab === 'tokens' && (
         <>
-          <nav className="docs-nav" aria-label="Token sections">
-            <div className="docs-inset docs-nav-bar">
-              <div className="docs-nav-row">
-                {sections.map((s, i) => (
-                  <a
-                    key={s.id}
-                    href={`#${s.id}`}
-                    className={`docs-nav-link ${
-                      activeSection === s.id ? 'docs-nav-link--active' : ''
-                    }`}
-                    aria-current={activeSection === s.id ? 'true' : undefined}
-                  >
-                    <span className="docs-nav-num" aria-hidden="true">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {s.label}
-                  </a>
-                ))}
-              </div>
-              {modeToggle}
-            </div>
-          </nav>
-
           <SectionBand
             id="palettes"
             num="01"
