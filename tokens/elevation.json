@@ -3,43 +3,90 @@
     "$type": "shadow",
     "1": {
       "$value": {
-        "color": "rgba(255, 255, 255, 0.05)",
+        "color": "rgba(214, 228, 238, 0.12)",
         "offsetX": "0",
         "offsetY": "1px",
         "blur": "0",
         "spread": "0"
       },
-      "$description": "Subtle top highlight"
+      "$description": "Minimal elevation on dark: a lit top edge in cool sky light (black drops cannot read on a near-black canvas, so elevation renders as light)",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 12%, transparent)"
+        }
+      }
     },
     "soft": {
-      "$value": {
-        "color": "rgba(0, 0, 0, 0.2)",
-        "offsetX": "0",
-        "offsetY": "2px",
-        "blur": "8px",
-        "spread": "0"
-      },
-      "$description": "Soft elevation"
+      "$value": [
+        {
+          "color": "rgba(214, 228, 238, 0.06)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "0",
+          "spread": "1px"
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.55)",
+          "offsetX": "0",
+          "offsetY": "2px",
+          "blur": "8px",
+          "spread": "0"
+        }
+      ],
+      "$description": "Soft elevation on dark: lit top edge, cool hairline rim, soft drop for photographic backdrops",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-sky-5) 6%, transparent), 0 2px 8px rgba(0, 0, 0, 0.55)"
+        }
+      }
     },
     "hover": {
-      "$value": {
-        "color": "rgba(0, 0, 0, 0.3)",
-        "offsetX": "0",
-        "offsetY": "4px",
-        "blur": "12px",
-        "spread": "0"
-      },
-      "$description": "Hover state elevation"
+      "$value": [
+        {
+          "color": "rgba(214, 228, 238, 0.08)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "0",
+          "spread": "1px"
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.6)",
+          "offsetX": "0",
+          "offsetY": "4px",
+          "blur": "12px",
+          "spread": "0"
+        }
+      ],
+      "$description": "Hover state elevation on dark: brighter lit edge and rim, deeper drop",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-sky-5) 8%, transparent), 0 4px 12px rgba(0, 0, 0, 0.6)"
+        }
+      }
     },
     "2": {
-      "$value": {
-        "color": "rgba(0, 0, 0, 0.4)",
-        "offsetX": "0",
-        "offsetY": "8px",
-        "blur": "24px",
-        "spread": "0"
-      },
-      "$description": "High elevation — cards, slides"
+      "$value": [
+        {
+          "color": "rgba(214, 228, 238, 0.1)",
+          "offsetX": "0",
+          "offsetY": "0",
+          "blur": "0",
+          "spread": "1px"
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.65)",
+          "offsetX": "0",
+          "offsetY": "8px",
+          "blur": "24px",
+          "spread": "0"
+        }
+      ],
+      "$description": "High elevation on dark for cards and slides: brightest lit edge, cool rim, deepest drop",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 22%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-sky-5) 10%, transparent), 0 8px 24px rgba(0, 0, 0, 0.65)"
+        }
+      }
     },
     "glow-accent": {
       "$value": [

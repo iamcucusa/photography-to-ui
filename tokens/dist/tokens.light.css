@@ -24,7 +24,7 @@
   --color-glow-warm: color-mix(in srgb, var(--color-sand-2) 3%, transparent); /** Sand-2 at 3% — warm wash on light */
   --color-glow-frost: color-mix(in srgb, var(--color-frost-2) 6%, transparent); /** Frost-2 at 6% — neutral wash on light (frost-1 reads as dirt on light surfaces) */
   --color-text-cool: #2160a8; /** Cool technical tone on light — a tuned saturated blue (5.95:1 on canvas, AA). The sky ramp is intentionally desaturated and its only AA-on-light stop (sky-2) reads as near-black navy with no pop; links and code-syntax need a confident blue that's clearly distinct from the near-black body text. Dark mode's cool is sky-4 (airy light blue); each mode tunes cool for its ground */
-  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.06); /** Hairline bottom shadow — light-mode replacement for the dark top highlight */
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.06); /** Hairline bottom shadow — light-mode replacement for the dark lit edge */
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.12); /** High elevation on light — cards, slides */
   --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08); /** Soft elevation on light — shadows soften, they do not carry mood */
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1); /** Hover state elevation on light */

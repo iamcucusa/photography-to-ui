@@ -9,7 +9,12 @@
         "blur": "0",
         "spread": "0"
       },
-      "$description": "Hairline bottom shadow — light-mode replacement for the dark top highlight"
+      "$description": "Hairline bottom shadow — light-mode replacement for the dark lit edge",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "0 1px 0 rgba(0, 0, 0, 0.06)"
+        }
+      }
     },
     "soft": {
       "$value": {
@@ -19,7 +24,12 @@
         "blur": "8px",
         "spread": "0"
       },
-      "$description": "Soft elevation on light — shadows soften, they do not carry mood"
+      "$description": "Soft elevation on light — shadows soften, they do not carry mood",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "0 2px 8px rgba(0, 0, 0, 0.08)"
+        }
+      }
     },
     "hover": {
       "$value": {
@@ -29,7 +39,12 @@
         "blur": "12px",
         "spread": "0"
       },
-      "$description": "Hover state elevation on light"
+      "$description": "Hover state elevation on light",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "0 4px 12px rgba(0, 0, 0, 0.1)"
+        }
+      }
     },
     "2": {
       "$value": {
@@ -39,7 +54,12 @@
         "blur": "24px",
         "spread": "0"
       },
-      "$description": "High elevation on light — cards, slides"
+      "$description": "High elevation on light — cards, slides",
+      "$extensions": {
+        "com.cucusa.platform": {
+          "css": "0 8px 24px rgba(0, 0, 0, 0.12)"
+        }
+      }
     },
     "glow-accent": {
       "$value": [

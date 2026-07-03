@@ -101,6 +101,10 @@ Rules:
   mode-specific (gradients, glows, strong borders). Alpha washes over the
   canvas (`accent-subtle`, `tag-bg`, `border-subtle`) composite correctly over
   any canvas and stay constant.
+- **Mode overrides inherit base `$extensions`.** If a base token carries
+  `com.cucusa.platform.css` and its light override doesn't, the build emits the
+  base (dark) CSS for the light token. Any mode override of an extended token
+  must declare its own `css` extension (see `modes/light/elevation.json`).
 - `validate.mjs` enforces parity: every light override must match a base path,
   and the must-flip list (semantic bg/text roles) must be fully covered.
 
@@ -144,7 +148,10 @@ Read the ordering and guard documentation in `sd.config.mjs` before adding trans
 - **Typography**: JetBrains Mono. Weights: 400/500/600. Perfect Fifth scale (1.5 ratio): `--text-xs` through `--text-xxl`, plus `--display-xl`.
 - **Spacing**: `--space-xs` (0.25rem) through `--space-xl` (4rem), doubling progression.
 - **Shape**: `--radius-sm/md`, `--divider-subtle/strong`, `--focus-ring-*`.
-- **Elevation**: `--shadow-1/2/soft/hover/glow-accent`.
+- **Elevation**: `--shadow-1/2/soft/hover/glow-accent`. Dark renders elevation
+  as light (black drops cannot read on a near-black canvas): a graded lit top
+  edge + cool sky-5 hairline rim + deep drop for photographic backdrops. Light
+  mode keeps plain drops.
 - **Motion**: `--duration-micro/fast/normal/slow/crossfade/blink`, `--easing-default/emphasized`.
 
 Do not introduce raw hex values, magic px for spacing/font-size, or new tokens without approval.

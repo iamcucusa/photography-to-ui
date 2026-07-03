@@ -68,10 +68,10 @@
   --color-ink-3: #8c8c8c; /** Muted — low-emphasis text. AA on all dark surfaces (5.2:1 canvas) */
   --color-ink-4: #b3b3b3; /** Secondary — medium-emphasis text */
   --color-ink-5: #e6e6e6; /** Primary — high-emphasis text */
-  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.05); /** Subtle top highlight */
-  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.4); /** High elevation — cards, slides */
-  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.2); /** Soft elevation */
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.3); /** Hover state elevation */
+  --shadow-1: inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 12%, transparent); /** Minimal elevation on dark: a lit top edge in cool sky light (black drops cannot read on a near-black canvas, so elevation renders as light) */
+  --shadow-2: inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 22%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-sky-5) 10%, transparent), 0 8px 24px rgba(0, 0, 0, 0.65); /** High elevation on dark for cards and slides: brightest lit edge, cool rim, deepest drop */
+  --shadow-soft: inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-sky-5) 6%, transparent), 0 2px 8px rgba(0, 0, 0, 0.55); /** Soft elevation on dark: lit top edge, cool hairline rim, soft drop for photographic backdrops */
+  --shadow-hover: inset 0 1px 0 color-mix(in srgb, var(--color-sky-5) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-sky-5) 8%, transparent), 0 4px 12px rgba(0, 0, 0, 0.6); /** Hover state elevation on dark: brighter lit edge and rim, deeper drop */
   --shadow-glow-accent: 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 0 12px color-mix(in srgb, var(--color-magenta-3) 25%, transparent), 0 0 24px color-mix(in srgb, var(--color-magenta-1) 15%, transparent); /** Accent glow — interactive focus/hover highlights */
   --duration-micro: 0.12s; /** Instant feedback — visibility toggles, label reveals */
   --duration-fast: 0.15s; /** Interactive response — hover, focus, color transitions */
