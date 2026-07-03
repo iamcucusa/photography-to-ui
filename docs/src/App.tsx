@@ -195,6 +195,23 @@ function App() {
   const [toast, setToast] = useState('')
   const [activeSection, setActiveSection] = useState('')
   const [showSource, setShowSource] = useState(false)
+  const [gridVisible, setGridVisible] = useState(false)
+
+  // Grid reveal (Ctrl+Alt+Shift+G, after Klim's Müller-Brockmann homage):
+  // overlays the page's real skeleton, drawn from the tokens it documents.
+  // e.code survives macOS Alt-layer characters; Escape closes.
+  useEffect(() => {
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.ctrlKey && e.altKey && e.shiftKey && e.code === 'KeyG') {
+        e.preventDefault()
+        setGridVisible((visible) => !visible)
+      } else if (e.key === 'Escape') {
+        setGridVisible(false)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
   const { mode, toggle } = useTheme()
 
   // Scroll-spy for the section index: the section crossing the upper third
@@ -1228,6 +1245,19 @@ function App() {
               })}
             </div>
           </SectionBand>
+        </>
+      )}
+
+      {gridVisible && (
+        <>
+          <div className="grid-reveal" aria-hidden="true">
+            <div className="grid-reveal-baselines" />
+            <div className="docs-inset grid-reveal-column" />
+          </div>
+          <p className="grid-reveal-caption">
+            The grid, from its own tokens: baseline = --line-height-base × --text-md · column =
+            docs-inset · esc closes
+          </p>
         </>
       )}
 

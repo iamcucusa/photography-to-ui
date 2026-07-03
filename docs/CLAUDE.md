@@ -85,6 +85,10 @@ Every token GROUP in `tokens/*.json` is rendered — enforced by
 - **Contrast badges by obligation** (mirrors `check-contrast.mjs`): text roles show AA/AAA (≥4.5:1); `accent` + `border-accent*` show `≥3` (WCAG 1.4.11 non-text); surfaces/overlays/decoration get no badge (no ratio to fake).
 - **Full coverage is enforced** — `check:docs-coverage` (`docs/scripts/check-token-coverage.mjs`, in `npm run check`) fails if any source token group isn't rendered here. Adding a token file/group means documenting it.
 - **No routing** — single page, anchor-linked sections. Keep it simple.
+- **Grid reveal** — Ctrl+Alt+Shift+G overlays the page's real skeleton (baseline
+  rhythm from `--line-height-base` × `--text-md`, the `docs-inset` reading-column
+  edges), after Klim's Müller-Brockmann homage. Esc closes. Hidden by design;
+  the overlay caption documents itself.
 
 ## How to add a new section
 
