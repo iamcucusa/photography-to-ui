@@ -127,6 +127,52 @@ export function AuditPage() {
     )
   }, [])
 
+  // The hero readout: aggregates as figures, each one an entry point into
+  // the section that holds its evidence (the index does the drill-down).
+  const checks = contrastData.checks as ContrastCheck[]
+  const hardcodedCount =
+    data.cssAnalysis.hardcoded.hex.length +
+    data.cssAnalysis.hardcoded.rgba.length +
+    data.cssAnalysis.hardcoded.colorMix.length
+  const figures = [
+    {
+      value: String(data.tokenSource.totalTokens),
+      label: 'tokens',
+      sub: `+ ${data.tokenSource.modeOverrideTokens} light overrides`,
+      href: '#source',
+    },
+    {
+      value: `${data.tokenSource.descriptionCoverage}%`,
+      label: 'described',
+      sub: 'every token agent-legible',
+      href: '#source',
+    },
+    {
+      value: data.cssAnalysis.totalTokenReferences.toLocaleString('en-US'),
+      label: 'token references',
+      sub: `${data.cssAnalysis.filesScanned.length} files · ${new Set(data.cssAnalysis.filesScanned.map((f) => f.split('/')[0])).size} consumers`,
+      href: '#coverage',
+    },
+    {
+      value: String(hardcodedCount),
+      label: 'hardcoded colors',
+      sub: 'hex, rgba, color-mix',
+      href: '#coverage',
+    },
+    {
+      value: `${checks.filter((c) => c.pass).length}/${checks.length}`,
+      label: 'contrast checks',
+      sub: 'dark and light',
+      href: '#contrast',
+    },
+    {
+      value: String(data.accessibility.totalAriaAttributes),
+      label: 'ARIA attributes',
+      sub: `${data.accessibility.totalInteractiveElements} interactive elements`,
+      href: '#a11y',
+    },
+  ]
+
   return (
     <div className="audit">
       {/* ── Hero: the health readout ─────────────────────── */}
@@ -135,12 +181,6 @@ export function AuditPage() {
           <ScoreRing score={data.score} />
           <div className="audit-hero-meta">
             <h2 className="audit-hero-title">Design System Health</h2>
-            <p className="audit-hero-detail">
-              {data.tokenSource.totalTokens} tokens · {data.tokenSource.modeOverrideTokens} light
-              overrides · {data.cssAnalysis.totalTokenReferences} references ·{' '}
-              {data.cssAnalysis.filesScanned.length} CSS files across{' '}
-              {new Set(data.cssAnalysis.filesScanned.map((f) => f.split('/')[0])).size} consumers
-            </p>
             <p className="audit-hero-stamp">
               Scanned {new Date(data.timestamp).toLocaleDateString()} · Reviewed{' '}
               {insights.lastReviewed} by {insights.reviewer}
@@ -166,7 +206,22 @@ export function AuditPage() {
         </div>
         <div className="docs-inset">
           {refreshResult && <p className="audit-refresh-result">{refreshResult}</p>}
-          <p className="audit-summary">{insights.summary}</p>
+        </div>
+        {/* Figures over prose: each aggregate links to the section holding
+            its evidence */}
+        <div className="docs-inset audit-figures">
+          {figures.map((f) => (
+            <a
+              key={f.label}
+              className="audit-figure"
+              href={f.href}
+              aria-label={`${f.value} ${f.label}. Jump to the detail section.`}
+            >
+              <span className="audit-figure-value">{f.value}</span>
+              <span className="audit-figure-label">{f.label}</span>
+              <span className="audit-figure-sub">{f.sub}</span>
+            </a>
+          ))}
         </div>
       </header>
 
@@ -375,6 +430,7 @@ export function AuditPage() {
         title="Assessment"
         description="Metrics above are automated. This interpretation is written by the /design-system audit skill into audit-insights.json, then reviewed."
       >
+        <p className="audit-summary">{insights.summary}</p>
         <div className="audit-skill">
           <div className="audit-skill-usage">
             <span className="audit-skill-label">Rescan:</span>
