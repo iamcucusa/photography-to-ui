@@ -852,8 +852,14 @@ body {
    hairlines between scale steps, no boxes. */
 .type-hero {
   padding-block: var(--space-lg);
-  border-bottom: var(--divider-subtle);
   overflow: hidden;
+}
+
+/* The hero is step one of the scale — its boundary is the same
+   content-width hairline the other steps use, drawn by the first
+   specimen below (a full-bleed rule here would break the column) */
+.type-hero + .docs-inset > .type-specimen:first-child {
+  border-top: var(--divider-subtle);
 }
 
 .type-hero-sample {
