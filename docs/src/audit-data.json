@@ -1,15 +1,16 @@
 {
-  "timestamp": "2026-06-27T17:53:33.416Z",
+  "timestamp": "2026-07-03T18:30:06.597Z",
   "tokenSource": {
-    "totalTokens": 151,
-    "totalDescribed": 159,
-    "descriptionCoverage": 105,
+    "totalTokens": 119,
+    "totalDescribed": 119,
+    "modeOverrideTokens": 32,
+    "descriptionCoverage": 100,
     "files": [
       {
         "file": "backdrop.json",
         "tokens": 2,
-        "described": 3,
-        "coverage": 150
+        "described": 2,
+        "coverage": 100
       },
       {
         "file": "color/derived.json",
@@ -20,8 +21,8 @@
       {
         "file": "color/primitives.json",
         "tokens": 25,
-        "described": 30,
-        "coverage": 120
+        "described": 25,
+        "coverage": 100
       },
       {
         "file": "color/semantic.json",
@@ -68,8 +69,8 @@
       {
         "file": "shape.json",
         "tokens": 7,
-        "described": 8,
-        "coverage": 114
+        "described": 7,
+        "coverage": 100
       },
       {
         "file": "sizing.json",
@@ -86,20 +87,20 @@
       {
         "file": "typography.json",
         "tokens": 17,
-        "described": 18,
-        "coverage": 106
+        "described": 17,
+        "coverage": 100
       }
     ]
   },
   "cssAnalysis": {
     "tokenUsage": {
-      "colors": 299,
-      "spacing": 237,
-      "typography": 86,
-      "font": 99,
-      "motion": 201,
-      "shape": 134,
-      "shadow": 10
+      "colors": 491,
+      "spacing": 409,
+      "typography": 173,
+      "font": 157,
+      "motion": 226,
+      "shape": 198,
+      "shadow": 13
     },
     "hardcoded": {
       "hex": [],
@@ -153,10 +154,75 @@
         "file": "photography-to-ui/src/styles/app.css",
         "value": "767px",
         "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
+        "file": "switching-brain/src/styles/app.css",
+        "value": "820px",
+        "query": "@media (max-width: 820px)"
+      },
+      {
+        "file": "switching-brain/src/styles/app.css",
+        "value": "560px",
+        "query": "@media (max-width: 560px)"
       }
     ],
     "layoutConstraints": [],
-    "totalTokenReferences": 1066,
+    "totalTokenReferences": 1667,
     "filesScanned": [
       "photography-to-ui/src/components/comingSoon.css",
       "photography-to-ui/src/components/photographyContextInsight.css",
@@ -166,7 +232,10 @@
       "photography-to-ui/src/post/components/PostQuote/PostQuote.css",
       "photography-to-ui/src/post/components/PostTags/PostTags.css",
       "photography-to-ui/src/styles/app.css",
-      "photography-to-ui/src/styles/base.css"
+      "photography-to-ui/src/styles/base.css",
+      "docs/src/styles.css",
+      "switching-brain/src/styles/app.css",
+      "switching-brain/src/styles/base.css"
     ]
   },
   "accessibility": {
@@ -338,10 +407,118 @@
         "ariaPressed": 0,
         "ariaExpanded": 0,
         "roles": 0
+      },
+      {
+        "file": "docs/src/App.tsx",
+        "interactive": 7,
+        "buttons": 6,
+        "inputs": 0,
+        "links": 1,
+        "ariaTotal": 42,
+        "ariaLabels": 23,
+        "ariaPressed": 1,
+        "ariaExpanded": 1,
+        "roles": 19
+      },
+      {
+        "file": "docs/src/AuditPage.tsx",
+        "interactive": 2,
+        "buttons": 2,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 9,
+        "ariaLabels": 5,
+        "ariaPressed": 2,
+        "ariaExpanded": 2,
+        "roles": 0
+      },
+      {
+        "file": "docs/src/SectionBand.tsx",
+        "interactive": 0,
+        "buttons": 0,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 1,
+        "ariaLabels": 0,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "switching-brain/src/App.tsx",
+        "interactive": 2,
+        "buttons": 1,
+        "inputs": 0,
+        "links": 1,
+        "ariaTotal": 5,
+        "ariaLabels": 2,
+        "ariaPressed": 1,
+        "ariaExpanded": 0,
+        "roles": 2
+      },
+      {
+        "file": "switching-brain/src/components/InspectCard.tsx",
+        "interactive": 1,
+        "buttons": 1,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 8,
+        "ariaLabels": 3,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "switching-brain/src/components/Legend.tsx",
+        "interactive": 0,
+        "buttons": 0,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 2,
+        "ariaLabels": 1,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "switching-brain/src/components/RhythmDial.tsx",
+        "interactive": 0,
+        "buttons": 0,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 7,
+        "ariaLabels": 1,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 2
+      },
+      {
+        "file": "switching-brain/src/components/SelfMap.tsx",
+        "interactive": 2,
+        "buttons": 1,
+        "inputs": 1,
+        "links": 0,
+        "ariaTotal": 4,
+        "ariaLabels": 2,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 0
+      },
+      {
+        "file": "switching-brain/src/viz/BrainStage.tsx",
+        "interactive": 0,
+        "buttons": 0,
+        "inputs": 0,
+        "links": 0,
+        "ariaTotal": 7,
+        "ariaLabels": 3,
+        "ariaPressed": 0,
+        "ariaExpanded": 0,
+        "roles": 3
       }
     ],
-    "totalAriaAttributes": 43,
-    "totalInteractiveElements": 26
+    "totalAriaAttributes": 128,
+    "totalInteractiveElements": 40
   },
   "stateCoverage": [
     {
@@ -392,11 +569,32 @@
       "focus": 6,
       "active": 0,
       "disabled": 0
+    },
+    {
+      "file": "docs/src/styles.css",
+      "hover": 13,
+      "focus": 4,
+      "active": 0,
+      "disabled": 1
+    },
+    {
+      "file": "switching-brain/src/styles/app.css",
+      "hover": 4,
+      "focus": 2,
+      "active": 1,
+      "disabled": 0
+    },
+    {
+      "file": "switching-brain/src/styles/base.css",
+      "hover": 0,
+      "focus": 1,
+      "active": 0,
+      "disabled": 0
     }
   ],
   "score": 100,
   "scores": {
-    "tokenCoverage": 105,
+    "tokenCoverage": 100,
     "zeroHardcodedColors": 100,
     "zeroInlineColorMix": 100,
     "ariaPresence": 100

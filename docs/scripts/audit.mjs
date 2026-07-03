@@ -41,7 +41,49 @@ function rel(path) {
   return relative(ROOT, path)
 }
 
+// Consumers discovered from the workspace, like check-coverage.mjs — new
+// consumers are audited automatically, zero setup.
+function getConsumers() {
+  const pkg = JSON.parse(readFile(resolve(ROOT, 'package.json')))
+  return (pkg.workspaces || []).filter((ws) => ws !== 'tokens')
+}
+
+function consumerSrcFiles(pattern) {
+  const files = []
+  for (const consumer of getConsumers()) {
+    try {
+      files.push(...findFiles(resolve(ROOT, consumer, 'src'), pattern))
+    } catch {
+      // consumer without a src dir — skip
+    }
+  }
+  return files
+}
+
 // ── Token source analysis ──────────────────────────────────────────
+
+// Walk the DTCG tree properly: a token is a leaf with $value, and it counts
+// as described only when that same leaf carries a $description. (The old
+// regex count inflated coverage with group-level descriptions and conflated
+// base tokens with mode overrides.)
+function walkTokenTree(obj) {
+  let tokens = 0
+  let described = 0
+  for (const [key, value] of Object.entries(obj)) {
+    if (key.startsWith('$')) continue
+    if (value && typeof value === 'object') {
+      if ('$value' in value) {
+        tokens += 1
+        if ('$description' in value) described += 1
+      } else {
+        const nested = walkTokenTree(value)
+        tokens += nested.tokens
+        described += nested.described
+      }
+    }
+  }
+  return { tokens, described }
+}
 
 function analyzeTokenSource() {
   const tokenDir = resolve(ROOT, 'tokens')
@@ -49,25 +91,30 @@ function analyzeTokenSource() {
 
   let totalTokens = 0
   let totalDescribed = 0
+  let modeOverrideTokens = 0
   const fileStats = []
 
   for (const file of jsonFiles) {
-    const content = readFile(file)
-    const values = (content.match(/"\$value"/g) || []).length
-    const descriptions = (content.match(/"\$description"/g) || []).length
-    totalTokens += values
-    totalDescribed += descriptions
+    const { tokens, described } = walkTokenTree(JSON.parse(readFile(file)))
+    const isModeOverride = relative(tokenDir, file).startsWith('modes/')
+    if (isModeOverride) {
+      modeOverrideTokens += tokens
+    } else {
+      totalTokens += tokens
+      totalDescribed += described
+    }
     fileStats.push({
       file: relative(tokenDir, file),
-      tokens: values,
-      described: descriptions,
-      coverage: values > 0 ? Math.round((descriptions / values) * 100) : 100,
+      tokens,
+      described,
+      coverage: tokens > 0 ? Math.round((described / tokens) * 100) : 100,
     })
   }
 
   return {
     totalTokens,
     totalDescribed,
+    modeOverrideTokens,
     descriptionCoverage: Math.round((totalDescribed / totalTokens) * 100),
     files: fileStats,
   }
@@ -76,9 +123,7 @@ function analyzeTokenSource() {
 // ── CSS analysis ───────────────────────────────────────────────────
 
 function analyzeCssFiles() {
-  const cssFiles = [
-    ...findFiles(resolve(ROOT, 'photography-to-ui/src'), /\.css$/),
-  ].filter(f => !f.includes('tokens.css'))
+  const cssFiles = consumerSrcFiles(/\.css$/).filter(f => !f.includes('tokens.css'))
 
   const results = {
     tokenUsage: { colors: 0, spacing: 0, typography: 0, font: 0, motion: 0, shape: 0, shadow: 0 },
@@ -135,7 +180,7 @@ function analyzeCssFiles() {
 // ── Accessibility scan ─────────────────────────────────────────────
 
 function analyzeAccessibility() {
-  const tsxFiles = findFiles(resolve(ROOT, 'photography-to-ui/src'), /\.tsx$/)
+  const tsxFiles = consumerSrcFiles(/\.tsx$/)
 
   const results = {
     components: [],
@@ -182,7 +227,7 @@ function analyzeAccessibility() {
 // ── CSS state coverage ─────────────────────────────────────────────
 
 function analyzeStateCoverage() {
-  const cssFiles = findFiles(resolve(ROOT, 'photography-to-ui/src'), /\.css$/).filter(f => !f.includes('tokens.css'))
+  const cssFiles = consumerSrcFiles(/\.css$/).filter(f => !f.includes('tokens.css'))
 
   const results = []
 

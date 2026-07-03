@@ -15,6 +15,12 @@ type ContrastCheck = {
   pass: boolean
 }
 
+// "photography-to-ui/src/components/Header.tsx" → "photography-to-ui · Header.tsx"
+// (files scan across all consumers now, so the consumer must stay visible)
+function consumerFile(path: string) {
+  return `${path.split('/')[0]} · ${path.split('/').pop()}`
+}
+
 // Pivot the per-mode check list into one row per pairing with a column per mode
 function pivotContrast(checks: ContrastCheck[]) {
   const rows = new Map<
@@ -130,8 +136,10 @@ export function AuditPage() {
           <div className="audit-hero-meta">
             <h2 className="audit-hero-title">Design System Health</h2>
             <p className="audit-hero-detail">
-              {data.tokenSource.totalTokens} tokens · {data.cssAnalysis.totalTokenReferences}{' '}
-              references · {data.cssAnalysis.filesScanned.length} CSS files scanned
+              {data.tokenSource.totalTokens} tokens · {data.tokenSource.modeOverrideTokens} light
+              overrides · {data.cssAnalysis.totalTokenReferences} references ·{' '}
+              {data.cssAnalysis.filesScanned.length} CSS files across{' '}
+              {new Set(data.cssAnalysis.filesScanned.map((f) => f.split('/')[0])).size} consumers
             </p>
             <p className="audit-hero-stamp">
               Scanned {new Date(data.timestamp).toLocaleDateString()} · Reviewed{' '}
@@ -315,7 +323,7 @@ export function AuditPage() {
             <tbody>
               {data.accessibility.components.map((c) => (
                 <tr key={c.file}>
-                  <td data-label="component">{c.file.split('/').pop()}</td>
+                  <td data-label="component">{consumerFile(c.file)}</td>
                   <td data-label="buttons">{c.buttons || ''}</td>
                   <td data-label="inputs">{c.inputs || ''}</td>
                   <td data-label="links">{c.links || ''}</td>
@@ -349,7 +357,7 @@ export function AuditPage() {
             <tbody>
               {data.stateCoverage.map((s) => (
                 <tr key={s.file}>
-                  <td data-label="file">{s.file.split('/').pop()}</td>
+                  <td data-label="file">{consumerFile(s.file)}</td>
                   <td data-label=":hover">{s.hover || ''}</td>
                   <td data-label=":focus">{s.focus || ''}</td>
                   <td data-label=":active">{s.active || ''}</td>
