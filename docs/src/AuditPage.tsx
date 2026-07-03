@@ -103,12 +103,12 @@ export function AuditPage() {
     try {
       const res = await fetch('/__audit')
       if (res.ok) {
-        setRefreshResult('Scan complete — page will refresh via HMR')
+        setRefreshResult('Scan complete. The page refreshes via HMR.')
       } else {
-        setRefreshResult('Scan failed — run npm run audit manually')
+        setRefreshResult('Scan failed. Run npm run audit manually.')
       }
     } catch {
-      setRefreshResult('Dev server only — run npm run audit in terminal')
+      setRefreshResult('Dev server only. Run npm run audit in a terminal.')
     } finally {
       setRefreshing(false)
     }
@@ -117,7 +117,7 @@ export function AuditPage() {
   const copyFullAudit = useCallback(() => {
     navigator.clipboard.writeText('npm run audit:full')
     setRefreshResult(
-      'Copied npm run audit:full — paste in your terminal. This runs the scanner, invokes Claude to update insights, and commits.',
+      'Copied npm run audit:full. It runs the scanner, updates insights via Claude, and commits.',
     )
   }, [])
 
