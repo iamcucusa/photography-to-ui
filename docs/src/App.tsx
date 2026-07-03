@@ -436,15 +436,30 @@ function App() {
     </div>
   )
 
-  const modeToggle = (
-    <button
-      className="mode-toggle"
-      onClick={toggle}
-      aria-pressed={mode === 'light'}
-      aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
-    >
-      mode: {mode}
-    </button>
+  // Mode switch in the page's own data idiom: the dark · light pair with the
+  // established middot. Words, not chrome — the active mode reads by weight +
+  // tone (two cues, never color alone), and JetBrains Mono keeps advance
+  // width across weights, so toggling never shifts the bar.
+  const modeSwitch = (
+    <div className="mode-switch" role="group" aria-label="Color mode">
+      <button
+        className={`mode-switch-option ${mode === 'dark' ? 'mode-switch-option--active' : ''}`}
+        aria-pressed={mode === 'dark'}
+        onClick={() => mode !== 'dark' && toggle()}
+      >
+        dark
+      </button>
+      <span className="mode-switch-sep" aria-hidden="true">
+        ·
+      </span>
+      <button
+        className={`mode-switch-option ${mode === 'light' ? 'mode-switch-option--active' : ''}`}
+        aria-pressed={mode === 'light'}
+        onClick={() => mode !== 'light' && toggle()}
+      >
+        light
+      </button>
+    </div>
   )
 
   // View switch in bracket grammar: the active view sits in accent brackets.
@@ -496,7 +511,7 @@ function App() {
             <li>
               <strong>dark · light</strong>
               <span>
-                Flip the mode pill in the bar. Values that differ show both bindings, live.
+                Click dark or light in the bar. Values that differ show both bindings, live.
               </span>
             </li>
             <li>
@@ -537,7 +552,7 @@ function App() {
       </header>
 
       {/* Instrument bar: one sticky strip, three grammars — bracketed view
-          switch, underlined position index, pill input — in hairline-
+          switch, underlined position index, weighted mode words — in hairline-
           separated zones, always reachable at any scroll depth */}
       <div className="docs-bar">
         <div className="docs-inset docs-bar-inner">
@@ -563,7 +578,7 @@ function App() {
               </a>
             ))}
           </nav>
-          <div className="docs-bar-end">{modeToggle}</div>
+          <div className="docs-bar-end">{modeSwitch}</div>
         </div>
       </div>
 

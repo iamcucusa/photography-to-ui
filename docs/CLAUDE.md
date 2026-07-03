@@ -48,9 +48,10 @@ Tokens CSS and fonts are imported directly from the `@cucusa/tokens` package:
 
 ## Modes
 
-The catalog dogfoods the toggle: a `mode:` pill (right end of the sticky
-instrument bar — one strip carrying the bracketed tokens/audit view switch,
-the numbered section index, and the toggle) flips
+The catalog dogfoods the toggle: a `dark · light` word pair (right end of the
+sticky instrument bar — one strip carrying the bracketed tokens/audit view
+switch, the numbered section index, and the mode switch; the active mode reads
+bold, the other is the click target) flips
 `data-theme` on `<html>` via `useTheme.ts` — swatches paint with live
 `var()` references, so they re-theme with the page. Tokens that flip in
 light mode show both bindings (`dark value · light: value`) by reading
