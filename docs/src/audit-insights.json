@@ -1,76 +1,75 @@
 {
-  "lastReviewed": "2026-06-27",
+  "lastReviewed": "2026-07-03",
   "reviewer": "Claude Fable 5",
-  "summary": "118 tokens, 100% description coverage, zero hardcoded colors. Light mode shipped and art-directed: sparse DTCG overrides, dark :root default, [data-theme='light'] opt-in. Contrast is executable — 54 WCAG checks across both modes (incl. worst-case backdrop) run in npm run check and CI. Light mode got a dedicated art-direction pass: mode-aware image treatment (no more muddy veils), elevation-based depth, stronger borders, and a tuned link blue. Images now ship responsive AVIF/WebP via a sharp build pipeline (manifest + <Picture>/image-set), post-gallery payload down ~95%. Playground and docs carry the toggle; switching-brain is pinned dark by design.",
+  "summary": "119 tokens plus 32 light overrides, 100% description coverage, zero hardcoded colors across all three consumers (the scanner now audits the whole workspace, not just the playground). Contrast is executable: 54 WCAG checks across both modes, including the worst-case backdrop, run in npm run check and CI. Dark elevation was reworked this cycle: black drops cannot read on a near-black canvas, so shadows now render as light (a lit sky edge, a cool rim, a deepened drop), with light-mode values untouched. The docs consumer shipped a full art-direction pass on both tabs: dividers-not-boxes structure, editorial token tables, living type specimens, a single instrument bar with per-view indexes, and a scan-first copy voice for humans and agents. Documentation strings that print token values as content opt out of the coverage scanner via a same-line token-coverage-ignore comment.",
   "priorities": [
     {
       "priority": 1,
       "title": "Breakpoint tokens deferred",
       "status": "deferred",
-      "detail": "3 breakpoint values (768px, 1024px, 767px) used in 8 media queries. Not tokenized yet — responsive behavior is still being defined. Revisit when adding responsive tokens to the DTCG source."
+      "detail": "5 breakpoint values (767px, 768px, 1024px, 820px, 560px) in 22 media queries across consumers, most added by the docs redesign's responsive collapses. Not tokenized yet; revisit when the responsive strategy is defined."
     },
     {
       "priority": 2,
       "title": "Layout constraints are art-directed",
       "status": "accepted",
-      "detail": "5 hardcoded layout values (280px, 320px, 400px, 1400px, 1600px) are playground-specific. They don't warrant tokens unless a second consumer needs the same constraints."
+      "detail": "Hardcoded layout values (280px to 1600px) are playground-specific art direction. They don't warrant tokens unless a second consumer needs the same constraints."
     },
     {
       "priority": 3,
       "title": "Small structural px are intentional",
       "status": "accepted",
-      "detail": "17 instances of 1-6px values (border-radius tweaks, padding adjustments). These are micro-adjustments below the spacing scale — tokenizing them would add overhead without design benefit."
+      "detail": "1-6px micro-adjustments below the spacing scale (hairline offsets, badge radii). Tokenizing them would add overhead without design benefit."
     },
     {
       "priority": 4,
       "title": "Contrast over photography",
       "status": "resolved",
-      "detail": "Resolved by the bounded backdrop system: a solid canvas scrim floor + photo capped at backdrop.photo-opacity (0.55 dark / 0.14 light) + tint. check-contrast.mjs now verifies every panel text role against the worst-case backdrop (photo treated as pure black AND pure white) in both modes — text stays AA regardless of photo content. The bleed aesthetic is preserved; the guarantee is photo-independent."
+      "detail": "Resolved by the bounded backdrop system: a solid canvas scrim floor + photo capped at backdrop.photo-opacity (0.55 dark / 0.14 light) + tint. check-contrast.mjs verifies every panel text role against the worst-case backdrop in both modes; the docs backdrop section now demonstrates the caps live over the real banner photograph."
     },
     {
       "priority": 5,
-      "title": "Light-mode visual regression baseline",
+      "title": "Visual regression baseline",
       "status": "open",
-      "detail": "Light mode doubles the visual surface. Verification is per-session via browser screenshots; a Playwright baseline (deferred earlier) would now cover 2x the states and is worth re-costing."
+      "detail": "Verification is per-session via browser screenshots. The surface has grown again: light mode doubled it, and the docs art-direction redesign rebuilt both tabs. A Playwright baseline (deferred earlier) is worth re-costing."
     },
     {
       "priority": 6,
-      "title": "Desaturated dark-mode accent variant",
-      "status": "deferred",
-      "detail": "magenta-2 (#d60076) is 100% saturated and can vibrate against the blue canvas. The Material/HIG pattern is a slightly desaturated accent for dark themes. Taste-driven brand decision — explore separately."
+      "title": "Art-direction propagation to consumers",
+      "status": "open",
+      "detail": "The docs consumer shipped the dividers-not-boxes idiom end to end; photography-to-ui and switching-brain still use the card idiom the redesign retired. Scope the propagation with the maintainer before touching consumer chrome."
     },
     {
       "priority": 7,
-      "title": "Switching-brain paper mode",
+      "title": "Desaturated dark-mode accent variant",
       "status": "deferred",
-      "detail": "The brain is pinned dark (glow-on-dark is the piece). A light variant means re-art-directing glow to shadow — a creative exploration, not a toggle."
+      "detail": "magenta-2 (#d60076) is 100% saturated and can vibrate against the blue canvas. The Material/HIG pattern is a slightly desaturated accent for dark themes. Taste-driven brand decision; explore separately."
     },
     {
       "priority": 8,
-      "title": "Image asset optimization pipeline",
-      "status": "resolved",
-      "detail": "Shipped. scripts/optimize-assets.mjs (sharp) generates responsive AVIF/WebP from the public/assets originals (AVIF q50 / WebP q75, quality approved against samples) + a committed manifest; the <Picture> helper and imageSetCss() consume them with exact srcset and graceful <img> fallback. Originals untouched, derivatives gitignored + regenerated on predev/prebuild. Legacy hand-made _NNNpx variants removed (one mechanism). Measured: post-gallery image payload 4.9MB to 260KB (~95%); the 3MB PNG to a few KB AVIF; banner + carousel backgrounds via image-set()."
+      "title": "Switching-brain paper mode",
+      "status": "deferred",
+      "detail": "The brain is pinned dark (glow-on-dark is the piece). A light variant means re-art-directing glow to shadow: a creative exploration, not a toggle."
     }
   ],
   "strengths": [
-    "Light mode as sparse overrides — 29 tokens flip, 15 derived tokens re-derive automatically via semantic var() references",
-    "Executable contrast contract: 44 checks per run, both modes, in CI — closed the drift risk",
-    "Deep-stop mirroring: light text.accent = magenta-1 and text.cool = sky-2, the structural mirror of dark's magenta-4/sky-4 — only possible because all five ramps are monotonic",
-    "Mode parity validated: overrides must match base paths, must-flip list enforced",
-    "Zero hardcoded colors in component CSS — including named colors (white/black scanned)",
-    "All text roles AA+ on every surface in both modes; interactive borders ≥3:1 in both modes",
-    "Catalog dogfoods the toggle and shows both bindings per flipping token",
-    "100% token description coverage — every $value has a $description",
-    "Self-contained token package with fonts — ready for extraction",
-    "tokens/dist committed to git — both mode files available after clone, no build step",
-    "Bounded backdrop: text contrast over the photograph is now provable in both modes (canvas scrim floor + capped photo opacity), verified by the worst-case backdrop gate",
-    "Below-fold images lazy-loaded; reduced-motion honored; transitions narrowed off transition:all",
-    "Mode-aware image treatment: images recede by darkening on dark, by desaturating + higher opacity on light — no muddy dark veils on the light canvas",
-    "Light mode has real depth: elevation (shadow) replaces dark's glow, borders strengthened, panels separate from canvas",
-    "Consistent image-hover language across all four image types (relax filter + uniform opacity lift)",
-    "Responsive AVIF/WebP pipeline: one mechanism (manifest + <Picture>/image-set), originals pristine, post-gallery payload down ~95%"
+    "Audit scanner covers every consumer via workspace discovery, the same auto-discovery as check:coverage; new consumers are audited with zero setup",
+    "Token accounting is structural: the scanner walks the DTCG tree, so base tokens (119), mode overrides (32) and per-leaf description coverage are exact",
+    "Light mode as sparse overrides: 32 tokens flip, derived tokens re-derive automatically via semantic var() references",
+    "Executable contrast contract: 54 checks per run, both modes, in CI; drift cannot land",
+    "Dark elevation renders as light (lit sky edge + cool rim + deep drop), so the shadow scale is actually differentiable on the near-black canvas, with real drops preserved for photographic backdrops",
+    "Mode parity validated: overrides must match base paths, must-flip list enforced, and mode overrides of extended tokens declare their own css extensions",
+    "Zero hardcoded colors in component CSS across all three consumers, including named colors",
+    "All text roles AA+ on every surface in both modes; interactive borders at 3:1 or better in both modes",
+    "The catalog dogfoods the system: live swatches, both bindings per flipping token, raw DTCG JSON one click away, and token $descriptions rendered as the documentation itself",
+    "100% token description coverage: every $value carries its own $description, so every token is legible to agents",
+    "Self-contained token package with fonts, ready for extraction",
+    "tokens/dist committed to git: both mode files available after clone, no build step",
+    "Bounded backdrop: text contrast over the photograph is provable in both modes, verified by the worst-case backdrop gate",
+    "Responsive AVIF/WebP pipeline: one mechanism (manifest + Picture/image-set), originals pristine, post-gallery payload down ~95%"
   ],
   "risks": [
-    "No automated visual regression baseline — and light mode doubled the visual surface (tracked as priority 5)"
+    "No automated visual regression baseline while the visual surface keeps growing (tracked as priority 5)",
+    "The accessibility and state tables count pattern occurrences, not correctness: they prove presence, not quality. Manual review still owns the difference."
   ]
 }
