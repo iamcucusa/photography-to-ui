@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import auditData from './audit-data.json'
 import auditInsights from './audit-insights.json'
 import contrastData from './contrast-data.json'
+import { SectionBand } from './SectionBand'
 
 type AuditData = typeof auditData
 type Insights = typeof auditInsights
@@ -78,21 +79,16 @@ function ScoreRing({ score }: { score: number }) {
   )
 }
 
+// Outline badge: the word carries the state, the tone only reinforces it
+// (never color alone), matching the contrast badges in the catalog.
 function StatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    deferred: 'var(--color-accent)',
-    accepted: 'var(--color-status-success)',
-    open: 'var(--color-status-error)',
-    resolved: 'var(--color-status-success)',
+  const tone: Record<string, string> = {
+    deferred: 'status-badge--deferred',
+    accepted: 'status-badge--pass',
+    resolved: 'status-badge--pass',
+    open: 'status-badge--open',
   }
-  return (
-    <span
-      className="audit-badge"
-      style={{ backgroundColor: colors[status] || 'var(--color-border-subtle)' }}
-    >
-      {status}
-    </span>
-  )
+  return <span className={`status-badge ${tone[status] ?? ''}`}>{status}</span>
 }
 
 export function AuditPage() {
@@ -127,20 +123,20 @@ export function AuditPage() {
 
   return (
     <div className="audit">
-      {/* ── Header ──────────────────────────────────────── */}
-      <div className="audit-header">
-        <div className="audit-score-section">
+      {/* ── Hero: the health readout ─────────────────────── */}
+      <header className="audit-hero">
+        <div className="docs-inset audit-hero-row">
           <ScoreRing score={data.score} />
-          <div className="audit-score-meta">
-            <div className="audit-score-label">Design System Health</div>
-            <div className="audit-score-detail">
-              {data.tokenSource.totalTokens} tokens | {data.cssAnalysis.totalTokenReferences}{' '}
-              references | {data.cssAnalysis.filesScanned.length} CSS files scanned
-            </div>
-            <div className="audit-timestamp">
-              Scanned {new Date(data.timestamp).toLocaleDateString()} | Reviewed{' '}
+          <div className="audit-hero-meta">
+            <h2 className="audit-hero-title">Design System Health</h2>
+            <p className="audit-hero-detail">
+              {data.tokenSource.totalTokens} tokens · {data.cssAnalysis.totalTokenReferences}{' '}
+              references · {data.cssAnalysis.filesScanned.length} CSS files scanned
+            </p>
+            <p className="audit-hero-stamp">
+              Scanned {new Date(data.timestamp).toLocaleDateString()} · Reviewed{' '}
               {insights.lastReviewed} by {insights.reviewer}
-            </div>
+            </p>
           </div>
           <div className="audit-actions">
             <button
@@ -160,73 +156,79 @@ export function AuditPage() {
             </button>
           </div>
         </div>
-        {refreshResult && <div className="audit-refresh-result">{refreshResult}</div>}
-        <p className="audit-summary">{insights.summary}</p>
-      </div>
+        <div className="docs-inset">
+          {refreshResult && <p className="audit-refresh-result">{refreshResult}</p>}
+          <p className="audit-summary">{insights.summary}</p>
+        </div>
+      </header>
 
-      {/* ── Token Coverage ──────────────────────────────── */}
-      <section className="audit-section">
-        <h3 className="audit-section-title">Token Coverage</h3>
-        <div className="audit-table-wrap">
-          <table className="audit-table">
+      <SectionBand
+        id="coverage"
+        num="01"
+        title="Token Coverage"
+        description="Every color reference in consumer CSS, by category. Zero hardcoded values is the contract; breakpoints stay untokenized by decision."
+      >
+        <div className="token-table-wrap">
+          <table className="token-table">
             <thead>
               <tr>
-                <th>Category</th>
-                <th>References</th>
-                <th>Hardcoded</th>
-                <th>Status</th>
+                <th scope="col">Category</th>
+                <th scope="col">References</th>
+                <th scope="col">Hardcoded</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(data.cssAnalysis.tokenUsage).map(([category, count]) => (
                 <tr key={category}>
-                  <td>{category}</td>
-                  <td>{count}</td>
-                  <td>0</td>
-                  <td>
+                  <td data-label="category">{category}</td>
+                  <td data-label="references">{count}</td>
+                  <td data-label="hardcoded">0</td>
+                  <td data-label="status">
                     <span className="audit-check">&#10003;</span>
                   </td>
                 </tr>
               ))}
               <tr>
-                <td>breakpoints</td>
-                <td>0 (not tokenized)</td>
-                <td>{data.cssAnalysis.breakpoints.length}</td>
-                <td>
+                <td data-label="category">breakpoints</td>
+                <td data-label="references">0 (not tokenized)</td>
+                <td data-label="hardcoded">{data.cssAnalysis.breakpoints.length}</td>
+                <td data-label="status">
                   <StatusBadge status="deferred" />
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionBand>
 
-      {/* ── Contrast Contract ────────────────────────────── */}
-      <section className="audit-section">
-        <h3 className="audit-section-title">Contrast Contract</h3>
-        <p className="audit-section-note">
-          Generated by check-contrast.mjs — the same gate that runs in npm run check and CI. Text
-          roles ≥4.5:1 on every surface, interactive borders and the focus ring ≥3:1, per mode.
-        </p>
-        <div className="audit-table-wrap">
-          <table className="audit-table">
+      <SectionBand
+        id="contrast"
+        num="02"
+        title="Contrast Contract"
+        description="The same gate that runs in npm run check and CI (check-contrast.mjs). Text roles clear 4.5:1 on every surface; interactive borders and the focus ring clear 3:1, per mode."
+      >
+        <div className="token-table-wrap">
+          <table className="token-table">
             <thead>
               <tr>
-                <th>Pairing</th>
-                <th>Min</th>
-                <th>Dark</th>
-                <th>Light</th>
+                <th scope="col">Pairing</th>
+                <th scope="col">Min</th>
+                <th scope="col">Dark</th>
+                <th scope="col">Light</th>
               </tr>
             </thead>
             <tbody>
               {pivotContrast(contrastData.checks as ContrastCheck[]).map((row) => (
                 <tr key={row.label}>
-                  <td>{row.label}</td>
-                  <td>{row.min}:1</td>
+                  <td data-label="pairing">{row.label}</td>
+                  <td data-label="min" className="token-table-hex">
+                    {row.min}:1
+                  </td>
                   {['dark', 'light'].map((mode) => {
                     const check = row.modes[mode]
                     return (
-                      <td key={mode}>
+                      <td key={mode} data-label={mode} className="token-table-hex">
                         {check ? (
                           <>
                             {check.ratio.toFixed(2)}{' '}
@@ -235,7 +237,7 @@ export function AuditPage() {
                             </span>
                           </>
                         ) : (
-                          '—'
+                          <span className="token-table-na">n/a</span>
                         )}
                       </td>
                     )
@@ -245,28 +247,31 @@ export function AuditPage() {
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionBand>
 
-      {/* ── Token Source Quality ─────────────────────────── */}
-      <section className="audit-section">
-        <h3 className="audit-section-title">Token Source Quality</h3>
-        <div className="audit-table-wrap">
-          <table className="audit-table">
+      <SectionBand
+        id="source"
+        num="03"
+        title="Source Quality"
+        description="$description coverage per token file. 100% is the bar: a token without a description is invisible to agents."
+      >
+        <div className="token-table-wrap">
+          <table className="token-table">
             <thead>
               <tr>
-                <th>File</th>
-                <th>Tokens</th>
-                <th>Described</th>
-                <th>Coverage</th>
+                <th scope="col">File</th>
+                <th scope="col">Tokens</th>
+                <th scope="col">Described</th>
+                <th scope="col">Coverage</th>
               </tr>
             </thead>
             <tbody>
               {data.tokenSource.files.map((f) => (
                 <tr key={f.file}>
-                  <td>{f.file}</td>
-                  <td>{f.tokens}</td>
-                  <td>{f.described}</td>
-                  <td>
+                  <td data-label="file">{f.file}</td>
+                  <td data-label="tokens">{f.tokens}</td>
+                  <td data-label="described">{f.described}</td>
+                  <td data-label="coverage">
                     <span className={f.coverage === 100 ? 'audit-check' : 'audit-warn'}>
                       {f.coverage}%
                     </span>
@@ -276,112 +281,109 @@ export function AuditPage() {
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionBand>
 
-      {/* ── Accessibility ───────────────────────────────── */}
-      <section className="audit-section">
-        <h3 className="audit-section-title">Accessibility</h3>
+      <SectionBand
+        id="a11y"
+        num="04"
+        title="Accessibility"
+        description="ARIA attributes and interactive elements per component, counted from source."
+      >
         <div className="audit-stat-row">
           <div className="audit-stat">
-            <div className="audit-stat-value">{data.accessibility.totalAriaAttributes}</div>
-            <div className="audit-stat-label">ARIA attributes</div>
+            <span className="audit-stat-value">{data.accessibility.totalAriaAttributes}</span>
+            <span className="audit-stat-label">ARIA attributes</span>
           </div>
           <div className="audit-stat">
-            <div className="audit-stat-value">{data.accessibility.totalInteractiveElements}</div>
-            <div className="audit-stat-label">Interactive elements</div>
+            <span className="audit-stat-value">{data.accessibility.totalInteractiveElements}</span>
+            <span className="audit-stat-label">Interactive elements</span>
           </div>
         </div>
-        <div className="audit-table-wrap">
-          <table className="audit-table">
+        <div className="token-table-wrap">
+          <table className="token-table">
             <thead>
               <tr>
-                <th>Component</th>
-                <th>Buttons</th>
-                <th>Inputs</th>
-                <th>Links</th>
-                <th>aria-label</th>
-                <th>aria-pressed</th>
-                <th>aria-expanded</th>
+                <th scope="col">Component</th>
+                <th scope="col">Buttons</th>
+                <th scope="col">Inputs</th>
+                <th scope="col">Links</th>
+                <th scope="col">aria-label</th>
+                <th scope="col">aria-pressed</th>
+                <th scope="col">aria-expanded</th>
               </tr>
             </thead>
             <tbody>
               {data.accessibility.components.map((c) => (
                 <tr key={c.file}>
-                  <td>{c.file.split('/').pop()}</td>
-                  <td>{c.buttons || ''}</td>
-                  <td>{c.inputs || ''}</td>
-                  <td>{c.links || ''}</td>
-                  <td>{c.ariaLabels || ''}</td>
-                  <td>{c.ariaPressed || ''}</td>
-                  <td>{c.ariaExpanded || ''}</td>
+                  <td data-label="component">{c.file.split('/').pop()}</td>
+                  <td data-label="buttons">{c.buttons || ''}</td>
+                  <td data-label="inputs">{c.inputs || ''}</td>
+                  <td data-label="links">{c.links || ''}</td>
+                  <td data-label="aria-label">{c.ariaLabels || ''}</td>
+                  <td data-label="aria-pressed">{c.ariaPressed || ''}</td>
+                  <td data-label="aria-expanded">{c.ariaExpanded || ''}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionBand>
 
-      {/* ── State Coverage ──────────────────────────────── */}
-      <section className="audit-section">
-        <h3 className="audit-section-title">CSS State Coverage</h3>
-        <div className="audit-table-wrap">
-          <table className="audit-table">
+      <SectionBand
+        id="states"
+        num="05"
+        title="State Coverage"
+        description="Interaction states declared per file: hover, focus, active, disabled."
+      >
+        <div className="token-table-wrap">
+          <table className="token-table">
             <thead>
               <tr>
-                <th>File</th>
-                <th>:hover</th>
-                <th>:focus</th>
-                <th>:active</th>
-                <th>:disabled</th>
+                <th scope="col">File</th>
+                <th scope="col">:hover</th>
+                <th scope="col">:focus</th>
+                <th scope="col">:active</th>
+                <th scope="col">:disabled</th>
               </tr>
             </thead>
             <tbody>
               {data.stateCoverage.map((s) => (
                 <tr key={s.file}>
-                  <td>{s.file.split('/').pop()}</td>
-                  <td>{s.hover || ''}</td>
-                  <td>{s.focus || ''}</td>
-                  <td>{s.active || ''}</td>
-                  <td>{s.disabled || ''}</td>
+                  <td data-label="file">{s.file.split('/').pop()}</td>
+                  <td data-label=":hover">{s.hover || ''}</td>
+                  <td data-label=":focus">{s.focus || ''}</td>
+                  <td data-label=":active">{s.active || ''}</td>
+                  <td data-label=":disabled">{s.disabled || ''}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </section>
+      </SectionBand>
 
-      {/* ── Agent Insights ──────────────────────────────── */}
-      <section className="audit-section">
-        <h3 className="audit-section-title">Strategic Assessment</h3>
-        <div className="audit-skill-card">
-          <div className="audit-skill-header">
-            <span className="audit-skill-icon">&#9881;</span>
-            <span className="audit-skill-name">/design-system audit</span>
-          </div>
-          <p className="audit-skill-desc">
-            This section is generated by the <code>/design-system audit</code> skill. It analyzes
-            token architecture, naming consistency, state coverage, and accessibility patterns —
-            then writes strategic findings to <code>audit-insights.json</code>. Metrics above are
-            automated; interpretation below is agent-reviewed.
-          </p>
+      <SectionBand
+        id="assessment"
+        num="06"
+        title="Assessment"
+        description="Metrics above are automated. This interpretation is written by the /design-system audit skill into audit-insights.json, then reviewed."
+      >
+        <div className="audit-skill">
           <div className="audit-skill-usage">
             <span className="audit-skill-label">Rescan:</span>
             <code>npm run audit</code>
-            <span className="audit-skill-sep">|</span>
             <span className="audit-skill-label">Full audit:</span>
             <code>npm run audit:full</code>
-            <span className="audit-skill-sep">—</span>
             <span className="audit-skill-label">scanner + Claude insights + commit</span>
           </div>
+          <p className="audit-reviewed">
+            Last reviewed {insights.lastReviewed} by {insights.reviewer}
+          </p>
         </div>
-        <p className="audit-reviewed">
-          Last reviewed {insights.lastReviewed} by {insights.reviewer}
-        </p>
 
-        <h4 className="audit-subsection-title">Priority Actions</h4>
+        <h3 className="token-subsection-title">Priority actions</h3>
         <div className="audit-priorities">
           {insights.priorities.map((p) => (
-            <div key={p.priority} className="audit-priority-card">
+            <div key={p.priority} className="audit-priority">
               <div className="audit-priority-header">
                 <span className="audit-priority-number">P{p.priority}</span>
                 <span className="audit-priority-title">{p.title}</span>
@@ -392,20 +394,20 @@ export function AuditPage() {
           ))}
         </div>
 
-        <h4 className="audit-subsection-title">Strengths</h4>
+        <h3 className="token-subsection-title">Strengths</h3>
         <ul className="audit-list audit-list--strengths">
           {insights.strengths.map((s, i) => (
             <li key={i}>{s}</li>
           ))}
         </ul>
 
-        <h4 className="audit-subsection-title">Risks</h4>
+        <h3 className="token-subsection-title">Risks</h3>
         <ul className="audit-list audit-list--risks">
           {insights.risks.map((r, i) => (
             <li key={i}>{r}</li>
           ))}
         </ul>
-      </section>
+      </SectionBand>
     </div>
   )
 }

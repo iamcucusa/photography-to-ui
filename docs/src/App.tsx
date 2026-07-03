@@ -1,12 +1,6 @@
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-  type KeyboardEvent,
-  type ReactNode,
-} from 'react'
+import { useState, useCallback, useEffect, useMemo, type KeyboardEvent } from 'react'
 import { AuditPage } from './AuditPage'
+import { SectionBand } from './SectionBand'
 import { useTheme } from './useTheme'
 import { resolveVarToHex, contrastRatio, grade } from './resolve'
 import primitives from '@tokens/color/primitives.json'
@@ -173,42 +167,15 @@ const sections = [
   { id: 'backdrop', label: 'Backdrop' },
 ]
 
-// Full-bleed section band: sections are separated by full-width hairline
-// rules and negative space (dividers-not-boxes); content re-insets to the
-// reading column. The numbered title doubles as a typographic divider.
-// `bleed` lets a section's content run edge-to-edge (palette bands,
-// gradients, glows) while title + description stay in the reading column.
-function SectionBand({
-  id,
-  num,
-  title,
-  description,
-  bleed = false,
-  children,
-}: {
-  id: string
-  num: string
-  title: string
-  description: string
-  bleed?: boolean
-  children: ReactNode
-}) {
-  return (
-    <section className="token-section" id={id}>
-      <div className="docs-inset">
-        <h2 className="token-section-title">
-          <span className="token-section-number" aria-hidden="true">
-            {num}
-          </span>
-          {title}
-        </h2>
-        <p className="token-section-description">{description}</p>
-        {!bleed && children}
-      </div>
-      {bleed && children}
-    </section>
-  )
-}
+// The audit dashboard gets the same numbered index and scroll-spy
+const auditSections = [
+  { id: 'coverage', label: 'Token Coverage' },
+  { id: 'contrast', label: 'Contrast Contract' },
+  { id: 'source', label: 'Source Quality' },
+  { id: 'a11y', label: 'Accessibility' },
+  { id: 'states', label: 'State Coverage' },
+  { id: 'assessment', label: 'Assessment' },
+]
 
 // A token gets a contrast badge only against the obligation that actually
 // governs it (mirrors check-contrast.mjs): text roles ≥4.5:1 (WCAG 1.4.3),
@@ -231,9 +198,8 @@ function App() {
   const { mode, toggle } = useTheme()
 
   // Scroll-spy for the section index: the section crossing the upper third
-  // of the viewport is the active one (underline + magenta in the nav).
+  // of the viewport is the active one (underline + magenta in the bar).
   useEffect(() => {
-    if (activeTab !== 'tokens') return
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -242,7 +208,7 @@ function App() {
       },
       { rootMargin: '-25% 0px -65% 0px' },
     )
-    for (const { id } of sections) {
+    for (const { id } of activeTab === 'tokens' ? sections : auditSections) {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
     }
@@ -562,34 +528,29 @@ function App() {
             {viewTab('tokens')}
             {viewTab('audit')}
           </div>
-          {activeTab === 'tokens' && (
-            <nav className="docs-nav-row" aria-label="Token sections">
-              {sections.map((s, i) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className={`docs-nav-link ${
-                    activeSection === s.id ? 'docs-nav-link--active' : ''
-                  }`}
-                  aria-current={activeSection === s.id ? 'true' : undefined}
-                >
-                  <span className="docs-nav-num" aria-hidden="true">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  {s.label}
-                </a>
-              ))}
-            </nav>
-          )}
+          <nav
+            className="docs-nav-row"
+            aria-label={activeTab === 'tokens' ? 'Token sections' : 'Audit sections'}
+          >
+            {(activeTab === 'tokens' ? sections : auditSections).map((s, i) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className={`docs-nav-link ${activeSection === s.id ? 'docs-nav-link--active' : ''}`}
+                aria-current={activeSection === s.id ? 'true' : undefined}
+              >
+                <span className="docs-nav-num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                {s.label}
+              </a>
+            ))}
+          </nav>
           <div className="docs-bar-end">{modeToggle}</div>
         </div>
       </div>
 
-      {activeTab === 'audit' && (
-        <div className="docs-inset">
-          <AuditPage />
-        </div>
-      )}
+      {activeTab === 'audit' && <AuditPage />}
 
       {activeTab === 'tokens' && (
         <>
