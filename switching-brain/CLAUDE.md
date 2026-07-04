@@ -34,7 +34,7 @@ src/
     runtimeTokens.ts   # reads DS color from CSS vars at RUNTIME (+ alpha/mix compose)
     BrainStage.tsx     # SVG skeleton + requestAnimationFrame loop (imperative draw)
     useGraphData.ts    # fetch + validate data/nodes.json (loading / error / ready)
-    useReducedMotion.ts, useIdleReturn.ts
+    useReducedMotion.ts, useIdleReturn.ts, useMediaQuery.ts
   components/          # RateControl, SelfMap, InspectCard, Legend (all DS-token styled)
   styles/
     base.css           # element reset + focus ring (token-driven)
@@ -87,6 +87,27 @@ public/data/nodes.json # the seed data — fetched at runtime, swappable with no
   rate persists across interactions; self-map tilt and the rate slider are mutually exclusive
   (grabbing the slider dismisses the annotation); inspect coexists with everything; ~20 s idle
   eases back to ambient watch. Reduced motion rests on the both-lit crossover still + a Play control.
+
+## Responsive (orientation-aware)
+
+The layout follows viewport **shape**, not width alone:
+
+- **Graph orientation** is picked in `App.tsx` via `useMediaQuery('(max-width: 560px)')` and passed
+  to `BrainStage`/`createBrainSimulation`. **≤560px (phone portrait) → vertical lanes** (portrait
+  viewBox; networks are columns, hemisphere leans vertically; a portrait-only `forceX` in `layout.ts`
+  holds each network in its lane so rich-club hubs don't drift to center). **Everything wider →
+  horizontal bands** (the landscape viewBox), which fill the width instead of letterboxing. Keep the
+  JS breakpoint and the CSS `@media (max-width: 560px)` block (portrait aspect + full-bleed) in sync.
+- **Page layout** in `app.css`: the two-column showcase requires **wide AND landscape**
+  (`@media (max-width: 1023px), (orientation: portrait)` drives the compact stacked layout), so tall
+  portrait tablets (e.g. iPad Pro 12.9″ at 1024px) stack instead of stranding the graph in a
+  vertically-stretched grid. Compact dissolves the desktop wrappers with `display:contents` + `order`.
+- **The brain hero does NOT use `position: sticky`.** Sticky was tried and removed — it slid the
+  controls behind the graph on scroll. It's a normal scrolling block; co-visibility comes from source
+  order (graph sits directly above the self-map). Don't reintroduce sticky.
+- The inspect sheet **docks full-width** on phones, **capped + centered** (28rem) on wider compact
+  screens — a reading card, not an edge-to-edge banner. iOS: `100dvh`/`svh`, `env(safe-area-inset-*)`,
+  `-webkit-tap-highlight-color`, `overscroll-behavior` (see `base.css` + `index.html` viewport-fit).
 
 ## Data model
 
