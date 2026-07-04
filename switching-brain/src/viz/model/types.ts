@@ -54,6 +54,13 @@ export const NETWORK_LABELS: Record<NetworkId, string> = {
   SN: 'Salience',
 }
 
+/** Hemisphere → human label, shown in every node readout (card + lanes). */
+export const HEMI_LABEL: Record<Hemisphere, string> = {
+  L: 'Left hemisphere',
+  R: 'Right hemisphere',
+  M: 'Midline',
+}
+
 /** The design-engineer translation for each network. Captions do the bridge. */
 export const NETWORK_GLOSS: Record<NetworkId, string> = {
   DMN: 'The dreamer. What could be.',

@@ -1,11 +1,5 @@
 import type { BrainNode } from '../viz/model/types'
-import { NETWORK_LABELS } from '../viz/model/types'
-
-const HEMI_LABEL: Record<string, string> = {
-  L: 'Left hemisphere',
-  R: 'Right hemisphere',
-  M: 'Midline',
-}
+import { NETWORK_LABELS, HEMI_LABEL } from '../viz/model/types'
 
 export interface NodeReadoutProps {
   node: BrainNode

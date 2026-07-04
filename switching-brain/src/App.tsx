@@ -208,6 +208,23 @@ export default function App() {
     easeAxisToBalance(reducedMotion ? 0 : 800)
   }, [poke, reducedMotion, easeAxisToBalance])
 
+  // ── Lanes: hover/focus an entry to highlight its node in the graph; click to
+  // pin. Lanes set the plain ids only (no anchored card — that needs cx/cy). ──
+  const onNodeHover = useCallback(
+    (id: string | null) => {
+      poke()
+      setHoveredNodeId(id)
+    },
+    [poke],
+  )
+  const onNodeSelect = useCallback(
+    (id: string) => {
+      poke()
+      setSelectedNodeId((cur) => (cur === id ? null : id))
+    },
+    [poke],
+  )
+
   // Tap empty canvas dismisses the pinned card (no hover trap on touch).
   const onCanvasClick = useCallback(
     (e: React.MouseEvent) => {
@@ -336,7 +353,15 @@ export default function App() {
 
       {/* Network lanes — the reading surface, a full-width section below the hero
           (a sibling of .app so the height:100dvh hero can't clip it). */}
-      {data.status === 'ready' && <BrainLanes graph={data.graph} tokens={tokens} />}
+      {data.status === 'ready' && (
+        <BrainLanes
+          graph={data.graph}
+          tokens={tokens}
+          inspectedId={inspectedId}
+          onNodeHover={onNodeHover}
+          onNodeSelect={onNodeSelect}
+        />
+      )}
     </ActivationContext.Provider>
   )
 }

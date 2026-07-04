@@ -1,11 +1,11 @@
-import { useMemo, type CSSProperties } from 'react'
+import { useMemo } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
-import { withAlpha } from '../viz/runtimeTokens'
 import type { BrainGraph, NetworkId } from '../viz/model/types'
-import { NETWORK_ORDER, NETWORK_LABELS, NETWORK_GLOSS } from '../viz/model/types'
+import { NETWORK_ORDER } from '../viz/model/types'
 import { createSubstrateSimulation, settle } from '../viz/layout'
 import { nodeRadius } from '../viz/geometry'
-import { LaneSubstrate, type Substrate } from './LaneSubstrate'
+import { Lane } from './Lane'
+import type { Substrate } from './LaneSubstrate'
 
 /** Filter the graph to one network's nodes + intra-network edges, lay it out, bbox-fit. */
 function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
@@ -45,42 +45,50 @@ function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
 export interface BrainLanesProps {
   graph: BrainGraph
   tokens: VizTokens
+  /** Active node id (from the graph or a lane) — drives graph↔lane highlight. */
+  inspectedId: string | null
+  onNodeHover: (id: string | null) => void
+  onNodeSelect: (id: string) => void
 }
 
 /**
  * The three-lane reading surface — one lane per network (DMN · SN · FPCN), the
  * hero's three bands "unrolled to be read". Each lane is a band of emitted light
- * (seams, no boxes) over its own faint connectome. Rendered below the hero; SN is
- * central by source order (NETWORK_ORDER = [DMN, SN, FPCN]).
+ * (seams, no boxes) over its own faint connectome, holding readable node
+ * readouts. Rendered below the hero; SN central by source order (NETWORK_ORDER).
  */
-export function BrainLanes({ graph, tokens }: BrainLanesProps) {
-  // Static substrates: laid out once per graph, no per-frame sim.
-  const substrates = useMemo(() => {
-    const map = {} as Record<NetworkId, Substrate>
-    for (const id of NETWORK_ORDER) map[id] = buildSubstrate(id, graph)
-    return map
-  }, [graph])
+export function BrainLanes({
+  graph,
+  tokens,
+  inspectedId,
+  onNodeHover,
+  onNodeSelect,
+}: BrainLanesProps) {
+  // Per-network nodes + static substrate, rebuilt only when the graph changes.
+  const lanes = useMemo(
+    () =>
+      NETWORK_ORDER.map((id) => ({
+        network: id,
+        nodes: graph.nodes.filter((n) => n.network === id),
+        substrate: buildSubstrate(id, graph),
+      })),
+    [graph],
+  )
 
   return (
     <section className="lanes" aria-label="Read the three networks">
-      {NETWORK_ORDER.map((id) => {
-        const net = tokens.network[id]
-        const style = {
-          '--lane-base': net.base,
-          '--lane-seam': withAlpha(net.base, 0.55),
-        } as CSSProperties
-        return (
-          <article className="lane" key={id} data-network={id} style={style}>
-            <LaneSubstrate substrate={substrates[id]} tokens={tokens} />
-            <header className="lane__header">
-              <h2 className="lane__name">
-                {NETWORK_LABELS[id]} <span className="lane__abbr">{id}</span>
-              </h2>
-              <p className="lane__gloss">{NETWORK_GLOSS[id]}</p>
-            </header>
-          </article>
-        )
-      })}
+      {lanes.map(({ network, nodes, substrate }) => (
+        <Lane
+          key={network}
+          network={network}
+          nodes={nodes}
+          substrate={substrate}
+          tokens={tokens}
+          inspectedId={inspectedId}
+          onNodeHover={onNodeHover}
+          onNodeSelect={onNodeSelect}
+        />
+      ))}
     </section>
   )
 }

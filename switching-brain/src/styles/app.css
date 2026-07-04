@@ -833,3 +833,128 @@
   color: var(--color-text-secondary);
   max-width: 46ch;
 }
+
+/* Entries — the readouts, above the substrate. A responsive flow of node
+   readouts (the row↔column thread comes with the container-query flip). */
+.lane__entries {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-lg);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--space-md) var(--space-lg);
+}
+
+/* Each entry lifts on hover/focus/active — a glow, never a box. data-active is
+   the graph→lane link (a graph hover/pin lights the matching entry); :hover /
+   :focus is the lane→graph link. No radius, no border. */
+.lane__entry {
+  position: relative;
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--easing-emphasized);
+}
+.lane__entry:hover,
+.lane__entry[data-active] {
+  transform: translateY(-1px);
+}
+.lane__entry:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.lane-readout__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.lane-readout__title {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-secondary);
+  transition: color var(--duration-fast) var(--easing-emphasized);
+}
+.lane__entry:hover .lane-readout__title,
+.lane__entry[data-active] .lane-readout__title {
+  color: var(--color-text-primary);
+  text-shadow: 0 0 12px var(--lane-seam);
+}
+
+.lane-readout__sub {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+.lane-readout__id {
+  color: var(--color-text-secondary);
+}
+
+.lane-readout__role {
+  font-size: var(--text-sm);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+  transition: color var(--duration-fast) var(--easing-emphasized);
+}
+.lane__entry:hover .lane-readout__role,
+.lane__entry[data-active] .lane-readout__role {
+  color: var(--color-text-primary);
+}
+
+.lane-readout__stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+.lane-readout__stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.lane-readout__stat-label {
+  flex: none;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+}
+.lane-readout__bar {
+  flex: 1 1 auto;
+  height: 4px;
+  background: var(--color-bg-inset);
+  overflow: hidden;
+}
+.lane-readout__bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--lane-base);
+}
+.lane-readout__stat-value {
+  flex: none;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.lane-readout__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+}
+.lane-readout__tag {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+}
+.lane-readout__tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--space-xs);
+  border-radius: 50%;
+  background: var(--lane-base);
+}

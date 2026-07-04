@@ -33,9 +33,12 @@ src/
     geometry.ts        # radius/edge-path/quad-bezier helpers, deterministic jitter
     runtimeTokens.ts   # reads DS color from CSS vars at RUNTIME (+ alpha/mix compose)
     BrainStage.tsx     # SVG skeleton + requestAnimationFrame loop (imperative draw)
+    ActivationContext  # ref-backed activation bus (App writes each frame; lanes read)
     useGraphData.ts    # fetch + validate data/nodes.json (loading / error / ready)
     useReducedMotion.ts, useIdleReturn.ts, useMediaQuery.ts
-  components/          # RateControl, SelfMap, InspectCard, Legend (all DS-token styled)
+  components/          # RhythmDial, SelfMap, Legend, InspectCard + the reading surface:
+                       #   NodeReadout (shared card/lane body), BrainLanes, Lane,
+                       #   LaneSubstrate (all DS-token styled)
   styles/
     base.css           # element reset + focus ring (token-driven)
     viz-tokens.css     # ← the 3-way categorical scale (see below)
@@ -108,6 +111,31 @@ The layout follows viewport **shape**, not width alone:
 - The inspect sheet **docks full-width** on phones, **capped + centered** (28rem) on wider compact
   screens — a reading card, not an edge-to-edge banner. iOS: `100dvh`/`svh`, `env(safe-area-inset-*)`,
   `-webkit-tap-highlight-color`, `overscroll-behavior` (see `base.css` + `index.html` viewport-fit).
+
+## Network lanes (the reading surface)
+
+Below the hero, `BrainLanes` renders three lanes (`NETWORK_ORDER` = DMN · SN · FPCN,
+SN central) — the hero's three bands "unrolled to be read". It's a full-width
+**sibling of `.app`** (not nested — the `height:100dvh` hero would clip it), so it
+just extends the page scroll.
+
+- **Seams of light, no boxes.** Each `Lane` is defined by top/bottom seam glow
+  (layered gradient + `mix-blend-mode: screen`, tinted per network via `withAlpha`),
+  never a border/radius — extends the InspectCard "glow states the network" language.
+  Colors flow through `--lane-base` / `--lane-seam` set inline from `network` tokens.
+- **`NodeReadout` is shared** by `InspectCard` (`block="inspect-card"`) and the lane
+  entries (`block="lane-readout"`) — one body, the `block` prop swaps the BEM family.
+  Don't duplicate readout markup; extend `NodeReadout`.
+- **Substrate = real data, static.** `LaneSubstrate` draws each network's own
+  intra-network connectome faint, laid out ONCE by `createSubstrateSimulation` +
+  `settle()` (a neutral origin-centred sim — the band-anchored `createBrainSimulation`
+  would collapse a single-network subgraph onto a line). No per-frame sim (protects
+  mobile perf); a live substrate is a deferred future toggle.
+- **Bidirectional highlight, no re-renders.** `App` owns `hoveredNodeId`/`selectedNodeId`;
+  `inspectedId = selectedNodeId ?? hoveredNodeId` drives BOTH the graph (BrainStage reads
+  it) and the lane entries (`data-active`). Lanes call `onNodeHover`/`onNodeSelect`.
+  Per-network activation is shared via `ActivationContext` (a ref bus) so lanes read it
+  in their own rAF — NEVER lift activation to state (60fps re-render).
 
 ## Data model
 
