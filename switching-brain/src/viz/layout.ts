@@ -19,6 +19,7 @@ import {
   forceCollide,
   forceLink,
   forceX,
+  forceY,
   type Simulation,
   type SimulationNodeDatum,
   type SimulationLinkDatum,
@@ -162,4 +163,39 @@ export function createBrainSimulation(
 export function settle(sim: Simulation<SimNode, SimLink>, ticks = 300): void {
   sim.alpha(1).stop()
   for (let i = 0; i < ticks; i++) sim.tick()
+}
+
+/**
+ * A neutral, origin-centred simulation for a single-network SUBGRAPH — the faint
+ * lane substrate. Unlike createBrainSimulation it has NO band/lane anchor (every
+ * node shares one network, so a band anchor would collapse them onto a line);
+ * instead a gentle forceX/forceY toward the origin lets charge + collide + links
+ * settle into an organic 2D cluster that bbox-fits any lane shape. Static: build,
+ * `settle()`, read positions.
+ */
+export function createSubstrateSimulation(graph: BrainGraph): BrainSim {
+  const nodes: SimNode[] = graph.nodes.map((n) => ({
+    ...n,
+    x: hashJitter(n.id) * 120,
+    y: hashJitter(n.id + '#y') * 120,
+    vx: 0,
+    vy: 0,
+  }))
+  const links: SimLink[] = graph.edges.map((e) => ({ ...e }))
+
+  const sim = forceSimulation<SimNode, SimLink>(nodes)
+    .force(
+      'link',
+      forceLink<SimNode, SimLink>(links)
+        .id((d) => d.id)
+        .distance((l) => 44 + (1 - l.weight) * 44)
+        .strength((l) => l.weight * 0.3),
+    )
+    .force('charge', forceManyBody<SimNode>().strength(-46).distanceMax(300))
+    .force('collide', forceCollide<SimNode>((d) => nodeRadius(d) + 4).iterations(2))
+    .force('x', forceX<SimNode>(0).strength(0.05))
+    .force('y', forceY<SimNode>(0).strength(0.05))
+    .velocityDecay(0.5)
+
+  return { sim, nodes, links }
 }

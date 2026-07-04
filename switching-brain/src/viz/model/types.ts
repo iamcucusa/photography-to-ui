@@ -56,9 +56,9 @@ export const NETWORK_LABELS: Record<NetworkId, string> = {
 
 /** The design-engineer translation for each network. Captions do the bridge. */
 export const NETWORK_GLOSS: Record<NetworkId, string> = {
-  DMN: 'Design exploration. Imagining what could be.',
-  FPCN: 'Live code and control. Making it real, rigorously.',
-  SN: 'The switch. Deciding when to flip between the two.',
+  DMN: 'The dreamer. What could be.',
+  FPCN: 'The builder. Make it real.',
+  SN: 'The switch. When to flip.',
 }
 
 /** Vertical band each network occupies in the map (top to bottom). */

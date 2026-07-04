@@ -7,6 +7,7 @@ import { useIdleReturn } from './viz/useIdleReturn'
 import { BrainStage, type InspectTarget } from './viz/BrainStage'
 import type { Activation } from './viz/activation'
 import { ActivationContext } from './viz/ActivationContext'
+import { BrainLanes } from './components/BrainLanes'
 import { Legend } from './components/Legend'
 import { RhythmDial } from './components/RhythmDial'
 import { SelfMap } from './components/SelfMap'
@@ -332,6 +333,10 @@ export default function App() {
           </a>
         </div>
       </main>
+
+      {/* Network lanes — the reading surface, a full-width section below the hero
+          (a sibling of .app so the height:100dvh hero can't clip it). */}
+      {data.status === 'ready' && <BrainLanes graph={data.graph} tokens={tokens} />}
     </ActivationContext.Provider>
   )
 }
