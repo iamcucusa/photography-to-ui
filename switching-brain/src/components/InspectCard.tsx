@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import type { InspectTarget } from '../viz/BrainStage'
 import type { VizTokens } from '../viz/runtimeTokens'
 import { withAlpha } from '../viz/runtimeTokens'
-import { NETWORK_LABELS } from '../viz/model/types'
+import { NodeReadout } from './NodeReadout'
 
 export interface Placement {
   flipX: boolean
@@ -15,12 +15,6 @@ interface InspectCardProps {
   tokens: VizTokens
   pinned: boolean
   onClose: () => void
-}
-
-const HEMI_LABEL: Record<string, string> = {
-  L: 'Left hemisphere',
-  R: 'Right hemisphere',
-  M: 'Midline',
 }
 
 /**
@@ -42,7 +36,6 @@ const HEMI_LABEL: Record<string, string> = {
 export function InspectCard({ target, placement, tokens, pinned, onClose }: InspectCardProps) {
   const { node, cx, cy } = target
   const net = tokens.network[node.network]
-  const pct = Math.round(node.degree * 100)
   const titleId = `inspect-title-${node.id}`
 
   const cls = [
@@ -68,58 +61,14 @@ export function InspectCard({ target, placement, tokens, pinned, onClose }: Insp
       aria-labelledby={pinned ? titleId : undefined}
       aria-hidden={pinned ? undefined : true}
     >
-      <div className="inspect-card__body">
-        <div className="inspect-card__head">
-          <span className="inspect-card__network">
-            {NETWORK_LABELS[node.network]}{' '}
-            <span className="inspect-card__abbr">{node.network}</span>
-          </span>
-          {pinned && (
-            <button
-              type="button"
-              className="inspect-card__close"
-              onClick={onClose}
-              aria-label="Close details"
-            >
-              <svg className="icon" viewBox="0 0 16 16" aria-hidden="true">
-                <path
-                  d="M4 4l8 8M12 4l-8 8"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-              </svg>
-            </button>
-          )}
-        </div>
-
-        <h3 id={titleId} className="inspect-card__title">
-          {node.label}
-        </h3>
-        <p className="inspect-card__sub">
-          {HEMI_LABEL[node.hemi]} · <span className="inspect-card__id">{node.id}</span>
-        </p>
-
-        {node.role && <p className="inspect-card__role">{node.role}</p>}
-
-        <div className="inspect-card__stats">
-          <div className="inspect-card__stat">
-            <span className="inspect-card__stat-label">Connectivity</span>
-            <span className="inspect-card__bar" aria-hidden="true">
-              <span className="inspect-card__bar-fill" style={{ width: `${pct}%` }} />
-            </span>
-            <span className="inspect-card__stat-value">{pct}%</span>
-          </div>
-
-          {(node.richClub || node.switcher) && (
-            <ul className="inspect-card__tags">
-              {node.richClub && <li className="inspect-card__tag">Rich-club hub</li>}
-              {node.switcher && <li className="inspect-card__tag">Initiates switching</li>}
-            </ul>
-          )}
-        </div>
-      </div>
+      <NodeReadout
+        node={node}
+        block="inspect-card"
+        showNetwork
+        showClose={pinned}
+        onClose={onClose}
+        titleId={titleId}
+      />
     </div>
   )
 }
