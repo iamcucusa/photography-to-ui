@@ -1,5 +1,7 @@
+import type { CSSProperties } from 'react'
 import type { InspectTarget } from '../viz/BrainStage'
 import type { VizTokens } from '../viz/runtimeTokens'
+import { withAlpha } from '../viz/runtimeTokens'
 import { NETWORK_LABELS } from '../viz/model/types'
 
 export interface Placement {
@@ -29,10 +31,15 @@ const HEMI_LABEL: Record<string, string> = {
  * A11y: a pinned card is a `dialog` labelled by its title; a transient hover/focus
  * card is `aria-hidden` because the node's own aria-label already conveys the same
  * information to screen readers (avoids a verbose double announcement).
+ *
+ * Elevation is emitted light: the sheet's glow is tinted by the inspected
+ * node's network, composed at runtime (alphas mirror --shadow-glow-accent's
+ * ring/mid/halo structure) and handed to CSS as custom properties. One
+ * --inspect-network var also colors the accent edge, bar fill and tag dots.
  */
 export function InspectCard({ target, placement, tokens, pinned, onClose }: InspectCardProps) {
   const { node, cx, cy } = target
-  const color = tokens.network[node.network].base
+  const net = tokens.network[node.network]
   const pct = Math.round(node.degree * 100)
   const titleId = `inspect-title-${node.id}`
 
@@ -42,15 +49,24 @@ export function InspectCard({ target, placement, tokens, pinned, onClose }: Insp
     placement.flipY ? 'inspect-card--below' : 'inspect-card--above',
   ].join(' ')
 
+  const sheetStyle = {
+    left: `${cx}px`,
+    top: `${cy}px`,
+    '--inspect-network': net.base,
+    '--inspect-glow-rim': withAlpha(net.base, 0.4),
+    '--inspect-glow-mid': withAlpha(net.bright, 0.22),
+    '--inspect-glow-halo': withAlpha(net.dim, 0.18),
+  } as CSSProperties
+
   return (
     <div
       className={cls}
-      style={{ left: `${cx}px`, top: `${cy}px` }}
+      style={sheetStyle}
       role={pinned ? 'dialog' : undefined}
       aria-labelledby={pinned ? titleId : undefined}
       aria-hidden={pinned ? undefined : true}
     >
-      <span className="inspect-card__accent" style={{ background: color }} aria-hidden="true" />
+      <span className="inspect-card__accent" aria-hidden="true" />
 
       <div className="inspect-card__body">
         <div className="inspect-card__head">
@@ -91,10 +107,7 @@ export function InspectCard({ target, placement, tokens, pinned, onClose }: Insp
           <div className="inspect-card__stat">
             <span className="inspect-card__stat-label">Connectivity</span>
             <span className="inspect-card__bar" aria-hidden="true">
-              <span
-                className="inspect-card__bar-fill"
-                style={{ width: `${pct}%`, background: color }}
-              />
+              <span className="inspect-card__bar-fill" style={{ width: `${pct}%` }} />
             </span>
             <span className="inspect-card__stat-value">{pct}%</span>
           </div>
