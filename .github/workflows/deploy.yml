@@ -29,9 +29,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          # Build runtime — kept at 20 for parity with the local machine
-          # (upgrade both together; Node 20 is past EOL)
-          node-version: 20
+          # One source of truth for the build runtime: CI reads the same
+          # pin the local machine uses (nvm)
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install dependencies
