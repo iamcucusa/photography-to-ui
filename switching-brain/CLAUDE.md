@@ -54,6 +54,21 @@ public/data/nodes.json # the seed data — fetched at runtime, swappable with no
   (bright accent)** — using only `var(--color-*)` references. No new raw colors.
 - **Network is never encoded by color alone** — also by vertical band position (DMN top, SN
   middle, FPCN bottom) + band labels + the legend, so it survives grayscale / color-blindness.
+- **Light, not lines.** The workspace's dividers-not-boxes art direction propagates here
+  *half-way by design*: no bordered/rounded/filled panel containers, **and no hairline
+  dividers either** — on a glow-on-dark piece, rules are the wrong structural instrument.
+  Structure comes from typography, whitespace, and the network hue system.
+- **Elevation is emitted light.** The inspect sheet's elevation is a glow tinted by the
+  inspected node's network: `--inspect-glow-*` custom properties set inline in
+  `InspectCard.tsx`, composed at runtime with `withAlpha` over the `--viz-*` ramps. Do
+  not use the DS `--shadow-1/soft/hover/2` here — their cool sky rim and lit edge are
+  panel language and fight the sand/magenta networks.
+- **Radius is rationed to circles.** The only radii in this consumer are `50%` on true
+  inputs and swatches (close button, slider thumb, legend dots, tag dots).
+  `--viz-radius-tight` was retired when the inspect card went sharp.
+- **Only `text-primary`/`text-secondary` on the inspect sheet.** Muted fails 4.5:1 in the
+  worst case (a bright sky-4 node bleeding through the 90% sheet surface: 4.20:1).
+  Enforced by the dark-only brain-sheet rows in `tokens/check-contrast.mjs`.
 - **Dark-only, pinned.** Glow-on-dark is the hero of this piece. The DS now ships a light mode
   (`@tokens/dist/tokens.light.css` under `[data-theme='light']`), but this consumer deliberately
   does NOT import it, and `index.html` pins `data-theme="dark"` so a shared theme preference on
