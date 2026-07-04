@@ -2,7 +2,9 @@
    No surrounding panels: the graph sits in open space, controls read as type. */
 
 .app {
-  height: 100vh;
+  /* dvh, not vh: on iOS the URL bar shows/hides and vh is the *large* viewport,
+     which clips the foot of the layout. dvh tracks the live viewport height. */
+  height: 100dvh;
   display: grid;
   grid-template-columns: minmax(280px, 31%) 1fr;
   column-gap: var(--space-xl);
@@ -601,8 +603,10 @@
 
 .credit {
   position: fixed;
-  bottom: var(--space-md);
-  right: var(--space-md);
+  /* max() with the safe-area inset keeps the credit clear of the iPhone home
+     indicator / rounded corners (env() resolves to 0 where there's no inset). */
+  bottom: max(var(--space-md), env(safe-area-inset-bottom));
+  right: max(var(--space-md), env(safe-area-inset-right));
   z-index: 100;
 }
 
@@ -636,7 +640,7 @@
     grid-template-rows: auto 1fr;
     row-gap: var(--space-lg);
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
     overflow: visible;
     padding: var(--space-lg);
   }
@@ -650,8 +654,8 @@
   }
 
   .credit {
-    bottom: var(--space-sm);
-    right: var(--space-sm);
+    bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+    right: max(var(--space-sm), env(safe-area-inset-right));
   }
 }
 

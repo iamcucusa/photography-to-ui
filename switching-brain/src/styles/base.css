@@ -10,6 +10,9 @@ html {
   /* 100% (not a fixed 16px) so rem-based type honors the user's browser
      font-size preference — defaults to 16px but scales for low-vision users. */
   font-size: 100%;
+  /* iOS Safari/Chrome: nodes are tapped constantly — suppress the grey tap flash
+     so a node tap reads as a clean lift, not a system highlight. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -22,6 +25,9 @@ body {
   background-color: var(--color-bg-canvas);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent pull-to-refresh / scroll-chaining from hijacking a vertical drag on
+     the rhythm dial near the top of the compact layout. */
+  overscroll-behavior-y: none;
 }
 
 h1,
