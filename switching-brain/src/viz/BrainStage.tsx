@@ -3,7 +3,14 @@ import type { BrainGraph, BrainNode, NetworkId } from './model/types'
 import { NETWORK_IDS, NETWORK_LABELS } from './model/types'
 import type { VizTokens } from './runtimeTokens'
 import { withAlpha, mix } from './runtimeTokens'
-import { createBrainSimulation, settle, NETWORK_Y, type SimNode } from './layout'
+import {
+  createBrainSimulation,
+  settle,
+  NETWORK_Y,
+  NETWORK_X,
+  type SimNode,
+  type Orientation,
+} from './layout'
 import { STAGE_W, STAGE_H, nodeRadius, controlPoint, quadPoint, hashJitter } from './geometry'
 import {
   computeActivation,
@@ -32,6 +39,8 @@ export interface BrainStageProps {
   playing: boolean
   /** prefers-reduced-motion: the still frame is the both-lit crossover. */
   reducedMotion: boolean
+  /** Layout orientation — portrait rotates the bands into vertical lanes for narrow screens. */
+  orientation: Orientation
   /** Currently-inspected node id (hover or pinned) — drives highlight + dim. */
   inspectedId: string | null
   /** Transient inspect (hover / focus enter, or null on leave). */
@@ -84,6 +93,7 @@ export function BrainStage({
   bias,
   playing,
   reducedMotion,
+  orientation,
   inspectedId,
   onInspectHover,
   onInspectActivate,
@@ -110,11 +120,11 @@ export function BrainStage({
   // it live so the activating network coheres while the other relaxes.
   const sim = useMemo(() => {
     const cohesion: Record<NetworkId, number> = { DMN: 1, FPCN: 1, SN: 1 }
-    const s = createBrainSimulation(graph, (net) => cohesion[net])
+    const s = createBrainSimulation(graph, (net) => cohesion[net], orientation)
     settle(s.sim, 220)
     s.sim.alphaTarget(0.05)
     return { ...s, cohesion }
-  }, [graph])
+  }, [graph, orientation])
 
   const { nodes, links } = sim
 
@@ -334,7 +344,12 @@ export function BrainStage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sim, nodes, edgeMeta, adjacency, particles, tokens])
 
-  const viewBox = `${-STAGE_W / 2} ${-STAGE_H / 2} ${STAGE_W} ${STAGE_H}`
+  // Portrait swaps the virtual space (STAGE_H wide × STAGE_W tall) so the rotated
+  // lane layout fills a portrait viewport instead of letterboxing.
+  const portrait = orientation === 'portrait'
+  const vbW = portrait ? STAGE_H : STAGE_W
+  const vbH = portrait ? STAGE_W : STAGE_H
+  const viewBox = `${-vbW / 2} ${-vbH / 2} ${vbW} ${vbH}`
 
   return (
     <svg
@@ -369,6 +384,28 @@ export function BrainStage({
       <g className="stage__bands" aria-hidden="true">
         {NETWORK_IDS.map((id) => {
           const words = NETWORK_LABELS[id].split(' ')
+          // Portrait: centered column headers in a reserved top gutter, stacked
+          // word-per-line. Landscape: right-aligned into the reserved left gutter.
+          if (portrait) {
+            const lx = NETWORK_X[id]
+            const topY = -vbH / 2 + 38
+            return (
+              <text
+                key={id}
+                className="stage__band-label"
+                x={lx}
+                y={topY}
+                fill={tokens.network[id].bright}
+                textAnchor="middle"
+              >
+                {words.map((w, i) => (
+                  <tspan key={i} x={lx} dy={i === 0 ? 0 : '1.16em'}>
+                    {w}
+                  </tspan>
+                ))}
+              </text>
+            )
+          }
           const lx = -STAGE_W / 2 + 165
           const ly = NETWORK_Y[id]
           return (

@@ -633,12 +633,13 @@
 }
 
 /* ── Compact: tablet-portrait + phone. Stack, allow scroll ─────────────
-   Floor at 1024px (not 820): the two-column needs ~1024px to breathe — at
-   iPad-portrait widths (744–834) it crushes the graph into a corner. So iPad
-   landscape + laptops keep the showcase two-column; every portrait tablet and
-   phone gets the purpose-built compact layout below. ──────────────────── */
+   The two-column editorial needs a wide, landscape-ish viewport: it wants
+   ~1024px+ to breathe AND a landscape shape (its height:100dvh strands the
+   graph with huge vertical gaps on a tall portrait screen — e.g. iPad Pro 12.9″
+   portrait at 1024×1366). So compact applies whenever the viewport is narrow
+   OR portrait; only wide-and-landscape keeps the showcase two-column. ──── */
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px), (orientation: portrait) {
   .app {
     display: flex;
     flex-direction: column;
@@ -675,24 +676,30 @@
     order: 5;
   }
 
-  /* Sticky brain hero: pin the network to the top of the compact viewport so it
-     stays lit while the self-map and rhythm dial scroll up beneath it — cause
-     and effect finally share the screen on a phone. Sized by the graph's own
-     landscape aspect (STAGE_W/STAGE_H = 1000/720) so the canvas hugs the graph
-     with no dead band before the play control. flex:none holds that height (no
-     stretch); contain:paint isolates the animating, filtered SVG so page-scroll
-     doesn't repaint the rest of the document. */
+  /* The desktop 42ch measure is tuned for the narrow left column; in the full-
+     width stacked layout it reads as a cramped column stranded beside the
+     full-width title. Widen it to a comfortable stacked measure. */
+  .app__thesis {
+    max-width: 60ch;
+  }
+
+  /* Brain hero: a large, prominent block that scrolls with the page (NOT sticky).
+     Sticky pinning was tried and removed — it made the controls slide behind the
+     graph on scroll, reading as content getting cut. A normal block keeps the
+     scroll clean and predictable; the graph sits directly under the hook so it's
+     the first thing seen, and the controls follow beneath it. contain:paint
+     isolates the animating, filtered SVG from the rest of the document's paints. */
   .stage__canvas {
     order: 2;
-    position: sticky;
-    top: 0;
     flex: none;
+    /* Landscape aspect (STAGE_W/STAGE_H = 1000/720) is the default across the
+       compact tier — on tablets and landscape phones the horizontal bands fill
+       the width. The narrow phone-portrait block below swaps in the portrait
+       aspect for the vertical-lane graph. No height cap: the block scrolls (not
+       sticky), so letting the aspect set the height keeps the graph full-width
+       instead of letterboxing it into a short strip on landscape phones. */
     aspect-ratio: 25 / 18;
     contain: paint;
-    /* Opaque canvas ground so the controls that scroll up behind the pinned
-       hero are occluded, not showing through the glow. (The base rule's radial
-       glow paints over this.) */
-    background-color: var(--color-bg-canvas);
   }
 
   /* Docked inspect sheet: on a phone the node-anchored card is wider than the
@@ -702,13 +709,16 @@
      the placement transforms; this is the one place inline positioning must be
      neutralised for the responsive dock. */
   .inspect-card {
-    left: var(--space-sm) !important;
-    right: var(--space-sm);
+    left: 50% !important;
+    right: auto !important;
     top: auto !important;
     bottom: var(--space-sm);
-    width: auto !important;
-    max-width: none !important;
-    transform: none !important;
+    /* Full-width on a phone, but capped + centered on wider compact screens
+       (iPad, landscape phone) so the reading card keeps a sane measure instead
+       of stretching into an edge-to-edge banner. */
+    width: calc(100% - 2 * var(--space-sm)) !important;
+    max-width: 28rem !important;
+    transform: translateX(-50%) !important;
   }
 
   .legend {
@@ -721,8 +731,17 @@
   }
 }
 
-/* Legend: stack to one column on very narrow screens so glosses stay readable. */
+/* Phone-portrait: the narrow tier. Vertical-lane graph (portrait aspect, matching
+   the rotated viewBox) + single-column legend so glosses stay readable. */
 @media (max-width: 560px) {
+  .stage__canvas {
+    aspect-ratio: 18 / 25;
+    /* Full-bleed the graph to the viewport edges (text keeps its padding) so the
+       network is as wide as the phone allows — wider canvas, and taller too via
+       the aspect ratio. */
+    margin-inline: calc(-1 * var(--space-lg));
+  }
+
   .legend {
     grid-template-columns: 1fr;
   }

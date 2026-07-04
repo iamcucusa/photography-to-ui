@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useGraphData } from './viz/useGraphData'
 import { readTokens, type VizTokens } from './viz/runtimeTokens'
 import { useReducedMotion } from './viz/useReducedMotion'
+import { useMediaQuery } from './viz/useMediaQuery'
 import { useIdleReturn } from './viz/useIdleReturn'
 import { BrainStage, type InspectTarget } from './viz/BrainStage'
 import type { Activation } from './viz/activation'
@@ -66,6 +67,11 @@ export default function App() {
   // Tokens resolve at first render (token CSS imported before mount); read lazily.
   const [tokens] = useState<VizTokens>(() => readTokens())
   const reducedMotion = useReducedMotion()
+  // Vertical lanes only on a genuinely narrow (phone-portrait) viewport, where a
+  // portrait graph fills the tall screen and aligns the DMN↔FPCN see-saw with the
+  // explore→ship self-map. Any wider viewport — landscape phone, iPad, desktop —
+  // uses the horizontal bands, which fill the width instead of letterboxing.
+  const orientation = useMediaQuery('(max-width: 560px)') ? 'portrait' : 'landscape'
 
   // ── State model ──────────────────────────────────────────────────────────
   const [rate, setRate] = useState(BALANCED) // always-on, persists across interactions
@@ -269,6 +275,7 @@ export default function App() {
                 bias={bias}
                 playing={playing}
                 reducedMotion={reducedMotion}
+                orientation={orientation}
                 inspectedId={inspectedId}
                 onInspectHover={onInspectHover}
                 onInspectActivate={onInspectActivate}
