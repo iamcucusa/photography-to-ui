@@ -245,6 +245,24 @@
       "pass": true
     },
     {
+      "mode": "dark",
+      "label": "primary on brain sheet over bright node",
+      "fg": "color.text.primary",
+      "bg": "brain-sheet-worst-node",
+      "ratio": 11.33,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "mode": "dark",
+      "label": "secondary on brain sheet over bright node",
+      "fg": "color.text.secondary",
+      "bg": "brain-sheet-worst-node",
+      "ratio": 6.74,
+      "min": 4.5,
+      "pass": true
+    },
+    {
       "mode": "light",
       "label": "primary on canvas",
       "fg": "color.text.primary",

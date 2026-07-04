@@ -225,6 +225,42 @@ function runBackdrop(mode) {
   return results
 }
 
+// Worst-case brain-sheet check: switching-brain's inspect sheet is
+// bg.overlay-surface (90% alpha) floating over the animated network — the
+// worst ground is the brightest node of each network bleeding through the
+// sheet (pure primitive bleed is strictly worse than reality, where the node
+// also blurs and dims). Only primary/secondary are asserted: the sheet bans
+// muted/accent text by convention (muted fails this worst case at 4.20:1).
+// Dark-only: the consumer pins data-theme="dark"; a light row would assert
+// a state that cannot occur.
+function runBrainSheet(mode) {
+  const tokens = loadTokens(mode)
+  const canvas = resolveColor('color.bg.canvas', tokens)
+  const sheet = resolveColor('color.bg.overlay-surface', tokens)
+  const GROUNDS = ['color.bg.canvas', 'color.sand.3', 'color.sky.4', 'color.magenta.3']
+  const results = []
+
+  for (const role of ['color.text.primary', 'color.text.secondary']) {
+    const text = resolveColor(role, tokens)
+    let worst = Infinity
+    for (const groundPath of GROUNDS) {
+      const ground = composite(resolveColor(groundPath, tokens), canvas)
+      const sheetBg = composite(sheet, ground)
+      worst = Math.min(worst, contrast(text, sheetBg))
+    }
+    results.push({
+      mode,
+      label: `${role.split('.').pop()} on brain sheet over bright node`,
+      fg: role,
+      bg: 'brain-sheet-worst-node',
+      ratio: +worst.toFixed(2),
+      min: 4.5,
+      pass: worst >= 4.5,
+    })
+  }
+  return results
+}
+
 // ── Run ────────────────────────────────────────────────────────────
 
 const MODES = ['dark', 'light']
@@ -232,7 +268,11 @@ const all = []
 let failures = 0
 
 for (const mode of MODES) {
-  const results = [...runMode(mode), ...runBackdrop(mode)]
+  const results = [
+    ...runMode(mode),
+    ...runBackdrop(mode),
+    ...(mode === 'dark' ? runBrainSheet(mode) : []),
+  ]
   all.push(...results)
   const failed = results.filter((r) => !r.pass)
   failures += failed.length

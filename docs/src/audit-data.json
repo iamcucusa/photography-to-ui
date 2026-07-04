@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-03T18:36:17.834Z",
+  "timestamp": "2026-07-04T10:10:58.321Z",
   "tokenSource": {
     "totalTokens": 119,
     "totalDescribed": 119,
@@ -94,13 +94,13 @@
   },
   "cssAnalysis": {
     "tokenUsage": {
-      "colors": 491,
-      "spacing": 409,
-      "typography": 173,
-      "font": 157,
+      "colors": 501,
+      "spacing": 420,
+      "typography": 180,
+      "font": 162,
       "motion": 226,
-      "shape": 198,
-      "shadow": 13
+      "shape": 199,
+      "shadow": 12
     },
     "hardcoded": {
       "hex": [],
@@ -211,6 +211,11 @@
         "query": "@media (max-width: 767px)"
       },
       {
+        "file": "docs/src/styles.css",
+        "value": "767px",
+        "query": "@media (max-width: 767px)"
+      },
+      {
         "file": "switching-brain/src/styles/app.css",
         "value": "820px",
         "query": "@media (max-width: 820px)"
@@ -222,7 +227,7 @@
       }
     ],
     "layoutConstraints": [],
-    "totalTokenReferences": 1667,
+    "totalTokenReferences": 1700,
     "filesScanned": [
       "photography-to-ui/src/components/comingSoon.css",
       "photography-to-ui/src/components/photographyContextInsight.css",
@@ -410,24 +415,24 @@
       },
       {
         "file": "docs/src/App.tsx",
-        "interactive": 7,
-        "buttons": 6,
+        "interactive": 8,
+        "buttons": 7,
         "inputs": 0,
         "links": 1,
-        "ariaTotal": 42,
+        "ariaTotal": 45,
         "ariaLabels": 23,
-        "ariaPressed": 1,
+        "ariaPressed": 2,
         "ariaExpanded": 1,
-        "roles": 19
+        "roles": 20
       },
       {
         "file": "docs/src/AuditPage.tsx",
-        "interactive": 2,
+        "interactive": 3,
         "buttons": 2,
         "inputs": 0,
-        "links": 0,
-        "ariaTotal": 9,
-        "ariaLabels": 5,
+        "links": 1,
+        "ariaTotal": 10,
+        "ariaLabels": 6,
         "ariaPressed": 2,
         "ariaExpanded": 2,
         "roles": 0
@@ -517,8 +522,8 @@
         "roles": 3
       }
     ],
-    "totalAriaAttributes": 128,
-    "totalInteractiveElements": 40
+    "totalAriaAttributes": 132,
+    "totalInteractiveElements": 42
   },
   "stateCoverage": [
     {
@@ -572,7 +577,7 @@
     },
     {
       "file": "docs/src/styles.css",
-      "hover": 13,
+      "hover": 14,
       "focus": 4,
       "active": 0,
       "disabled": 1

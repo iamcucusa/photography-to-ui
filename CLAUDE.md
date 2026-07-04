@@ -68,7 +68,7 @@ cucusa (workspace root — orchestration only)
 ```
 npm run tokens       # Regenerate tokens/dist/tokens.css from tokens/*.json
 npm run validate     # Check DTCG integrity — structure, descriptions, refs, extensions, mode parity
-npm run check:contrast # Contrast contract — 54 WCAG checks across dark + light (also in npm run check)
+npm run check:contrast # Contrast contract — 56 WCAG checks across dark + light (also in npm run check)
 npm run audit        # Re-scan codebase, update audit-data.json + contrast-data.json
 npm run dev          # Start photography-to-ui dev server (port 5173)
 npm run dev:docs     # Start docs consumer dev server (port 5174)
