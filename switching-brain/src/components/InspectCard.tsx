@@ -35,7 +35,9 @@ const HEMI_LABEL: Record<string, string> = {
  * Elevation is emitted light: the sheet's glow is tinted by the inspected
  * node's network, composed at runtime (alphas mirror --shadow-glow-accent's
  * ring/mid/halo structure) and handed to CSS as custom properties. One
- * --inspect-network var also colors the accent edge, bar fill and tag dots.
+ * --inspect-network var also colors the bar fill and tag dots. (The old 3px
+ * accent edge was removed: the glow states the network; a solid top strip
+ * against the 40% rim read as vestigial titlebar chrome.)
  */
 export function InspectCard({ target, placement, tokens, pinned, onClose }: InspectCardProps) {
   const { node, cx, cy } = target
@@ -66,8 +68,6 @@ export function InspectCard({ target, placement, tokens, pinned, onClose }: Insp
       aria-labelledby={pinned ? titleId : undefined}
       aria-hidden={pinned ? undefined : true}
     >
-      <span className="inspect-card__accent" aria-hidden="true" />
-
       <div className="inspect-card__body">
         <div className="inspect-card__head">
           <span className="inspect-card__network">

@@ -435,14 +435,6 @@
   transform: translate(calc(-100% - 16px), 16px);
 }
 
-/* Network-colored accent edge — ties the sheet to the node's network. */
-.inspect-card__accent {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background: var(--inspect-network);
-}
-
 .inspect-card__body {
   display: flex;
   flex-direction: column;
