@@ -90,10 +90,15 @@
   text-transform: uppercase;
 }
 
+/* Canvas-colored knockout halo keeps labels legible over crossing edges
+   and bright nodes (paint-order alone was a no-op without a stroke) */
 .stage__node-label {
   font-size: 14px;
   font-weight: var(--font-weight-medium);
   paint-order: stroke;
+  stroke: var(--viz-node-stroke);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 .stage__node {
@@ -168,7 +173,10 @@
   stroke: var(--color-accent);
   stroke-width: 5;
   stroke-linecap: round;
-  opacity: 0.7;
+  /* Full opacity: accent at 0.7 sat at 2.13:1 vs canvas, under the 3:1
+     non-text floor; full accent is 3.41:1 and stays subordinate to the
+     4.74:1 magenta-3 handle */
+  opacity: 1;
 }
 
 .dial__handle {
@@ -456,8 +464,11 @@
   color: var(--color-text-secondary);
 }
 
+/* Secondary, not muted: muted fails 4.5:1 worst-case on the sheet over a
+   bright sky-4 node bleeding through the 90% surface (4.20:1). Only
+   text-primary/secondary are allowed on the sheet. */
 .inspect-card__abbr {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .inspect-card__close {
@@ -500,7 +511,7 @@
 }
 
 .inspect-card__id {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 /* The craft translation — the most useful line, so it leads in primary text. */
