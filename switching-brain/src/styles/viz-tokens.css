@@ -41,10 +41,10 @@
   --viz-node-stroke: var(--color-bg-canvas);
   --viz-node-label: var(--color-text-primary);
 
-  /* ── Experimental UI tokens (kept in-consumer; candidates for the DS) ──────
-     The inspect tooltip is a focused, single-node reading surface, so it wants a
-     crisper corner than the DS's --radius-sm (10px) and a generous reading width.
-     If these prove out, promote --viz-radius-tight → --radius-xs in @cucusa/tokens. */
-  --viz-radius-tight: 5px;
+  /* ── Experimental UI tokens (kept in-consumer) ─────────────────────────────
+     --viz-radius-tight (5px) was retired: the radius experiment resolved
+     AGAINST promotion when the inspect card became a boxless sheet. The only
+     radii left in this consumer are 50% circles on true inputs and swatches,
+     which need no token. The inspect sheet keeps its reading width. */
   --viz-inspect-width: 320px;
 }
