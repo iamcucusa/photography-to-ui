@@ -640,13 +640,42 @@
 
 @media (max-width: 1023px) {
   .app {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    row-gap: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
     height: auto;
     min-height: 100dvh;
     overflow: visible;
     padding: var(--space-lg);
+  }
+
+  /* Dissolve the desktop grouping wrappers so the header, brain, controls and
+     legend become direct flex children of .app and can be reordered as one flow
+     (no JSX change — the desktop two-column keeps these wrappers intact). */
+  .app__text,
+  .app__intro,
+  .app__controls,
+  .stage {
+    display: contents;
+  }
+
+  /* Hook-first reading order: thesis → living brain → self-map → rhythm →
+     legend. The brain sits directly under the hook so it's on-screen while you
+     drive the controls that follow it (sticky pinning comes next). */
+  .app__header {
+    order: 1;
+  }
+  .stage__canvas {
+    order: 2;
+  }
+  .selfmap {
+    order: 3;
+  }
+  .dial {
+    order: 4;
+  }
+  .legend {
+    order: 5;
   }
 
   .stage__canvas {
