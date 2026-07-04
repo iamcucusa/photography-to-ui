@@ -665,9 +665,6 @@
   .app__header {
     order: 1;
   }
-  .stage__canvas {
-    order: 2;
-  }
   .selfmap {
     order: 3;
   }
@@ -678,8 +675,24 @@
     order: 5;
   }
 
+  /* Sticky brain hero: pin the network to the top of the compact viewport so it
+     stays lit while the self-map and rhythm dial scroll up beneath it — cause
+     and effect finally share the screen on a phone. Sized by the graph's own
+     landscape aspect (STAGE_W/STAGE_H = 1000/720) so the canvas hugs the graph
+     with no dead band before the play control. flex:none holds that height (no
+     stretch); contain:paint isolates the animating, filtered SVG so page-scroll
+     doesn't repaint the rest of the document. */
   .stage__canvas {
-    min-height: 60vh;
+    order: 2;
+    position: sticky;
+    top: 0;
+    flex: none;
+    aspect-ratio: 25 / 18;
+    contain: paint;
+    /* Opaque canvas ground so the controls that scroll up behind the pinned
+       hero are occluded, not showing through the glow. (The base rule's radial
+       glow paints over this.) */
+    background-color: var(--color-bg-canvas);
   }
 
   .legend {
