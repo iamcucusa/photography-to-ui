@@ -695,6 +695,22 @@
     background-color: var(--color-bg-canvas);
   }
 
+  /* Docked inspect sheet: on a phone the node-anchored card is wider than the
+     space beside any node and clips off the canvas. Dock it full-width to the
+     foot of the brain hero instead — the inspected node stays lit above it,
+     nothing clips. !important overrides the JS-set inline anchor (left/top) and
+     the placement transforms; this is the one place inline positioning must be
+     neutralised for the responsive dock. */
+  .inspect-card {
+    left: var(--space-sm) !important;
+    right: var(--space-sm);
+    top: auto !important;
+    bottom: var(--space-sm);
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+
   .legend {
     gap: var(--space-md) var(--space-lg);
   }
