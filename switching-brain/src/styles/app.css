@@ -764,6 +764,16 @@
   padding: var(--space-xl);
 }
 
+/* Match the hero's responsive gutter so the lanes span the SAME content width as
+   the hero at every breakpoint (.app drops to --space-lg on the compact/portrait
+   tier; without this the lanes stay inset at --space-xl and read narrower). Placed
+   after the base rule so it wins on source order when the query matches. */
+@media (max-width: 1023px), (orientation: portrait) {
+  .lanes {
+    padding: var(--space-lg);
+  }
+}
+
 .lane {
   position: relative;
   overflow: hidden;
