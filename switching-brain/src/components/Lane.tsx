@@ -67,6 +67,9 @@ export function Lane({
   // in-lane bars/tags.
   const style = {
     '--lane-base': net.base,
+    // Bright tone for facet labels + hemisphere marks — the lane's own color,
+    // AA-legible on the dark canvas where the mid tone (esp. SN) falls short.
+    '--lane-accent': net.bright,
     '--lane-glow-rim': withAlpha(net.base, 0.4),
     '--lane-glow-mid': withAlpha(net.bright, 0.22),
     '--lane-glow-halo': withAlpha(net.dim, 0.18),
@@ -119,7 +122,10 @@ export function Lane({
       <div className={`lane__facets lane__facets--${iaLayout}`}>
         {groups.map((g) => (
           <section className="lane__facet" key={g.key} aria-label={g.label}>
-            <p className="lane__facet-label">{g.label}</p>
+            <p className="lane__facet-label">
+              <HemiMark hemi={g.key as 'L' | 'M' | 'R'} />
+              {g.label}
+            </p>
             <div className="lane__entries">{g.items.map(renderItem)}</div>
           </section>
         ))}
@@ -137,6 +143,30 @@ export function Lane({
       </header>
       {body}
     </article>
+  )
+}
+
+/** A simple hemisphere cue for a facet label: a brain-circle with the label's
+ *  own side lit (left / right filled), or a central midline. Inherits the lane
+ *  color via currentColor; decorative (the section already labels the group). */
+function HemiMark({ hemi }: { hemi: 'L' | 'M' | 'R' }) {
+  return (
+    <svg className="lane__hemi-mark" viewBox="0 0 16 16" aria-hidden="true">
+      <circle
+        cx="8"
+        cy="8"
+        r="6.5"
+        fill="none"
+        stroke="currentColor"
+        strokeOpacity="0.4"
+        strokeWidth="1.3"
+      />
+      {hemi === 'L' && <path d="M8 1.5A6.5 6.5 0 0 0 8 14.5Z" fill="currentColor" />}
+      {hemi === 'R' && <path d="M8 1.5A6.5 6.5 0 0 1 8 14.5Z" fill="currentColor" />}
+      {hemi === 'M' && (
+        <line x1="8" y1="1.5" x2="8" y2="14.5" stroke="currentColor" strokeWidth="1.3" />
+      )}
+    </svg>
   )
 }
 

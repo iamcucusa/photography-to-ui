@@ -1003,15 +1003,29 @@
 }
 
 .lane__facet-label {
-  /* Align the LEFT/MIDLINE/RIGHT label with its column's entry text — entries
-     carry --space-md inline padding (.lane__entry), so the label matches it. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  /* Align the label's LEADING edge (the hemisphere mark) with its column's entry
+     text — entries carry --space-md inline padding (.lane__entry), so the label
+     matches it and nothing pokes left of the column. */
   padding-inline-start: var(--space-md);
   margin-bottom: var(--space-sm);
   font-size: var(--text-xs);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-text-secondary);
+  /* The lane's own (bright) color — reads as "this network", AA on the canvas. */
+  color: var(--lane-accent);
+}
+
+/* Hemisphere cue — the label's leading glyph, its left edge on the column line.
+   Slightly larger than the (small) label text so the left/right fill reads. */
+.lane__hemi-mark {
+  --hemi-size: 1.4em;
+  flex: none;
+  width: var(--hemi-size);
+  height: var(--hemi-size);
 }
 
 /* ── Prototype control panel (TEMPORARY — removed on converge) ─────────────── */
