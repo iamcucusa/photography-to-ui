@@ -176,13 +176,14 @@ function PairReadout({ left, right }: { left: BrainNode; right: BrainNode }) {
   const switcher = left.switcher || right.switcher
   return (
     <div className="lane-readout__body">
-      <h3 className="lane-readout__title">{left.label}</h3>
-      <p className="lane-readout__sub">
-        Bilateral ·{' '}
+      {/* Bilateral: both ids lead, then the shared region name. The L/R stat
+          rows below carry the "both hemispheres" reading — no "Bilateral ·". */}
+      <h3 className="lane-readout__title">
         <span className="lane-readout__id">
-          {left.id} / {right.id}
+          {left.id} · {right.id}
         </span>
-      </p>
+        <span className="lane-readout__name">{left.label}</span>
+      </h3>
       {left.role && <p className="lane-readout__role">{left.role}</p>}
       <div className="lane-readout__stats">
         <div className="lane-readout__stat">

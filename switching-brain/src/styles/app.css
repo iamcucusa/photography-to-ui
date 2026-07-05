@@ -880,25 +880,32 @@
   gap: var(--space-xs);
 }
 
+/* Identity line: region id leads (precise, network-tinted), then the name. The
+   hemisphere is carried by the facet grouping, so it's dropped from the entry. */
 .lane-readout__title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  line-height: var(--line-height-tight);
+}
+.lane-readout__id {
+  flex: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--lane-accent);
+}
+.lane-readout__name {
   font-size: var(--text-md);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
   color: var(--color-text-secondary);
   transition: color var(--duration-fast) var(--easing-emphasized);
 }
-.lane__entry:hover .lane-readout__title,
-.lane__entry[data-active] .lane-readout__title {
+.lane__entry:hover .lane-readout__name,
+.lane__entry[data-active] .lane-readout__name {
   color: var(--color-text-primary);
   text-shadow: 0 0 12px var(--lane-base);
-}
-
-.lane-readout__sub {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-}
-.lane-readout__id {
-  color: var(--color-text-secondary);
 }
 
 .lane-readout__role {

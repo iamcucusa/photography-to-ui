@@ -15,11 +15,15 @@ export interface NodeReadoutProps {
 }
 
 /**
- * The single-node readout — region label, hemisphere · id, plain-language craft
- * role, connectivity bar, and rich-club / switcher tags. Shared verbatim by the
- * anchored `InspectCard` (`block="inspect-card"`) and the in-lane entries
- * (`block="lane-readout"`). The `block` prop swaps the BEM family so the card
+ * The single-node readout — region identity, plain-language craft role,
+ * connectivity bar, and rich-club / switcher tags. Shared by the anchored
+ * `InspectCard` (`block="inspect-card"`) and the in-lane entries
+ * (`block="lane-readout"`); the `block` prop swaps the BEM family so the card
  * path emits byte-identical class strings — no visual regression on the card.
+ *
+ * The identity line differs by context: the card shows `label` then
+ * `hemisphere · id` (it stands alone); a lane entry leads with the `id` then the
+ * `name` (the facet grouping already states the hemisphere — no per-entry repeat).
  */
 export function NodeReadout({
   node,
@@ -63,12 +67,24 @@ export function NodeReadout({
         </div>
       )}
 
-      <h3 id={titleId} className={`${block}__title`}>
-        {node.label}
-      </h3>
-      <p className={`${block}__sub`}>
-        {HEMI_LABEL[node.hemi]} · <span className={`${block}__id`}>{node.id}</span>
-      </p>
+      {block === 'lane-readout' ? (
+        // In a lane the hemisphere is already stated by the facet grouping, so
+        // lead with the region id (a precise, network-tinted reference) then the
+        // name — no repeated "Left hemisphere · …" per entry.
+        <h3 id={titleId} className={`${block}__title`}>
+          <span className={`${block}__id`}>{node.id}</span>
+          <span className={`${block}__name`}>{node.label}</span>
+        </h3>
+      ) : (
+        <>
+          <h3 id={titleId} className={`${block}__title`}>
+            {node.label}
+          </h3>
+          <p className={`${block}__sub`}>
+            {HEMI_LABEL[node.hemi]} · <span className={`${block}__id`}>{node.id}</span>
+          </p>
+        </>
+      )}
 
       {node.role && <p className={`${block}__role`}>{node.role}</p>}
 
