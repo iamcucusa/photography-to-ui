@@ -46,7 +46,6 @@ const STROKE = 1.2
  */
 export function LaneSubstrate({ substrate, tokens, variant }: LaneSubstrateProps) {
   const net = tokens.network[substrate.network]
-  const uid = `lane-${substrate.network}`
 
   return (
     <svg
@@ -55,7 +54,7 @@ export function LaneSubstrate({ substrate, tokens, variant }: LaneSubstrateProps
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
     >
-      {variant === 'drift' && <Drift net={net} uid={uid} />}
+      {variant === 'drift' && <Drift net={net} />}
       {variant === 'pulse' && <Pulse net={net} />}
       {variant === 'lattice' && <Lattice substrate={substrate} net={net} />}
     </svg>
@@ -94,22 +93,16 @@ function wanderPath(seed: number): string {
   return d
 }
 
-/** DMN — long, smooth, aimless meandering lines: the trail of a wandering mind. */
-function Drift({ net, uid }: { net: Net; uid: string }) {
+/** DMN — long, smooth, aimless meandering lines: the trail of a wandering mind.
+    Crisp (no blur) so the stroke language matches the pulse/lattice lanes. */
+function Drift({ net }: { net: Net }) {
   const seeds = [11, 43, 87, 129, 205, 251]
   return (
-    <>
-      <defs>
-        <filter id={`${uid}-soft`} x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation="0.7" />
-        </filter>
-      </defs>
-      <g fill="none" strokeLinecap="round" strokeWidth={STROKE} filter={`url(#${uid}-soft)`}>
-        {seeds.map((seed, i) => (
-          <path key={seed} d={wanderPath(seed)} stroke={withAlpha(net.base, 0.4 - i * 0.03)} />
-        ))}
-      </g>
-    </>
+    <g fill="none" strokeLinecap="round" strokeWidth={STROKE}>
+      {seeds.map((seed, i) => (
+        <path key={seed} d={wanderPath(seed)} stroke={withAlpha(net.base, 0.42 - i * 0.03)} />
+      ))}
+    </g>
   )
 }
 

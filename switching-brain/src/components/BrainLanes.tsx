@@ -6,7 +6,7 @@ import { createSubstrateSimulation, settle } from '../viz/layout'
 import { nodeRadius } from '../viz/geometry'
 import { Lane } from './Lane'
 import type { Substrate, BgVariant } from './LaneSubstrate'
-import { LanePrototypeControls, type BgChoice } from './LanePrototypeControls'
+import { LanePrototypeControls } from './LanePrototypeControls'
 import type { IaLayout, PairMode } from './laneLayout'
 
 /** Filter the graph to one network's nodes + intra-network edges, lay it out, bbox-fit. */
@@ -42,9 +42,9 @@ function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
   }
 }
 
-/** Each network's own metaphor background when bg = 'spread' (the intended look):
+/** Each network's own metaphor background (the chosen, converged look):
  *  DMN dreamer = drift · SN switch = pulse · FPCN builder = lattice. */
-const SPREAD: Record<NetworkId, BgVariant> = { DMN: 'drift', SN: 'pulse', FPCN: 'lattice' }
+const NETWORK_BG: Record<NetworkId, BgVariant> = { DMN: 'drift', SN: 'pulse', FPCN: 'lattice' }
 
 export interface BrainLanesProps {
   graph: BrainGraph
@@ -77,16 +77,14 @@ export function BrainLanes({
     [graph],
   )
 
-  // Prototype axes (bakeoff).
-  const [bg, setBg] = useState<BgChoice>('spread')
+  // Remaining prototype axes (bakeoff) — background is concluded (per-network
+  // NETWORK_BG); layout + pairs are still under review.
   const [layout, setLayout] = useState<IaLayout>('echo-hero')
   const [pairs, setPairs] = useState<PairMode>('keep')
 
   return (
     <section className="lanes" aria-label="Read the three networks">
       <LanePrototypeControls
-        bg={bg}
-        setBg={setBg}
         layout={layout}
         setLayout={setLayout}
         pairs={pairs}
@@ -102,7 +100,7 @@ export function BrainLanes({
           inspectedId={inspectedId}
           onNodeHover={onNodeHover}
           onNodeSelect={onNodeSelect}
-          bgVariant={bg === 'spread' ? SPREAD[network] : bg}
+          bgVariant={NETWORK_BG[network]}
           iaLayout={layout}
           pairMode={pairs}
         />
