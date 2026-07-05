@@ -68,6 +68,17 @@ export const NETWORK_GLOSS: Record<NetworkId, string> = {
   SN: 'The switch. When to flip.',
 }
 
+/**
+ * Split a network's gloss into its two editorial halves — the persona
+ * ("The dreamer") and the tagline / promise ("What could be."). One source of
+ * copy (NETWORK_GLOSS): the lane header titles the persona (title-cased in CSS),
+ * the legend lists persona + phrase. Keeps the two presentations in sync.
+ */
+export function networkVoice(id: NetworkId): { persona: string; tagline: string } {
+  const [persona, ...rest] = NETWORK_GLOSS[id].split('. ')
+  return { persona, tagline: rest.join('. ') }
+}
+
 /** Vertical band each network occupies in the map (top to bottom). */
 export const NETWORK_POSITION: Record<NetworkId, string> = {
   DMN: 'top band',

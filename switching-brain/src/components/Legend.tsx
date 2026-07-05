@@ -1,5 +1,5 @@
 import type { VizTokens } from '../viz/runtimeTokens'
-import { NETWORK_ORDER, NETWORK_LABELS, NETWORK_GLOSS, NETWORK_POSITION } from '../viz/model/types'
+import { NETWORK_ORDER, NETWORK_LABELS, NETWORK_POSITION, networkVoice } from '../viz/model/types'
 
 interface LegendProps {
   tokens: VizTokens
@@ -17,8 +17,7 @@ export function Legend({ tokens }: LegendProps) {
   return (
     <ul className="legend" aria-label="The three networks, top to bottom of the map">
       {NETWORK_ORDER.map((id) => {
-        const [role, ...rest] = NETWORK_GLOSS[id].split('. ')
-        const phrase = rest.join('. ')
+        const { persona, tagline } = networkVoice(id)
         return (
           <li key={id} className="legend__item">
             <span
@@ -31,8 +30,8 @@ export function Legend({ tokens }: LegendProps) {
               <p className="legend__meta">
                 {id} · {NETWORK_POSITION[id]}
               </p>
-              <p className="legend__role">{role}.</p>
-              {phrase && <p className="legend__phrase">{phrase}</p>}
+              <p className="legend__role">{persona}.</p>
+              {tagline && <p className="legend__phrase">{tagline}</p>}
             </div>
           </li>
         )

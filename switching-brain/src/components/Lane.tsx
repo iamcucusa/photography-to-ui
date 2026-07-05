@@ -2,7 +2,7 @@ import { useMemo, type CSSProperties, type KeyboardEvent } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import { withAlpha } from '../viz/runtimeTokens'
 import type { BrainNode, NetworkId } from '../viz/model/types'
-import { NETWORK_LABELS, NETWORK_GLOSS, HEMI_LABEL } from '../viz/model/types'
+import { NETWORK_LABELS, HEMI_LABEL, networkVoice } from '../viz/model/types'
 import { LaneSubstrate, type Substrate, type BgVariant } from './LaneSubstrate'
 import { NodeReadout } from './NodeReadout'
 import {
@@ -62,6 +62,7 @@ export function Lane({
   pairMode,
 }: LaneProps) {
   const net = tokens.network[network]
+  const { persona, tagline } = networkVoice(network)
   // Elevation-as-light, mirroring InspectCard: a network-tinted rim + soft glow
   // (rim 0.4 / mid 0.22 / halo 0.18), composed at runtime. --lane-base tints the
   // in-lane bars/tags.
@@ -136,10 +137,15 @@ export function Lane({
     <article className="lane" data-network={network} data-bg={bgVariant} style={style}>
       <LaneSubstrate substrate={substrate} tokens={tokens} variant={bgVariant} />
       <header className="lane__header">
-        <h2 className="lane__name">
-          {NETWORK_LABELS[network]} <span className="lane__abbr">{network}</span>
-        </h2>
-        <p className="lane__gloss">{NETWORK_GLOSS[network]}</p>
+        <div className="lane__title-block">
+          <h2 className="lane__persona">{persona}</h2>
+          <p className="lane__tagline">{tagline}</p>
+        </div>
+        <p className="lane__key">
+          <span className="lane__dot" style={{ background: net.base }} aria-hidden="true" />
+          <span className="lane__net-name">{NETWORK_LABELS[network]}</span>
+          <span className="lane__abbr">{network}</span>
+        </p>
       </header>
       {body}
     </article>

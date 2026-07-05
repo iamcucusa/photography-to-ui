@@ -806,36 +806,69 @@
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 100%);
 }
 
+/* Persona headline + tagline on the left, the clinical name as a quiet key tag
+   on the top-end. Wraps (key drops below) when the lane gets too narrow. */
 .lane__header {
   position: relative;
   z-index: 2;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-lg);
 }
 
-.lane__name {
+/* Persona + tagline share ONE baseline — the tagline hangs off the headline as
+   a small accent-hued aside (not a stacked subtitle). The dramatic size drop +
+   hue shift is the separator; on a narrow lane the tagline wraps beneath. */
+.lane__title-block {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--space-sm);
-  font-size: var(--text-lg);
+  gap: 0 var(--space-md);
+  flex: 1 1 auto;
+}
+/* The persona — the lane's hook and hero. Data is sentence-case ("The dreamer");
+   `capitalize` renders it as the title "The Dreamer". */
+.lane__persona {
+  font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  text-transform: capitalize;
   color: var(--color-text-primary);
 }
+/* The tagline / promise — carries the network hue as the persona's voice. */
+.lane__tagline {
+  font-size: var(--text-md);
+  line-height: var(--line-height-base);
+  color: var(--lane-accent);
+}
 
-.lane__abbr {
+/* Key tag — the clinical identity (swatch · name · abbr), reference metadata. */
+.lane__key {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: 0 0 auto;
+  margin-top: var(--space-xs);
   font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+.lane__dot {
+  flex: none;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+}
+.lane__abbr {
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
 }
-
-.lane__gloss {
-  font-size: var(--text-sm);
-  line-height: var(--line-height-base);
-  color: var(--color-text-secondary);
-  max-width: 46ch;
+.lane__abbr::before {
+  content: '·';
+  margin-inline-end: var(--space-xs);
+  font-weight: var(--font-weight-regular);
 }
 
 /* Entries — the readouts, above the substrate. A responsive flow of node
