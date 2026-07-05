@@ -1,11 +1,13 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import type { BrainGraph, NetworkId } from '../viz/model/types'
 import { NETWORK_ORDER } from '../viz/model/types'
 import { createSubstrateSimulation, settle } from '../viz/layout'
 import { nodeRadius } from '../viz/geometry'
 import { Lane } from './Lane'
-import type { Substrate } from './LaneSubstrate'
+import type { Substrate, BgVariant } from './LaneSubstrate'
+import { LanePrototypeControls, type BgChoice } from './LanePrototypeControls'
+import type { IaLayout, PairMode } from './laneLayout'
 
 /** Filter the graph to one network's nodes + intra-network edges, lay it out, bbox-fit. */
 function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
@@ -29,23 +31,24 @@ function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
     maxY = Math.max(maxY, n.y + r)
   }
   const pad = 14
-  const x = minX - pad
-  const y = minY - pad
-  const w = maxX - minX + pad * 2
-  const h = maxY - minY + pad * 2
+  const bbox = { x: minX - pad, y: minY - pad, w: maxX - minX + pad * 2, h: maxY - minY + pad * 2 }
 
   return {
     network,
     nodes: sim.nodes,
     links: sim.links,
-    viewBox: `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`,
+    bbox,
+    viewBox: `${bbox.x.toFixed(1)} ${bbox.y.toFixed(1)} ${bbox.w.toFixed(1)} ${bbox.h.toFixed(1)}`,
   }
 }
+
+/** Each network's own metaphor background when bg = 'spread' (the intended look):
+ *  DMN dreamer = drift · SN switch = pulse · FPCN builder = lattice. */
+const SPREAD: Record<NetworkId, BgVariant> = { DMN: 'drift', SN: 'pulse', FPCN: 'lattice' }
 
 export interface BrainLanesProps {
   graph: BrainGraph
   tokens: VizTokens
-  /** Active node id (from the graph or a lane) — drives graph↔lane highlight. */
   inspectedId: string | null
   onNodeHover: (id: string | null) => void
   onNodeSelect: (id: string) => void
@@ -53,9 +56,9 @@ export interface BrainLanesProps {
 
 /**
  * The three-lane reading surface — one lane per network (DMN · SN · FPCN), the
- * hero's three bands "unrolled to be read". Each lane is a band of emitted light
- * (seams, no boxes) over its own faint connectome, holding readable node
- * readouts. Rendered below the hero; SN central by source order (NETWORK_ORDER).
+ * hero's three bands "unrolled to be read". Rendered below the hero; SN central
+ * by source order. Currently carries the reading-experience bakeoff harness
+ * (background × IA layout × pairs) — removed on converge.
  */
 export function BrainLanes({
   graph,
@@ -64,7 +67,6 @@ export function BrainLanes({
   onNodeHover,
   onNodeSelect,
 }: BrainLanesProps) {
-  // Per-network nodes + static substrate, rebuilt only when the graph changes.
   const lanes = useMemo(
     () =>
       NETWORK_ORDER.map((id) => ({
@@ -75,8 +77,21 @@ export function BrainLanes({
     [graph],
   )
 
+  // Prototype axes (bakeoff).
+  const [bg, setBg] = useState<BgChoice>('spread')
+  const [layout, setLayout] = useState<IaLayout>('echo-hero')
+  const [pairs, setPairs] = useState<PairMode>('keep')
+
   return (
     <section className="lanes" aria-label="Read the three networks">
+      <LanePrototypeControls
+        bg={bg}
+        setBg={setBg}
+        layout={layout}
+        setLayout={setLayout}
+        pairs={pairs}
+        setPairs={setPairs}
+      />
       {lanes.map(({ network, nodes, substrate }) => (
         <Lane
           key={network}
@@ -87,6 +102,9 @@ export function BrainLanes({
           inspectedId={inspectedId}
           onNodeHover={onNodeHover}
           onNodeSelect={onNodeSelect}
+          bgVariant={bg === 'spread' ? SPREAD[network] : bg}
+          iaLayout={layout}
+          pairMode={pairs}
         />
       ))}
     </section>
