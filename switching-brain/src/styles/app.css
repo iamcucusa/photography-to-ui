@@ -797,20 +797,13 @@
   z-index: 0;
   width: 100%;
   height: 100%;
+  /* One shared whisper envelope for all three variants — each field is then
+     matched to this level via its own per-element stroke alpha in LaneSubstrate
+     (drift lines, pulse rings, lattice grid+ticks), so none competes with text. */
   opacity: 0.5;
   pointer-events: none;
   /* Feather to fade into the lane's calm centre so the readouts stay legible. */
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 100%);
-}
-/* Per-variant intensity (bakeoff) — tuned so none competes with the text. */
-.lane-substrate--drift {
-  opacity: 0.5;
-}
-.lane-substrate--pulse {
-  opacity: 0.7;
-}
-.lane-substrate--lattice {
-  opacity: 0.55;
 }
 
 .lane__header {

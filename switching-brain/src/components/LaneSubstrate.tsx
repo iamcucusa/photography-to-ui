@@ -10,7 +10,7 @@ import type { SimNode, SimLink } from '../viz/layout'
  *             trail of a wandering mind.
  *   pulse   — SN "the switch": concentric wavefronts broadcasting from the
  *             conductor hub — the switch signal rippling brain-wide.
- *   lattice — FPCN "the builder": a precise thin structural mesh, a blueprint.
+ *   lattice — FPCN "the builder": an even, faint blueprint grid + measure ticks.
  */
 export type BgVariant = 'drift' | 'pulse' | 'lattice'
 
@@ -56,7 +56,7 @@ export function LaneSubstrate({ substrate, tokens, variant }: LaneSubstrateProps
     >
       {variant === 'drift' && <Drift net={net} />}
       {variant === 'pulse' && <Pulse net={net} />}
-      {variant === 'lattice' && <Lattice substrate={substrate} net={net} />}
+      {variant === 'lattice' && <Lattice net={net} />}
     </svg>
   )
 }
@@ -110,13 +110,18 @@ function Drift({ net }: { net: Net }) {
 function Pulse({ net }: { net: Net }) {
   const cx = FW * 0.44
   const cy = FH * 0.5
-  const rings = 9
-  const step = FH * 0.15 // even, generous spacing — clean wavefronts
+  const rings = 13
+  // Tight spacing so many wavefronts fill the wide/short lane — with large rings
+  // the slice-fit crop showed only a few big arcs (read as sparse + zoomed-in).
+  const step = FH * 0.09
   return (
     <g fill="none">
       {Array.from({ length: rings }, (_, i) => {
         const r = step * (i + 1)
-        const op = 0.55 * (1 - i / rings) // strongest at the hub, fading out
+        // Peak below drift's 0.42 (magenta-bright reads more luminous than the
+        // sand/sky bases). Gentle fade so the field stays evenly present, not a
+        // bright hub trailing off to nothing.
+        const op = 0.38 * (1 - 0.5 * (i / rings))
         return (
           <circle
             key={i}
@@ -132,39 +137,40 @@ function Pulse({ net }: { net: Net }) {
   )
 }
 
-/** FPCN — a precise thin structural mesh, remapped into the shared frame. */
-function Lattice({ substrate, net }: { substrate: Substrate; net: Net }) {
-  const { bbox } = substrate
-  const mx = (x: number) => ((x - bbox.x) / bbox.w) * FW
-  const my = (y: number) => ((y - bbox.y) / bbox.h) * FH
-  const tick = 5
+/** FPCN — the builder's blueprint: an even, faint orthogonal grid spanning the
+ *  whole frame with small measure-point ticks at the crossings. GENERATIVE and
+ *  regular (not the sparse real connectome), so it covers the lane evenly like
+ *  the sibling fields — and, being a grid rather than clustered nodes+edges,
+ *  never reads as a second graph. Kept a whisper (low --lattice opacity). */
+function Lattice({ net }: { net: Net }) {
+  const step = 150
+  const xs: number[] = []
+  for (let x = 0; x <= FW; x += step) xs.push(x)
+  const ys: number[] = []
+  for (let y = 0; y <= FH; y += step) ys.push(y)
+  const tick = 3
   return (
     <g>
-      <g stroke={withAlpha(net.base, 0.42)} strokeWidth={STROKE * 0.9}>
-        {substrate.links.map((l, i) => {
-          const s = l.source as SimNode
-          const t = l.target as SimNode
-          return (
-            <line
-              key={i}
-              x1={mx(s.x).toFixed(1)}
-              y1={my(s.y).toFixed(1)}
-              x2={mx(t.x).toFixed(1)}
-              y2={my(t.y).toFixed(1)}
-            />
-          )
-        })}
-      </g>
-      <g fill={withAlpha(net.bright, 0.5)}>
-        {substrate.nodes.map((n) => (
-          <rect
-            key={n.id}
-            x={(mx(n.x) - tick / 2).toFixed(1)}
-            y={(my(n.y) - tick / 2).toFixed(1)}
-            width={tick}
-            height={tick}
-          />
+      <g fill="none" stroke={withAlpha(net.base, 0.3)} strokeWidth={STROKE * 0.7}>
+        {xs.map((x) => (
+          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={FH} />
         ))}
+        {ys.map((y) => (
+          <line key={`h${y}`} x1={0} y1={y} x2={FW} y2={y} />
+        ))}
+      </g>
+      <g fill={withAlpha(net.base, 0.42)}>
+        {ys.map((y) =>
+          xs.map((x) => (
+            <rect
+              key={`${x}-${y}`}
+              x={(x - tick / 2).toFixed(1)}
+              y={(y - tick / 2).toFixed(1)}
+              width={tick}
+              height={tick}
+            />
+          )),
+        )}
       </g>
     </g>
   )
