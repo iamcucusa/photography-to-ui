@@ -77,8 +77,8 @@ export function BrainLanes({
     [graph],
   )
 
-  // Remaining prototype axes (bakeoff) — background is concluded (per-network
-  // NETWORK_BG); layout + pairs are still under review.
+  // Remaining prototype axes (bakeoff) — background + connectivity-value treatment
+  // are concluded; layout + pairs are still under review.
   const [layout, setLayout] = useState<IaLayout>('echo-hero')
   const [pairs, setPairs] = useState<PairMode>('keep')
 

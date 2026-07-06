@@ -9,9 +9,9 @@ interface Props {
 
 /**
  * TEMPORARY prototype control panel for the lane reading-experience bakeoff —
- * flip IA layout × bilateral pairs live to compare. (Background is concluded:
- * per-network metaphor, hard-coded in BrainLanes.) Deleted in the converge
- * commit once layout + pairs are chosen. Deliberately utilitarian.
+ * flip IA layout × bilateral pairs live to compare. (Background and the
+ * connectivity-value treatment are concluded — hard-coded in BrainLanes / the
+ * lane readout.) Deleted in the converge commit once layout + pairs are chosen.
  */
 export function LanePrototypeControls({ layout, setLayout, pairs, setPairs }: Props) {
   return (

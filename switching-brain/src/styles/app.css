@@ -906,13 +906,16 @@
   gap: var(--space-xs);
 }
 
-/* Identity line: region id leads (precise, network-tinted), then the name. The
-   hemisphere is carried by the facet grouping, so it's dropped from the entry. */
-.lane-readout__title {
+/* Eyebrow (line 1): id · mirror · connectivity — a kicker above the name, so the
+   connectivity value can never wrap the name (which owns its own line below). */
+.lane-readout__meta {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-sm);
+  gap: var(--space-xs) var(--space-sm);
+}
+/* Name (line 2) — the headline. Role (line 3) follows. */
+.lane-readout__title {
   line-height: var(--line-height-tight);
 }
 .lane-readout__id {
@@ -921,6 +924,22 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.04em;
   color: var(--lane-accent);
+}
+/* Mirror mark — a bilateral region's "has a contralateral twin" cue, in the lane
+   accent, sitting between the id and name so the shared role prose reads as
+   symmetry. Faint by default; brightens with the entry on hover/active. */
+.lane-readout__mirror {
+  flex: none;
+  align-self: center;
+  width: 0.9em;
+  height: 0.9em;
+  color: var(--lane-accent);
+  opacity: 0.55;
+  transition: opacity var(--duration-fast) var(--easing-emphasized);
+}
+.lane__entry:hover .lane-readout__mirror,
+.lane__entry[data-active] .lane-readout__mirror {
+  opacity: 1;
 }
 .lane-readout__name {
   font-size: var(--text-md);
@@ -979,6 +998,33 @@
   font-size: var(--text-xs);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
+}
+
+/* Connectivity — details-on-demand. The number sits on the eyebrow but is hidden
+   at rest (opacity, so its space is reserved — no reflow) and revealed on the
+   hover / focus / tap that selects the entry (touch-safe via [data-active]). The
+   lane is for reading roles; the exact value lives in the entry's aria-label and
+   the InspectCard. Bright network tone — AA on the canvas (net.bright ≥ 4.74:1);
+   the dim ramp failed (1.98–2.56:1). */
+.lane-readout__value-inline {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--lane-accent);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-emphasized);
+}
+.lane__entry:hover .lane-readout__value-inline,
+.lane__entry:focus-visible .lane-readout__value-inline,
+.lane__entry[data-active] .lane-readout__value-inline {
+  opacity: 1;
+}
+
+/* The revealed value must be able to appear instantly (invariant). */
+@media (prefers-reduced-motion: reduce) {
+  .lane-readout__value-inline {
+    transition: none;
+  }
 }
 
 .lane-readout__tags {

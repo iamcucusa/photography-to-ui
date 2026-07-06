@@ -12,6 +12,9 @@ export interface NodeReadoutProps {
   onClose?: () => void
   /** Title element id, for the card's `aria-labelledby`. */
   titleId?: string
+  /** Lane only: the contralateral twin's id — renders a mirror mark by the id so
+   *  a bilateral pair's repeated role prose reads as symmetry, not duplication. */
+  mirror?: string
 }
 
 /**
@@ -32,6 +35,7 @@ export function NodeReadout({
   showClose = false,
   onClose,
   titleId,
+  mirror,
 }: NodeReadoutProps) {
   const pct = Math.round(node.degree * 100)
   const showHead = showNetwork || showClose
@@ -68,13 +72,24 @@ export function NodeReadout({
       )}
 
       {block === 'lane-readout' ? (
-        // In a lane the hemisphere is already stated by the facet grouping, so
-        // lead with the region id (a precise, network-tinted reference) then the
-        // name — no repeated "Left hemisphere · …" per entry.
-        <h3 id={titleId} className={`${block}__title`}>
-          <span className={`${block}__id`}>{node.id}</span>
-          <span className={`${block}__name`}>{node.label}</span>
-        </h3>
+        // Lane IA — three lines: an eyebrow (id · mirror · connectivity) so the
+        // value never wraps the name, then the name as the headline, then role.
+        // The hemisphere is already stated by the facet grouping (no repeat).
+        <>
+          <p className={`${block}__meta`}>
+            <span className={`${block}__id`}>{node.id}</span>
+            {mirror && <MirrorMark />}
+            {/* Connectivity — details-on-demand: hidden at rest, revealed on the
+                hover/focus/tap that selects the entry (touch-safe). aria-hidden:
+                the entry aria-label carries the number authoritatively. */}
+            <span className={`${block}__value-inline`} aria-hidden="true">
+              {pct}%
+            </span>
+          </p>
+          <h3 id={titleId} className={`${block}__title`}>
+            <span className={`${block}__name`}>{node.label}</span>
+          </h3>
+        </>
       ) : (
         <>
           <h3 id={titleId} className={`${block}__title`}>
@@ -89,13 +104,17 @@ export function NodeReadout({
       {node.role && <p className={`${block}__role`}>{node.role}</p>}
 
       <div className={`${block}__stats`}>
-        <div className={`${block}__stat`}>
-          <span className={`${block}__stat-label`}>Connectivity</span>
-          <span className={`${block}__bar`} aria-hidden="true">
-            <span className={`${block}__bar-fill`} style={{ width: `${pct}%` }} />
-          </span>
-          <span className={`${block}__stat-value`}>{pct}%</span>
-        </div>
+        {/* The labeled bar + % is the card's canonical datum. In a lane the value
+            lives on the eyebrow (or as a foot trace), so the bar isn't rendered. */}
+        {block !== 'lane-readout' && (
+          <div className={`${block}__stat`}>
+            <span className={`${block}__stat-label`}>Connectivity</span>
+            <span className={`${block}__bar`} aria-hidden="true">
+              <span className={`${block}__bar-fill`} style={{ width: `${pct}%` }} />
+            </span>
+            <span className={`${block}__stat-value`}>{pct}%</span>
+          </div>
+        )}
 
         {(node.richClub || node.switcher) && (
           <ul className={`${block}__tags`}>
@@ -105,5 +124,24 @@ export function NodeReadout({
         )}
       </div>
     </div>
+  )
+}
+
+/** A tiny mirror mark (↔) for a bilateral lane entry — sits by the id to signal
+ *  "this region has a contralateral twin", so the twin's repeated role prose
+ *  reads as anatomical symmetry rather than a copy-paste. Inherits the lane
+ *  accent via currentColor; decorative (the entry's aria-label states it). */
+function MirrorMark() {
+  return (
+    <svg className="lane-readout__mirror" viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M3 8H13M3 8L6 5M3 8L6 11M13 8L10 5M13 8L10 11"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }

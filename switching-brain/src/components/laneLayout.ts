@@ -14,6 +14,9 @@ export interface LaneItem {
   hemi: 'L' | 'M' | 'R' | 'B'
   /** Sort key — the (max) connectivity. */
   degree: number
+  /** In `keep` mode: the contralateral twin's id, if this region is bilateral —
+   *  the entry marks it so the shared role prose reads as symmetry, not a dupe. */
+  mirror?: string
 }
 
 export interface LaneGroup {
@@ -26,7 +29,18 @@ export interface LaneGroup {
 /** Build the readable items for a lane's nodes, honoring the pair mode. */
 export function buildLaneItems(nodes: BrainNode[], pairMode: PairMode): LaneItem[] {
   if (pairMode === 'keep') {
-    return nodes.map((n) => ({ key: n.id, primary: n, hemi: n.hemi, degree: n.degree }))
+    // Flag bilateral regions (a contralateral node shares the base label) so the
+    // twin entries can show a mirror mark next to their id.
+    const byLabel = new Map<string, BrainNode[]>()
+    for (const n of nodes) {
+      const g = byLabel.get(n.label)
+      if (g) g.push(n)
+      else byLabel.set(n.label, [n])
+    }
+    return nodes.map((n) => {
+      const twin = byLabel.get(n.label)!.find((o) => o.id !== n.id && o.hemi !== n.hemi)
+      return { key: n.id, primary: n, hemi: n.hemi, degree: n.degree, mirror: twin?.id }
+    })
   }
   // merge: group by region label; an L+R group becomes one bilateral item.
   const byLabel = new Map<string, BrainNode[]>()

@@ -17,12 +17,13 @@ const pct = (d: number) => Math.round(d * 100)
 
 /** Concise full readout as the accessible name for an entry (its rich content is
  *  presentational under role="button"). Mirrors the graph node's aria-label. */
-function entryLabel(node: BrainNode): string {
+function entryLabel(node: BrainNode, mirror?: string): string {
   const tags = [node.richClub && 'rich-club hub', node.switcher && 'initiates switching']
     .filter(Boolean)
     .join(', ')
   const role = node.role ? ` ${node.role}` : ''
-  return `${node.label}, ${HEMI_LABEL[node.hemi]}.${role} ${pct(node.degree)}% connectivity${tags ? `. ${tags}` : ''}`
+  const bilateral = mirror ? '. Bilateral pair' : ''
+  return `${node.label}, ${HEMI_LABEL[node.hemi]}.${role} ${pct(node.degree)}% connectivity${bilateral}${tags ? `. ${tags}` : ''}`
 }
 
 function pairAriaLabel(a: BrainNode, b: BrainNode): string {
@@ -99,7 +100,9 @@ export function Lane({
         data-active={inspectedId === id || undefined}
         role="button"
         tabIndex={0}
-        aria-label={isPair ? pairAriaLabel(item.primary, item.pair!) : entryLabel(item.primary)}
+        aria-label={
+          isPair ? pairAriaLabel(item.primary, item.pair!) : entryLabel(item.primary, item.mirror)
+        }
         onMouseEnter={() => onNodeHover(id)}
         onMouseLeave={() => onNodeHover(null)}
         onFocus={() => onNodeHover(id)}
@@ -110,7 +113,7 @@ export function Lane({
         {isPair ? (
           <PairReadout left={item.primary} right={item.pair!} />
         ) : (
-          <NodeReadout node={item.primary} block="lane-readout" />
+          <NodeReadout node={item.primary} block="lane-readout" mirror={item.mirror} />
         )}
       </div>
     )
