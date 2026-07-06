@@ -1142,3 +1142,262 @@
   background: var(--color-bg-inset);
   border-color: var(--color-magenta-3);
 }
+
+/* ══ Lane interaction bakeoff (TEMPORARY — one mode kept on converge) ═════════════
+   Same lanes rendered three ways (Accordion · Board · Carousel), stacked + labeled,
+   so the maintainer picks the arrangement live. All color via the inline --lane-*
+   custom props (set by LaneStrip/Lane) or --color-* tokens. ═══════════════════════ */
+
+.lane-bakeoff {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.lane-bakeoff + .lane-bakeoff {
+  margin-top: var(--space-xl);
+}
+.lane-bakeoff__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs) var(--space-md);
+  font-size: var(--text-xs);
+}
+.lane-bakeoff__tag {
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-magenta-3);
+}
+.lane-bakeoff__name {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.lane-bakeoff__note {
+  color: var(--color-text-secondary);
+}
+
+/* ── LaneStrip — the collapsed representation (glow, not a card) ──────────────── */
+.lane-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm) var(--space-md);
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1px var(--lane-glow-rim),
+    0 0 12px var(--lane-glow-mid);
+  transition: box-shadow var(--duration-fast) var(--easing-emphasized);
+}
+.lane-strip:hover,
+.lane-strip[aria-expanded='true'] {
+  box-shadow:
+    0 0 0 1px var(--lane-glow-rim),
+    0 0 16px var(--lane-glow-mid),
+    0 0 48px var(--lane-glow-halo);
+}
+.lane-strip:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+.lane-strip__swatch {
+  flex: none;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+}
+.lane-strip__persona {
+  flex: none;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
+  color: var(--lane-accent);
+}
+.lane-strip__gloss {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lane-strip__spark {
+  flex: none;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 1.6em;
+}
+.lane-strip__bar {
+  flex: none;
+  width: 3px;
+  min-height: 2px;
+}
+.lane-strip__abbr {
+  flex: none;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+/* Rail — a compact vertical column for the board's unfocused lanes. */
+.lane-strip--rail {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  height: 100%;
+  padding: var(--space-lg);
+}
+.lane-strip--rail .lane-strip__gloss {
+  flex: none;
+  white-space: normal;
+}
+.lane-strip--rail .lane-strip__spark {
+  height: 3em;
+  margin-top: auto;
+}
+
+/* ── Accordion mode ──────────────────────────────────────────────────────────── */
+.lanes-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+.lanes-accordion__region {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-normal) var(--easing-emphasized);
+}
+.lanes-accordion__item[data-open='true'] .lanes-accordion__region {
+  grid-template-rows: 1fr;
+  margin-top: var(--space-md);
+}
+.lanes-accordion__region-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+@supports not (grid-template-rows: 1fr) {
+  .lanes-accordion__region {
+    transition: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lanes-accordion__region {
+    transition: none;
+  }
+}
+
+/* ── Board → focus mode (wide only; narrow falls back to Accordion in JS) ─────── */
+.lanes-board {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr 1fr 1fr;
+  transition: grid-template-columns var(--duration-normal) var(--easing-emphasized);
+}
+.lanes-board[data-focused='DMN'] {
+  grid-template-columns: 3fr minmax(0, 16rem) minmax(0, 16rem);
+}
+.lanes-board[data-focused='SN'] {
+  grid-template-columns: minmax(0, 16rem) 3fr minmax(0, 16rem);
+}
+.lanes-board[data-focused='FPCN'] {
+  grid-template-columns: minmax(0, 16rem) minmax(0, 16rem) 3fr;
+}
+.lanes-board__col {
+  min-width: 0;
+  overflow: hidden;
+}
+@supports not (grid-template-columns: 1fr) {
+  .lanes-board {
+    transition: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lanes-board {
+    transition: none;
+  }
+}
+
+/* ── Carousel mode ───────────────────────────────────────────────────────────── */
+.lanes-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.lanes-carousel__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+}
+.lanes-carousel__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--easing-emphasized);
+}
+.lanes-carousel__tab[aria-selected='true'] {
+  color: var(--lane-accent);
+}
+.lanes-carousel__tab:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+.lanes-carousel__dot {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+}
+.lanes-carousel__viewport {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.lanes-carousel__track {
+  display: flex;
+  transition: transform var(--duration-normal) var(--easing-emphasized);
+}
+.lanes-carousel__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lanes-carousel__track {
+    transition: none;
+  }
+}
+.lanes-carousel__arrows {
+  display: flex;
+  gap: var(--space-sm);
+}
+.lanes-carousel__arrow {
+  width: 2em;
+  height: 2em;
+  font-size: var(--text-md);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--easing-emphasized);
+}
+.lanes-carousel__arrow:hover {
+  color: var(--color-text-primary);
+}
+.lanes-carousel__arrow:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}

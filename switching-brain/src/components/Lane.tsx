@@ -32,6 +32,9 @@ export interface LaneProps {
   // bakeoff (echo-hero / labeled / rank).
   bgVariant: BgVariant
   iaLayout: IaLayout
+  /** Suppress the intro + persona header — the accordion mode's LaneStrip is the
+   *  sole header, so the expanded lane shows only its content. Defaults on. */
+  showHeader?: boolean
 }
 
 /**
@@ -48,6 +51,7 @@ export function Lane({
   onNodeSelect,
   bgVariant,
   iaLayout,
+  showHeader = true,
 }: LaneProps) {
   const net = tokens.network[network]
   const { persona, tagline } = networkVoice(network)
@@ -122,17 +126,19 @@ export function Lane({
     // network custom props live on the group so both the intro and the lane use them.
     <div className="lane-group" style={style}>
       {/* No terminal period — it reads as a bold opener, not a sentence. */}
-      <p className="lane-intro">{tagline.replace(/\.$/, '')}</p>
+      {showHeader && <p className="lane-intro">{tagline.replace(/\.$/, '')}</p>}
       <article className="lane" data-network={network} data-bg={bgVariant}>
         <LaneSubstrate substrate={substrate} tokens={tokens} variant={bgVariant} />
-        <header className="lane__header">
-          <h2 className="lane__persona">{persona}</h2>
-          <p className="lane__key">
-            <span className="lane__dot" style={{ background: net.base }} aria-hidden="true" />
-            <span className="lane__net-name">{NETWORK_LABELS[network]}</span>
-            <span className="lane__abbr">{network}</span>
-          </p>
-        </header>
+        {showHeader && (
+          <header className="lane__header">
+            <h2 className="lane__persona">{persona}</h2>
+            <p className="lane__key">
+              <span className="lane__dot" style={{ background: net.base }} aria-hidden="true" />
+              <span className="lane__net-name">{NETWORK_LABELS[network]}</span>
+              <span className="lane__abbr">{network}</span>
+            </p>
+          </header>
+        )}
         {body}
       </article>
     </div>

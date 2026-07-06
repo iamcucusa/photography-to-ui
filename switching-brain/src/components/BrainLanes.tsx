@@ -1,13 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import type { BrainGraph, NetworkId } from '../viz/model/types'
 import { NETWORK_ORDER } from '../viz/model/types'
 import { createSubstrateSimulation, settle } from '../viz/layout'
 import { nodeRadius } from '../viz/geometry'
-import { Lane } from './Lane'
-import type { Substrate, BgVariant } from './LaneSubstrate'
-import { LanePrototypeControls } from './LanePrototypeControls'
-import type { IaLayout } from './laneLayout'
+import type { Substrate } from './LaneSubstrate'
+import { LanesAccordion } from './LanesAccordion'
+import { LanesBoard } from './LanesBoard'
+import { LanesCarousel } from './LanesCarousel'
+import type { LaneDatum, SharedLaneProps } from './laneModeData'
 
 /** Filter the graph to one network's nodes + intra-network edges, lay it out, bbox-fit. */
 function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
@@ -42,10 +43,6 @@ function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
   }
 }
 
-/** Each network's own metaphor background (the chosen, converged look):
- *  DMN dreamer = drift · SN switch = pulse · FPCN builder = lattice. */
-const NETWORK_BG: Record<NetworkId, BgVariant> = { DMN: 'drift', SN: 'pulse', FPCN: 'lattice' }
-
 export interface BrainLanesProps {
   graph: BrainGraph
   tokens: VizTokens
@@ -54,11 +51,34 @@ export interface BrainLanesProps {
   onNodeSelect: (id: string) => void
 }
 
+/** TEMPORARY bakeoff wrapper: labels each interaction mode being compared. */
+function BakeoffSection({
+  label,
+  note,
+  children,
+}: {
+  label: string
+  note: string
+  children: ReactNode
+}) {
+  return (
+    <section className="lane-bakeoff" aria-label={label}>
+      <p className="lane-bakeoff__head">
+        <span className="lane-bakeoff__tag">bakeoff</span>
+        <span className="lane-bakeoff__name">{label}</span>
+        <span className="lane-bakeoff__note">{note}</span>
+      </p>
+      {children}
+    </section>
+  )
+}
+
 /**
- * The three-lane reading surface — one lane per network (DMN · SN · FPCN), the
- * hero's three bands "unrolled to be read". Rendered below the hero; SN central
- * by source order. Currently carries the reading-experience bakeoff harness
- * (background × IA layout × pairs) — removed on converge.
+ * The three-lane reading surface — one lane per network (DMN · SN · FPCN, SN
+ * central), the hero's three bands "unrolled to be read". Currently carries the
+ * INTERACTION bakeoff: the same lanes rendered three ways (Accordion · Board ·
+ * Carousel), stacked, so the maintainer picks one live — then the converge commit
+ * keeps the winner and deletes the losers + this harness.
  */
 export function BrainLanes({
   graph,
@@ -67,7 +87,7 @@ export function BrainLanes({
   onNodeHover,
   onNodeSelect,
 }: BrainLanesProps) {
-  const lanes = useMemo(
+  const lanes: LaneDatum[] = useMemo(
     () =>
       NETWORK_ORDER.map((id) => ({
         network: id,
@@ -77,27 +97,19 @@ export function BrainLanes({
     [graph],
   )
 
-  // Layout is the last prototype axis still under review; background, value
-  // treatment, and pairs (keep) are all concluded.
-  const [layout, setLayout] = useState<IaLayout>('echo-hero')
+  const shared: SharedLaneProps = { tokens, inspectedId, onNodeHover, onNodeSelect }
 
   return (
     <section className="lanes" aria-label="Read the three networks">
-      <LanePrototypeControls layout={layout} setLayout={setLayout} />
-      {lanes.map(({ network, nodes, substrate }) => (
-        <Lane
-          key={network}
-          network={network}
-          nodes={nodes}
-          substrate={substrate}
-          tokens={tokens}
-          inspectedId={inspectedId}
-          onNodeHover={onNodeHover}
-          onNodeSelect={onNodeSelect}
-          bgVariant={NETWORK_BG[network]}
-          iaLayout={layout}
-        />
-      ))}
+      <BakeoffSection label="A · Accordion" note="stacked · each collapses to a strip">
+        <LanesAccordion lanes={lanes} {...shared} />
+      </BakeoffSection>
+      <BakeoffSection label="B · Board → focus" note="columns · click to expand · narrow → accordion">
+        <LanesBoard lanes={lanes} {...shared} />
+      </BakeoffSection>
+      <BakeoffSection label="C · Carousel" note="one at a time · swipe / tabs / arrows">
+        <LanesCarousel lanes={lanes} {...shared} />
+      </BakeoffSection>
     </section>
   )
 }
