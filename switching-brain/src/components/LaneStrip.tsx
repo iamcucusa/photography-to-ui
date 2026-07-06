@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import { withAlpha } from '../viz/runtimeTokens'
 import type { BrainNode, BrainEdge, NetworkId } from '../viz/model/types'
@@ -8,7 +8,7 @@ import { LaneSpark } from './LaneSpark'
 export interface LaneStripProps {
   network: NetworkId
   nodes: BrainNode[]
-  /** Intra-network edges — the row's connectome spark. */
+  /** Intra-network edges — the strip's connectome spark. */
   edges: BrainEdge[]
   tokens: VizTokens
   /** aria-expanded (accordion) / active column (board). */
@@ -23,11 +23,11 @@ export interface LaneStripProps {
 
 /**
  * The collapsed representation of a lane — a boxless seam of light (glow, not a
- * card): swatch · persona · gloss · a degree sparkline · abbr. The whole strip IS
- * the toggle button, so keyboard + focus ring + aria-expanded come for free. It
- * renders NO node entries and NO LaneSubstrate, so a collapsed lane mounts no
+ * card): lead label · connectome spark · abbr. The whole strip IS the toggle
+ * button, so keyboard + focus ring + aria-expanded come for free. It renders NO
+ * node entries and NO LaneSubstrate, so a collapsed lane mounts no
  * ResizeObserver — the harness perf win. Shared by the accordion (collapsed
- * lanes) and the board (unfocused rails).
+ * lanes, horizontal spark) and the board (unfocused rails, vertical spark).
  */
 export function LaneStrip({
   network,
@@ -50,10 +50,6 @@ export function LaneStrip({
     '--lane-glow-halo': withAlpha(net.dim, 0.18),
   } as CSSProperties
 
-  // The most-connected regions become the sparkline bars (a compact "shape of the
-  // network" summary; the exact numbers live in the expanded readouts).
-  const bars = useMemo(() => [...nodes].sort((a, b) => b.degree - a.degree).slice(0, 10), [nodes])
-
   return (
     <button
       type="button"
@@ -70,28 +66,15 @@ export function LaneStrip({
           the expanded lane's header. */}
       {variant === 'rail' && <span className="lane-strip__persona">{persona}</span>}
       <span className="lane-strip__gloss">{tagline.replace(/\.$/, '')}</span>
-      {variant === 'row' ? (
-        <LaneSpark
-          network={network}
-          nodes={nodes}
-          edges={edges}
-          tokens={tokens}
-          orientation="row"
-        />
-      ) : (
-        <span className="lane-strip__spark" aria-hidden="true">
-          {bars.map((n) => (
-            <span
-              key={n.id}
-              className="lane-strip__bar"
-              style={{
-                height: `${Math.round(20 + n.degree * 80)}%`,
-                background: withAlpha(n.richClub ? net.bright : net.base, 0.35 + n.degree * 0.45),
-              }}
-            />
-          ))}
-        </span>
-      )}
+      {/* The spark stripe follows the strip's own shape: horizontal band in the
+          row, vertical column in the rail — each echoing the hero's orientation. */}
+      <LaneSpark
+        network={network}
+        nodes={nodes}
+        edges={edges}
+        tokens={tokens}
+        orientation={variant}
+      />
       <span className="lane-strip__abbr">{network}</span>
     </button>
   )

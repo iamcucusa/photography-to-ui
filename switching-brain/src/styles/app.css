@@ -1221,18 +1221,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.lane-strip__spark {
-  flex: none;
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 1.6em;
-}
-.lane-strip__bar {
-  flex: none;
-  width: 3px;
-  min-height: 2px;
-}
 .lane-strip__abbr {
   flex: none;
   font-size: var(--text-xs);
@@ -1241,8 +1229,10 @@
   text-transform: uppercase;
   color: var(--color-text-secondary);
 }
-/* Spark — the collapsed lane's mini connectome fragment (LaneSpark), scaled to a
-   fixed box; a horizontal stripe on the accordion row. */
+/* Spark — the collapsed lane's mini connectome fragment (LaneSpark). A fixed
+   horizontal band on the accordion row; on the board rail a vertical stripe that
+   fills the column between the label and the abbr (centered — replaces the
+   bottom-stranded sparkline). */
 .lane-spark {
   flex: none;
   display: block;
@@ -1250,6 +1240,16 @@
 .lane-spark--row {
   width: 5.5em;
   height: 2em;
+}
+/* A small corner signature at the rail's foot — where the old bars sat, in
+   syntony with the abbr right below it. margin-top:auto sinks it (and the abbr)
+   to the bottom; height:auto keeps the fragment's own viewBox aspect. It stays
+   quiet next to the focused lane's content. */
+.lane-spark--rail {
+  margin-top: auto;
+  width: 100%;
+  max-width: 4.5em;
+  height: auto;
 }
 /* Row — the accordion's collapsed strip. With the persona gone the tagline is the
    lead label, so it takes the lane's color + weight (as the board persona does),
@@ -1271,10 +1271,6 @@
 .lane-strip--rail .lane-strip__gloss {
   flex: none;
   white-space: normal;
-}
-.lane-strip--rail .lane-strip__spark {
-  height: 3em;
-  margin-top: auto;
 }
 
 /* ── Accordion mode ──────────────────────────────────────────────────────────── */

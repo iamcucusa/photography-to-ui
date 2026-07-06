@@ -41,8 +41,13 @@ export interface Spark {
   viewBox: string
 }
 
-const SUBSET = 7 // the network's most-connected regions — "simple enough"
-const HEMI_SPREAD = 30 // hemisphere target offset along the long axis
+// Tailored per shape: the row is a short wide band (lean subset, hard flatten);
+// the rail is a corner piece at the column's foot — a slightly richer, stubbier
+// vertical cluster (gentler flatten) that fills its corner in both dimensions
+// without competing with the focused lane's content.
+const SUBSET: Record<SparkOrientation, number> = { row: 7, rail: 9 }
+const HEMI_SPREAD: Record<SparkOrientation, number> = { row: 30, rail: 34 }
+const FLATTEN: Record<SparkOrientation, number> = { row: 0.42, rail: 0.3 }
 const PAD = 3 // viewBox breathing room (spark units)
 
 /** Small radius from degree, rich-club bump — the spark's own scale, not the hero's. */
@@ -56,14 +61,15 @@ export function buildSpark(
   allEdges: BrainEdge[],
   orientation: SparkOrientation,
 ): Spark {
-  const subset = [...allNodes].sort((a, b) => b.degree - a.degree).slice(0, SUBSET)
+  const spread = HEMI_SPREAD[orientation]
+  const subset = [...allNodes].sort((a, b) => b.degree - a.degree).slice(0, SUBSET[orientation])
   const ids = new Set(subset.map((n) => n.id))
   const edges = allEdges.filter((e) => ids.has(e.source) && ids.has(e.target))
 
   const nodes: SimNode[] = subset.map((n) => ({
     ...n,
-    x: hashJitter(n.id) * HEMI_SPREAD,
-    y: hashJitter(n.id + '#y') * HEMI_SPREAD,
+    x: hashJitter(n.id) * spread,
+    y: hashJitter(n.id + '#y') * spread,
     vx: 0,
     vy: 0,
   }))
@@ -84,14 +90,15 @@ export function buildSpark(
   // Long axis = hemisphere spread; short axis = flatten to a centerline. Charge
   // guarantees a spread even when the subset is midline-heavy (targets pile at 0),
   // so the stripe never collapses into a blob.
+  const flatten = FLATTEN[orientation]
   if (orientation === 'row') {
     sim
-      .force('hemi', forceX<SimNode>((d) => hemiSign(d.hemi) * HEMI_SPREAD).strength(0.13))
-      .force('flat', forceY<SimNode>(0).strength(0.42))
+      .force('hemi', forceX<SimNode>((d) => hemiSign(d.hemi) * spread).strength(0.13))
+      .force('flat', forceY<SimNode>(0).strength(flatten))
   } else {
     sim
-      .force('hemi', forceY<SimNode>((d) => hemiSign(d.hemi) * HEMI_SPREAD).strength(0.13))
-      .force('flat', forceX<SimNode>(0).strength(0.42))
+      .force('hemi', forceY<SimNode>((d) => hemiSign(d.hemi) * spread).strength(0.13))
+      .force('flat', forceX<SimNode>(0).strength(flatten))
   }
 
   settle(sim, 260)
