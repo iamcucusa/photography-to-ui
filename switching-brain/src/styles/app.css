@@ -1328,10 +1328,27 @@
 .lanes-board__col[data-network='FPCN'] {
   view-transition-name: board-fpcn;
 }
+/* --duration-crossfade (0.5s) is the token made for content/layout transitions —
+   at --duration-normal (0.2s) the big column morph read as an abrupt cut. */
 ::view-transition-group(board-dmn),
 ::view-transition-group(board-sn),
 ::view-transition-group(board-fpcn) {
-  animation-duration: var(--duration-normal);
+  animation-duration: var(--duration-crossfade);
+  animation-timing-function: var(--easing-emphasized);
+}
+/* rail ↔ lane have very different aspect ratios; without this the snapshots
+   stretch to the morphing box (warped text). `cover` + top-left keeps the
+   content undistorted — revealed/concealed as the box resizes — and the
+   cross-fade timing is matched to the box morph so nothing lags behind it. */
+::view-transition-old(board-dmn),
+::view-transition-new(board-dmn),
+::view-transition-old(board-sn),
+::view-transition-new(board-sn),
+::view-transition-old(board-fpcn),
+::view-transition-new(board-fpcn) {
+  object-fit: cover;
+  object-position: top left;
+  animation-duration: var(--duration-crossfade);
   animation-timing-function: var(--easing-emphasized);
 }
 @media (prefers-reduced-motion: reduce) {
