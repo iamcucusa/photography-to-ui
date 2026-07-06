@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import { withAlpha } from '../viz/runtimeTokens'
 import type { NetworkId } from '../viz/model/types'
@@ -31,57 +32,81 @@ interface LaneSubstrateProps {
 
 type Net = { dim: string; base: string; bright: string }
 
-// One shared frame for ALL variants → identical zoom + stroke scale across lanes.
-// Tall enough that a very tall (stacked, mobile) lane only zooms ~2×, not 6×, and
-// slice-fit so lines/rings only scale — never stretch.
-const FW = 1000
-const FH = 800
+// Stroke weight in real pixels — the substrate draws 1:1 into the lane's own box
+// (viewBox = measured px, preserveAspectRatio="none"), so the pattern renders at a
+// consistent scale on every device instead of a fixed 1000×800 frame slice-fit to
+// wildly different lane aspects (near-1:1 on wide desktop lanes, but 2.5× zoomed
+// and 88% cropped on the tall stacked mobile lanes). The generative patterns fill
+// whatever w×h they're given, so element size stays constant across breakpoints.
 const STROKE = 1.2
 
 /**
  * The faint background field for one lane — abstracted into that network's own
- * visual metaphor so it narrates the lane rather than decorating it. All three
- * variants draw in the same slice-fit frame, so their stroke weight and zoom are
- * consistent. Static, low-opacity, network-hued, aria-hidden.
+ * visual metaphor so it narrates the lane rather than decorating it. Measures its
+ * own rendered box (ResizeObserver) and draws the pattern 1:1 in those pixels, so
+ * zoom is uniform across devices. Static, low-opacity, network-hued, aria-hidden.
  */
 export function LaneSubstrate({ substrate, tokens, variant }: LaneSubstrateProps) {
   const net = tokens.network[substrate.network]
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [size, setSize] = useState({ w: 0, h: 0 })
+
+  useLayoutEffect(() => {
+    const el = svgRef.current
+    if (!el) return
+    const measure = () => {
+      const r = el.getBoundingClientRect()
+      const w = Math.round(r.width)
+      const h = Math.round(r.height)
+      setSize((prev) => (prev.w === w && prev.h === h ? prev : { w, h }))
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const { w, h } = size
+  const ready = w > 0 && h > 0
 
   return (
     <svg
+      ref={svgRef}
       className={`lane-substrate lane-substrate--${variant}`}
-      viewBox={`0 0 ${FW} ${FH}`}
-      preserveAspectRatio="xMidYMid slice"
+      viewBox={ready ? `0 0 ${w} ${h}` : undefined}
+      preserveAspectRatio="none"
       aria-hidden="true"
     >
-      {variant === 'drift' && <Drift net={net} />}
-      {variant === 'pulse' && <Pulse net={net} />}
-      {variant === 'lattice' && <Lattice net={net} />}
+      {ready && variant === 'drift' && <Drift net={net} w={w} h={h} />}
+      {ready && variant === 'pulse' && <Pulse net={net} w={w} h={h} />}
+      {ready && variant === 'lattice' && <Lattice net={net} w={w} h={h} />}
     </svg>
   )
 }
 
-/** A smooth, seeded, aimless 2D meander across the frame → an SVG path string. */
-function wanderPath(seed: number): string {
+/** A smooth, seeded, aimless 2D meander that fills the w×h box → an SVG path.
+ *  Fixed pixel step length (constant zoom); step count scales so the line
+ *  traverses the whole lane whatever its shape. */
+function wanderPath(seed: number, w: number, h: number): string {
   let s = (seed * 2654435761) & 0x7fffffff
   const rnd = () => {
     s = (s * 1103515245 + 12345) & 0x7fffffff
     return s / 0x7fffffff
   }
-  const steps = 22
-  const stepLen = Math.min(FW, FH) * 0.16
-  let x = rnd() * FW
-  let y = rnd() * FH
+  const stepLen = 128
+  const steps = Math.max(20, Math.round(Math.max(w, h) / 110) + 6)
+  let x = rnd() * w
+  let y = rnd() * h
   let ang = rnd() * Math.PI * 2
   const pts: { x: number; y: number }[] = [{ x, y }]
   for (let i = 0; i < steps; i++) {
     ang += (rnd() - 0.5) * 1.7 // veer — an aimless turn each step
     x += Math.cos(ang) * stepLen
     y += Math.sin(ang) * stepLen
-    if (x < 0 || x > FW) ang = Math.PI - ang // reflect at the edges, keep drifting
-    if (y < 0 || y > FH) ang = -ang
-    x = Math.max(0, Math.min(FW, x))
-    y = Math.max(0, Math.min(FH, y))
+    if (x < 0 || x > w) ang = Math.PI - ang // reflect at the edges, keep drifting
+    if (y < 0 || y > h) ang = -ang
+    x = Math.max(0, Math.min(w, x))
+    y = Math.max(0, Math.min(h, y))
     pts.push({ x, y })
   }
   let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`
@@ -93,35 +118,33 @@ function wanderPath(seed: number): string {
   return d
 }
 
-/** DMN — long, smooth, aimless meandering lines: the trail of a wandering mind.
-    Crisp (no blur) so the stroke language matches the pulse/lattice lanes. */
-function Drift({ net }: { net: Net }) {
+/** DMN — long, smooth, aimless meandering lines: the trail of a wandering mind. */
+function Drift({ net, w, h }: { net: Net; w: number; h: number }) {
   const seeds = [11, 43, 87, 129, 205, 251]
   return (
     <g fill="none" strokeLinecap="round" strokeWidth={STROKE}>
       {seeds.map((seed, i) => (
-        <path key={seed} d={wanderPath(seed)} stroke={withAlpha(net.base, 0.42 - i * 0.03)} />
+        <path key={seed} d={wanderPath(seed, w, h)} stroke={withAlpha(net.base, 0.42 - i * 0.03)} />
       ))}
     </g>
   )
 }
 
-/** SN — concentric wavefronts broadcasting from the conductor. The switch. */
-function Pulse({ net }: { net: Net }) {
-  const cx = FW * 0.44
-  const cy = FH * 0.5
-  const rings = 13
-  // Tight spacing so many wavefronts fill the wide/short lane — with large rings
-  // the slice-fit crop showed only a few big arcs (read as sparse + zoomed-in).
-  const step = FH * 0.09
+/** SN — concentric wavefronts from an off-centre hub, filling the box. The switch.
+ *  Fixed pixel ring spacing (constant zoom); ring count reaches the far corner. */
+function Pulse({ net, w, h }: { net: Net; w: number; h: number }) {
+  const cx = w * 0.44
+  const cy = h * 0.5
+  const step = 84 // even, generous spacing — clean wavefronts
+  const maxR = Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy))
+  const rings = Math.max(1, Math.ceil(maxR / step))
   return (
     <g fill="none">
       {Array.from({ length: rings }, (_, i) => {
         const r = step * (i + 1)
         // Peak below drift's 0.42 (magenta-bright reads more luminous than the
-        // sand/sky bases). Gentle fade so the field stays evenly present, not a
-        // bright hub trailing off to nothing.
-        const op = 0.38 * (1 - 0.5 * (i / rings))
+        // sand/sky bases); fade by radius so the field stays even at any count.
+        const op = 0.38 * (1 - 0.5 * (r / maxR))
         return (
           <circle
             key={i}
@@ -137,26 +160,24 @@ function Pulse({ net }: { net: Net }) {
   )
 }
 
-/** FPCN — the builder's blueprint: an even, faint orthogonal grid spanning the
- *  whole frame with small measure-point ticks at the crossings. GENERATIVE and
- *  regular (not the sparse real connectome), so it covers the lane evenly like
- *  the sibling fields — and, being a grid rather than clustered nodes+edges,
- *  never reads as a second graph. Kept a whisper (low --lattice opacity). */
-function Lattice({ net }: { net: Net }) {
+/** FPCN — the builder's blueprint: an even, faint orthogonal grid filling the box
+ *  with small measure-point ticks at the crossings. Fixed pixel cell size
+ *  (constant zoom); line/tick counts scale to the lane. Never a second graph. */
+function Lattice({ net, w, h }: { net: Net; w: number; h: number }) {
   const step = 150
-  const xs: number[] = []
-  for (let x = 0; x <= FW; x += step) xs.push(x)
-  const ys: number[] = []
-  for (let y = 0; y <= FH; y += step) ys.push(y)
   const tick = 3
+  const xs: number[] = []
+  for (let x = 0; x <= w; x += step) xs.push(x)
+  const ys: number[] = []
+  for (let y = 0; y <= h; y += step) ys.push(y)
   return (
     <g>
       <g fill="none" stroke={withAlpha(net.base, 0.3)} strokeWidth={STROKE * 0.7}>
         {xs.map((x) => (
-          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={FH} />
+          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={h} />
         ))}
         {ys.map((y) => (
-          <line key={`h${y}`} x1={0} y1={y} x2={FW} y2={y} />
+          <line key={`h${y}`} x1={0} y1={y} x2={w} y2={y} />
         ))}
       </g>
       <g fill={withAlpha(net.base, 0.42)}>
