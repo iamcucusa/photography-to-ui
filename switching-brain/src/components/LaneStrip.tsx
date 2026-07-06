@@ -61,7 +61,9 @@ export function LaneStrip({
       onClick={onToggle}
     >
       <span className="lane-strip__swatch" style={{ background: net.base }} aria-hidden="true" />
-      <span className="lane-strip__persona">{persona}</span>
+      {/* Rail (board) leads with the persona; the accordion's row leads with the
+          tagline alone — the persona moves into the expanded lane's header. */}
+      {variant === 'rail' && <span className="lane-strip__persona">{persona}</span>}
       <span className="lane-strip__gloss">{tagline.replace(/\.$/, '')}</span>
       <span className="lane-strip__spark" aria-hidden="true">
         {bars.map((n) => (

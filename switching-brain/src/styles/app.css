@@ -1247,6 +1247,15 @@
   text-transform: uppercase;
   color: var(--color-text-secondary);
 }
+/* Row — the accordion's collapsed strip. With the persona gone the tagline is the
+   lead label, so it takes the lane's color + weight (as the board persona does),
+   at the accordion's own size (the persona + full key return in the expanded
+   lane's header). */
+.lane-strip--row .lane-strip__gloss {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--lane-accent);
+}
 /* Rail — a compact vertical column for the board's unfocused lanes. */
 .lane-strip--rail {
   flex-direction: column;

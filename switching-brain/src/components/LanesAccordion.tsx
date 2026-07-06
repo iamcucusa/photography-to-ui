@@ -7,9 +7,10 @@ import { NETWORK_BG, type LanesModeProps } from './laneModeData'
 /**
  * Accordion mode — the three lanes stacked full-width (coherent with the wide
  * hero's top-down bands, SN the middle lane). Each lane's `LaneStrip` is a
- * persistent header/toggle; expanding reveals the full (headerless) `Lane` in a
- * `grid-template-rows: 0fr↔1fr` region below it. All open by default. Collapsed
- * lanes unmount their `Lane` (no substrate / ResizeObserver).
+ * persistent toggle (swatch + tagline); expanding reveals the full `Lane` — its
+ * own persona/key header intact, only the tagline opener suppressed (the strip
+ * carries it) — in a `grid-template-rows: 0fr↔1fr` region below it. All open by
+ * default. Collapsed lanes unmount their `Lane` (no substrate / ResizeObserver).
  */
 export function LanesAccordion({
   lanes,
@@ -55,7 +56,7 @@ export function LanesAccordion({
                     onNodeSelect={onNodeSelect}
                     bgVariant={NETWORK_BG[network]}
                     iaLayout="echo-hero"
-                    showHeader={false}
+                    showIntro={false}
                   />
                 )}
               </div>

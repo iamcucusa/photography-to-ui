@@ -32,8 +32,10 @@ export interface LaneProps {
   // bakeoff (echo-hero / labeled / rank).
   bgVariant: BgVariant
   iaLayout: IaLayout
-  /** Suppress the intro + persona header — the accordion mode's LaneStrip is the
-   *  sole header, so the expanded lane shows only its content. Defaults on. */
+  /** Suppress the tagline section-opener above the lane. The accordion's collapsed
+   *  strip already carries the tagline, so its expanded body starts at the header. On by default. */
+  showIntro?: boolean
+  /** Suppress the persona + network-key header inside the lane. On by default. */
   showHeader?: boolean
 }
 
@@ -51,6 +53,7 @@ export function Lane({
   onNodeSelect,
   bgVariant,
   iaLayout,
+  showIntro = true,
   showHeader = true,
 }: LaneProps) {
   const net = tokens.network[network]
@@ -123,7 +126,7 @@ export function Lane({
     // network custom props live on the group so both the intro and the lane use them.
     <div className="lane-group" style={style}>
       {/* No terminal period — it reads as a bold opener, not a sentence. */}
-      {showHeader && <p className="lane-intro">{tagline.replace(/\.$/, '')}</p>}
+      {showIntro && <p className="lane-intro">{tagline.replace(/\.$/, '')}</p>}
       <article className="lane" data-network={network} data-bg={bgVariant}>
         <LaneSubstrate substrate={substrate} tokens={tokens} variant={bgVariant} />
         {showHeader && (
