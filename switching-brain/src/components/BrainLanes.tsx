@@ -104,7 +104,10 @@ export function BrainLanes({
       <BakeoffSection label="A · Accordion" note="stacked · each collapses to a strip">
         <LanesAccordion lanes={lanes} {...shared} />
       </BakeoffSection>
-      <BakeoffSection label="B · Board → focus" note="columns · click to expand · narrow → accordion">
+      <BakeoffSection
+        label="B · Board → focus"
+        note="columns · click to expand · narrow → accordion"
+      >
         <LanesBoard lanes={lanes} {...shared} />
       </BakeoffSection>
       <BakeoffSection label="C · Carousel" note="one at a time · swipe / tabs / arrows">

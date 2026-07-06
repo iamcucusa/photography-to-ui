@@ -73,14 +73,23 @@ export function LanesCarousel({
               onClick={() => setIndex(i)}
               onKeyDown={onTabKey}
             >
-              <span className="lanes-carousel__dot" style={{ background: net.base }} aria-hidden="true" />
+              <span
+                className="lanes-carousel__dot"
+                style={{ background: net.base }}
+                aria-hidden="true"
+              />
               {networkVoice(network).persona}
             </button>
           )
         })}
       </div>
 
-      <div className="lanes-carousel__viewport" onPointerDown={onDown} onPointerUp={onUp} onPointerCancel={onUp}>
+      <div
+        className="lanes-carousel__viewport"
+        onPointerDown={onDown}
+        onPointerUp={onUp}
+        onPointerCancel={onUp}
+      >
         <div
           className="lanes-carousel__track"
           style={{ transform: `translateX(${-index * 100}%)` }}

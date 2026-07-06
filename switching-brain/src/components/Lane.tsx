@@ -68,10 +68,7 @@ export function Lane({
     '--lane-glow-halo': withAlpha(net.dim, 0.18),
   } as CSSProperties
 
-  const groups = useMemo(
-    () => groupLaneItems(buildLaneItems(nodes), iaLayout),
-    [nodes, iaLayout],
-  )
+  const groups = useMemo(() => groupLaneItems(buildLaneItems(nodes), iaLayout), [nodes, iaLayout])
 
   const onEntryKey = (e: KeyboardEvent<HTMLDivElement>, id: string) => {
     if (e.key === 'Enter' || e.key === ' ') {

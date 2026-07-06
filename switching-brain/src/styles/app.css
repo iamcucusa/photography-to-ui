@@ -1295,11 +1295,13 @@
 }
 
 /* ── Board → focus mode (wide only; narrow falls back to Accordion in JS) ─────── */
+/* The grid columns change INSTANTLY (no CSS transition); the focus change is wrapped
+   in a View Transition (LanesBoard.tsx), so the browser morphs the columns' size and
+   cross-fades their content as snapshots — no live grid-reflow jank. */
 .lanes-board {
   display: grid;
   gap: var(--space-lg);
   grid-template-columns: 1fr 1fr 1fr;
-  transition: grid-template-columns var(--duration-normal) var(--easing-emphasized);
 }
 .lanes-board[data-focused='DMN'] {
   grid-template-columns: 3fr minmax(0, 16rem) minmax(0, 16rem);
@@ -1311,17 +1313,32 @@
   grid-template-columns: minmax(0, 16rem) minmax(0, 16rem) 3fr;
 }
 .lanes-board__col {
+  /* min-width:0 lets a track shrink; NO overflow:hidden — it would clip the
+     focused lane's (and rails') rim+glow box-shadow on every side. */
   min-width: 0;
-  overflow: hidden;
 }
-@supports not (grid-template-columns: 1fr) {
-  .lanes-board {
-    transition: none;
-  }
+/* Each column is its own view-transition group → a focus change morphs the three
+   column boxes (size) and cross-fades rail ↔ full-lane in one smooth pass. */
+.lanes-board__col[data-network='DMN'] {
+  view-transition-name: board-dmn;
+}
+.lanes-board__col[data-network='SN'] {
+  view-transition-name: board-sn;
+}
+.lanes-board__col[data-network='FPCN'] {
+  view-transition-name: board-fpcn;
+}
+::view-transition-group(board-dmn),
+::view-transition-group(board-sn),
+::view-transition-group(board-fpcn) {
+  animation-duration: var(--duration-normal);
+  animation-timing-function: var(--easing-emphasized);
 }
 @media (prefers-reduced-motion: reduce) {
-  .lanes-board {
-    transition: none;
+  ::view-transition-group(board-dmn),
+  ::view-transition-group(board-sn),
+  ::view-transition-group(board-fpcn) {
+    animation: none;
   }
 }
 
@@ -1374,6 +1391,9 @@
 .lanes-carousel__slide {
   flex: 0 0 100%;
   min-width: 0;
+  /* Inset the lane so its rim+glow box-shadow has room INSIDE the viewport's
+     overflow clip (which is needed to hide the off-screen slides). */
+  padding: var(--space-md) var(--space-lg);
 }
 @media (prefers-reduced-motion: reduce) {
   .lanes-carousel__track {
