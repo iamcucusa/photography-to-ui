@@ -5,13 +5,7 @@ import type { BrainNode, NetworkId } from '../viz/model/types'
 import { NETWORK_LABELS, HEMI_LABEL, networkVoice } from '../viz/model/types'
 import { LaneSubstrate, type Substrate, type BgVariant } from './LaneSubstrate'
 import { NodeReadout } from './NodeReadout'
-import {
-  buildLaneItems,
-  groupLaneItems,
-  type IaLayout,
-  type PairMode,
-  type LaneItem,
-} from './laneLayout'
+import { buildLaneItems, groupLaneItems, type IaLayout, type LaneItem } from './laneLayout'
 
 const pct = (d: number) => Math.round(d * 100)
 
@@ -26,11 +20,6 @@ function entryLabel(node: BrainNode, mirror?: string): string {
   return `${node.label}, ${HEMI_LABEL[node.hemi]}.${role} ${pct(node.degree)}% connectivity${bilateral}${tags ? `. ${tags}` : ''}`
 }
 
-function pairAriaLabel(a: BrainNode, b: BrainNode): string {
-  const role = a.role ? ` ${a.role}` : ''
-  return `${a.label}, bilateral.${role} Left ${pct(a.degree)}%, right ${pct(b.degree)}% connectivity`
-}
-
 export interface LaneProps {
   network: NetworkId
   nodes: BrainNode[]
@@ -39,16 +28,15 @@ export interface LaneProps {
   inspectedId: string | null
   onNodeHover: (id: string | null) => void
   onNodeSelect: (id: string) => void
-  // Prototype axes (bakeoff)
+  // Background is concluded (per-network); iaLayout is the one axis still in the
+  // bakeoff (echo-hero / labeled / rank).
   bgVariant: BgVariant
   iaLayout: IaLayout
-  pairMode: PairMode
 }
 
 /**
  * One network band: seam of light + faint connectome background + the network's
- * readouts, organised by taxonomy. Prototype axes (bgVariant / iaLayout /
- * pairMode) are threaded from the BrainLanes control panel for the bakeoff.
+ * readouts, organised by taxonomy (iaLayout — the remaining bakeoff axis).
  */
 export function Lane({
   network,
@@ -60,7 +48,6 @@ export function Lane({
   onNodeSelect,
   bgVariant,
   iaLayout,
-  pairMode,
 }: LaneProps) {
   const net = tokens.network[network]
   const { persona, tagline } = networkVoice(network)
@@ -78,8 +65,8 @@ export function Lane({
   } as CSSProperties
 
   const groups = useMemo(
-    () => groupLaneItems(buildLaneItems(nodes, pairMode), iaLayout),
-    [nodes, pairMode, iaLayout],
+    () => groupLaneItems(buildLaneItems(nodes), iaLayout),
+    [nodes, iaLayout],
   )
 
   const onEntryKey = (e: KeyboardEvent<HTMLDivElement>, id: string) => {
@@ -91,7 +78,6 @@ export function Lane({
 
   const renderItem = (item: LaneItem) => {
     const id = item.primary.id
-    const isPair = Boolean(item.pair)
     return (
       <div
         key={item.key}
@@ -100,9 +86,7 @@ export function Lane({
         data-active={inspectedId === id || undefined}
         role="button"
         tabIndex={0}
-        aria-label={
-          isPair ? pairAriaLabel(item.primary, item.pair!) : entryLabel(item.primary, item.mirror)
-        }
+        aria-label={entryLabel(item.primary, item.mirror)}
         onMouseEnter={() => onNodeHover(id)}
         onMouseLeave={() => onNodeHover(null)}
         onFocus={() => onNodeHover(id)}
@@ -110,11 +94,7 @@ export function Lane({
         onClick={() => onNodeSelect(id)}
         onKeyDown={(e) => onEntryKey(e, id)}
       >
-        {isPair ? (
-          <PairReadout left={item.primary} right={item.pair!} />
-        ) : (
-          <NodeReadout node={item.primary} block="lane-readout" mirror={item.mirror} />
-        )}
+        <NodeReadout node={item.primary} block="lane-readout" mirror={item.mirror} />
       </div>
     )
   }
@@ -180,44 +160,5 @@ function HemiMark({ hemi }: { hemi: 'L' | 'M' | 'R' }) {
         <line x1="8" y1="1.5" x2="8" y2="14.5" stroke="currentColor" strokeWidth="1.3" />
       )}
     </svg>
-  )
-}
-
-/** Merged bilateral readout: the region once, both hemispheres' connectivity. */
-function PairReadout({ left, right }: { left: BrainNode; right: BrainNode }) {
-  const richClub = left.richClub || right.richClub
-  return (
-    <div className="lane-readout__body">
-      {/* Bilateral: both ids lead, then the shared region name. The L/R stat
-          rows below carry the "both hemispheres" reading — no "Bilateral ·". */}
-      <h3 className="lane-readout__title">
-        <span className="lane-readout__id">
-          {left.id} · {right.id}
-        </span>
-        <span className="lane-readout__name">{left.label}</span>
-      </h3>
-      {left.role && <p className="lane-readout__role">{left.role}</p>}
-      <div className="lane-readout__stats">
-        <div className="lane-readout__stat">
-          <span className="lane-readout__stat-label">Left</span>
-          <span className="lane-readout__bar" aria-hidden="true">
-            <span className="lane-readout__bar-fill" style={{ width: `${pct(left.degree)}%` }} />
-          </span>
-          <span className="lane-readout__stat-value">{pct(left.degree)}%</span>
-        </div>
-        <div className="lane-readout__stat">
-          <span className="lane-readout__stat-label">Right</span>
-          <span className="lane-readout__bar" aria-hidden="true">
-            <span className="lane-readout__bar-fill" style={{ width: `${pct(right.degree)}%` }} />
-          </span>
-          <span className="lane-readout__stat-value">{pct(right.degree)}%</span>
-        </div>
-        {richClub && (
-          <ul className="lane-readout__tags">
-            <li className="lane-readout__tag">Load-bearing</li>
-          </ul>
-        )}
-      </div>
-    </div>
   )
 }

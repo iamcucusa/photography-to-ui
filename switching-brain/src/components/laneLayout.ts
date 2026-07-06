@@ -1,21 +1,18 @@
 import type { BrainNode } from '../viz/model/types'
 
-/** Prototype axes (bakeoff — see BrainLanes control panel). */
+/** Prototype axis still under review (bakeoff — see BrainLanes control panel). */
 export type IaLayout = 'echo-hero' | 'labeled' | 'rank'
-export type PairMode = 'keep' | 'merge'
 
-/** One readable unit: a single region, or a merged bilateral (L+R) pair. */
+/** One readable unit: a single region. Bilateral L/R twins each stand on their
+ *  own (the concluded "keep" pairing), linked by the mirror mark. */
 export interface LaneItem {
   key: string
   primary: BrainNode
-  /** The other hemisphere, when a bilateral pair is merged. */
-  pair?: BrainNode
-  /** L / M / R, or B when a merged bilateral pair. */
-  hemi: 'L' | 'M' | 'R' | 'B'
-  /** Sort key — the (max) connectivity. */
+  hemi: 'L' | 'M' | 'R'
+  /** Sort key — the connectivity. */
   degree: number
-  /** In `keep` mode: the contralateral twin's id, if this region is bilateral —
-   *  the entry marks it so the shared role prose reads as symmetry, not a dupe. */
+  /** The contralateral twin's id, if this region is bilateral — the entry marks
+   *  it so the shared role prose reads as symmetry, not a duplicate. */
   mirror?: string
 }
 
@@ -26,47 +23,19 @@ export interface LaneGroup {
   items: LaneItem[]
 }
 
-/** Build the readable items for a lane's nodes, honoring the pair mode. */
-export function buildLaneItems(nodes: BrainNode[], pairMode: PairMode): LaneItem[] {
-  if (pairMode === 'keep') {
-    // Flag bilateral regions (a contralateral node shares the base label) so the
-    // twin entries can show a mirror mark next to their id.
-    const byLabel = new Map<string, BrainNode[]>()
-    for (const n of nodes) {
-      const g = byLabel.get(n.label)
-      if (g) g.push(n)
-      else byLabel.set(n.label, [n])
-    }
-    return nodes.map((n) => {
-      const twin = byLabel.get(n.label)!.find((o) => o.id !== n.id && o.hemi !== n.hemi)
-      return { key: n.id, primary: n, hemi: n.hemi, degree: n.degree, mirror: twin?.id }
-    })
-  }
-  // merge: group by region label; an L+R group becomes one bilateral item.
+/** Build the readable items for a lane's nodes. Every region stands on its own;
+ *  bilateral twins are flagged with the contralateral id for the mirror mark. */
+export function buildLaneItems(nodes: BrainNode[]): LaneItem[] {
   const byLabel = new Map<string, BrainNode[]>()
   for (const n of nodes) {
     const g = byLabel.get(n.label)
     if (g) g.push(n)
     else byLabel.set(n.label, [n])
   }
-  const items: LaneItem[] = []
-  for (const group of byLabel.values()) {
-    if (group.length >= 2) {
-      const left = group.find((n) => n.hemi === 'L') ?? group[0]
-      const right = group.find((n) => n.hemi === 'R') ?? group[1]
-      items.push({
-        key: `${left.label}`,
-        primary: left,
-        pair: right,
-        hemi: 'B',
-        degree: Math.max(left.degree, right.degree),
-      })
-    } else {
-      const n = group[0]
-      items.push({ key: n.id, primary: n, hemi: n.hemi, degree: n.degree })
-    }
-  }
-  return items
+  return nodes.map((n) => {
+    const twin = byLabel.get(n.label)!.find((o) => o.id !== n.id && o.hemi !== n.hemi)
+    return { key: n.id, primary: n, hemi: n.hemi, degree: n.degree, mirror: twin?.id }
+  })
 }
 
 const byDegreeDesc = (a: LaneItem, b: LaneItem) => b.degree - a.degree
@@ -76,12 +45,12 @@ export function groupLaneItems(items: LaneItem[], layout: IaLayout): LaneGroup[]
   if (layout === 'rank') {
     return [{ key: 'all', items: [...items].sort(byDegreeDesc) }]
   }
-  // Hemisphere facets. Bilateral (merged) items sit in the central Midline group.
+  // Hemisphere facets: Left / Midline / Right.
   const buckets: Record<'L' | 'M' | 'R', LaneItem[]> = { L: [], M: [], R: [] }
   for (const it of items) {
     if (it.hemi === 'L') buckets.L.push(it)
     else if (it.hemi === 'R') buckets.R.push(it)
-    else buckets.M.push(it) // M or B (bilateral)
+    else buckets.M.push(it)
   }
   const order: { key: 'L' | 'M' | 'R'; label: string }[] = [
     { key: 'L', label: 'Left' },

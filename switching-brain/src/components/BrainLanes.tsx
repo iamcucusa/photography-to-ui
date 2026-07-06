@@ -7,7 +7,7 @@ import { nodeRadius } from '../viz/geometry'
 import { Lane } from './Lane'
 import type { Substrate, BgVariant } from './LaneSubstrate'
 import { LanePrototypeControls } from './LanePrototypeControls'
-import type { IaLayout, PairMode } from './laneLayout'
+import type { IaLayout } from './laneLayout'
 
 /** Filter the graph to one network's nodes + intra-network edges, lay it out, bbox-fit. */
 function buildSubstrate(network: NetworkId, graph: BrainGraph): Substrate {
@@ -77,19 +77,13 @@ export function BrainLanes({
     [graph],
   )
 
-  // Remaining prototype axes (bakeoff) — background + connectivity-value treatment
-  // are concluded; layout + pairs are still under review.
+  // Layout is the last prototype axis still under review; background, value
+  // treatment, and pairs (keep) are all concluded.
   const [layout, setLayout] = useState<IaLayout>('echo-hero')
-  const [pairs, setPairs] = useState<PairMode>('keep')
 
   return (
     <section className="lanes" aria-label="Read the three networks">
-      <LanePrototypeControls
-        layout={layout}
-        setLayout={setLayout}
-        pairs={pairs}
-        setPairs={setPairs}
-      />
+      <LanePrototypeControls layout={layout} setLayout={setLayout} />
       {lanes.map(({ network, nodes, substrate }) => (
         <Lane
           key={network}
@@ -102,7 +96,6 @@ export function BrainLanes({
           onNodeSelect={onNodeSelect}
           bgVariant={NETWORK_BG[network]}
           iaLayout={layout}
-          pairMode={pairs}
         />
       ))}
     </section>
