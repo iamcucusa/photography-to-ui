@@ -19,7 +19,7 @@ export interface NodeReadoutProps {
 
 /**
  * The single-node readout — region identity, plain-language craft role,
- * connectivity bar, and rich-club / switcher tags. Shared by the anchored
+ * connectivity bar, and the load-bearing flag (rich-club, translated). Shared by the anchored
  * `InspectCard` (`block="inspect-card"`) and the in-lane entries
  * (`block="lane-readout"`); the `block` prop swaps the BEM family so the card
  * path emits byte-identical class strings — no visual regression on the card.
@@ -116,11 +116,19 @@ export function NodeReadout({
           </div>
         )}
 
-        {(node.richClub || node.switcher) && (
+        {node.richClub && (
           <ul className={`${block}__tags`}>
-            {node.richClub && <li className={`${block}__tag`}>Rich-club hub</li>}
-            {node.switcher && <li className={`${block}__tag`}>Initiates switching</li>}
+            <li className={`${block}__tag`}>Load-bearing</li>
           </ul>
+        )}
+
+        {/* Detail surface only: a plain-language gloss for the load-bearing flag
+            — the lane keeps just the compact tag. (switcher/initiates is dropped
+            as a tag; the SN role prose already says "calls/flips the switch".) */}
+        {block === 'inspect-card' && node.richClub && (
+          <p className={`${block}__flag-note`}>
+            Load-bearing — wired into the other hubs; the part whose loss cascades.
+          </p>
         )}
       </div>
     </div>

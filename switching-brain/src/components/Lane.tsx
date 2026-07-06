@@ -18,9 +18,9 @@ const pct = (d: number) => Math.round(d * 100)
 /** Concise full readout as the accessible name for an entry (its rich content is
  *  presentational under role="button"). Mirrors the graph node's aria-label. */
 function entryLabel(node: BrainNode, mirror?: string): string {
-  const tags = [node.richClub && 'rich-club hub', node.switcher && 'initiates switching']
-    .filter(Boolean)
-    .join(', ')
+  // Switcher/initiates is no longer a tag — its meaning lives in the role prose
+  // ("calls/flips the switch"), which is already part of this label via `role`.
+  const tags = node.richClub ? 'load-bearing' : ''
   const role = node.role ? ` ${node.role}` : ''
   const bilateral = mirror ? '. Bilateral pair' : ''
   return `${node.label}, ${HEMI_LABEL[node.hemi]}.${role} ${pct(node.degree)}% connectivity${bilateral}${tags ? `. ${tags}` : ''}`
@@ -182,7 +182,6 @@ function HemiMark({ hemi }: { hemi: 'L' | 'M' | 'R' }) {
 /** Merged bilateral readout: the region once, both hemispheres' connectivity. */
 function PairReadout({ left, right }: { left: BrainNode; right: BrainNode }) {
   const richClub = left.richClub || right.richClub
-  const switcher = left.switcher || right.switcher
   return (
     <div className="lane-readout__body">
       {/* Bilateral: both ids lead, then the shared region name. The L/R stat
@@ -209,10 +208,9 @@ function PairReadout({ left, right }: { left: BrainNode; right: BrainNode }) {
           </span>
           <span className="lane-readout__stat-value">{pct(right.degree)}%</span>
         </div>
-        {(richClub || switcher) && (
+        {richClub && (
           <ul className="lane-readout__tags">
-            {richClub && <li className="lane-readout__tag">Rich-club hub</li>}
-            {switcher && <li className="lane-readout__tag">Initiates switching</li>}
+            <li className="lane-readout__tag">Load-bearing</li>
           </ul>
         )}
       </div>
