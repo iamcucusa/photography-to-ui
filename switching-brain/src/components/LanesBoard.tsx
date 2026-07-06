@@ -46,7 +46,7 @@ export function LanesBoard(props: LanesModeProps) {
 
   return (
     <div className="lanes-board" data-focused={focused}>
-      {lanes.map(({ network, nodes, substrate }) => {
+      {lanes.map(({ network, nodes, edges, substrate }) => {
         const isFocused = network === focused
         return (
           <div className="lanes-board__col" data-network={network} key={network}>
@@ -66,6 +66,7 @@ export function LanesBoard(props: LanesModeProps) {
               <LaneStrip
                 network={network}
                 nodes={nodes}
+                edges={edges}
                 tokens={tokens}
                 expanded={false}
                 onToggle={() => focus(network)}

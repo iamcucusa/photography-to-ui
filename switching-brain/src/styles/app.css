@@ -1205,12 +1205,6 @@
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
-.lane-strip__swatch {
-  flex: none;
-  width: 0.6em;
-  height: 0.6em;
-  border-radius: 50%;
-}
 .lane-strip__persona {
   flex: none;
   font-size: var(--text-md);
@@ -1246,6 +1240,16 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
+}
+/* Spark — the collapsed lane's mini connectome fragment (LaneSpark), scaled to a
+   fixed box; a horizontal stripe on the accordion row. */
+.lane-spark {
+  flex: none;
+  display: block;
+}
+.lane-spark--row {
+  width: 5.5em;
+  height: 2em;
 }
 /* Row — the accordion's collapsed strip. With the persona gone the tagline is the
    lead label, so it takes the lane's color + weight (as the board persona does),

@@ -1,12 +1,15 @@
 import { useMemo, type CSSProperties } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import { withAlpha } from '../viz/runtimeTokens'
-import type { BrainNode, NetworkId } from '../viz/model/types'
+import type { BrainNode, BrainEdge, NetworkId } from '../viz/model/types'
 import { networkVoice } from '../viz/model/types'
+import { LaneSpark } from './LaneSpark'
 
 export interface LaneStripProps {
   network: NetworkId
   nodes: BrainNode[]
+  /** Intra-network edges — the row's connectome spark. */
+  edges: BrainEdge[]
   tokens: VizTokens
   /** aria-expanded (accordion) / active column (board). */
   expanded: boolean
@@ -29,6 +32,7 @@ export interface LaneStripProps {
 export function LaneStrip({
   network,
   nodes,
+  edges,
   tokens,
   expanded,
   onToggle,
@@ -60,23 +64,34 @@ export function LaneStrip({
       aria-controls={controlsId}
       onClick={onToggle}
     >
-      <span className="lane-strip__swatch" style={{ background: net.base }} aria-hidden="true" />
-      {/* Rail (board) leads with the persona; the accordion's row leads with the
-          tagline alone — the persona moves into the expanded lane's header. */}
+      {/* No swatch dot — the network's hue is already stated by the lead label
+          (accent-colored) and the spark. Rail (board) leads with the persona; the
+          accordion's row leads with the tagline alone — the persona moves into
+          the expanded lane's header. */}
       {variant === 'rail' && <span className="lane-strip__persona">{persona}</span>}
       <span className="lane-strip__gloss">{tagline.replace(/\.$/, '')}</span>
-      <span className="lane-strip__spark" aria-hidden="true">
-        {bars.map((n) => (
-          <span
-            key={n.id}
-            className="lane-strip__bar"
-            style={{
-              height: `${Math.round(20 + n.degree * 80)}%`,
-              background: withAlpha(n.richClub ? net.bright : net.base, 0.35 + n.degree * 0.45),
-            }}
-          />
-        ))}
-      </span>
+      {variant === 'row' ? (
+        <LaneSpark
+          network={network}
+          nodes={nodes}
+          edges={edges}
+          tokens={tokens}
+          orientation="row"
+        />
+      ) : (
+        <span className="lane-strip__spark" aria-hidden="true">
+          {bars.map((n) => (
+            <span
+              key={n.id}
+              className="lane-strip__bar"
+              style={{
+                height: `${Math.round(20 + n.degree * 80)}%`,
+                background: withAlpha(n.richClub ? net.bright : net.base, 0.35 + n.degree * 0.45),
+              }}
+            />
+          ))}
+        </span>
+      )}
       <span className="lane-strip__abbr">{network}</span>
     </button>
   )

@@ -24,7 +24,7 @@ export function LanesAccordion({
 
   return (
     <div className="lanes-accordion">
-      {lanes.map(({ network, nodes, substrate }) => {
+      {lanes.map(({ network, nodes, edges, substrate }) => {
         const isOpen = open[network]
         const regionId = `acc-${network}`
         return (
@@ -37,6 +37,7 @@ export function LanesAccordion({
             <LaneStrip
               network={network}
               nodes={nodes}
+              edges={edges}
               tokens={tokens}
               expanded={isOpen}
               onToggle={() => toggle(network)}

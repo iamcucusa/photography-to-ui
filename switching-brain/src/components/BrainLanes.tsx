@@ -89,11 +89,12 @@ export function BrainLanes({
 }: BrainLanesProps) {
   const lanes: LaneDatum[] = useMemo(
     () =>
-      NETWORK_ORDER.map((id) => ({
-        network: id,
-        nodes: graph.nodes.filter((n) => n.network === id),
-        substrate: buildSubstrate(id, graph),
-      })),
+      NETWORK_ORDER.map((id) => {
+        const nodes = graph.nodes.filter((n) => n.network === id)
+        const nodeIds = new Set(nodes.map((n) => n.id))
+        const edges = graph.edges.filter((e) => nodeIds.has(e.source) && nodeIds.has(e.target))
+        return { network: id, nodes, edges, substrate: buildSubstrate(id, graph) }
+      }),
     [graph],
   )
 

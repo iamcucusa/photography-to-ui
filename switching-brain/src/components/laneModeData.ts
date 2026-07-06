@@ -1,4 +1,4 @@
-import type { BrainNode, NetworkId } from '../viz/model/types'
+import type { BrainNode, BrainEdge, NetworkId } from '../viz/model/types'
 import type { VizTokens } from '../viz/runtimeTokens'
 import type { Substrate, BgVariant } from './LaneSubstrate'
 
@@ -12,6 +12,8 @@ import type { Substrate, BgVariant } from './LaneSubstrate'
 export interface LaneDatum {
   network: NetworkId
   nodes: BrainNode[]
+  /** Intra-network edges — feeds the collapsed strip's connectome spark. */
+  edges: BrainEdge[]
   substrate: Substrate
 }
 
