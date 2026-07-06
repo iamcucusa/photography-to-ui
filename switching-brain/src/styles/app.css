@@ -783,6 +783,25 @@
   }
 }
 
+/* One lane's block: a bold section-opener (the tagline) leading into the glowing
+   lane box. The network custom props (set inline here) drive both. */
+.lane-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* The intro — the tagline promoted to a bold, network-hued section opener that
+   introduces the lane. Its color + soft glow rhyme with the lane's rim below,
+   tying the opener to the box it announces. */
+.lane-intro {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--lane-accent);
+  text-shadow: 0 0 24px var(--lane-glow-mid);
+}
+
 .lane {
   position: relative;
   overflow: hidden;
@@ -827,30 +846,15 @@
   gap: var(--space-sm) var(--space-lg);
 }
 
-/* Persona + tagline share ONE baseline — the tagline hangs off the headline as
-   a small accent-hued aside (not a stacked subtitle). The dramatic size drop +
-   hue shift is the separator; on a narrow lane the tagline wraps beneath. */
-.lane__title-block {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 var(--space-md);
-  flex: 1 1 auto;
-}
-/* The persona — the lane's hook and hero. Data is sentence-case ("The dreamer");
-   `capitalize` renders it as the title "The Dreamer". */
+/* The persona — the lane's title inside the box. Sits BELOW the intro in the
+   hierarchy, so it's a step smaller (--text-lg) than the intro's --text-xl and
+   doesn't compete with it. Data is sentence-case; `capitalize` → "The Dreamer". */
 .lane__persona {
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   text-transform: capitalize;
   color: var(--color-text-primary);
-}
-/* The tagline / promise — carries the network hue as the persona's voice. */
-.lane__tagline {
-  font-size: var(--text-md);
-  line-height: var(--line-height-base);
-  color: var(--lane-accent);
 }
 
 /* Key tag — the clinical identity (swatch · name · abbr), reference metadata. */
