@@ -1,13 +1,15 @@
-import { useMemo, type ReactNode } from 'react'
+import { useMemo, useState } from 'react'
 import type { VizTokens } from '../viz/runtimeTokens'
 import type { BrainGraph, NetworkId } from '../viz/model/types'
 import { NETWORK_ORDER } from '../viz/model/types'
 import { createSubstrateSimulation, settle } from '../viz/layout'
 import { nodeRadius } from '../viz/geometry'
+import { useMediaQuery } from '../viz/useMediaQuery'
 import type { Substrate } from './LaneSubstrate'
 import { LanesAccordion } from './LanesAccordion'
 import { LanesBoard } from './LanesBoard'
 import { LanesCarousel } from './LanesCarousel'
+import { LanesViewToggle, type DeskMode } from './LanesViewToggle'
 import { LaneCursor } from './LaneCursor'
 import type { LaneDatum, SharedLaneProps } from './laneModeData'
 
@@ -52,34 +54,18 @@ export interface BrainLanesProps {
   onNodeSelect: (id: string) => void
 }
 
-/** TEMPORARY bakeoff wrapper: labels each interaction mode being compared. */
-function BakeoffSection({
-  label,
-  note,
-  children,
-}: {
-  label: string
-  note: string
-  children: ReactNode
-}) {
-  return (
-    <section className="lane-bakeoff" aria-label={label}>
-      <p className="lane-bakeoff__head">
-        <span className="lane-bakeoff__tag">bakeoff</span>
-        <span className="lane-bakeoff__name">{label}</span>
-        <span className="lane-bakeoff__note">{note}</span>
-      </p>
-      {children}
-    </section>
-  )
-}
-
 /**
  * The three-lane reading surface — one lane per network (DMN · SN · FPCN, SN
- * central), the hero's three bands "unrolled to be read". Currently carries the
- * INTERACTION bakeoff: the same lanes rendered three ways (Accordion · Board ·
- * Carousel), stacked, so the maintainer picks one live — then the converge commit
- * keeps the winner and deletes the losers + this harness.
+ * central), the hero's three bands "unrolled to be read". The interaction adapts
+ * by viewport tier, each mode owning the breakpoint where it's strongest:
+ *
+ *   ≥1024px landscape → Board     — 3 columns + focus-morph (room to compare)
+ *   ≤560px  portrait  → Carousel  — one-handed swipe; ≤560 is the hero's own
+ *                                    orientation flip, so its L→R order rhymes
+ *                                    with the phone hero's L→R network columns
+ *   in between        → Accordion — stacked bands, matching the wide hero, and
+ *                                    the most robust anywhere (tablet, landscape
+ *                                    phone, large portrait)
  */
 export function BrainLanes({
   graph,
@@ -101,20 +87,33 @@ export function BrainLanes({
 
   const shared: SharedLaneProps = { tokens, inspectedId, onNodeHover, onNodeSelect }
 
+  // Tier selection. 1024px+landscape is the board's column threshold; 560px is
+  // the hero's orientation-flip line (App.tsx) — below it, in portrait, the
+  // device is a one-handed phone and the hero reads as L→R columns.
+  const boardTier = useMediaQuery('(min-width: 1024px) and (orientation: landscape)')
+  const phoneTier = useMediaQuery('(max-width: 560px) and (orientation: portrait)')
+
+  // On the desktop tier there's room for either arrangement, so let the reader
+  // choose: Columns (Board, the default) or Stacked (Accordion). Persists across
+  // renders; only surfaced on the board tier.
+  const [deskMode, setDeskMode] = useState<DeskMode>('board')
+
   return (
     <section className="lanes" aria-label="Read the three networks">
-      <BakeoffSection label="A · Accordion" note="stacked · each collapses to a strip">
-        <LanesAccordion lanes={lanes} {...shared} />
-      </BakeoffSection>
-      <BakeoffSection
-        label="B · Board → focus"
-        note="columns · click to expand · narrow → accordion"
-      >
-        <LanesBoard lanes={lanes} {...shared} />
-      </BakeoffSection>
-      <BakeoffSection label="C · Carousel" note="peek neighbours · drag anywhere · arrow keys">
+      {boardTier ? (
+        <>
+          <LanesViewToggle mode={deskMode} onChange={setDeskMode} />
+          {deskMode === 'board' ? (
+            <LanesBoard lanes={lanes} {...shared} />
+          ) : (
+            <LanesAccordion lanes={lanes} {...shared} />
+          )}
+        </>
+      ) : phoneTier ? (
         <LanesCarousel lanes={lanes} {...shared} />
-      </BakeoffSection>
+      ) : (
+        <LanesAccordion lanes={lanes} {...shared} />
+      )}
       <LaneCursor />
     </section>
   )

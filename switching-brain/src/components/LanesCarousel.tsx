@@ -7,6 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 import { NETWORK_ORDER, networkVoice } from '../viz/model/types'
+import { useReducedMotion } from '../viz/useReducedMotion'
 import { Lane } from './Lane'
 import { NETWORK_BG, type LanesModeProps } from './laneModeData'
 
@@ -14,6 +15,9 @@ const SWIPE_FRACTION = 0.12 // fraction of viewport width to commit a swipe
 const DRAG_THRESHOLD = 8 // px of movement before a press becomes a drag (not a tap)
 const EDGE_RESIST = 0.35 // rubber-band factor when dragging past an end
 const FLICK_VELOCITY = 0.45 // px/ms — a quick flick commits even under the distance threshold
+
+// One swipe-hint nudge per session (module-level so a tier change doesn't repeat it).
+let hasHintedSwipe = false
 
 /**
  * Carousel mode — one lane read at a time, its neighbours PEEKING on both sides
@@ -51,6 +55,7 @@ export function LanesCarousel({
   })
   const raf = useRef(0)
   const suppressClick = useRef(false)
+  const reduce = useReducedMotion()
 
   useEffect(() => {
     indexRef.current = index
@@ -58,6 +63,27 @@ export function LanesCarousel({
       if (raf.current) cancelAnimationFrame(raf.current)
     }
   }, [index])
+
+  // Swipe cue — a one-time gentle nudge of the track so the peek moves, hinting
+  // the cards are swipeable (the only affordance on touch). Reduced-motion + once
+  // per session; the flag is set only AFTER it completes, so StrictMode's dev
+  // mount→cleanup→remount doesn't cancel-then-skip it.
+  useEffect(() => {
+    if (reduce || hasHintedSwipe) return
+    const track = trackRef.current
+    if (!track) return
+    const out = setTimeout(() => {
+      if (!drag.current.active) track.style.setProperty('--drag', '-26px')
+    }, 650)
+    const back = setTimeout(() => {
+      if (!drag.current.active) track.style.setProperty('--drag', '0px')
+      hasHintedSwipe = true
+    }, 1150)
+    return () => {
+      clearTimeout(out)
+      clearTimeout(back)
+    }
+  }, [reduce])
 
   const clamp = (i: number) => Math.max(0, Math.min(n - 1, i))
   const go = (i: number) => setIndex(clamp(i))

@@ -1148,33 +1148,47 @@
    so the maintainer picks the arrangement live. All color via the inline --lane-*
    custom props (set by LaneStrip/Lane) or --color-* tokens. ═══════════════════════ */
 
-.lane-bakeoff {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+/* ── Lanes view toggle — desktop layout switch (Columns / Stacked) ───────────── */
+.lanes-view {
+  display: inline-flex;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-self: end;
 }
-.lane-bakeoff + .lane-bakeoff {
-  margin-top: var(--space-xl);
-}
-.lane-bakeoff__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-xs) var(--space-md);
+.lanes-view__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
   font-size: var(--text-xs);
-}
-.lane-bakeoff__tag {
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.08em;
-  color: var(--color-magenta-3);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--easing-emphasized);
 }
-.lane-bakeoff__name {
-  font-weight: var(--font-weight-bold);
+.lanes-view__btn:hover {
   color: var(--color-text-primary);
 }
-.lane-bakeoff__note {
-  color: var(--color-text-secondary);
+.lanes-view__btn[data-active='true'] {
+  color: var(--color-text-primary);
+}
+.lanes-view__btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+.lanes-view__icon {
+  width: 0.95em;
+  height: 0.95em;
+  fill: currentColor;
+  opacity: 0.55;
+  transition: opacity var(--duration-fast) var(--easing-emphasized);
+}
+.lanes-view__btn[data-active='true'] .lanes-view__icon {
+  opacity: 1;
 }
 
 /* ── LaneStrip — the collapsed representation (glow, not a card) ──────────────── */
@@ -1380,9 +1394,15 @@
 }
 
 /* ── Carousel mode ───────────────────────────────────────────────────────────── */
+/* Full-bleed: the carousel only renders on the phone tier, where .lanes has a
+   --space-lg horizontal gutter. Reclaim it with a negative inline margin so the
+   active card + peeks measure against the WHOLE viewport (the peek becomes the
+   card's edge gutter) — a meaningful width gain on ≤375 phones. Vertical
+   rhythm is untouched. */
 .lanes-carousel {
   display: flex;
   flex-direction: column;
+  margin-inline: calc(-1 * var(--space-lg));
 }
 /* Peek carousel: the active card is centred at --slide-w with both neighbours
    peeking --peek on each side (container-query units → viewport-relative, and
@@ -1402,6 +1422,15 @@
   --peek: 9cqw;
   --gap: 0.4cqw;
   --slide-w: 82cqw;
+}
+/* Small phones: widen the peek so the "there's more" cue survives the tiny
+   viewport (a 9cqw peek is only ~30px at 375). The card stays readable — its
+   echo-hero is single-column at this size regardless. */
+@media (max-width: 400px) {
+  .lanes-carousel__viewport {
+    --peek: 13cqw;
+    --slide-w: 74cqw;
+  }
 }
 .lanes-carousel__track {
   display: flex;

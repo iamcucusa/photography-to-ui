@@ -119,6 +119,21 @@ SN central) — the hero's three bands "unrolled to be read". It's a full-width
 **sibling of `.app`** (not nested — the `height:100dvh` hero would clip it), so it
 just extends the page scroll.
 
+- **Interaction adapts by viewport tier** — one mode per tier, each owning the
+  breakpoint where it's strongest (`BrainLanes` picks via `useMediaQuery`):
+  **`≥1024px landscape → LanesBoard`** (3 columns; click a rail to expand it to the
+  echo-hero via the View Transitions API, others become `LaneStrip` rails) — with a
+  `LanesViewToggle` letting the reader switch this desktop tier between Columns
+  (Board, default) and Stacked (Accordion);
+  **`≤560px portrait → LanesCarousel`** (one-handed peek carousel — drag/swipe
+  anywhere, flick-to-commit, arrow keys; 560px is the hero's own orientation-flip
+  line in `App.tsx`, so its L→R order rhymes with the phone hero's L→R columns);
+  **everything between → LanesAccordion** (stacked bands + collapse-to-`LaneStrip`,
+  matching the wide hero; the most robust tier). All three share `LaneStrip` (the
+  collapsed rep: tagline-led, connectome `LaneSpark`, no substrate/observer) and a
+  single `LaneCursor` (mouse-only glowing inspect dot on any `.lane__entry`). The
+  lane's internal layout is hard-locked to `echo-hero`.
+
 - **Seams of light, no boxes.** Each `Lane` is defined by top/bottom seam glow
   (layered gradient + `mix-blend-mode: screen`, tinted per network via `withAlpha`),
   never a border/radius — extends the InspectCard "glow states the network" language.
