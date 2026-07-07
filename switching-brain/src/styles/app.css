@@ -1372,78 +1372,117 @@
 .lanes-carousel {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
 }
-.lanes-carousel__nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs) var(--space-md);
-}
-.lanes-carousel__tab {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) 0;
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-bold);
-  text-transform: capitalize;
-  color: var(--color-text-secondary);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color var(--duration-fast) var(--easing-emphasized);
-}
-.lanes-carousel__tab[aria-selected='true'] {
-  color: var(--lane-accent);
-}
-.lanes-carousel__tab:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-.lanes-carousel__dot {
-  flex: none;
-  width: 0.55em;
-  height: 0.55em;
-  border-radius: 50%;
-}
+/* Peek carousel: the active card is centred at --slide-w with both neighbours
+   peeking --peek on each side (container-query units → viewport-relative, and
+   the ~82% active card still clears echo-hero's 720px). Navigation is drag /
+   peek-click / arrow-keys (the viewport is focusable) — no visible chrome. */
 .lanes-carousel__viewport {
+  position: relative;
   overflow: hidden;
   touch-action: pan-y;
+  /* Drag-anywhere surface — suppress text selection so a horizontal drag over a
+     readout never starts selecting text (it fights the swipe). */
+  user-select: none;
+  -webkit-user-select: none;
+  container-type: inline-size;
+  /* peek + gap + slide tuned so a real slice of each neighbour shows right up
+     against the active card (2*peek + slide-w = 100cqw; gap stays tiny). */
+  --peek: 9cqw;
+  --gap: 0.4cqw;
+  --slide-w: 82cqw;
 }
 .lanes-carousel__track {
   display: flex;
+  transform: translateX(
+    calc(var(--peek) - var(--index, 0) * (var(--slide-w) + var(--gap)) + var(--drag, 0px))
+  );
   transition: transform var(--duration-normal) var(--easing-emphasized);
+  will-change: transform;
+}
+.lanes-carousel[data-dragging='true'] .lanes-carousel__track {
+  transition: none;
 }
 .lanes-carousel__slide {
-  flex: 0 0 100%;
+  flex: 0 0 var(--slide-w);
   min-width: 0;
-  /* Inset the lane so its rim+glow box-shadow has room INSIDE the viewport's
-     overflow clip (which is needed to hide the off-screen slides). */
-  padding: var(--space-md) var(--space-lg);
+  margin-right: var(--gap);
+  /* Small inset so the active card's rim glow has room without pushing the
+     neighbours' content out of the peek. */
+  padding: var(--space-md) var(--space-sm);
+  /* Neighbours recede; the active card is full-strength. */
+  opacity: 0.46;
+  transform: scale(0.95);
+  transition:
+    opacity var(--duration-normal) var(--easing-emphasized),
+    transform var(--duration-normal) var(--easing-emphasized);
+}
+.lanes-carousel__slide[data-active='true'] {
+  opacity: 1;
+  transform: none;
+}
+/* A peek is a target, not a reading surface — clicking it advances. */
+.lanes-carousel__slide:not([data-active='true']) {
+  cursor: pointer;
+}
+.lanes-carousel__slide:not([data-active='true']) .lane-group {
+  pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .lanes-carousel__track {
+  .lanes-carousel__track,
+  .lanes-carousel__slide {
     transition: none;
   }
 }
-.lanes-carousel__arrows {
-  display: flex;
-  gap: var(--space-sm);
+
+/* Carousel swipe cursor — mouse only; touch drags directly. Chevrons over the
+   card background signal horizontal drag; over an entry it yields to the shared
+   inspect dot. Hidden while grabbing. */
+.lanes-carousel__cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.2em;
+  height: 3.2em;
+  margin: -1.6em 0 0 -1.6em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--lane-accent);
+  color: var(--lane-accent);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transition:
+    opacity var(--duration-fast) var(--easing-emphasized),
+    width var(--duration-fast) var(--easing-emphasized),
+    height var(--duration-fast) var(--easing-emphasized),
+    margin var(--duration-fast) var(--easing-emphasized);
 }
-.lanes-carousel__arrow {
-  width: 2em;
-  height: 2em;
+.lanes-carousel__cursor-glyph {
   font-size: var(--text-md);
-  color: var(--color-text-secondary);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color var(--duration-fast) var(--easing-emphasized);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
 }
-.lanes-carousel__arrow:hover {
-  color: var(--color-text-primary);
+@media (hover: hover) and (pointer: fine) {
+  .lanes-carousel__cursor[data-show='true'] {
+    opacity: 1;
+  }
+  .lanes-carousel__viewport {
+    cursor: none;
+  }
+  .lanes-carousel[data-dragging='true'] .lanes-carousel__viewport,
+  .lanes-carousel[data-dragging='true'] .lanes-carousel__viewport * {
+    cursor: grabbing;
+  }
 }
-.lanes-carousel__arrow:focus-visible {
+@media (prefers-reduced-motion: reduce) {
+  .lanes-carousel__cursor {
+    transition: opacity var(--duration-fast) var(--easing-emphasized);
+  }
+}
+
+.lanes-carousel__viewport:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }

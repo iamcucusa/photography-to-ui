@@ -111,7 +111,7 @@ export function BrainLanes({
       >
         <LanesBoard lanes={lanes} {...shared} />
       </BakeoffSection>
-      <BakeoffSection label="C · Carousel" note="one at a time · swipe / tabs / arrows">
+      <BakeoffSection label="C · Carousel" note="peek neighbours · drag anywhere · arrow keys">
         <LanesCarousel lanes={lanes} {...shared} />
       </BakeoffSection>
     </section>
