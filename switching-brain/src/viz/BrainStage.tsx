@@ -177,7 +177,49 @@ export function BrainStage({
   // Roving tabindex: one node is tabbable at a time; arrows move focus.
   const [activeIndex, setActiveIndex] = useState(0)
 
+  // Cached SVG→screen transform so targetFor maps a node's live user-space
+  // position to a pixel centre WITHOUT a getBoundingClientRect per hover — that
+  // read, interleaved with the rAF loop's attribute writes, forces a synchronous
+  // reflow. Refreshed on scroll/resize and when the viewBox flips (orientation).
+  const ctmRef = useRef<DOMMatrix | null>(null)
+  const svgOriginRef = useRef({ left: 0, top: 0 })
+  useEffect(() => {
+    const refresh = () => {
+      const svg = svgRef.current
+      if (!svg) return
+      ctmRef.current = svg.getScreenCTM()
+      const r = svg.getBoundingClientRect()
+      svgOriginRef.current = { left: r.left, top: r.top }
+    }
+    refresh()
+    let raf = 0
+    const onScrollResize = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        refresh()
+      })
+    }
+    window.addEventListener('scroll', onScrollResize, { passive: true })
+    window.addEventListener('resize', onScrollResize)
+    return () => {
+      if (raf) cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScrollResize)
+      window.removeEventListener('resize', onScrollResize)
+    }
+  }, [orientation])
+
   function targetFor(i: number): InspectTarget {
+    const n = nodes[i]
+    const ctm = ctmRef.current
+    if (ctm) {
+      // n.x/n.y are the node group's translate (SVG user space); map to svg-
+      // relative pixels via the cached screen CTM — no layout read.
+      const sx = ctm.a * n.x + ctm.c * n.y + ctm.e - svgOriginRef.current.left
+      const sy = ctm.b * n.x + ctm.d * n.y + ctm.f - svgOriginRef.current.top
+      return { node: n, cx: sx, cy: sy }
+    }
+    // Fallback before the CTM is cached: measure directly.
     const el = nodeCircle.current[i]
     const svg = svgRef.current
     let cx = 0
@@ -188,7 +230,7 @@ export function BrainStage({
       cx = r.left + r.width / 2 - s.left
       cy = r.top + r.height / 2 - s.top
     }
-    return { node: nodes[i], cx, cy }
+    return { node: n, cx, cy }
   }
 
   function focusNode(i: number) {

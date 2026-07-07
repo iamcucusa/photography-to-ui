@@ -55,6 +55,7 @@ export function LanesCarousel({
   })
   const raf = useRef(0)
   const suppressClick = useRef(false)
+  const dragAbort = useRef<AbortController | null>(null)
   const reduce = useReducedMotion()
 
   useEffect(() => {
@@ -63,6 +64,10 @@ export function LanesCarousel({
       if (raf.current) cancelAnimationFrame(raf.current)
     }
   }, [index])
+
+  // Unmounting mid-drag (e.g. a tier switch during a swipe) must drop the window
+  // pointer listeners — they're normally removed on pointerup, which won't fire.
+  useEffect(() => () => dragAbort.current?.abort(), [])
 
   // Swipe cue — a one-time gentle nudge of the track so the peek moves, hinting
   // the cards are swipeable (the only affordance on touch). Reduced-motion + once
@@ -131,9 +136,8 @@ export function LanesCarousel({
 
   const onDragEnd = () => {
     const d = drag.current
-    window.removeEventListener('pointermove', onDragMove)
-    window.removeEventListener('pointerup', onDragEnd)
-    window.removeEventListener('pointercancel', onDragEnd)
+    dragAbort.current?.abort()
+    dragAbort.current = null
     d.active = false
     if (!d.moved) return
     if (raf.current) {
@@ -167,9 +171,13 @@ export function LanesCarousel({
       lastT: ev.timeStamp || performance.now(),
       vx: 0,
     }
-    window.addEventListener('pointermove', onDragMove, { passive: false })
-    window.addEventListener('pointerup', onDragEnd)
-    window.addEventListener('pointercancel', onDragEnd)
+    dragAbort.current?.abort()
+    const ac = new AbortController()
+    dragAbort.current = ac
+    const opts = { signal: ac.signal }
+    window.addEventListener('pointermove', onDragMove, { passive: false, signal: ac.signal })
+    window.addEventListener('pointerup', onDragEnd, opts)
+    window.addEventListener('pointercancel', onDragEnd, opts)
   }
 
   // ── Custom swipe cursor (mouse only) ────────────────────────────────────────
