@@ -394,12 +394,16 @@ export function BrainStage({
   const viewBox = `${-vbW / 2} ${-vbH / 2} ${vbW} ${vbH}`
 
   return (
+    // A named group, NOT role="img": role="img" makes descendants presentational,
+    // which would hide the 33 operable node buttons from assistive tech. The full
+    // prose description lives in the .sr-only alternative (App.tsx); the decorative
+    // layers (edges, bands, particles) are aria-hidden.
     <svg
       ref={svgRef}
       className="stage__svg"
       viewBox={viewBox}
-      role="img"
-      aria-label="Bilateral brain network of three cooperating systems, oscillating between exploration and control."
+      role="group"
+      aria-label="Brain network — three cooperating systems; use the region buttons below."
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>
