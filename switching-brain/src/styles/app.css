@@ -1435,6 +1435,37 @@
   }
 }
 
+/* Shared inspect cursor (LaneCursor) — on mouse hover of any node entry in any
+   mode the native cursor becomes a glowing dot in the lane's colour. Colour +
+   glow are set inline at runtime (token-derived). */
+@media (hover: hover) and (pointer: fine) {
+  .lane__entry {
+    cursor: none;
+  }
+}
+.lane-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 60;
+  transition: opacity var(--duration-fast) var(--easing-emphasized);
+  will-change: transform;
+}
+.lane-cursor[data-show='true'] {
+  opacity: 1;
+}
+@media (hover: none) {
+  .lane-cursor {
+    display: none;
+  }
+}
+
 /* Carousel swipe cursor — mouse only; touch drags directly. Chevrons over the
    card background signal horizontal drag; over an entry it yields to the shared
    inspect dot. Hidden while grabbing. */

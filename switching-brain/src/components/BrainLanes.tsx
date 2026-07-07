@@ -8,6 +8,7 @@ import type { Substrate } from './LaneSubstrate'
 import { LanesAccordion } from './LanesAccordion'
 import { LanesBoard } from './LanesBoard'
 import { LanesCarousel } from './LanesCarousel'
+import { LaneCursor } from './LaneCursor'
 import type { LaneDatum, SharedLaneProps } from './laneModeData'
 
 /** Filter the graph to one network's nodes + intra-network edges, lay it out, bbox-fit. */
@@ -114,6 +115,7 @@ export function BrainLanes({
       <BakeoffSection label="C · Carousel" note="peek neighbours · drag anywhere · arrow keys">
         <LanesCarousel lanes={lanes} {...shared} />
       </BakeoffSection>
+      <LaneCursor />
     </section>
   )
 }
