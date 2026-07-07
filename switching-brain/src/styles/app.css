@@ -1268,9 +1268,20 @@
   height: 100%;
   padding: var(--space-lg);
 }
+/* Rail leads with the tagline (accent + glow, echoing the expanded lane-intro),
+   the persona sits below it in primary a step smaller (echoing lane__persona) —
+   so expanding the column is the same two elements growing, not reordering. */
 .lane-strip--rail .lane-strip__gloss {
   flex: none;
   white-space: normal;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--lane-accent);
+  text-shadow: 0 0 16px var(--lane-glow-mid);
+}
+.lane-strip--rail .lane-strip__persona {
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
 }
 
 /* ── Accordion mode ──────────────────────────────────────────────────────────── */

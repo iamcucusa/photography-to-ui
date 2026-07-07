@@ -60,12 +60,14 @@ export function LaneStrip({
       aria-controls={controlsId}
       onClick={onToggle}
     >
-      {/* No swatch dot — the network's hue is already stated by the lead label
-          (accent-colored) and the spark. Rail (board) leads with the persona; the
-          accordion's row leads with the tagline alone — the persona moves into
-          the expanded lane's header. */}
-      {variant === 'rail' && <span className="lane-strip__persona">{persona}</span>}
+      {/* No swatch dot — the network's hue is stated by the accent-coloured lead
+          + the spark. BOTH strips lead with the tagline, mirroring the expanded
+          lane's tagline-first opener so the board's expand morph reads as growth,
+          not a reshuffle. The rail shows the persona below it (in primary, a step
+          down — as in the expanded header); the accordion row omits the persona,
+          which returns in that lane's expanded header. */}
       <span className="lane-strip__gloss">{tagline.replace(/\.$/, '')}</span>
+      {variant === 'rail' && <span className="lane-strip__persona">{persona}</span>}
       {/* The spark stripe follows the strip's own shape: horizontal band in the
           row, vertical column in the rail — each echoing the hero's orientation. */}
       <LaneSpark
