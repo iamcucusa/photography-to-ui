@@ -24,6 +24,9 @@ const TEXT_ALTERNATIVE =
 
 const IDLE_MS = 20000
 const BALANCED = 0.5
+// Self-map tilt past which the takeaway is "content the user chose" — idle-return
+// won't silently revoke it (matches SelfMap's own tilted threshold).
+const SELFMAP_TILT = 0.33
 
 interface InspectState {
   target: InspectTarget
@@ -130,7 +133,15 @@ export default function App() {
   )
 
   // ── Idle return: ease everything back to ambient watch ───────────────────
+  const pokeRef = useRef<(() => void) | null>(null)
   const poke = useIdleReturn(IDLE_MS, () => {
+    // WCAG 2.2.1 — don't silently revoke content the user is actively reading:
+    // a pinned node, or a deliberately tilted self-map takeaway. Keep waiting
+    // (re-arm) and only ease back once they've moved on.
+    if (pinned || Math.abs(axisRef.current) > SELFMAP_TILT) {
+      pokeRef.current?.()
+      return
+    }
     setHover(null)
     setPinned(null)
     setHoveredNodeId(null)
@@ -138,6 +149,9 @@ export default function App() {
     easeAxisToBalance(reducedMotion ? 0 : 700)
     tweenRate(rateRef.current, BALANCED, reducedMotion ? 0 : 1000, setRate)
   })
+  useEffect(() => {
+    pokeRef.current = poke
+  }, [poke])
 
   function placeFor(t: InspectTarget): Placement {
     const el = canvasRef.current
