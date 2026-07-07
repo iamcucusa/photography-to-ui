@@ -772,6 +772,23 @@
   gap: var(--space-xl);
   padding: var(--space-xl);
 }
+.lanes__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-width: 52ch;
+}
+.lanes__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+.lanes__lead {
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
 
 /* Match the hero's responsive gutter so the lanes span the SAME content width as
    the hero at every breakpoint (.app drops to --space-lg on the compact/portrait
@@ -1403,6 +1420,50 @@
   display: flex;
   flex-direction: column;
   margin-inline: calc(-1 * var(--space-lg));
+}
+/* Position indicator + jump control — the active dot glows in the active
+   network's colour; each is a ~38px tap target with a small dot inside. */
+.lanes-carousel__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+.lanes-carousel__dot {
+  display: grid;
+  place-items: center;
+  width: 2.4em;
+  height: 2.4em;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.lanes-carousel__dot::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--color-text-secondary);
+  opacity: 0.5;
+  transition:
+    background var(--duration-fast) var(--easing-emphasized),
+    opacity var(--duration-fast) var(--easing-emphasized),
+    box-shadow var(--duration-fast) var(--easing-emphasized);
+}
+.lanes-carousel__dot:hover::before {
+  opacity: 0.9;
+}
+.lanes-carousel__dot[data-active='true']::before {
+  background: var(--lane-accent);
+  opacity: 1;
+  box-shadow: 0 0 8px var(--lane-accent);
+}
+.lanes-carousel__dot:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: 50%;
 }
 /* Peek carousel: the active card is centred at --slide-w with both neighbours
    peeking --peek on each side (container-query units → viewport-relative, and

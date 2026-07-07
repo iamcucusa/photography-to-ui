@@ -6,10 +6,16 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
-import { NETWORK_ORDER, networkVoice } from '../viz/model/types'
+import { networkVoice, type NetworkId } from '../viz/model/types'
 import { useReducedMotion } from '../viz/useReducedMotion'
 import { Lane } from './Lane'
 import { NETWORK_BG, type LanesModeProps } from './laneModeData'
+
+export interface LanesCarouselProps extends LanesModeProps {
+  /** The active slide's network, lifted to BrainLanes so it survives a tier swap. */
+  active: NetworkId
+  onActive: (network: NetworkId) => void
+}
 
 const SWIPE_FRACTION = 0.12 // fraction of viewport width to commit a swipe
 const DRAG_THRESHOLD = 8 // px of movement before a press becomes a drag (not a tap)
@@ -34,9 +40,15 @@ export function LanesCarousel({
   inspectedId,
   onNodeHover,
   onNodeSelect,
-}: LanesModeProps) {
+  active,
+  onActive,
+}: LanesCarouselProps) {
   const n = lanes.length
-  const [index, setIndex] = useState(() => Math.max(0, NETWORK_ORDER.indexOf('SN')))
+  // Controlled: the active slide is derived from the lifted `active` network.
+  const index = Math.max(
+    0,
+    lanes.findIndex((l) => l.network === active),
+  )
   const [dragging, setDragging] = useState(false)
   const viewportRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
@@ -54,7 +66,6 @@ export function LanesCarousel({
     vx: 0,
   })
   const raf = useRef(0)
-  const suppressClick = useRef(false)
   const dragAbort = useRef<AbortController | null>(null)
   const reduce = useReducedMotion()
 
@@ -91,7 +102,7 @@ export function LanesCarousel({
   }, [reduce])
 
   const clamp = (i: number) => Math.max(0, Math.min(n - 1, i))
-  const go = (i: number) => setIndex(clamp(i))
+  const go = (i: number) => onActive(lanes[clamp(i)].network)
 
   const setDrag = (px: number) => trackRef.current?.style.setProperty('--drag', `${px}px`)
 
@@ -145,7 +156,6 @@ export function LanesCarousel({
       raf.current = 0
     }
     setDragging(false)
-    suppressClick.current = true
     setDrag(0)
     const farEnough = Math.abs(d.dx) > d.w * SWIPE_FRACTION
     const flicked = Math.abs(d.vx) > FLICK_VELOCITY && Math.abs(d.dx) > 20
@@ -209,14 +219,6 @@ export function LanesCarousel({
     }
   }
 
-  const onSlideClick = (i: number) => {
-    if (suppressClick.current) {
-      suppressClick.current = false
-      return
-    }
-    if (i !== index) go(i)
-  }
-
   const activeNet = tokens.network[lanes[index].network]
 
   return (
@@ -225,8 +227,27 @@ export function LanesCarousel({
       data-dragging={dragging}
       style={{ '--lane-accent': activeNet.bright, '--lane-base': activeNet.base } as CSSProperties}
     >
-      {/* WAI-ARIA carousel: a focusable group navigated by ←/→ (no visible
-          rotation controls — drag and peek-clicks are the primary affordances). */}
+      {/* Announce the active slide to screen readers on change. */}
+      <p className="sr-only" aria-live="polite">
+        {networkVoice(lanes[index].network).persona}, {index + 1} of {n}
+      </p>
+      {/* Position indicator that doubles as the operable control (for
+          switch-access / SR / non-drag users). Above the card so it's seen
+          without scrolling a tall lane. */}
+      <div className="lanes-carousel__dots" role="group" aria-label="Choose a network">
+        {lanes.map(({ network }, i) => (
+          <button
+            type="button"
+            key={network}
+            className="lanes-carousel__dot"
+            data-active={i === index}
+            aria-current={i === index ? 'true' : undefined}
+            aria-label={networkVoice(network).persona}
+            onClick={() => go(i)}
+          />
+        ))}
+      </div>
+      {/* WAI-ARIA carousel: a focusable group navigated by ←/→. */}
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         className="lanes-carousel__viewport"
@@ -251,9 +272,10 @@ export function LanesCarousel({
             const mounted = Math.abs(i - index) <= 1
             const active = i === index
             return (
-              // Clicking a peek advances to it — a pointer shortcut; the accessible
-              // control is the focusable carousel (arrow keys change slides).
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+              // Non-active slides are `inert`: their (still-mounted, peeking) Lane
+              // entries drop out of the tab order and the AT tree, so nothing
+              // focusable hides behind aria-hidden. Navigation is the dots / drag /
+              // arrow keys.
               <div
                 className="lanes-carousel__slide"
                 key={network}
@@ -261,8 +283,8 @@ export function LanesCarousel({
                 aria-roledescription="slide"
                 aria-label={`${networkVoice(network).persona} — ${i + 1} of ${n}`}
                 aria-hidden={!active}
+                inert={!active}
                 data-active={active}
-                onClick={() => onSlideClick(i)}
               >
                 {mounted && (
                   <Lane

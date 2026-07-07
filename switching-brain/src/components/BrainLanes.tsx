@@ -98,19 +98,42 @@ export function BrainLanes({
   // renders; only surfaced on the board tier.
   const [deskMode, setDeskMode] = useState<DeskMode>('board')
 
+  // The focused network, lifted here so it survives a tier swap — Board's focused
+  // column and the Carousel's active slide are the same concept, so rotating a
+  // device or resizing a window keeps your place instead of resetting to SN.
+  const [activeNetwork, setActiveNetwork] = useState<NetworkId>('SN')
+
   return (
-    <section className="lanes" aria-label="Read the three networks">
+    <section className="lanes" aria-labelledby="lanes-heading">
+      <header className="lanes__intro">
+        <h2 id="lanes-heading" className="lanes__title">
+          The three networks, up close
+        </h2>
+        <p className="lanes__lead">
+          Each band from the map above, unrolled to read — the dreamer, the switch, and the builder.
+        </p>
+      </header>
       {boardTier ? (
         <>
           <LanesViewToggle mode={deskMode} onChange={setDeskMode} />
           {deskMode === 'board' ? (
-            <LanesBoard lanes={lanes} {...shared} />
+            <LanesBoard
+              lanes={lanes}
+              {...shared}
+              focused={activeNetwork}
+              onFocus={setActiveNetwork}
+            />
           ) : (
             <LanesAccordion lanes={lanes} {...shared} />
           )}
         </>
       ) : phoneTier ? (
-        <LanesCarousel lanes={lanes} {...shared} />
+        <LanesCarousel
+          lanes={lanes}
+          {...shared}
+          active={activeNetwork}
+          onActive={setActiveNetwork}
+        />
       ) : (
         <LanesAccordion lanes={lanes} {...shared} />
       )}
