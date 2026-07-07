@@ -42,3 +42,6 @@ docs/ai-scaffolding-report.md
 # The manifest (src/assets-manifest.json) IS tracked — it's metadata, not an image.
 photography-to-ui/public/assets/**/*.avif
 photography-to-ui/public/assets/**/*.webp
+
+# proto: raw vectorized mockup trace (1.8MB, dev-only A/B reference)
+switching-brain/public/proto-ref.svg
