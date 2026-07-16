@@ -44,10 +44,10 @@ export function ContextBar({
         <h1>{trialName}</h1>
         <span className={`commit-state${hasPending ? ' is-pending' : ''}`}>
           {hasPending
-            ? `Pending — ${pendingCount} ${pendingCount === 1 ? 'change' : 'changes'} unsaved`
+            ? `Pending · ${pendingCount} unsaved ${pendingCount === 1 ? 'change' : 'changes'}`
             : savedCount > 0
-              ? `Saved — ${savedCount} ${savedCount === 1 ? 'country' : 'countries'} committed`
-              : 'No selection committed yet'}
+              ? `Saved · ${savedCount} ${savedCount === 1 ? 'country' : 'countries'}`
+              : 'No countries saved yet'}
         </span>
       </div>
       <div className="context-actions">
@@ -71,7 +71,7 @@ export function ContextBar({
           aria-pressed={mode === 'light'}
           aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
         >
-          mode: {mode}
+          Theme: {mode === 'light' ? 'Light' : 'Dark'}
         </button>
       </div>
       <div className="toast-region" role="status" aria-live="polite">

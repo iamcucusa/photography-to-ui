@@ -85,7 +85,7 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
         {(
           [
             { value: 'footprint', label: 'Footprint' },
-            { value: 'enrollment-performance', label: 'Enrollment' },
+            { value: 'enrollment-performance', label: 'Enrollment & performance' },
             { value: 'timelines', label: 'Timelines' },
           ] as { value: EvidenceFamily; label: string }[]
         ).map((option) => (

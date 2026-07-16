@@ -6,15 +6,32 @@
 // carries the accent evidence bar.
 
 import { useState } from 'react'
-import type { Finding } from '../types'
+import type { CountryCode3, Finding } from '../types'
 import { validateFinding } from '../atlas/checks'
 import { writeState } from '../state/url'
 
-interface FindingsRailProps {
-  findings: Finding[]
+// The human encoding of the typed fields Atlas cites in `derivedFrom`. The
+// card is the human's window (the thesis): it reads the same evidence Atlas
+// reads, but in words — Atlas keeps the raw field keys.
+const FIELD_LABELS: Record<string, string> = {
+  ranking: 'rank',
+  historicalMedianEnrollmentRate: 'historical enrollment',
+  predictedEnrollmentRate: 'predicted enrollment',
+  performanceRatio: 'performance ratio',
+  medianStartupTime: 'startup time',
+  predictedStartupTime: 'predicted startup',
+  siteToSiteVariability: 'site-to-site variability',
+  totalSites: 'sites',
+  totalInvestigators: 'investigators',
+  multiTrialInvestigators: 'multi-trial investigators',
 }
 
-export function FindingsRail({ findings }: FindingsRailProps) {
+interface FindingsRailProps {
+  findings: Finding[]
+  countryNames: ReadonlyMap<CountryCode3, string>
+}
+
+export function FindingsRail({ findings, countryNames }: FindingsRailProps) {
   // Ephemeral: which claim is expanded. Never persisted anywhere.
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const proposed = findings.filter((f) => validateFinding(f) && f.status === 'proposed')
@@ -28,7 +45,7 @@ export function FindingsRail({ findings }: FindingsRailProps) {
         </span>
       </header>
       {proposed.length === 0 ? (
-        <p className="rail-quiet">No findings on the current state.</p>
+        <p className="rail-quiet">No findings for this view.</p>
       ) : (
         proposed.map((finding) => {
           const expanded = expandedId === finding.id
@@ -48,7 +65,7 @@ export function FindingsRail({ findings }: FindingsRailProps) {
                   <ul>
                     {finding.derivedFrom.map(([entityId, field]) => (
                       <li key={`${entityId}:${field}`}>
-                        <code>{entityId}</code> · <code>{field}</code>
+                        {countryNames.get(entityId) ?? entityId} · {FIELD_LABELS[field] ?? field}
                       </li>
                     ))}
                   </ul>

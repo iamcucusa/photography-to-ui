@@ -53,6 +53,11 @@ function Workspace() {
     [fixtures, weights],
   )
 
+  const countryNames = useMemo(
+    () => new Map((fixtures?.countries ?? []).map((c) => [c.code, c.name])),
+    [fixtures],
+  )
+
   const provenance = state?.provenance ?? 'all'
   const allRows = useMemo(
     () =>
@@ -112,7 +117,7 @@ function Workspace() {
   if (fixturesQuery.isError) {
     return (
       <div className="app-status" role="alert">
-        <p>Couldn’t load the trial’s evidence fixtures.</p>
+        <p>Couldn’t load this trial’s evidence.</p>
         <button
           type="button"
           className="btn btn-accent"
@@ -162,7 +167,7 @@ function Workspace() {
             )
           }
         />
-        <FindingsRail findings={findings} />
+        <FindingsRail findings={findings} countryNames={countryNames} />
       </div>
       {state.sites !== null && <SiteExplorer state={state} fixtures={fixtures} />}
       {state.distribution !== null && <DistributionPanel state={state} fixtures={fixtures} />}

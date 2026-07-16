@@ -90,8 +90,7 @@ export function RankingCriteria({ open, onClose, defaults }: RankingCriteriaProp
     >
       <h2>Ranking criteria</h2>
       <p className="dialog-hint">
-        Rank changes only through these weights (BL1). The composite recomputes in the data layer on
-        save.
+        Rank changes only through these weights. Scores recompute when you save.
       </p>
       <div className="weight-rows">
         {defaults.map((v) => (
