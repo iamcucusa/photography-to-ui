@@ -375,7 +375,7 @@ and design files.
 |---|---|---|---|
 | `ContextBar` | entry, commit | Trial name, commit state (pending or saved), the share link | `trialId` |
 | `ScopeBar` | 3 Re-scope | The three scope controls plus country search, always visible | `provenance`, `countriesScope`, `evidenceFamily`, `list.filterText` |
-| `CountryList` | 1 Rank, 5 Decide | The ranked rows: rank, active family's metrics, selection checkboxes, counts | `list.sortField`, `list.sortOrder`, `list.page` |
+| `CountryList` | 1 Rank, 5 Decide | The ranked rows: rank, active family's metrics, selection checkboxes, counts | `list.sortField`, `list.sortOrder` |
 | `DistributionPanel` | 2 Explain | One country's quartiles and startup buckets, outliers toggle, unit switch | `distribution` |
 | `SiteExplorer` | 2 Explain (site level) | The windowed evidence grid: every observation in scope, sortable, only visible rows mounted | `sites` |
 | `RankingCriteria` | 4 Steer | The weight vector and custom variables, behind an explicit control | none (weights are shared state, not view state) |
@@ -397,7 +397,6 @@ to one query parameter:
 | `countriesScope` | `scope` | `all`, `selected` | `all` |
 | `evidenceFamily` | `family` | `footprint`, `enrollment-performance`, `timelines` | `footprint` |
 | `list.sortField` + `list.sortOrder` | `sort` | `<field>:asc` or `<field>:desc` | `ranking:desc` |
-| `list.page` | `page` | integer from 1 | `1` |
 | `list.filterText` | `q` | free text, country name only | empty |
 | `distribution` | `dist` | `<countryCode>:<all|outliers>:<unit>`, absent when null | absent |
 | `sites` | `sites` | `<sortField>:<asc|desc>`, absent when closed | absent |
@@ -477,7 +476,7 @@ never persisted anywhere.
 ### History semantics (which interactions create a back-button stop)
 
 Discrete navigation **pushes** a history entry: provenance, scope, family,
-sort, page, open or close distribution or the site grid, the grid's sort, a
+sort, open or close distribution or the site grid, the grid's sort, a
 finding's "show me". Continuous input **replaces** the current entry: search
 typing (debounced 250 ms), outliers toggle, unit switch. Back therefore walks
 investigation moves, not keystrokes. Scroll positions and cursors are never
@@ -489,7 +488,7 @@ state: links share intent (sort, filters), never scroll offsets.
 |---|---|---|---|---|
 | Row hover | pointer over row | derived row | ephemeral hover | Row emphasis and affordances fade in, 120 ms; full-precision values in tooltip |
 | Sort | click column header; Enter on focused header | derived rows | view: `sort` (push) | Rows reorder with position transitions, 200 ms; sorted column marked |
-| Page | paginator; PageUp or PageDown | derived rows | view: `page` (push) | Instant swap; scroll resets to list top |
+| Scroll | wheel, drag; PageUp or PageDown | derived rows | ephemeral only; never the URL | Rows flow continuously under the pinned header; a new sort or filter resets to the top |
 | Select or deselect | checkbox click; Space on focused row | committed selection (for diff) | draft: pending selection | Checkbox state plus `ContextBar` pending count updates immediately (BL9) |
 | Open distribution (drill) | row action click; Enter on focused row | derived `CountryDistribution` | view: `dist` (push) | `DistributionPanel` enters, 200 ms slide-fade; focus moves into panel |
 
@@ -694,7 +693,7 @@ InvestigationState {
   provenance: 'all' | 'benchmark' | 'non-benchmark',
   countriesScope: 'all' | 'selected',
   evidenceFamily: 'footprint' | 'enrollment-performance' | 'timelines',
-  list: { sortField: string, sortOrder: 1 | -1, page: number, filterText: string },
+  list: { sortField: string, sortOrder: 1 | -1, filterText: string },
   distribution: { countryCode: CountryCode3, outliers: boolean,
                   unit: 'days' | 'weeks' | 'months' } | null,
   sites: { sortField: string, sortOrder: 1 | -1 } | null,   // the evidence grid

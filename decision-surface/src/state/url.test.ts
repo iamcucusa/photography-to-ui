@@ -8,7 +8,7 @@ function fullState(): InvestigationState {
     provenance: 'benchmark',
     countriesScope: 'selected',
     evidenceFamily: 'timelines',
-    list: { sortField: 'medianStartupTime', sortOrder: 1, page: 2, filterText: 'pol' },
+    list: { sortField: 'medianStartupTime', sortOrder: 1, filterText: 'pol' },
     distribution: { countryCode: 'POL', outliers: false, unit: 'weeks' },
     sites: { sortField: 'startupDays', sortOrder: -1 },
     highlight: ['POL', 'ESP'],
@@ -23,7 +23,7 @@ describe('serializeState (the F.2 canonical serializer)', () => {
   it('serializes parameters in the F.2 table order', () => {
     expect(serializeState(fullState())).toBe(
       'trial/trial-001?prov=benchmark&scope=selected&family=timelines' +
-        '&sort=medianStartupTime:asc&page=2&q=pol&dist=POL:outliers:weeks' +
+        '&sort=medianStartupTime:asc&q=pol&dist=POL:outliers:weeks' +
         '&sites=startupDays:desc&hl=POL,ESP',
     )
   })
@@ -59,9 +59,13 @@ describe('parseState', () => {
   it('falls back to defaults on malformed parameters — a link never dead-ends', () => {
     const state = parseState(
       'trial/trial-001',
-      'prov=nope&sort=hacked:up&page=-3&dist=X&sites=nope:asc&hl=lowercase',
+      'prov=nope&sort=hacked:up&dist=X&sites=nope:asc&hl=lowercase',
     )
     expect(state).toEqual(defaultState('trial-001'))
+  })
+
+  it('ignores the retired page param from older links', () => {
+    expect(parseState('trial/trial-001', 'page=2')).toEqual(defaultState('trial-001'))
   })
 
   it('rejects non-trial paths so the app can redirect to the entry URL', () => {

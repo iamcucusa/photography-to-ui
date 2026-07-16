@@ -1,13 +1,13 @@
 // F.1 `CountryList` — capabilities 1 Rank and 5 Decide. The ranked rows are
 // the spine of the surface: rank, the active family's metrics, selection,
-// counts. Owns list.sortField, list.sortOrder, list.page (§G.3).
+// counts. Owns list.sortField and list.sortOrder (§G.3). Rows scroll
+// continuously under the pinned header — scroll position is never state
+// (F.2); links share the list's intent (sort, filter), not offsets.
 
 import { useEffect, useMemo, useRef } from 'react'
 import type { CountryMetrics, EvidenceFamily, InvestigationState } from '../types'
 import { writeState } from '../state/url'
 import { useRowTransitions } from '../hooks/useRowTransitions'
-
-export const LIST_PAGE_SIZE = 20
 
 interface Column {
   field: keyof CountryMetrics
@@ -119,43 +119,39 @@ export function CountryList({
   onToggleSelect,
   onOpenDistribution,
 }: CountryListProps) {
-  const { sortField, sortOrder, page } = state.list
+  const { sortField, sortOrder } = state.list
   const columns = FAMILY_COLUMNS[state.evidenceFamily]
-  const pageCount = Math.max(1, Math.ceil(rows.length / LIST_PAGE_SIZE))
-  const currentPage = Math.min(page, pageCount)
-  const pageRows = useMemo(
-    () => rows.slice((currentPage - 1) * LIST_PAGE_SIZE, currentPage * LIST_PAGE_SIZE),
-    [rows, currentPage],
-  )
   const highlighted = useMemo(() => new Set(state.highlight), [state.highlight])
 
+  const scrollRef = useRef<HTMLDivElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
-  useRowTransitions(bodyRef, pageRows.map((r) => r.countryCode).join(','), settleToken)
+  useRowTransitions(bodyRef, rows.map((r) => r.countryCode).join(','), settleToken)
 
   const sortBy = (field: keyof CountryMetrics) => {
     const nextOrder = field === sortField ? (-sortOrder as 1 | -1) : defaultOrderFor(field)
     writeState(
-      { ...state, list: { ...state.list, sortField: field, sortOrder: nextOrder, page: 1 } },
+      { ...state, list: { ...state.list, sortField: field, sortOrder: nextOrder } },
       'push',
     )
   }
 
-  const goToPage = (next: number) => {
-    const clamped = Math.min(Math.max(1, next), pageCount)
-    if (clamped === currentPage) return
-    writeState({ ...state, list: { ...state.list, page: clamped } }, 'push')
-    window.scrollTo({ top: 0 }) // instant swap; scroll resets to list top
-  }
+  // A new sort or filter starts reading from the top; scroll itself is
+  // ephemeral and never lands in the URL.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 })
+  }, [sortField, sortOrder, state.list.filterText, state.countriesScope])
 
-  // Keyboard path for the paginator: PageUp/PageDown page the list unless
-  // focus is in an input, a dialog, or the site evidence grid.
+  // Keyboard path for the scrolling list: PageUp/PageDown move a viewport at
+  // a time unless focus is in an input, a dialog, or the site evidence grid.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'PageUp' && e.key !== 'PageDown') return
       const target = e.target as HTMLElement | null
       if (target?.closest('input, textarea, dialog, .site-explorer')) return
+      const scroller = scrollRef.current
+      if (!scroller) return
       e.preventDefault()
-      goToPage(currentPage + (e.key === 'PageDown' ? 1 : -1))
+      scroller.scrollBy({ top: (e.key === 'PageDown' ? 1 : -1) * scroller.clientHeight * 0.9 })
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -167,7 +163,7 @@ export function CountryList({
         ...state,
         provenance: 'all',
         countriesScope: 'all',
-        list: { ...state.list, filterText: '', page: 1 },
+        list: { ...state.list, filterText: '' },
       },
       'push',
     )
@@ -203,9 +199,11 @@ export function CountryList({
   return (
     <section className="country-list" aria-label="Ranked countries">
       <div
-        className="country-grid has-select"
+        ref={scrollRef}
+        className="country-grid"
         role="table"
         aria-label="Countries ranked by composite score"
+        aria-rowcount={rows.length + 1}
       >
         <div className="country-row country-row-head" role="row">
           <span role="columnheader" className="cell-select" />
@@ -251,7 +249,7 @@ export function CountryList({
           <span role="columnheader" className="cell-drill" />
         </div>
         <div ref={bodyRef} role="rowgroup">
-          {pageRows.map((row) => (
+          {rows.map((row, index) => (
             <div
               key={row.countryCode}
               data-flip-key={row.countryCode}
@@ -259,6 +257,7 @@ export function CountryList({
                 isChecked(row) !== row.selected ? ' is-pending' : ''
               }`}
               role="row"
+              aria-rowindex={index + 2}
             >
               <span role="cell" className="cell-select">
                 <input
@@ -282,7 +281,7 @@ export function CountryList({
               <span role="cell" className="cell-drill">
                 <button
                   type="button"
-                  className="btn btn-quiet drill-btn"
+                  className="btn-quiet drill-btn"
                   id={`dist-trigger-${row.countryCode}`}
                   aria-label={`Open distribution for ${row.countryName}`}
                   onClick={() => onOpenDistribution(row.countryCode)}
@@ -299,29 +298,6 @@ export function CountryList({
           {rows.length} of {totalCandidates} countries ·{' '}
           {state.provenance === 'all' ? 'all trial sources' : `${state.provenance} trials`}
         </span>
-        {pageCount > 1 && (
-          <nav className="paginator" aria-label="List pages">
-            <button
-              type="button"
-              className="btn"
-              onClick={() => goToPage(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              ‹ Prev
-            </button>
-            <span>
-              page {currentPage} of {pageCount}
-            </span>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === pageCount}
-            >
-              Next ›
-            </button>
-          </nav>
-        )}
       </footer>
     </section>
   )

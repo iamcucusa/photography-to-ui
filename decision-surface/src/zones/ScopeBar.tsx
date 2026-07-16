@@ -67,7 +67,7 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
     // Continuous input replaces the history entry (debounced 250 ms) —
     // back walks investigation moves, not keystrokes.
     debounceRef.current = setTimeout(() => {
-      writeState({ ...state, list: { ...state.list, filterText: text, page: 1 } }, 'replace')
+      writeState({ ...state, list: { ...state.list, filterText: text } }, 'replace')
     }, 250)
   }
 
@@ -118,9 +118,7 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
           { value: 'all', label: 'All' },
           { value: 'selected', label: 'Selected' },
         ]}
-        onChange={(countriesScope) =>
-          writeState({ ...state, countriesScope, list: { ...state.list, page: 1 } }, 'push')
-        }
+        onChange={(countriesScope) => writeState({ ...state, countriesScope }, 'push')}
       />
       <div className="scope-search">
         <input

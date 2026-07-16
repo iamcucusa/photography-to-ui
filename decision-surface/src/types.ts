@@ -74,12 +74,14 @@ export interface SitePage {
 }
 
 // §G.3 — the shareable unit of work, always serialized in the URL (BL7).
+// The list scrolls continuously; scroll position is never state (F.2), so
+// the list's shareable intent is its sort and filter only.
 export interface InvestigationState {
   trialId: string
   provenance: Provenance
   countriesScope: CountriesScope
   evidenceFamily: EvidenceFamily
-  list: { sortField: string; sortOrder: SortOrder; page: number; filterText: string }
+  list: { sortField: string; sortOrder: SortOrder; filterText: string }
   distribution: { countryCode: CountryCode3; outliers: boolean; unit: TimeUnit } | null
   sites: { sortField: string; sortOrder: SortOrder } | null
   highlight: CountryCode3[]

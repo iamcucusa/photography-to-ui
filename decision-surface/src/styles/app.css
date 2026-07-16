@@ -20,10 +20,15 @@
   }
 }
 
+/* The page never scrolls: chrome stays fixed and the ranked list scrolls in
+   its own region under a pinned header row, like the evidence grid. */
 .workspace {
   max-width: 1360px;
+  height: 100%;
   margin: 0 auto;
-  padding: 0 var(--space-lg) var(--space-xl);
+  padding: 0 var(--space-lg);
+  display: flex;
+  flex-direction: column;
 }
 
 .app-status {
@@ -157,8 +162,7 @@
 /* ---------- top bars (always visible, F.5) ---------- */
 
 .top-bars {
-  position: sticky;
-  top: 0;
+  flex: none;
   z-index: 20;
   background: var(--color-bg-canvas);
   border-bottom: 1px solid var(--color-border-strong);
@@ -389,23 +393,40 @@
 /* ---------- workspace body ---------- */
 
 .workspace-body {
+  flex: 1;
+  min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
   gap: var(--space-xl);
-  align-items: start;
+  align-items: stretch;
   padding-top: var(--space-md);
 }
 
 @media (max-width: 1100px) {
   .workspace-body {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .findings-rail {
+    max-height: 32vh;
+    overflow-y: auto;
   }
 }
 
 /* ---------- country list: lines carry the structure ---------- */
 
+.country-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .country-grid {
   font-variant-numeric: tabular-nums;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .country-row {
@@ -423,6 +444,10 @@
 }
 
 .country-row-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--color-bg-canvas);
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
   text-transform: uppercase;
@@ -527,6 +552,7 @@
 }
 
 .list-footer {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -534,12 +560,7 @@
   padding: var(--space-sm) var(--space-sm);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
-}
-
-.paginator {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+  border-top: 1px solid var(--color-border-strong);
 }
 
 .empty-state {
@@ -561,6 +582,8 @@
 .findings-rail {
   display: grid;
   align-content: start;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .rail-header {

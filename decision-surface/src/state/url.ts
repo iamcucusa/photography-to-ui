@@ -50,7 +50,7 @@ export function defaultState(trialId: string): InvestigationState {
     provenance: 'all',
     countriesScope: 'all',
     evidenceFamily: 'footprint',
-    list: { sortField: 'ranking', sortOrder: -1, page: 1, filterText: '' },
+    list: { sortField: 'ranking', sortOrder: -1, filterText: '' },
     distribution: null,
     sites: null,
     highlight: [],
@@ -76,7 +76,6 @@ export function serializeState(state: InvestigationState): string {
   if (state.evidenceFamily !== 'footprint') params.push(['family', state.evidenceFamily])
   const sort = sortToken(state.list.sortField, state.list.sortOrder)
   if (sort !== 'ranking:desc') params.push(['sort', sort])
-  if (state.list.page !== 1) params.push(['page', String(state.list.page)])
   if (state.list.filterText !== '') params.push(['q', state.list.filterText])
   if (state.distribution !== null) {
     const { countryCode, outliers, unit } = state.distribution
@@ -121,8 +120,8 @@ export function parseState(path: string, search: string): InvestigationState | n
   state.evidenceFamily = pick(params.get('family'), FAMILIES, 'footprint')
   const listSort = parseSortToken(params.get('sort'), LIST_SORT_FIELDS)
   if (listSort) state.list = { ...state.list, ...listSort }
-  const page = Number(params.get('page'))
-  if (Number.isInteger(page) && page >= 1) state.list.page = page
+  // Older links may carry a `page` param; the list scrolls continuously now,
+  // so it is ignored like any unknown parameter — links never dead-end.
   state.list.filterText = params.get('q') ?? ''
   const dist = params.get('dist')
   if (dist !== null) {
