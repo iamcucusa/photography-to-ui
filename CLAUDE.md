@@ -27,6 +27,11 @@ cucusa (workspace root — orchestration only)
 │     Experimentation + content-creation consumer. SVG/d3-force brain network.
 │     Carries its own viz deps (d3-force). See switching-brain/CLAUDE.md
 │
+├── decision-surface/      @cucusa/decision-surface — "Country Data Overview" case study
+│     Agent-era decision surface: URL-serialized investigation state, typed
+│     data tier, in-app agent (Atlas). Own deps (d3-*, TanStack, zustand,
+│     vitest). See decision-surface/CLAUDE.md + its docs/ specs.
+│
 └── (future consumers)     landing pages, blog
 ```
 
@@ -56,7 +61,7 @@ cucusa (workspace root — orchestration only)
 ## Stack
 
 - React 19, TypeScript 6 (strict), Vite 8, Node 24 (pinned in `.nvmrc`, read by CI and nvm — keep local and CI on this one pin)
-- npm workspaces (4 packages: tokens, photography-to-ui, docs, switching-brain)
+- npm workspaces (5 packages: tokens, photography-to-ui, docs, switching-brain, decision-surface)
 - Plain CSS with custom properties (no CSS modules, no Tailwind, no CSS-in-JS)
 - JetBrains Mono as the sole typeface (monospace everywhere)
 - Style Dictionary 4 (DTCG token pipeline; dark `:root` default + sparse light overrides under `[data-theme='light']`)
@@ -73,8 +78,9 @@ npm run audit        # Re-scan codebase, update audit-data.json + contrast-data.
 npm run dev          # Start photography-to-ui dev server (port 5173)
 npm run dev:docs     # Start docs consumer dev server (port 5174)
 npm run dev:brain    # Start switching-brain dev server (port 5175)
+npm run dev:decision # Start decision-surface dev server (port 5176)
 npm run build        # Build photography-to-ui only
-npm run build:all    # tokens → photography-to-ui → docs → switching-brain (full pipeline)
+npm run build:all    # tokens → photography-to-ui → docs → switching-brain → decision-surface
 npm run check        # tsc (all consumers) + eslint + prettier
 npm run lint         # ESLint only
 npm run format       # Prettier write
@@ -107,6 +113,14 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
   src/components/    # DS-styled chrome: RateControl, SelfMap, InspectCard, Legend
   public/data/nodes.json  # Seed data — fetched at runtime, swappable with no rebuild
   vite.config.ts     # Builds to dist/switching-brain/
+decision-surface/    # @cucusa/decision-surface — Country Data Overview (see decision-surface/CLAUDE.md)
+  docs/              # design-spec.md + data-spec.md — the consumer's source of truth
+  scripts/           # Seeded fixture generator + validator (python3), bundle-budget check
+  src/data/          # Typed data tier: fixtures, decode, derive, keyset query
+  src/state/         # URL canonical serializer, Zustand stores per §G.0 tier
+  src/atlas/         # The in-app agent: checks over the derived tier → findings
+  src/zones/         # One component per F.1 zone (CountryList, ScopeBar, ...)
+  vite.config.ts     # Builds to dist/decision-surface/
 ```
 
 ## How to add a new consumer

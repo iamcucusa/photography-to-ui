@@ -28,7 +28,7 @@ exist. Do not invent behavior.
 
 ```
 npm run dev          # from this dir — vite dev server, port 5176
-npm run build        # tsc && vite build → ../dist/decision-surface/
+npm run build        # tsc && vite build → ../dist/decision-surface/ + §H.3 bundle budget check
 npm run check        # tsc --noEmit && vitest run (the pure-layer tests gate CI)
 ```
 
