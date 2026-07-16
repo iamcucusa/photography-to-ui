@@ -122,8 +122,8 @@ function checkSingleWeightCarrier(
         findings.push({
           id: `finding-carrier-${code}`,
           claim:
-            `${name} ranks #${baseRank} on the strength of one variable — ` +
-            `${variable.title.toLowerCase()}. Without that weight it falls to ` +
+            `${name} ranks #${baseRank} mostly on one variable: ` +
+            `${variable.title.toLowerCase()}. Take that weight away and it falls to ` +
             `#${without.get(code)!}.`,
           derivedFrom: [
             [code, variable.metricKey],

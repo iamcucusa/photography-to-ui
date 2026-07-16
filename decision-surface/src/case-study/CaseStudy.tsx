@@ -38,12 +38,12 @@ const READERS = [
   {
     name: 'Ana',
     role: 'decides',
-    body: 'The feasibility analyst. The only writer of shared state — she steers the ranking and commits the shortlist.',
+    body: 'The feasibility analyst. The only writer of shared state; she steers the ranking and commits the shortlist.',
   },
   {
     name: 'Vera',
     role: 'verifies',
-    body: 'The reviewer, accountable for a decision she didn’t watch being made. One link restores Ana’s exact view — same data, filters, sort. Full surface, zero write paths.',
+    body: 'The reviewer, accountable for a decision she didn’t watch being made. One link restores Ana’s exact view: same data, filters, sort. Full surface, zero write paths.',
   },
   {
     name: 'Atlas',
@@ -53,12 +53,12 @@ const READERS = [
 ]
 
 const DEMO_STEPS = [
-  'Open the plain URL — the ranked answer is the first thing on screen.',
-  'Switch the trial source to Benchmark — the metrics change, and the rank column holds still. Rank is scope-independent by design.',
-  'Open Ranking criteria and shift one weight — the list re-ranks in front of you, with a 320 ms settle so the cause is visible.',
-  'Open Site evidence — scroll thousands of records with never more than ~40 rows in the DOM.',
-  'An Atlas card appears — “Show me” restores the exact view its claim is about, countries highlighted.',
-  'Copy the URL, paste it in a fresh tab — the identical investigation reopens.',
+  'Open the plain URL. The ranked answer is the first thing on screen.',
+  'Switch the trial source to Benchmark. The metrics change, and the rank column holds still: rank is scope-independent by design.',
+  'Open Ranking criteria and shift one weight. The list re-ranks in front of you, with a 320 ms settle so the cause is visible.',
+  'Open Site evidence and scroll: thousands of records, never more than ~40 rows in the DOM.',
+  'An Atlas card appears. “Show me” restores the exact view its claim is about, countries highlighted.',
+  'Copy the URL and paste it in a fresh tab. The identical investigation reopens.',
 ]
 
 const DECISIONS = [
@@ -66,7 +66,7 @@ const DECISIONS = [
     title: 'State lives in the URL',
     fork: 'A client store as the source of truth, or the URL.',
     choice:
-      'The URL. Link equality is state equality — any view can be reopened by anyone: Ana, Vera, or an agent’s finding.',
+      'The URL. Link equality is state equality, so any view can be reopened by anyone: Ana, Vera, or an agent’s finding.',
     tradeoff:
       'Serialization discipline: one canonical serializer is the only writer of the URL, and scroll positions are never state.',
   },
@@ -76,7 +76,7 @@ const DECISIONS = [
     choice:
       'Keyset. Flat-latency deep scroll over thousands → billions of rows, ≤40 mounted in the DOM, and the exact seam where a real backend plugs in.',
     tradeoff:
-      'The demo runs it client-side over fixtures — but the contract is production-shaped, so swapping in a service is a change of one layer, not a rewrite.',
+      'The demo runs it client-side over fixtures, but the contract is production-shaped: swapping in a service changes one layer, not the app.',
   },
 ]
 
@@ -84,7 +84,7 @@ const BUDGETS = [
   {
     label: 'Initial JS',
     value: '98.6 KB',
-    limit: '180 KB budget, build-enforced — this page included',
+    limit: '180 KB budget, build-enforced (this page included)',
   },
   { label: 'Evidence grid', value: '≤40 rows', limit: 'mounted over thousands of records' },
   { label: 'Keyset page', value: '<30 ms', limit: 'flat-latency at any scroll depth' },
@@ -110,12 +110,12 @@ export function CaseStudy() {
           </p>
           <p className="cs-def">
             A decision surface that turns thousands of scattered performance records into a ranked,
-            steerable shortlist — where every investigation is a shareable link, and a human and an
+            steerable shortlist, where every investigation is a shareable link and a human and an
             agent work from the same state.
           </p>
           <UrlChip />
           <div className="cs-chips" aria-label="Role and stack">
-            <span className="chip chip-role">Solo — product · design · engineering</span>
+            <span className="chip chip-role">Solo: product · design · engineering</span>
             <span className="chip">React 19</span>
             <span className="chip">TypeScript strict</span>
             <span className="chip">d3</span>
@@ -136,11 +136,11 @@ export function CaseStudy() {
 
         {/* 2 — The problem / Dash0 bridge */}
         <section className="cs-section">
-          <p className="cs-section-num">01 — The problem</p>
+          <p className="cs-section-num">01 · The problem</p>
           <h2 className="cs-h2">Overwhelming data, one defensible decision</h2>
           <p className="cs-lead">
             Choosing which countries a clinical trial runs in means reading thousands of site-level
-            records across dozens of countries — enrollment rates, startup times, site-to-site
+            records across dozens of countries: enrollment rates, startup times, site-to-site
             variability. Raw, no human can eyeball it. A wrong pick costs months; every call must
             survive a reviewer.
           </p>
@@ -153,9 +153,9 @@ export function CaseStudy() {
               <li>An agent reading the signals under the charts</li>
             </ul>
             <p className="cs-body">
-              The trial analyst and the on-call engineer at 2&nbsp;a.m. are the same user — someone
-              who has to turn too much data into a decision they can defend. The techniques here —
-              windowed rendering, keyset paging, investigation-in-a-URL — are the ones a real-time
+              The trial analyst and the on-call engineer at 2&nbsp;a.m. are the same user: someone
+              who has to turn too much data into a decision they can defend. The techniques here
+              (windowed rendering, keyset paging, investigation-in-a-URL) are the ones a real-time
               observability surface lives or dies on.
             </p>
           </div>
@@ -163,7 +163,7 @@ export function CaseStudy() {
 
         {/* 3 — Three readers */}
         <section className="cs-section">
-          <p className="cs-section-num">02 — Who it’s for</p>
+          <p className="cs-section-num">02 · Who it’s for</p>
           <h2 className="cs-h2">One surface, three readers</h2>
           <div className="cs-readers">
             {READERS.map((r) => (
@@ -177,13 +177,13 @@ export function CaseStudy() {
           </div>
           <p className="cs-note">
             The assumption I challenged: a UI serves one user. This one serves a human <em>and</em>{' '}
-            an agent — each in its own encoding. Force either into the other’s, and you fail both.
+            an agent, each in its own encoding. Force either into the other’s, and you fail both.
           </p>
         </section>
 
         {/* 4 — Live demo */}
         <section className="cs-section" id="demo">
-          <p className="cs-section-num">03 — See it work</p>
+          <p className="cs-section-num">03 · See it work</p>
           <h2 className="cs-h2">Ninety seconds, live</h2>
           <ol className="cs-checklist">
             {DEMO_STEPS.map((step, i) => (
@@ -196,13 +196,13 @@ export function CaseStudy() {
             </a>
           </div>
           <p className="cs-note">
-            This is the live product, not a recording — best explored with your own hands.
+            This is the live product, not a recording. Best explored with your own hands.
           </p>
         </section>
 
         {/* 5 — Architecture */}
         <section className="cs-section">
-          <p className="cs-section-num">04 — Architecture</p>
+          <p className="cs-section-num">04 · Architecture</p>
           <h2 className="cs-h2">Structural decisions, not just features</h2>
           <div className="cs-tiers" aria-label="The tiered data model">
             <span className="tier">Seeded fixtures</span>
@@ -213,7 +213,7 @@ export function CaseStudy() {
           </div>
           <p className="cs-body">
             Data flows one way. The derived tier is computed on read, never stored, so the overview
-            and the drill-down can’t contradict — one truth-source, aggregation below the view. Then
+            and the drill-down can’t contradict: one truth-source, aggregation below the view. Then
             two decisions carry the weight:
           </p>
           <div className="cs-decisions">
@@ -236,7 +236,7 @@ export function CaseStudy() {
 
         {/* 6 — Rigor / receipts */}
         <section className="cs-section">
-          <p className="cs-section-num">05 — Done well, provably</p>
+          <p className="cs-section-num">05 · Done well, provably</p>
           <h2 className="cs-h2">Budgets that fail the build</h2>
           <table className="cs-budgets">
             <tbody>
@@ -264,20 +264,20 @@ export function CaseStudy() {
             </li>
           </ul>
           <p className="cs-body">
-            The interaction contract — ten business rules a reviewer enforces, seven invariants that
-            keep the URL canonical and the agent honest — is written down and cited by ID in the
-            code and the commit history.
+            The interaction contract is written down and cited by ID in the code and the commit
+            history: ten business rules a reviewer enforces, and seven invariants that keep the URL
+            canonical and the agent honest.
           </p>
         </section>
 
         {/* 7 — AI thread + next + close */}
         <section className="cs-section">
-          <p className="cs-section-num">06 — The reader under the charts</p>
+          <p className="cs-section-num">06 · The reader under the charts</p>
           <h2 className="cs-h2">What an agent needs to be trusted</h2>
           <figure className="cs-finding">
             <p className="cs-finding-claim">
-              Poland ranks #2 on the strength of one variable — median startup time. Without that
-              weight it falls to #10.
+              Poland ranks #2 mostly on one variable: median startup time. Take that weight away and
+              it falls to #10.
             </p>
             <p className="cs-finding-schema">
               <code>
@@ -287,7 +287,7 @@ export function CaseStudy() {
           </figure>
           <p className="cs-body">
             Atlas reads the typed rows, not the pixels. Every finding carries its evidence{' '}
-            <em>and</em> a restorable view — no claim renders without both. That’s the shape of
+            <em>and</em> a restorable view; no claim renders without both. That’s the shape of
             AI-assisted debugging: at 2&nbsp;a.m. you don’t want an answer, you want the answer and
             the exact view that proves it.
           </p>
@@ -295,7 +295,7 @@ export function CaseStudy() {
           <h3 className="cs-h3">What I’d build next</h3>
           <ul className="cs-next">
             <li>
-              A real backend behind the keyset contract — the socket is already the right shape.
+              A real backend behind the keyset contract; the socket is already the right shape.
             </li>
             <li>Derivation off the main thread as the dataset grows past this scale.</li>
             <li>Multi-user shared state, so Ana and Vera can be live on one investigation.</li>
@@ -307,7 +307,7 @@ export function CaseStudy() {
             design for this case study.
           </p>
           <p className="cs-close">
-            Charts for humans, structured data for agents — one state, and the link is the proof.
+            Charts for humans, structured data for agents. One state, and the link is the proof.
           </p>
           <div className="cs-actions">
             <a className="cs-cta" href={DEMO_HREF}>
@@ -318,7 +318,7 @@ export function CaseStudy() {
       </main>
 
       <footer className="cs-footer">
-        <span>Country Data Overview — a frontend product engineering case study.</span>
+        <span>Country Data Overview, a frontend product engineering case study.</span>
         <a
           href="https://www.linkedin.com/in/iamcucusa"
           target="_blank"

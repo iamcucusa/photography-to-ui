@@ -96,7 +96,7 @@ const FAMILY_COLUMNS: Record<EvidenceFamily, Column[]> = {
       unit: 'IQR ÷ median',
       format: (r) => rate(r.siteToSiteVariability),
       title: (r) =>
-        `spread across sites — IQR ÷ median of per-site means: ${precise(r.siteToSiteVariability)}. Higher means sites vary more`,
+        `spread across sites (IQR ÷ median of per-site means): ${precise(r.siteToSiteVariability)}. Higher means sites vary more`,
     },
   ],
 }
@@ -189,7 +189,7 @@ export function CountryList({
         <div className="empty-state">
           <p>
             No countries match the active filters
-            {active.length > 0 ? ` — ${active.join(' · ')}` : ''}.
+            {active.length > 0 ? ` (${active.join(' · ')})` : ''}.
           </p>
           <button type="button" className="btn" onClick={clearFilters}>
             Clear filters
