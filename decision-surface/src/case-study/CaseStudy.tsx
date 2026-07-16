@@ -66,7 +66,7 @@ const DECISIONS = [
     title: 'State lives in the URL',
     fork: 'A client store as the source of truth, or the URL.',
     choice:
-      'The URL. Link equality is state equality — any view is restorable and shareable by anyone: Ana, Vera, or an agent’s finding.',
+      'The URL. Link equality is state equality — any view can be reopened by anyone: Ana, Vera, or an agent’s finding.',
     tradeoff:
       'Serialization discipline: one canonical serializer is the only writer of the URL, and scroll positions are never state.',
   },
@@ -81,7 +81,11 @@ const DECISIONS = [
 ]
 
 const BUDGETS = [
-  { label: 'Initial JS', value: '94.7 KB', limit: '180 KB budget — fails the build if exceeded' },
+  {
+    label: 'Initial JS',
+    value: '98.6 KB',
+    limit: '180 KB budget, build-enforced — this page included',
+  },
   { label: 'Evidence grid', value: '≤40 rows', limit: 'mounted over thousands of records' },
   { label: 'Keyset page', value: '<30 ms', limit: 'flat-latency at any scroll depth' },
   { label: 'Rank recompute', value: '<50 ms', limit: 'steer → reordered paint' },
@@ -106,8 +110,8 @@ export function CaseStudy() {
           </p>
           <p className="cs-def">
             A decision surface that turns thousands of scattered performance records into a ranked,
-            steerable shortlist — where every decision persists as a shareable link, and a human and
-            an agent work from the same state.
+            steerable shortlist — where every investigation is a shareable link, and a human and an
+            agent work from the same state.
           </p>
           <UrlChip />
           <div className="cs-chips" aria-label="Role and stack">
@@ -118,14 +122,14 @@ export function CaseStudy() {
             <span className="chip">TanStack Query · Virtual</span>
             <span className="chip">Zustand</span>
             <span className="chip">DTCG tokens</span>
-            <span className="chip">frontend-only</span>
+            <span className="chip">frontend-only, by design</span>
           </div>
           <div className="cs-actions">
             <a className="cs-cta" href={DEMO_HREF}>
               Open the live investigation →
             </a>
             <a className="cs-cta-quiet" href="#demo">
-              or read on ↓
+              or skip to the demo ↓
             </a>
           </div>
         </section>
@@ -149,9 +153,9 @@ export function CaseStudy() {
               <li>An agent reading the signals under the charts</li>
             </ul>
             <p className="cs-body">
-              The trial analyst and the on-call engineer at 2&nbsp;a.m. are the same user: turn
-              overwhelming data into a fast, defensible decision. The techniques here — windowed
-              rendering, keyset paging, investigation-in-a-URL — are the ones a real-time
+              The trial analyst and the on-call engineer at 2&nbsp;a.m. are the same user — someone
+              who has to turn too much data into a decision they can defend. The techniques here —
+              windowed rendering, keyset paging, investigation-in-a-URL — are the ones a real-time
               observability surface lives or dies on.
             </p>
           </div>
@@ -192,13 +196,13 @@ export function CaseStudy() {
             </a>
           </div>
           <p className="cs-note">
-            This is the demo — not a video of it. Best seen with your own hands on it.
+            This is the live product, not a recording — best explored with your own hands.
           </p>
         </section>
 
         {/* 5 — Architecture */}
         <section className="cs-section">
-          <p className="cs-section-num">04 — The architecture I’d co-own</p>
+          <p className="cs-section-num">04 — Architecture</p>
           <h2 className="cs-h2">Structural decisions, not just features</h2>
           <div className="cs-tiers" aria-label="The tiered data model">
             <span className="tier">Seeded fixtures</span>
@@ -247,7 +251,7 @@ export function CaseStudy() {
           </table>
           <ul className="cs-receipts">
             <li>
-              <strong>67</strong> tests · 9 files
+              <strong>70</strong> tests · 10 files
             </li>
             <li>
               <strong>54</strong> contrast checks · dark + light
@@ -262,7 +266,7 @@ export function CaseStudy() {
           <p className="cs-body">
             The interaction contract — ten business rules a reviewer enforces, seven invariants that
             keep the URL canonical and the agent honest — is written down and cited by ID in the
-            code. Picky developers notice when it’s done this well.
+            code and the commit history.
           </p>
         </section>
 
@@ -314,7 +318,10 @@ export function CaseStudy() {
       </main>
 
       <footer className="cs-footer">
-        <span>Country Data Overview — a frontend product engineering case study.</span>
+        <span>
+          Country Data Overview — a frontend product engineering case study, built solo by Graciela
+          Henriquez: product, design, engineering.
+        </span>
       </footer>
     </div>
   )

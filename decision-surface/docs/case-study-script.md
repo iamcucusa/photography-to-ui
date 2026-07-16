@@ -70,9 +70,10 @@ Drive slowly; narrate the *why*, not the clicks.
 
 ## 12:00 — Rigor (1.5 min) · Section 05
 
-- "Budgets that fail the build: initial JS 94.7 KB against a 180 KB ceiling; the grid caps
-  at 40 mounted rows; keyset pages serve under 30 ms." Point at the table.
-- "67 tests, 54 contrast checks across both themes, zero hardcoded color enforced in CI,
+- "Budgets that fail the build: initial JS 98.6 KB against a 180 KB ceiling — and that
+  includes this case-study page; the grid caps at 40 mounted rows; keyset pages serve
+  under 30 ms." Point at the table.
+- "70 tests, 54 contrast checks across both themes, zero hardcoded color enforced in CI,
   and the fixtures come from a seeded generator that passes 13 of 13 data-integrity checks
   including anti-leakage. Picky developers notice when it's done this well."
 
