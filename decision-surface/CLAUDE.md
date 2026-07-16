@@ -83,6 +83,13 @@ src/
 - **`--color-status-error` is a 15% accent WASH**, not a text color (~1:1 as
   a line). Use it as an indicator field with primary text on top, never as
   text or a thin border.
+- **Row hover is `--color-accent-wash`, not a canvas overlay.** The
+  `--color-overlay-*` tokens tint toward canvas, so they vanish wherever the
+  ground already is canvas (light mode) or elevated (the panels). Accent-wash
+  is the only single token that contrasts against every neutral ground in
+  both modes (Δ 14-23) while keeping text ≥ 13.6:1 — accent is this surface's
+  interaction color. A highlighted row keeps its accent-tint on hover (guard
+  in app.css) so the meaningful highlight never softens to the hover wash.
 - Distributions drawn with **d3** (scale, shape, array) to SVG, styled by
   tokens. No high-level chart wrapper.
 - App deps live here, not in the root: `d3-scale`, `d3-shape`, `d3-array`,

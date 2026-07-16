@@ -441,8 +441,19 @@
   transition: background-color var(--ds-duration-fast) var(--ds-ease);
 }
 
+/* Row hover uses the softest accent wash, not a canvas-tinted overlay: an
+   overlay tints toward canvas and so vanishes wherever the ground IS canvas
+   (light mode) or elevated (the panels). Accent-wash contrasts against every
+   neutral ground in both modes (Δ 14-23), stays subtle and transient, and
+   keeps text ≥ 13.6:1 — accent is already this surface's interaction color. */
 .country-row:not(.country-row-head):hover {
-  background: var(--color-overlay-faint);
+  background-color: var(--color-accent-wash);
+}
+
+/* A highlighted row keeps its persistent accent-tint on hover rather than
+   softening to the wash — the highlight is the stronger, meaningful signal. */
+.country-row.is-highlighted:hover {
+  background-color: var(--color-accent-tint);
 }
 
 .country-row-head {
@@ -854,7 +865,7 @@
 }
 
 .site-row:not(.site-row-head):hover {
-  background: var(--color-overlay-faint);
+  background-color: var(--color-accent-wash);
 }
 
 .site-row-head {
