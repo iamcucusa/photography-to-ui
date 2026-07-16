@@ -153,10 +153,25 @@ function base(): string {
   return import.meta.env.BASE_URL
 }
 
-export function readState(): InvestigationState | null {
+function appRelativePath(): string {
   const pathname = window.location.pathname
-  const path = pathname.startsWith(base()) ? pathname.slice(base().length) : pathname
-  return parseState(path, window.location.search)
+  return pathname.startsWith(base()) ? pathname.slice(base().length) : pathname
+}
+
+export function readState(): InvestigationState | null {
+  return parseState(appRelativePath(), window.location.search)
+}
+
+// The case-study landing route. url.ts stays the URL authority (I2): the
+// entry branch in App reads the route through here, not window directly.
+export function isCaseStudyRoute(): boolean {
+  return appRelativePath().replace(/^\/+/, '').replace(/\/+$/, '') === 'case-study'
+}
+
+// Full URL for a trial, base-prefixed — the case study's launch link opens
+// the live app with a plain navigation (no reactive routing).
+export function trialHref(trialId: string): string {
+  return base() + serializeState(defaultState(trialId))
 }
 
 // Stable snapshot for useSyncExternalStore: the same URL returns the same

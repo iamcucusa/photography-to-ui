@@ -5,7 +5,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useInvestigationState } from './state/useInvestigationState'
-import { DEFAULT_TRIAL_ID, defaultState, writeState } from './state/url'
+import { DEFAULT_TRIAL_ID, defaultState, isCaseStudyRoute, writeState } from './state/url'
 import { useDraftsStore, useSharedStore } from './state/store'
 import { useFixtures } from './data/query'
 import { applyWeights, deriveCountryRows, filterRows, sortRows } from './data/derive'
@@ -17,10 +17,16 @@ import { FindingsRail } from './zones/FindingsRail'
 import { RankingCriteria } from './zones/RankingCriteria'
 import { SiteExplorer } from './zones/SiteExplorer'
 import { DistributionPanel } from './zones/DistributionPanel'
+import { CaseStudy } from './case-study/CaseStudy'
 
 const queryClient = new QueryClient()
 
 export function App() {
+  // Additive landing route: /case-study renders the portfolio narrative; every
+  // other path is the live app exactly as before. Navigation between them is a
+  // full page load (the case study's launch link is a plain anchor), so this
+  // route decision is read once at mount — no reactive routing, no coupling.
+  if (isCaseStudyRoute()) return <CaseStudy />
   return (
     <QueryClientProvider client={queryClient}>
       <Workspace />
