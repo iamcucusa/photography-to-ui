@@ -318,10 +318,15 @@ export function CaseStudy() {
       </main>
 
       <footer className="cs-footer">
-        <span>
-          Country Data Overview — a frontend product engineering case study, built solo by Graciela
-          Henriquez: product, design, engineering.
-        </span>
+        <span>Country Data Overview — a frontend product engineering case study.</span>
+        <a
+          href="https://www.linkedin.com/in/iamcucusa"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cs-credit-link"
+        >
+          Designed in code by <span className="cs-credit-handle">@iamcucusa</span>
+        </a>
       </footer>
     </div>
   )
