@@ -52,26 +52,21 @@ export function ContextBar({
       </div>
       <div className="context-actions">
         {hasPending && onDiscard && (
-          <button type="button" className="btn btn-quiet" onClick={onDiscard}>
+          <button type="button" className="btn-quiet" onClick={onDiscard}>
             Discard
           </button>
         )}
         {onCommit && (
-          <button
-            type="button"
-            className="btn btn-accent"
-            onClick={onCommit}
-            disabled={!hasPending}
-          >
+          <button type="button" className="btn-primary" onClick={onCommit} disabled={!hasPending}>
             Save Countries
           </button>
         )}
-        <button type="button" className="btn" onClick={copyLink}>
+        <button type="button" className="btn-quiet" onClick={copyLink}>
           Copy link
         </button>
         <button
           type="button"
-          className="btn btn-quiet"
+          className="btn-quiet"
           onClick={toggle}
           aria-pressed={mode === 'light'}
           aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}

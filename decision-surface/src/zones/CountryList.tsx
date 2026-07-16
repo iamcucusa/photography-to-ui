@@ -12,31 +12,36 @@ export const LIST_PAGE_SIZE = 20
 interface Column {
   field: keyof CountryMetrics
   label: string
+  unit: string // rendered under the label; full wording in the cell tooltip
   format: (row: CountryMetrics) => string
   title: (row: CountryMetrics) => string
 }
 
 const rate = (v: number) => v.toFixed(2)
-const days = (v: number) => `${Math.round(v)} d`
 
 // One evidence family visible at a time (F.4); §C item 2 names the families.
+// Units live in the header so the numbers stay clean; tooltips carry the
+// full-precision value with the unit spelled out.
 const FAMILY_COLUMNS: Record<EvidenceFamily, Column[]> = {
   footprint: [
     {
       field: 'totalSites',
       label: 'Sites',
+      unit: 'distinct',
       format: (r) => String(r.totalSites),
-      title: (r) => `${r.totalSites} sites`,
+      title: (r) => `${r.totalSites} distinct sites`,
     },
     {
       field: 'totalInvestigators',
       label: 'Investigators',
+      unit: 'distinct',
       format: (r) => String(r.totalInvestigators),
-      title: (r) => `${r.totalInvestigators} investigators`,
+      title: (r) => `${r.totalInvestigators} distinct investigators`,
     },
     {
       field: 'multiTrialInvestigators',
       label: 'Multi-trial',
+      unit: '≥2 source trials',
       format: (r) => String(r.multiTrialInvestigators),
       title: (r) => `${r.multiTrialInvestigators} investigators in more than one source trial`,
     },
@@ -44,41 +49,48 @@ const FAMILY_COLUMNS: Record<EvidenceFamily, Column[]> = {
   'enrollment-performance': [
     {
       field: 'historicalMedianEnrollmentRate',
-      label: 'Historical rate',
+      label: 'Historical',
+      unit: 'pts/site/mo',
       format: (r) => rate(r.historicalMedianEnrollmentRate),
-      title: (r) => `median ${r.historicalMedianEnrollmentRate} patients/site/month`,
+      title: (r) => `median ${r.historicalMedianEnrollmentRate} patients per site per month`,
     },
     {
       field: 'predictedEnrollmentRate',
-      label: 'Predicted rate',
+      label: 'Predicted',
+      unit: 'pts/site/mo',
       format: (r) => rate(r.predictedEnrollmentRate),
-      title: (r) => `predicted ${r.predictedEnrollmentRate} patients/site/month`,
+      title: (r) => `predicted ${r.predictedEnrollmentRate} patients per site per month`,
     },
     {
       field: 'performanceRatio',
       label: 'Performance',
-      format: (r) => `×${rate(r.performanceRatio)}`,
-      title: (r) => `achieved over target, median ${r.performanceRatio}`,
+      unit: 'achieved ÷ target',
+      format: (r) => rate(r.performanceRatio),
+      title: (r) => `median achieved-over-target ratio ${r.performanceRatio} (1.00 = on target)`,
     },
   ],
   timelines: [
     {
       field: 'medianStartupTime',
       label: 'Startup',
-      format: (r) => days(r.medianStartupTime),
-      title: (r) => `median ${r.medianStartupTime} days, activation to first patient`,
+      unit: 'days',
+      format: (r) => String(Math.round(r.medianStartupTime)),
+      title: (r) => `median ${r.medianStartupTime} days, site activation to first patient`,
     },
     {
       field: 'predictedStartupTime',
-      label: 'Predicted startup',
-      format: (r) => days(r.predictedStartupTime),
-      title: (r) => `predicted ${r.predictedStartupTime} days`,
+      label: 'Predicted',
+      unit: 'days',
+      format: (r) => String(Math.round(r.predictedStartupTime)),
+      title: (r) => `predicted ${r.predictedStartupTime} days, site activation to first patient`,
     },
     {
       field: 'siteToSiteVariability',
       label: 'Variability',
+      unit: 'IQR ÷ median',
       format: (r) => rate(r.siteToSiteVariability),
-      title: (r) => `IQR over median of per-site means: ${r.siteToSiteVariability}`,
+      title: (r) =>
+        `IQR over median of per-site mean enrollment: ${r.siteToSiteVariability} (dimensionless)`,
     },
   ],
 }
@@ -232,6 +244,7 @@ export function CountryList({
             >
               <button type="button" className="sort-btn" onClick={() => sortBy(col.field)}>
                 {col.label} {sortIndicator(col.field)}
+                <span className="unit">{col.unit}</span>
               </button>
             </span>
           ))}

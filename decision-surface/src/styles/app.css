@@ -1,12 +1,14 @@
 /* decision-surface zones — token-driven, no hardcoded color (workspace rule).
-   Motion: CSS transitions/one-shot animations on the contract's duration
-   custom properties (base.css); reduced motion collapses them (I7). */
+   Art direction: a line-based data surface. Rules and alignment carry the
+   structure — no cards, no pills, no rounded boxes. Control weight encodes
+   importance: solid accent for the shared-state write, bordered for tools,
+   underlined text for quiet actions. Motion: CSS transitions/one-shot
+   animations on the contract's duration custom properties (I7). */
 
 /* Visible focus for every keyboard-reachable control (workspace focus-ring system). */
 :focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
-  border-radius: var(--radius-sm);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -32,51 +34,99 @@
   color: var(--color-text-secondary);
 }
 
-/* ---------- buttons ---------- */
+/* ---------- the action system (three tiers, all square) ---------- */
 
-.btn {
+/* Tier 1 — the shared-state write. One solid control per screen. */
+.btn-primary {
   font: inherit;
-  font-size: var(--text-sm);
-  color: var(--color-text-primary);
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
-  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  padding: var(--space-xs) var(--space-md);
   cursor: pointer;
-  transition:
-    border-color var(--ds-duration-fast) var(--ds-ease),
-    background-color var(--ds-duration-fast) var(--ds-ease);
+  transition: background-color var(--ds-duration-fast) var(--ds-ease);
 }
 
-.btn:hover:not(:disabled) {
-  border-color: var(--color-border-accent-hover);
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-highlight);
+  border-color: var(--color-accent-highlight);
 }
 
-.btn:disabled {
+.btn-primary:disabled {
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
   color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
-.btn-accent {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-text-on-accent);
-}
-
-.btn-accent:disabled {
-  background: var(--color-bg-inset);
-  border-color: var(--color-border-subtle);
-}
-
-.btn-quiet {
+/* Tier 2 — tools that open surfaces. Bordered, square. */
+.btn {
+  font: inherit;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-primary);
   background: transparent;
-  border-color: transparent;
+  border: 1px solid var(--color-border-strong);
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--ds-duration-fast) var(--ds-ease),
+    color var(--ds-duration-fast) var(--ds-ease);
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--color-border-accent-hover);
+  color: var(--color-text-accent);
+}
+
+.btn:disabled {
+  color: var(--color-text-muted);
+  border-color: var(--color-border-subtle);
+  cursor: not-allowed;
+}
+
+.btn[aria-expanded='true'],
+.btn[aria-pressed='true'] {
+  border-color: var(--color-border-accent);
+  color: var(--color-text-accent);
+}
+
+/* Tier 3 — quiet actions. Text only, underline on hover. */
+.btn-quiet {
+  font: inherit;
+  font-size: var(--text-xs);
   color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  padding: var(--space-xs) 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--ds-duration-fast) var(--ds-ease);
 }
 
 .btn-quiet:hover:not(:disabled) {
   color: var(--color-text-primary);
-  border-color: var(--color-border-subtle);
+  text-decoration: underline;
+}
+
+/* Inline accent action (a finding's "show me") — a link, not a control chip. */
+.action-link {
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-text-accent);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.action-link:hover {
+  text-decoration: underline;
 }
 
 .sort-btn {
@@ -89,10 +139,19 @@
   cursor: pointer;
   letter-spacing: inherit;
   text-transform: inherit;
+  text-align: inherit;
 }
 
 .sort-btn:hover {
   color: var(--color-text-accent);
+}
+
+.sort-btn .unit {
+  display: block;
+  font-size: var(--text-xs);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
 }
 
 /* ---------- top bars (always visible, F.5) ---------- */
@@ -102,7 +161,7 @@
   top: 0;
   z-index: 20;
   background: var(--color-bg-canvas);
-  border-bottom: var(--divider-subtle);
+  border-bottom: 1px solid var(--color-border-strong);
   margin: 0 calc(-1 * var(--space-lg));
   padding: 0 var(--space-lg);
 }
@@ -131,24 +190,26 @@
   white-space: nowrap;
 }
 
+/* Commit state is a statement, not a badge: text against a rule (BL9). */
 .commit-state {
   font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
   color: var(--color-text-muted);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
-  padding: 2px var(--space-sm);
+  border-left: 2px solid var(--color-border-subtle);
+  padding-left: var(--space-sm);
   white-space: nowrap;
 }
 
 .commit-state.is-pending {
   color: var(--color-text-accent);
-  border-color: var(--color-border-accent);
+  border-left-color: var(--color-accent);
 }
 
 .context-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
 }
 
 .toast-region {
@@ -163,91 +224,166 @@
   font-size: var(--text-xs);
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
-  border: 1px solid var(--color-border-accent);
-  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--color-accent);
   padding: var(--space-xs) var(--space-sm);
   box-shadow: var(--shadow-soft);
   animation: ds-enter var(--ds-duration-standard) var(--ds-ease);
 }
 
-/* ---------- scope bar ---------- */
+/* ---------- scope bar: importance is legible in the control shapes ----------
+   Evidence family = view tabs (structure). Trial source = the evidence
+   filter, bordered toggles (consequence). Countries = a quiet text toggle.
+   Search = an underlined field (utility). */
 
 .scope-bar {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-sm) 0 var(--space-md);
+  align-items: flex-end;
+  gap: var(--space-lg);
+  padding: var(--space-sm) 0 0;
 }
 
-.segmented {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
-.segmented-label {
+.control-label {
+  display: block;
   font-size: var(--text-xs);
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-normal);
+  margin-bottom: var(--space-xs);
 }
 
-.segmented-buttons {
-  display: inline-flex;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+/* Evidence family — underline tabs, flush with the bar's bottom rule. */
+.family-tabs {
+  display: flex;
+  gap: var(--space-md);
 }
 
-.segmented-buttons button {
+.family-tabs button {
+  font: inherit;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: var(--space-xs) 0 var(--space-sm);
+  cursor: pointer;
+  transition:
+    color var(--ds-duration-fast) var(--ds-ease),
+    border-color var(--ds-duration-fast) var(--ds-ease);
+}
+
+.family-tabs button:hover {
+  color: var(--color-text-primary);
+}
+
+.family-tabs button[aria-pressed='true'] {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Trial source — bordered square toggles: the filter that changes what the
+   evidence means. */
+.provenance-control .options {
+  display: flex;
+}
+
+.provenance-control .options button {
   font: inherit;
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
   background: transparent;
-  border: none;
+  border: 1px solid var(--color-border-subtle);
+  border-right-width: 0;
   padding: var(--space-xs) var(--space-sm);
   cursor: pointer;
+  margin-bottom: var(--space-sm);
   transition:
-    background-color var(--ds-duration-fast) var(--ds-ease),
-    color var(--ds-duration-fast) var(--ds-ease);
+    color var(--ds-duration-fast) var(--ds-ease),
+    background-color var(--ds-duration-fast) var(--ds-ease);
 }
 
-.segmented-buttons button + button {
-  border-left: 1px solid var(--color-border-subtle);
+.provenance-control .options button:last-child {
+  border-right-width: 1px;
 }
 
-.segmented-buttons button[aria-pressed='true'] {
+/* Active state carried by the tint + accent border; text stays primary so
+   small type holds AA in both modes (accent-on-tint fails in light). */
+.provenance-control .options button[aria-pressed='true'] {
   background: var(--color-accent-tint);
-  color: var(--color-text-accent);
+  border-color: var(--color-border-accent);
+  border-right-width: 1px;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.provenance-control .options button[aria-pressed='true'] + button {
+  border-left-width: 0;
+}
+
+/* Countries — the lightest filter: a text toggle. */
+.scope-toggle .options {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.scope-toggle .options button {
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  padding: var(--space-xs) 0;
+  cursor: pointer;
+  transition: color var(--ds-duration-fast) var(--ds-ease);
+}
+
+.scope-toggle .options button:hover {
+  color: var(--color-text-primary);
+}
+
+.scope-toggle .options button[aria-pressed='true'] {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 4px;
 }
 
 .scope-search {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
 }
 
 .scope-search input {
   font: inherit;
   font-size: var(--text-sm);
   color: var(--color-text-primary);
-  background: var(--color-bg-inset);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
-  padding: var(--space-xs) var(--space-sm);
-  width: 14rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding: var(--space-xs) 0;
+  width: 13rem;
 }
 
-.scope-search input:focus {
-  border-color: var(--color-border-accent);
+.scope-search input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.scope-search input:focus-visible {
   outline: none;
+  border-bottom-color: var(--color-accent);
+  box-shadow: 0 1px 0 0 var(--color-accent);
 }
 
 .scope-actions {
   display: flex;
   gap: var(--space-sm);
   margin-left: auto;
+  margin-bottom: var(--space-sm);
 }
 
 /* ---------- workspace body ---------- */
@@ -255,7 +391,7 @@
 .workspace-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
   align-items: start;
   padding-top: var(--space-md);
 }
@@ -266,13 +402,9 @@
   }
 }
 
-/* ---------- country list ---------- */
+/* ---------- country list: lines carry the structure ---------- */
 
 .country-grid {
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
-  background: var(--color-bg-surface);
-  overflow: hidden;
   font-variant-numeric: tabular-nums;
 }
 
@@ -281,9 +413,24 @@
   grid-template-columns: 2rem 4rem minmax(11rem, 1.3fr) repeat(3, minmax(6.5rem, 1fr)) 2.5rem;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
   border-bottom: var(--divider-subtle);
   transition: background-color var(--ds-duration-fast) var(--ds-ease);
+}
+
+.country-row:not(.country-row-head):hover {
+  background: var(--color-overlay-faint);
+}
+
+.country-row-head {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
+  border-top: 2px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-border-strong);
+  align-items: end;
+  padding-top: var(--space-sm);
 }
 
 .cell-select input {
@@ -302,36 +449,7 @@
   right: 2px;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
   background: var(--color-accent);
-}
-
-.cell-drill {
-  text-align: right;
-}
-
-.drill-btn {
-  font-size: var(--text-sm);
-  padding: 0 var(--space-xs);
-  opacity: 0;
-  transition: opacity var(--ds-duration-fast) var(--ds-ease);
-}
-
-.country-row:hover .drill-btn,
-.drill-btn:focus-visible {
-  opacity: 1;
-}
-
-.country-row:not(.country-row-head):hover {
-  background: var(--color-overlay-faint);
-}
-
-.country-row-head {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-normal);
-  background: var(--color-bg-inset);
 }
 
 .cell-rank {
@@ -359,10 +477,33 @@
   color: var(--color-text-secondary);
 }
 
+.cell-drill {
+  text-align: right;
+}
+
+.drill-btn {
+  font-size: var(--text-sm);
+  padding: 0 var(--space-xs);
+  opacity: 0;
+  transition: opacity var(--ds-duration-fast) var(--ds-ease);
+}
+
+.country-row:hover .drill-btn,
+.drill-btn:focus-visible {
+  opacity: 1;
+}
+
 .country-row.is-highlighted {
   position: relative;
   background: var(--color-accent-tint);
   box-shadow: inset 2px 0 0 var(--color-accent);
+}
+
+/* On the tinted highlight, lift secondary/muted text to primary so the
+   emphasized rows never read at lower contrast than plain ones. */
+.country-row.is-highlighted .cell-num,
+.country-row.is-highlighted .country-code {
+  color: var(--color-text-primary);
 }
 
 .country-row.is-highlighted::after {
@@ -390,7 +531,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  padding: var(--space-sm) var(--space-xs);
+  padding: var(--space-sm) var(--space-sm);
   font-size: var(--text-xs);
   color: var(--color-text-muted);
 }
@@ -405,29 +546,35 @@
   display: grid;
   gap: var(--space-md);
   justify-items: start;
-  border: 1px dashed var(--color-border-subtle);
-  border-radius: var(--radius-md);
-  padding: var(--space-lg);
+  border-top: 2px solid var(--color-border-strong);
+  border-bottom: var(--divider-subtle);
+  padding: var(--space-lg) var(--space-sm);
   color: var(--color-text-secondary);
 }
 
-/* ---------- findings rail ---------- */
+.empty-state p {
+  margin: 0;
+}
+
+/* ---------- findings rail: a column of claims, separated by rules ---------- */
 
 .findings-rail {
   display: grid;
-  gap: var(--space-sm);
   align-content: start;
 }
 
 .rail-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-sm);
+  border-top: 2px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding: var(--space-sm) 0;
 }
 
 .rail-header h2 {
   margin: 0;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-normal);
   color: var(--color-text-cool);
@@ -435,25 +582,18 @@
 
 .rail-badge {
   font-size: var(--text-xs);
-  color: var(--color-text-on-accent);
-  background: var(--color-accent);
-  border-radius: var(--radius-md);
-  padding: 0 var(--space-xs);
-  min-width: 1.2rem;
-  text-align: center;
+  color: var(--color-text-accent);
 }
 
 .rail-quiet {
   font-size: var(--text-xs);
   color: var(--color-text-muted);
-  margin: 0;
+  margin: var(--space-sm) 0 0;
 }
 
-.finding-card {
-  border: 1px solid var(--color-border-subtle);
-  border-left: 2px solid var(--color-accent);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-surface);
+.finding {
+  border-bottom: var(--divider-subtle);
+  padding: var(--space-sm) 0;
   animation: ds-enter var(--ds-duration-standard) var(--ds-ease);
 }
 
@@ -464,41 +604,53 @@
   color: var(--color-text-primary);
   background: none;
   border: none;
+  border-left: 2px solid var(--color-accent);
   text-align: left;
   width: 100%;
-  padding: var(--space-sm);
+  padding: 2px 0 2px var(--space-sm);
   cursor: pointer;
 }
 
+.finding-claim:hover {
+  color: var(--color-text-accent);
+}
+
 .finding-evidence {
-  padding: 0 var(--space-sm) var(--space-sm);
+  padding: var(--space-sm) 0 var(--space-xs) calc(var(--space-sm) + 2px);
   animation: ds-enter var(--ds-duration-fast) var(--ds-ease);
 }
 
 .finding-evidence h3 {
   margin: 0 0 var(--space-xs);
   font-size: var(--text-xs);
+  font-weight: var(--font-weight-regular);
   text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
   color: var(--color-text-muted);
 }
 
 .finding-evidence ul {
+  list-style: none;
   margin: 0 0 var(--space-sm);
-  padding-left: var(--space-md);
+  padding: 0;
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
 }
 
-/* ---------- ranking criteria dialog ---------- */
+.finding-evidence li {
+  padding: 1px 0;
+}
+
+/* ---------- ranking criteria dialog: a sharp instrument ---------- */
 
 .ranking-dialog {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
+  border-top: 2px solid var(--color-accent);
   padding: var(--space-lg);
-  width: min(32rem, 92vw);
-  box-shadow: var(--shadow-2, var(--shadow-soft));
+  width: min(34rem, 92vw);
+  box-shadow: var(--shadow-hover);
   animation: ds-enter var(--ds-duration-standard) var(--ds-ease);
 }
 
@@ -508,18 +660,20 @@
 
 .ranking-dialog h2 {
   margin: 0 0 var(--space-xs);
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 .dialog-hint {
   margin: 0 0 var(--space-md);
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .weight-rows {
   display: grid;
-  gap: var(--space-sm);
+  border-top: 1px solid var(--color-border-strong);
 }
 
 .weight-row {
@@ -527,6 +681,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: var(--divider-subtle);
   animation: ds-enter var(--ds-duration-fast) var(--ds-ease);
 }
 
@@ -551,35 +707,47 @@
   font: inherit;
   font-size: var(--text-sm);
   color: var(--color-text-primary);
-  background: var(--color-bg-inset);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
-  padding: var(--space-xs);
-  width: 4.5rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding: var(--space-xs) 0;
+  width: 3.5rem;
   text-align: right;
 }
 
+.weight-input input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--color-accent);
+  box-shadow: 0 1px 0 0 var(--color-accent);
+}
+
 .weight-total {
+  display: flex;
+  justify-content: space-between;
   margin: var(--space-md) 0;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 2px solid var(--color-border-strong);
   font-size: var(--text-sm);
-  background: var(--color-bg-inset);
   color: var(--color-text-secondary);
 }
 
+/* Error color on the rule only: as small text it measures under 4.5:1 on
+   the elevated surface, but as a non-text indicator 3:1 suffices. The
+   message itself stays primary; save-disabled + aria-live carry the state. */
 .weight-total.is-invalid {
-  color: var(--color-status-error);
-  border: 1px solid var(--color-status-error);
+  color: var(--color-text-primary);
+  border-bottom-width: 2px;
+  border-bottom-color: var(--color-status-error);
 }
 
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-sm);
+  align-items: center;
+  gap: var(--space-lg);
 }
 
-/* ---------- site explorer ---------- */
+/* ---------- site explorer: the reference table ---------- */
 
 .site-explorer {
   position: fixed;
@@ -591,7 +759,7 @@
   display: flex;
   flex-direction: column;
   background: var(--color-bg-elevated);
-  border-top: 1px solid var(--color-border-strong);
+  border-top: 2px solid var(--color-accent);
   box-shadow: var(--shadow-hover);
   animation: ds-enter-up var(--ds-duration-standard) var(--ds-ease);
 }
@@ -601,17 +769,19 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-sm) var(--space-lg);
-  border-bottom: var(--divider-strong);
+  border-bottom: 1px solid var(--color-border-strong);
 }
 
 .explorer-header h2 {
   margin: 0;
-  font-size: var(--text-md);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 .explorer-count {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   margin-right: auto;
 }
 
@@ -646,10 +816,15 @@
 
 .site-row-head {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-normal);
-  background: var(--color-bg-inset);
+  border-bottom: 1px solid var(--color-border-strong);
+  height: auto;
+  min-height: 36px;
+  align-items: end;
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
 }
 
 .site-scroll {
@@ -676,7 +851,7 @@
   z-index: 50;
   overflow-y: auto;
   background: var(--color-bg-elevated);
-  border-left: 1px solid var(--color-border-strong);
+  border-left: 2px solid var(--color-accent);
   box-shadow: var(--shadow-hover);
   padding: var(--space-lg);
   animation: ds-enter-side var(--ds-duration-standard) var(--ds-ease);
@@ -687,17 +862,21 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: var(--space-sm);
 }
 
 .panel-header h2 {
   margin: 0;
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
 }
 
 .panel-caption {
-  margin: var(--space-sm) 0;
+  margin: var(--space-md) 0 var(--space-sm);
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-secondary);
 }
 
 .quartile-plot,
@@ -707,11 +886,7 @@
   display: block;
 }
 
-.q-whisker {
-  stroke: var(--color-border-strong);
-  stroke-width: 1;
-}
-
+.q-whisker,
 .q-cap {
   stroke: var(--color-border-strong);
   stroke-width: 1;
@@ -733,15 +908,15 @@
 }
 
 .axis-label {
-  fill: var(--color-text-muted);
-  font-size: 9px;
+  fill: var(--color-text-secondary);
+  font-size: 11px;
   font-family: var(--font-family-base);
 }
 
 .hist-bar {
-  fill: var(--color-accent-subtle);
+  fill: var(--color-accent-tint);
   stroke: var(--color-accent);
-  stroke-width: 0.5;
+  stroke-width: 1;
   transition:
     y var(--ds-duration-standard) var(--ds-ease),
     height var(--ds-duration-standard) var(--ds-ease),
@@ -756,6 +931,8 @@
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
   margin: var(--space-sm) 0 var(--space-md);
+  border-bottom: var(--divider-subtle);
+  padding-bottom: var(--space-sm);
 }
 
 .legend-median {
@@ -764,22 +941,42 @@
 
 .panel-controls {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-md);
   margin: var(--space-md) 0;
 }
 
-@keyframes ds-enter-side {
-  from {
-    opacity: 0;
-    transform: translateX(12px);
-  }
+/* Unit switch inside the panel reuses the provenance-control shape. */
+.unit-control .options {
+  display: flex;
+}
 
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.unit-control .options button {
+  font: inherit;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-right-width: 0;
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+}
+
+.unit-control .options button:last-child {
+  border-right-width: 1px;
+}
+
+.unit-control .options button[aria-pressed='true'] {
+  background: var(--color-accent-tint);
+  border-color: var(--color-border-accent);
+  border-right-width: 1px;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.unit-control .options button[aria-pressed='true'] + button {
+  border-left-width: 0;
 }
 
 /* ---------- shared animations ---------- */
@@ -805,5 +1002,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes ds-enter-side {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

@@ -49,7 +49,3 @@ body {
   font-size: var(--text-md);
   line-height: var(--line-height-base);
 }
-
-.surface {
-  padding: var(--space-lg);
-}

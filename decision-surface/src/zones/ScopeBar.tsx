@@ -1,23 +1,33 @@
 // F.1 `ScopeBar` — capability 3 Re-scope. The three scope controls plus
 // country search, always visible. Owns provenance, countriesScope,
 // evidenceFamily, list.filterText (§G.3). Labels per the F.3 taxonomy.
+// The controls' shapes encode their weight: evidence family switches the
+// view (tabs), trial source changes what the evidence means (bordered
+// toggles), countries scope narrows it (text toggle), search is utility.
 
 import { useRef, useState } from 'react'
 import type { CountriesScope, EvidenceFamily, InvestigationState, Provenance } from '../types'
 import { writeState } from '../state/url'
 
-interface SegmentedProps<T extends string> {
+interface OptionGroupProps<T extends string> {
   label: string
   value: T
   options: { value: T; label: string }[]
   onChange: (value: T) => void
+  className: string
 }
 
-function Segmented<T extends string>({ label, value, options, onChange }: SegmentedProps<T>) {
+function OptionGroup<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+  className,
+}: OptionGroupProps<T>) {
   return (
-    <div className="segmented" role="group" aria-label={label}>
-      <span className="segmented-label">{label}</span>
-      <div className="segmented-buttons">
+    <div className={className} role="group" aria-label={label}>
+      <span className="control-label">{label}</span>
+      <div className="options">
         {options.map((option) => (
           <button
             key={option.value}
@@ -71,7 +81,26 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
 
   return (
     <div className="scope-bar">
-      <Segmented<Provenance>
+      <div className="family-tabs" role="group" aria-label="Evidence">
+        {(
+          [
+            { value: 'footprint', label: 'Footprint' },
+            { value: 'enrollment-performance', label: 'Enrollment' },
+            { value: 'timelines', label: 'Timelines' },
+          ] as { value: EvidenceFamily; label: string }[]
+        ).map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            aria-pressed={state.evidenceFamily === option.value}
+            onClick={() => writeState({ ...state, evidenceFamily: option.value }, 'push')}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+      <OptionGroup<Provenance>
+        className="provenance-control"
         label="Trial source"
         value={state.provenance}
         options={[
@@ -81,7 +110,8 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
         ]}
         onChange={(provenance) => writeState({ ...state, provenance }, 'push')}
       />
-      <Segmented<CountriesScope>
+      <OptionGroup<CountriesScope>
+        className="scope-toggle"
         label="Countries"
         value={state.countriesScope}
         options={[
@@ -92,16 +122,6 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
           writeState({ ...state, countriesScope, list: { ...state.list, page: 1 } }, 'push')
         }
       />
-      <Segmented<EvidenceFamily>
-        label="Evidence"
-        value={state.evidenceFamily}
-        options={[
-          { value: 'footprint', label: 'Footprint' },
-          { value: 'enrollment-performance', label: 'Enrollment' },
-          { value: 'timelines', label: 'Timelines' },
-        ]}
-        onChange={(evidenceFamily) => writeState({ ...state, evidenceFamily }, 'push')}
-      />
       <div className="scope-search">
         <input
           type="search"
@@ -111,7 +131,7 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
           onChange={(e) => search(e.target.value)}
         />
         {searchText !== '' && (
-          <button type="button" className="btn btn-quiet" onClick={() => search('')}>
+          <button type="button" className="btn-quiet" onClick={() => search('')}>
             Clear
           </button>
         )}

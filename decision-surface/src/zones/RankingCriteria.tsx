@@ -15,6 +15,16 @@ interface RankingCriteriaProps {
   defaults: RankingVariable[] // the fixture defaults; shared weights overlay them
 }
 
+// Each variable's unit, shown with its direction so the weight is judged
+// against a concrete quantity.
+const METRIC_UNITS: Partial<Record<RankingVariable['metricKey'], string>> = {
+  historicalMedianEnrollmentRate: 'pts/site/mo',
+  predictedEnrollmentRate: 'pts/site/mo',
+  performanceRatio: 'achieved ÷ target',
+  medianStartupTime: 'days',
+  siteToSiteVariability: 'IQR ÷ median',
+}
+
 function toPercents(
   defaults: RankingVariable[],
   writes: WeightWrite[] | null,
@@ -89,6 +99,7 @@ export function RankingCriteria({ open, onClose, defaults }: RankingCriteriaProp
             <span className="weight-title">
               {v.title}
               <span className="weight-direction">
+                {METRIC_UNITS[v.metricKey] ?? ''} ·{' '}
                 {v.contribution === 'Inverse' ? 'lower is better' : 'higher is better'}
               </span>
             </span>
@@ -110,10 +121,10 @@ export function RankingCriteria({ open, onClose, defaults }: RankingCriteriaProp
         Total {total}%{total !== 100 && <span> · Remaining {remaining}%</span>}
       </div>
       <div className="dialog-actions">
-        <button type="button" className="btn btn-quiet" onClick={cancel}>
+        <button type="button" className="btn-quiet" onClick={cancel}>
           Cancel
         </button>
-        <button type="button" className="btn btn-accent" onClick={save} disabled={total !== 100}>
+        <button type="button" className="btn-primary" onClick={save} disabled={total !== 100}>
           Save weights
         </button>
       </div>

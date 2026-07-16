@@ -15,21 +15,28 @@ const ROW_HEIGHT = 36
 interface SiteColumn {
   field: keyof Observation
   label: string
+  unit: string
   format: (row: Observation) => string
 }
 
 const COLUMNS: SiteColumn[] = [
-  { field: 'siteId', label: 'Site', format: (r) => r.siteId },
-  { field: 'countryCode', label: 'Country', format: (r) => r.countryCode },
-  { field: 'sourceTrialId', label: 'Source trial', format: (r) => r.sourceTrialId },
-  { field: 'benchmark', label: 'Benchmark', format: (r) => (r.benchmark ? 'yes' : 'no') },
-  { field: 'enrollmentRatePSM', label: 'Rate', format: (r) => r.enrollmentRatePSM.toFixed(3) },
+  { field: 'siteId', label: 'Site', unit: '', format: (r) => r.siteId },
+  { field: 'countryCode', label: 'Country', unit: '', format: (r) => r.countryCode },
+  { field: 'sourceTrialId', label: 'Source trial', unit: '', format: (r) => r.sourceTrialId },
+  { field: 'benchmark', label: 'Benchmark', unit: '', format: (r) => (r.benchmark ? 'yes' : 'no') },
+  {
+    field: 'enrollmentRatePSM',
+    label: 'Achieved',
+    unit: 'pts/site/mo',
+    format: (r) => r.enrollmentRatePSM.toFixed(3),
+  },
   {
     field: 'targetEnrollmentRatePSM',
     label: 'Target',
+    unit: 'pts/site/mo',
     format: (r) => r.targetEnrollmentRatePSM.toFixed(3),
   },
-  { field: 'startupDays', label: 'Startup (d)', format: (r) => String(r.startupDays) },
+  { field: 'startupDays', label: 'Startup', unit: 'days', format: (r) => String(r.startupDays) },
 ]
 
 interface SiteExplorerProps {
@@ -117,7 +124,7 @@ export function SiteExplorer({ state, fixtures }: SiteExplorerProps) {
           {rows.length.toLocaleString('en-US')} loaded ·{' '}
           {state.provenance === 'all' ? 'all trial sources' : `${state.provenance} trials`}
         </span>
-        <button type="button" className="btn btn-quiet" onClick={close}>
+        <button type="button" className="btn-quiet" onClick={close}>
           Close
         </button>
       </header>
@@ -137,6 +144,7 @@ export function SiteExplorer({ state, fixtures }: SiteExplorerProps) {
             >
               <button type="button" className="sort-btn" onClick={() => sortBy(col.field)}>
                 {col.label} {sortIndicator(col.field)}
+                {col.unit !== '' && <span className="unit">{col.unit}</span>}
               </button>
             </span>
           ))}

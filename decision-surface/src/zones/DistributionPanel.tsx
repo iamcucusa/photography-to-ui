@@ -95,12 +95,12 @@ export function DistributionPanel({ state, fixtures }: DistributionPanelProps) {
         <h2>
           {countryName} <code className="country-code">{dist.countryCode}</code>
         </h2>
-        <button type="button" className="btn btn-quiet" onClick={close}>
+        <button type="button" className="btn-quiet" onClick={close}>
           Close
         </button>
       </header>
       <p className="panel-caption">
-        Per-site mean enrollment ·{' '}
+        Per-site mean enrollment · patients / site / month ·{' '}
         {state.provenance === 'all' ? 'all trial sources' : `${state.provenance} trials`}
       </p>
 
@@ -179,8 +179,8 @@ export function DistributionPanel({ state, fixtures }: DistributionPanelProps) {
         >
           Outliers {dist.outliers ? 'shown' : 'hidden'}
         </button>
-        <div className="segmented" role="group" aria-label="Startup time unit">
-          <div className="segmented-buttons">
+        <div className="unit-control" role="group" aria-label="Startup time unit">
+          <div className="options">
             {(['days', 'weeks', 'months'] as TimeUnit[]).map((unit) => (
               <button
                 key={unit}
@@ -196,7 +196,7 @@ export function DistributionPanel({ state, fixtures }: DistributionPanelProps) {
       </div>
 
       <p className="panel-caption">
-        Startup histogram · bucket {buckets.bucketSize} {buckets.unit}
+        Startup time, activation to first patient · buckets of {buckets.bucketSize} {buckets.unit}
       </p>
       <svg
         className="startup-hist"

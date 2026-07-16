@@ -2,6 +2,8 @@
 // never blocking it. Owns `highlight` (§G.3) through each finding's
 // "show me". A finding without derivedFrom and suggestedState never renders
 // (BL5); the quiet state is a valid, calm outcome (Flow C).
+// Visually: a column of claims separated by rules — no boxes; each claim
+// carries the accent evidence bar.
 
 import { useState } from 'react'
 import type { Finding } from '../types'
@@ -13,7 +15,7 @@ interface FindingsRailProps {
 }
 
 export function FindingsRail({ findings }: FindingsRailProps) {
-  // Ephemeral: which card is expanded. Never persisted anywhere.
+  // Ephemeral: which claim is expanded. Never persisted anywhere.
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const proposed = findings.filter((f) => validateFinding(f) && f.status === 'proposed')
 
@@ -22,7 +24,7 @@ export function FindingsRail({ findings }: FindingsRailProps) {
       <header className="rail-header">
         <h2>Atlas</h2>
         <span className="rail-badge" aria-hidden="true">
-          {proposed.length}
+          {proposed.length} proposed
         </span>
       </header>
       {proposed.length === 0 ? (
@@ -31,7 +33,7 @@ export function FindingsRail({ findings }: FindingsRailProps) {
         proposed.map((finding) => {
           const expanded = expandedId === finding.id
           return (
-            <article key={finding.id} className="finding-card">
+            <article key={finding.id} className="finding">
               <button
                 type="button"
                 className="finding-claim"
@@ -52,10 +54,10 @@ export function FindingsRail({ findings }: FindingsRailProps) {
                   </ul>
                   <button
                     type="button"
-                    className="btn btn-accent"
+                    className="action-link"
                     onClick={() => writeState(finding.suggestedState, 'push')}
                   >
-                    Show me
+                    Show me →
                   </button>
                 </div>
               )}
