@@ -1,0 +1,52 @@
+[
+ {
+  "contribution": "Direct",
+  "id": "rv-01",
+  "isDefault": true,
+  "metricKey": "historicalMedianEnrollmentRate",
+  "name": "historical-enrollment",
+  "title": "Historical enrollment rate",
+  "varType": "Numeric",
+  "weight": 0.2
+ },
+ {
+  "contribution": "Direct",
+  "id": "rv-02",
+  "isDefault": true,
+  "metricKey": "performanceRatio",
+  "name": "performance-ratio",
+  "title": "Performance ratio",
+  "varType": "Numeric",
+  "weight": 0.2
+ },
+ {
+  "contribution": "Inverse",
+  "id": "rv-03",
+  "isDefault": true,
+  "metricKey": "medianStartupTime",
+  "name": "startup-time",
+  "title": "Median startup time",
+  "varType": "Numeric",
+  "weight": 0.2
+ },
+ {
+  "contribution": "Inverse",
+  "id": "rv-04",
+  "isDefault": true,
+  "metricKey": "siteToSiteVariability",
+  "name": "site-variability",
+  "title": "Site-to-site variability",
+  "varType": "Numeric",
+  "weight": 0.2
+ },
+ {
+  "contribution": "Direct",
+  "id": "rv-05",
+  "isDefault": true,
+  "metricKey": "predictedEnrollmentRate",
+  "name": "predicted-enrollment",
+  "title": "Predicted enrollment rate",
+  "varType": "Numeric",
+  "weight": 0.2
+ }
+]

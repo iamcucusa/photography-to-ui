@@ -1,0 +1,146 @@
+[
+ {
+  "code": "ARG",
+  "name": "Argentina"
+ },
+ {
+  "code": "AUS",
+  "name": "Australia"
+ },
+ {
+  "code": "AUT",
+  "name": "Austria"
+ },
+ {
+  "code": "BEL",
+  "name": "Belgium"
+ },
+ {
+  "code": "BGR",
+  "name": "Bulgaria"
+ },
+ {
+  "code": "BRA",
+  "name": "Brazil"
+ },
+ {
+  "code": "CAN",
+  "name": "Canada"
+ },
+ {
+  "code": "CHE",
+  "name": "Switzerland"
+ },
+ {
+  "code": "CHL",
+  "name": "Chile"
+ },
+ {
+  "code": "COL",
+  "name": "Colombia"
+ },
+ {
+  "code": "CZE",
+  "name": "Czechia"
+ },
+ {
+  "code": "DEU",
+  "name": "Germany"
+ },
+ {
+  "code": "DNK",
+  "name": "Denmark"
+ },
+ {
+  "code": "ESP",
+  "name": "Spain"
+ },
+ {
+  "code": "FIN",
+  "name": "Finland"
+ },
+ {
+  "code": "FRA",
+  "name": "France"
+ },
+ {
+  "code": "GBR",
+  "name": "United Kingdom"
+ },
+ {
+  "code": "GRC",
+  "name": "Greece"
+ },
+ {
+  "code": "HUN",
+  "name": "Hungary"
+ },
+ {
+  "code": "IND",
+  "name": "India"
+ },
+ {
+  "code": "ISR",
+  "name": "Israel"
+ },
+ {
+  "code": "ITA",
+  "name": "Italy"
+ },
+ {
+  "code": "JPN",
+  "name": "Japan"
+ },
+ {
+  "code": "KOR",
+  "name": "South Korea"
+ },
+ {
+  "code": "MEX",
+  "name": "Mexico"
+ },
+ {
+  "code": "NLD",
+  "name": "Netherlands"
+ },
+ {
+  "code": "NOR",
+  "name": "Norway"
+ },
+ {
+  "code": "NZL",
+  "name": "New Zealand"
+ },
+ {
+  "code": "POL",
+  "name": "Poland"
+ },
+ {
+  "code": "PRT",
+  "name": "Portugal"
+ },
+ {
+  "code": "ROU",
+  "name": "Romania"
+ },
+ {
+  "code": "SVK",
+  "name": "Slovakia"
+ },
+ {
+  "code": "SWE",
+  "name": "Sweden"
+ },
+ {
+  "code": "TUR",
+  "name": "Turkey"
+ },
+ {
+  "code": "USA",
+  "name": "United States"
+ },
+ {
+  "code": "ZAF",
+  "name": "South Africa"
+ }
+]

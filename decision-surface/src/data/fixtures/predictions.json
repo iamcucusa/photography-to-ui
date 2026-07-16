@@ -1,0 +1,182 @@
+[
+ {
+  "countryCode": "ARG",
+  "predictedEnrollmentRatePSM": 0.536,
+  "predictedStartupDays": 147
+ },
+ {
+  "countryCode": "AUS",
+  "predictedEnrollmentRatePSM": 0.513,
+  "predictedStartupDays": 201
+ },
+ {
+  "countryCode": "AUT",
+  "predictedEnrollmentRatePSM": 0.673,
+  "predictedStartupDays": 172
+ },
+ {
+  "countryCode": "BEL",
+  "predictedEnrollmentRatePSM": 0.402,
+  "predictedStartupDays": 160
+ },
+ {
+  "countryCode": "BGR",
+  "predictedEnrollmentRatePSM": 0.428,
+  "predictedStartupDays": 169
+ },
+ {
+  "countryCode": "BRA",
+  "predictedEnrollmentRatePSM": 1.057,
+  "predictedStartupDays": 159
+ },
+ {
+  "countryCode": "CAN",
+  "predictedEnrollmentRatePSM": 0.535,
+  "predictedStartupDays": 169
+ },
+ {
+  "countryCode": "CHE",
+  "predictedEnrollmentRatePSM": 0.501,
+  "predictedStartupDays": 164
+ },
+ {
+  "countryCode": "CHL",
+  "predictedEnrollmentRatePSM": 0.576,
+  "predictedStartupDays": 197
+ },
+ {
+  "countryCode": "COL",
+  "predictedEnrollmentRatePSM": 0.47,
+  "predictedStartupDays": 225
+ },
+ {
+  "countryCode": "CZE",
+  "predictedEnrollmentRatePSM": 0.794,
+  "predictedStartupDays": 192
+ },
+ {
+  "countryCode": "DEU",
+  "predictedEnrollmentRatePSM": 0.802,
+  "predictedStartupDays": 174
+ },
+ {
+  "countryCode": "DNK",
+  "predictedEnrollmentRatePSM": 0.916,
+  "predictedStartupDays": 198
+ },
+ {
+  "countryCode": "ESP",
+  "predictedEnrollmentRatePSM": 0.783,
+  "predictedStartupDays": 116
+ },
+ {
+  "countryCode": "FIN",
+  "predictedEnrollmentRatePSM": 0.321,
+  "predictedStartupDays": 152
+ },
+ {
+  "countryCode": "FRA",
+  "predictedEnrollmentRatePSM": 0.388,
+  "predictedStartupDays": 167
+ },
+ {
+  "countryCode": "GBR",
+  "predictedEnrollmentRatePSM": 0.635,
+  "predictedStartupDays": 174
+ },
+ {
+  "countryCode": "GRC",
+  "predictedEnrollmentRatePSM": 0.646,
+  "predictedStartupDays": 185
+ },
+ {
+  "countryCode": "HUN",
+  "predictedEnrollmentRatePSM": 0.451,
+  "predictedStartupDays": 218
+ },
+ {
+  "countryCode": "IND",
+  "predictedEnrollmentRatePSM": 0.606,
+  "predictedStartupDays": 146
+ },
+ {
+  "countryCode": "ISR",
+  "predictedEnrollmentRatePSM": 0.861,
+  "predictedStartupDays": 187
+ },
+ {
+  "countryCode": "ITA",
+  "predictedEnrollmentRatePSM": 0.895,
+  "predictedStartupDays": 218
+ },
+ {
+  "countryCode": "JPN",
+  "predictedEnrollmentRatePSM": 0.411,
+  "predictedStartupDays": 144
+ },
+ {
+  "countryCode": "KOR",
+  "predictedEnrollmentRatePSM": 0.695,
+  "predictedStartupDays": 177
+ },
+ {
+  "countryCode": "MEX",
+  "predictedEnrollmentRatePSM": 0.83,
+  "predictedStartupDays": 165
+ },
+ {
+  "countryCode": "NLD",
+  "predictedEnrollmentRatePSM": 0.552,
+  "predictedStartupDays": 244
+ },
+ {
+  "countryCode": "NOR",
+  "predictedEnrollmentRatePSM": 0.544,
+  "predictedStartupDays": 153
+ },
+ {
+  "countryCode": "NZL",
+  "predictedEnrollmentRatePSM": 0.624,
+  "predictedStartupDays": 198
+ },
+ {
+  "countryCode": "POL",
+  "predictedEnrollmentRatePSM": 0.557,
+  "predictedStartupDays": 43
+ },
+ {
+  "countryCode": "PRT",
+  "predictedEnrollmentRatePSM": 0.412,
+  "predictedStartupDays": 134
+ },
+ {
+  "countryCode": "ROU",
+  "predictedEnrollmentRatePSM": 0.541,
+  "predictedStartupDays": 217
+ },
+ {
+  "countryCode": "SVK",
+  "predictedEnrollmentRatePSM": 0.552,
+  "predictedStartupDays": 132
+ },
+ {
+  "countryCode": "SWE",
+  "predictedEnrollmentRatePSM": 1.217,
+  "predictedStartupDays": 213
+ },
+ {
+  "countryCode": "TUR",
+  "predictedEnrollmentRatePSM": 0.848,
+  "predictedStartupDays": 155
+ },
+ {
+  "countryCode": "USA",
+  "predictedEnrollmentRatePSM": 0.511,
+  "predictedStartupDays": 191
+ },
+ {
+  "countryCode": "ZAF",
+  "predictedEnrollmentRatePSM": 0.665,
+  "predictedStartupDays": 158
+ }
+]
