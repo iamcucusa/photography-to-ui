@@ -169,7 +169,7 @@ function checkProvenanceFlip(
     {
       id: 'finding-provenance-flip',
       claim:
-        `The top ${TOP_N} changes under benchmark-only trials: ` +
+        `Under benchmark-only trials, the top ${TOP_N} reorders: ` +
         `${countryName(fixtures, biggest)} moves from #${baseRanking.get(biggest)!} ` +
         `to #${benchRanking.get(biggest)!}.`,
       derivedFrom: movers.map((c) => [c, 'ranking'] as [string, string]),

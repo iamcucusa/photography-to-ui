@@ -18,6 +18,9 @@ interface Column {
 }
 
 const rate = (v: number) => v.toFixed(2)
+// Tooltips carry more precision than the cell (interaction contract), but a
+// human-readable amount of it — not raw float noise.
+const precise = (v: number) => String(Number(v.toFixed(4)))
 
 // One evidence family visible at a time (F.4); §C item 2 names the families.
 // Units live in the header so the numbers stay clean; tooltips carry the
@@ -52,21 +55,23 @@ const FAMILY_COLUMNS: Record<EvidenceFamily, Column[]> = {
       label: 'Historical',
       unit: 'pts/site/mo',
       format: (r) => rate(r.historicalMedianEnrollmentRate),
-      title: (r) => `median ${r.historicalMedianEnrollmentRate} patients per site per month`,
+      title: (r) =>
+        `median ${precise(r.historicalMedianEnrollmentRate)} patients per site per month`,
     },
     {
       field: 'predictedEnrollmentRate',
       label: 'Predicted',
       unit: 'pts/site/mo',
       format: (r) => rate(r.predictedEnrollmentRate),
-      title: (r) => `predicted ${r.predictedEnrollmentRate} patients per site per month`,
+      title: (r) => `predicted ${precise(r.predictedEnrollmentRate)} patients per site per month`,
     },
     {
       field: 'performanceRatio',
       label: 'Performance',
       unit: 'achieved ÷ target',
       format: (r) => rate(r.performanceRatio),
-      title: (r) => `median achieved-over-target ratio ${r.performanceRatio} (1.00 = on target)`,
+      title: (r) =>
+        `median achieved-over-target ratio ${precise(r.performanceRatio)} (1.00 = on target)`,
     },
   ],
   timelines: [
@@ -75,14 +80,15 @@ const FAMILY_COLUMNS: Record<EvidenceFamily, Column[]> = {
       label: 'Startup',
       unit: 'days',
       format: (r) => String(Math.round(r.medianStartupTime)),
-      title: (r) => `median ${r.medianStartupTime} days, site activation to first patient`,
+      title: (r) => `median ${precise(r.medianStartupTime)} days, site activation to first patient`,
     },
     {
       field: 'predictedStartupTime',
       label: 'Predicted',
       unit: 'days',
       format: (r) => String(Math.round(r.predictedStartupTime)),
-      title: (r) => `predicted ${r.predictedStartupTime} days, site activation to first patient`,
+      title: (r) =>
+        `predicted ${precise(r.predictedStartupTime)} days, site activation to first patient`,
     },
     {
       field: 'siteToSiteVariability',
@@ -90,7 +96,7 @@ const FAMILY_COLUMNS: Record<EvidenceFamily, Column[]> = {
       unit: 'IQR ÷ median',
       format: (r) => rate(r.siteToSiteVariability),
       title: (r) =>
-        `IQR over median of per-site mean enrollment: ${r.siteToSiteVariability} (dimensionless)`,
+        `spread across sites — IQR ÷ median of per-site means: ${precise(r.siteToSiteVariability)}. Higher means sites vary more`,
     },
   ],
 }
@@ -172,8 +178,11 @@ export function CountryList({
   if (rows.length === 0) {
     // Flow A 3a-E: the empty state names the active filters; one action clears them.
     const active: string[] = []
-    if (state.provenance !== 'all') active.push(`Trial source: ${state.provenance}`)
-    if (state.countriesScope !== 'all') active.push('Countries: selected')
+    if (state.provenance !== 'all')
+      active.push(
+        `Trial source: ${state.provenance === 'benchmark' ? 'Benchmark' : 'Non-benchmark'}`,
+      )
+    if (state.countriesScope !== 'all') active.push('Countries: Selected')
     if (state.list.filterText !== '') active.push(`Search: “${state.list.filterText}”`)
     return (
       <section className="country-list" aria-label="Ranked countries">

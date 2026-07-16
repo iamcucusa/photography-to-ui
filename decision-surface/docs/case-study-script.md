@@ -84,8 +84,8 @@ Drive slowly; narrate the *why*, not the clicks.
   want the answer and the exact view that proves it."
 - What's next: a real backend behind the keyset contract (the socket's already the right
   shape); derivation off the main thread; multi-user shared state.
-- **Provenance, said plainly:** "The human loop re-implements patterns I proved in a
-  production system I led the frontend for. The URL-state, the agent tier, and the findings
+- **Provenance, said plainly:** "The human loop re-implements patterns proven in a
+  production system whose frontend I led. The URL-state, the agent tier, and the findings
   contract are new design for this case study."
 - Close on the thesis: *"Charts for humans, structured data for agents — one state, and the
   link is the proof."*

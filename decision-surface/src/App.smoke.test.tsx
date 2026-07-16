@@ -79,7 +79,7 @@ describe('demo path smoke test (§H.2)', () => {
   it('surfaces an Atlas finding whose "show me" restores its exact view (BL5, BL7)', async () => {
     const user = await loadedApp()
     // Atlas runs on hydration; the provenance-flip finding is deterministic.
-    const claim = await screen.findByText(/top 5 changes under benchmark-only/i)
+    const claim = await screen.findByText(/under benchmark-only trials, the top 5 reorders/i)
     await user.click(claim)
     await user.click(await screen.findByRole('button', { name: /show me/i }))
     // The finding's suggestedState lands whole: provenance + highlighted codes.

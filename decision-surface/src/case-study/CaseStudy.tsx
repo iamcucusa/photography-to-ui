@@ -54,11 +54,11 @@ const READERS = [
 
 const DEMO_STEPS = [
   'Open the plain URL — the ranked answer is the first thing on screen.',
-  'Flip provenance — the metrics change, and the rank column holds still. Rank is scope-independent by design.',
-  'Shift one ranking weight — the list re-ranks in front of you, a 320 ms settle so the causality is visible.',
-  'Open the site-evidence grid — scroll thousands of records with never more than ~40 rows in the DOM.',
-  'An Atlas card appears — “show me” restores the exact view it’s about, countries highlighted.',
-  'Copy the URL, paste in a fresh tab — the identical investigation reopens.',
+  'Switch the trial source to Benchmark — the metrics change, and the rank column holds still. Rank is scope-independent by design.',
+  'Open Ranking criteria and shift one weight — the list re-ranks in front of you, with a 320 ms settle so the cause is visible.',
+  'Open Site evidence — scroll thousands of records with never more than ~40 rows in the DOM.',
+  'An Atlas card appears — “Show me” restores the exact view its claim is about, countries highlighted.',
+  'Copy the URL, paste it in a fresh tab — the identical investigation reopens.',
 ]
 
 const DECISIONS = [
@@ -302,8 +302,8 @@ export function CaseStudy() {
           </ul>
 
           <p className="cs-provenance">
-            The human loop re-implements patterns I proved in a production system I led the frontend
-            for. The investigation-in-a-URL, the agent tier, and the findings contract are new
+            The human loop re-implements patterns proven in a production system whose frontend I
+            led. The investigation-in-a-URL, the agent tier, and the findings contract are new
             design for this case study.
           </p>
           <p className="cs-close">
