@@ -92,7 +92,10 @@ interface CountryListProps {
   rows: CountryMetrics[] // already scoped + sorted by the caller
   totalCandidates: number
   settleToken: unknown // changes when the weights in force change
-  onToggleSelect?: (countryCode: string) => void
+  // BL9: the draft selection while one exists; row.selected stays committed
+  pendingSelection: ReadonlySet<string> | null
+  onToggleSelect: (countryCode: string) => void
+  onOpenDistribution: (countryCode: string) => void
 }
 
 export function CountryList({
@@ -100,7 +103,9 @@ export function CountryList({
   rows,
   totalCandidates,
   settleToken,
+  pendingSelection,
   onToggleSelect,
+  onOpenDistribution,
 }: CountryListProps) {
   const { sortField, sortOrder, page } = state.list
   const columns = FAMILY_COLUMNS[state.evidenceFamily]
@@ -180,13 +185,18 @@ export function CountryList({
   const sortIndicator = (field: keyof CountryMetrics) =>
     field === sortField ? (sortOrder === 1 ? '↑' : '↓') : ''
 
-  const gridClass = `country-grid${onToggleSelect ? ' has-select' : ''}`
+  const isChecked = (row: CountryMetrics) =>
+    pendingSelection ? pendingSelection.has(row.countryCode) : row.selected
 
   return (
     <section className="country-list" aria-label="Ranked countries">
-      <div className={gridClass} role="table" aria-label="Countries ranked by composite score">
+      <div
+        className="country-grid has-select"
+        role="table"
+        aria-label="Countries ranked by composite score"
+      >
         <div className="country-row country-row-head" role="row">
-          {onToggleSelect && <span role="columnheader" className="cell-select" />}
+          <span role="columnheader" className="cell-select" />
           <span
             role="columnheader"
             aria-sort={
@@ -225,25 +235,26 @@ export function CountryList({
               </button>
             </span>
           ))}
+          <span role="columnheader" className="cell-drill" />
         </div>
         <div ref={bodyRef} role="rowgroup">
           {pageRows.map((row) => (
             <div
               key={row.countryCode}
               data-flip-key={row.countryCode}
-              className={`country-row${highlighted.has(row.countryCode) ? ' is-highlighted' : ''}${row.selected ? ' is-selected' : ''}`}
+              className={`country-row${highlighted.has(row.countryCode) ? ' is-highlighted' : ''}${
+                isChecked(row) !== row.selected ? ' is-pending' : ''
+              }`}
               role="row"
             >
-              {onToggleSelect && (
-                <span role="cell" className="cell-select">
-                  <input
-                    type="checkbox"
-                    checked={row.selected}
-                    onChange={() => onToggleSelect(row.countryCode)}
-                    aria-label={`Select ${row.countryName}`}
-                  />
-                </span>
-              )}
+              <span role="cell" className="cell-select">
+                <input
+                  type="checkbox"
+                  checked={isChecked(row)}
+                  onChange={() => onToggleSelect(row.countryCode)}
+                  aria-label={`Select ${row.countryName}`}
+                />
+              </span>
               <span role="cell" className="cell-rank">
                 #{row.ranking}
               </span>
@@ -255,6 +266,17 @@ export function CountryList({
                   {col.format(row)}
                 </span>
               ))}
+              <span role="cell" className="cell-drill">
+                <button
+                  type="button"
+                  className="btn btn-quiet drill-btn"
+                  id={`dist-trigger-${row.countryCode}`}
+                  aria-label={`Open distribution for ${row.countryName}`}
+                  onClick={() => onOpenDistribution(row.countryCode)}
+                >
+                  ▤
+                </button>
+              </span>
             </div>
           ))}
         </div>

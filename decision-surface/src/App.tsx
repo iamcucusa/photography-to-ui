@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useInvestigationState } from './state/useInvestigationState'
 import { DEFAULT_TRIAL_ID, defaultState, writeState } from './state/url'
-import { useSharedStore } from './state/store'
+import { useDraftsStore, useSharedStore } from './state/store'
 import { useFixtures } from './data/query'
 import { applyWeights, deriveCountryRows, filterRows, sortRows } from './data/derive'
 import { mergeFindings, runAtlas } from './atlas/checks'
@@ -16,6 +16,7 @@ import { CountryList } from './zones/CountryList'
 import { FindingsRail } from './zones/FindingsRail'
 import { RankingCriteria } from './zones/RankingCriteria'
 import { SiteExplorer } from './zones/SiteExplorer'
+import { DistributionPanel } from './zones/DistributionPanel'
 
 const queryClient = new QueryClient()
 
@@ -41,6 +42,9 @@ function Workspace() {
   const findings = useSharedStore((s) => s.findings)
   const setFindings = useSharedStore((s) => s.setFindings)
   const committedSelection = useSharedStore((s) => s.selection)
+  const commit = useSharedStore((s) => s.commit)
+  const pendingSelection = useDraftsStore((s) => s.pendingSelection)
+  const setPendingSelection = useDraftsStore((s) => s.setPendingSelection)
 
   const [rankingOpen, setRankingOpen] = useState(false)
 
@@ -85,6 +89,25 @@ function Workspace() {
     setFindings(mergeFindings(useSharedStore.getState().findings, fresh))
   }, [fixtures, weights, committedKey, setFindings])
 
+  // BL2/BL9: checkbox toggles write only the pending draft; the draft clears
+  // itself when it matches the committed selection again.
+  const toggleSelect = (countryCode: string) => {
+    const current = new Set(pendingSelection ?? committedSelection)
+    if (current.has(countryCode)) current.delete(countryCode)
+    else current.add(countryCode)
+    const next = [...current].sort()
+    const committed = [...committedSelection].sort()
+    const isCommitted =
+      next.length === committed.length && next.every((code, i) => code === committed[i])
+    setPendingSelection(isCommitted ? null : next)
+  }
+
+  const pendingCount = pendingSelection
+    ? pendingSelection
+        .filter((code) => !committedSelection.includes(code))
+        .concat(committedSelection.filter((code) => !pendingSelection.includes(code))).length
+    : 0
+
   // Flow A 1b-E: the error names what failed and offers retry; no partial UI.
   if (fixturesQuery.isError) {
     return (
@@ -109,8 +132,14 @@ function Workspace() {
       <div className="top-bars">
         <ContextBar
           trialName={fixtures.trial.name}
-          pendingCount={0}
+          pendingCount={pendingCount}
           savedCount={committedSelection.length}
+          onCommit={() => {
+            // BL4: the commit persists the selection vector, the weights in
+            // force, and the investigation record (this exact view state).
+            if (pendingSelection) commit(pendingSelection, state)
+          }}
+          onDiscard={() => setPendingSelection(null)}
         />
         <ScopeBar
           state={state}
@@ -124,10 +153,19 @@ function Workspace() {
           rows={viewRows}
           totalCandidates={fixtures.trial.candidateCountries.length}
           settleToken={variables}
+          pendingSelection={pendingSelection ? new Set(pendingSelection) : null}
+          onToggleSelect={toggleSelect}
+          onOpenDistribution={(countryCode) =>
+            writeState(
+              { ...state, distribution: { countryCode, outliers: true, unit: 'days' } },
+              'push',
+            )
+          }
         />
         <FindingsRail findings={findings} />
       </div>
       {state.sites !== null && <SiteExplorer state={state} fixtures={fixtures} />}
+      {state.distribution !== null && <DistributionPanel state={state} fixtures={fixtures} />}
       <RankingCriteria
         open={rankingOpen}
         onClose={() => setRankingOpen(false)}
