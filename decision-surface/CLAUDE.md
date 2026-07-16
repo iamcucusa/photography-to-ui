@@ -75,6 +75,14 @@ src/
 
 - **No hardcoded color anywhere in `src`.** The root coverage checker rejects
   hex / rgba / `color-mix`. All color through `var(--color-*)` tokens.
+- **Soft dark ground, this consumer only.** Pure `--color-bg-canvas` (sky-1)
+  is too harsh under a dense table; `--ds-ground-lift` (base.css) layers the
+  DS's own `overlay-mid` + `overlay-heavy` tokens over canvas/elevated for a
+  one-step navy lift — no new color values, light mode untouched. Every text
+  pair on the lifted ground was re-measured ≥ 4.5:1; keep it that way.
+- **`--color-status-error` is a 15% accent WASH**, not a text color (~1:1 as
+  a line). Use it as an indicator field with primary text on top, never as
+  text or a thin border.
 - Distributions drawn with **d3** (scale, shape, array) to SVG, styled by
   tokens. No high-level chart wrapper.
 - App deps live here, not in the root: `d3-scale`, `d3-shape`, `d3-array`,

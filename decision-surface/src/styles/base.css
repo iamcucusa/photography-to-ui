@@ -30,6 +30,28 @@ html[data-theme='light'] {
   color-scheme: light;
 }
 
+:root {
+  /* The soft dark ground, this consumer only: pure canvas (sky-1) is too
+     harsh a base for sustained table reading, and the dark ramp has no
+     intermediate step. Composite one from existing overlay tokens — the
+     sky-2 mid-tone (overlay-mid) knocked back by the canvas scrim
+     (overlay-heavy) — for a one-step navy lift with no new color values.
+     Every text pair on the lifted ground re-measures ≥ 4.5:1 (AA). */
+  --ds-ground-lift:
+    linear-gradient(var(--color-overlay-heavy), var(--color-overlay-heavy)),
+    linear-gradient(var(--color-overlay-mid), var(--color-overlay-mid));
+}
+
+:root[data-theme='light'] {
+  /* Light mode keeps its token ground untouched. */
+  --ds-ground-lift: none;
+}
+
+body {
+  background-color: var(--color-bg-canvas);
+  background-image: var(--ds-ground-lift);
+}
+
 /* Kill transitions for the theme-switch frame so the recolor is instant. */
 [data-theme-switching] *,
 [data-theme-switching] *::before,
@@ -49,7 +71,6 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-bg-canvas);
   color: var(--color-text-primary);
   font-family: var(--font-family-base);
   font-size: var(--text-md);

@@ -164,7 +164,8 @@
 .top-bars {
   flex: none;
   z-index: 20;
-  background: var(--color-bg-canvas);
+  background-color: var(--color-bg-canvas);
+  background-image: var(--ds-ground-lift);
   border-bottom: 1px solid var(--color-border-strong);
   margin: 0 calc(-1 * var(--space-lg));
   padding: 0 var(--space-lg);
@@ -226,7 +227,8 @@
 .toast {
   display: inline-block;
   font-size: var(--text-xs);
-  background: var(--color-bg-elevated);
+  background-color: var(--color-bg-elevated);
+  background-image: var(--ds-ground-lift);
   color: var(--color-text-primary);
   border-left: 2px solid var(--color-accent);
   padding: var(--space-xs) var(--space-sm);
@@ -447,7 +449,8 @@
   position: sticky;
   top: 0;
   z-index: 5;
-  background: var(--color-bg-canvas);
+  background-color: var(--color-bg-canvas);
+  background-image: var(--ds-ground-lift);
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
   text-transform: uppercase;
@@ -667,7 +670,8 @@
 /* ---------- ranking criteria dialog: a sharp instrument ---------- */
 
 .ranking-dialog {
-  background: var(--color-bg-elevated);
+  background-color: var(--color-bg-elevated);
+  background-image: var(--ds-ground-lift);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-strong);
   border-top: 2px solid var(--color-accent);
@@ -748,19 +752,21 @@
   display: flex;
   justify-content: space-between;
   margin: var(--space-md) 0;
-  padding: var(--space-sm) 0;
+  padding: var(--space-sm);
   border-bottom: 2px solid var(--color-border-strong);
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
 }
 
-/* Error color on the rule only: as small text it measures under 4.5:1 on
-   the elevated surface, but as a non-text indicator 3:1 suffices. The
-   message itself stays primary; save-disabled + aria-live carry the state. */
+/* The invalid state uses the DS error semantics as designed:
+   --color-status-error is a 15% accent WASH (an indicator field, not a
+   text color — as a line it measures ~1.05:1). Wash + solid accent rule
+   (≥5:1, non-text needs 3:1) + primary text + disabled save + aria-live
+   carry the state through independent channels. */
 .weight-total.is-invalid {
   color: var(--color-text-primary);
-  border-bottom-width: 2px;
-  border-bottom-color: var(--color-status-error);
+  background: var(--color-status-error);
+  border-bottom-color: var(--color-accent);
 }
 
 .dialog-actions {
@@ -781,7 +787,8 @@
   z-index: 40;
   display: flex;
   flex-direction: column;
-  background: var(--color-bg-elevated);
+  background-color: var(--color-bg-elevated);
+  background-image: var(--ds-ground-lift);
   border-top: 2px solid var(--color-accent);
   box-shadow: var(--shadow-hover);
   animation: ds-enter-up var(--ds-duration-standard) var(--ds-ease);
@@ -873,7 +880,8 @@
   width: min(27rem, 92vw);
   z-index: 50;
   overflow-y: auto;
-  background: var(--color-bg-elevated);
+  background-color: var(--color-bg-elevated);
+  background-image: var(--ds-ground-lift);
   border-left: 2px solid var(--color-accent);
   box-shadow: var(--shadow-hover);
   padding: var(--space-lg);
