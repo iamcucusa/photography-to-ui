@@ -160,6 +160,20 @@ export function readState(): InvestigationState | null {
   return parseState(path, window.location.search)
 }
 
+// Stable snapshot for useSyncExternalStore: the same URL returns the same
+// object reference, so React re-renders only on real view-state changes.
+let cachedHref: string | null = null
+let cachedState: InvestigationState | null = null
+
+export function readStateCached(): InvestigationState | null {
+  const href = window.location.pathname + window.location.search
+  if (href !== cachedHref) {
+    cachedHref = href
+    cachedState = readState()
+  }
+  return cachedState
+}
+
 export function stateToHref(state: InvestigationState): string {
   return base() + serializeState(state)
 }

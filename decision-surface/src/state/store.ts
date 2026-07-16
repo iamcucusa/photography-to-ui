@@ -23,24 +23,31 @@ interface SharedSlice extends SharedState {
   setFindings: (findings: Finding[]) => void
 }
 
+// Each action sets ONLY the field it changed: re-setting the untouched
+// fields from a fresh service read would give them new identities on every
+// write, retriggering everything that selects them (e.g. the Atlas effect,
+// which watches `weights`).
 export const useSharedStore = create<SharedSlice>((set, get) => ({
   ...sharedService.load(TRIAL_ID),
 
   commit: (selection, investigation) => {
-    set(sharedService.commit(TRIAL_ID, selection, get().weights, investigation))
+    sharedService.commit(TRIAL_ID, selection, get().weights, investigation)
+    set({ selection, investigation })
     useDraftsStore.getState().setPendingSelection(null)
   },
 
   saveWeights: (weights) => {
-    set(sharedService.saveWeights(TRIAL_ID, weights))
+    sharedService.saveWeights(TRIAL_ID, weights)
+    set({ weights })
   },
 
   setFindingStatus: (findingId, status) => {
-    set(sharedService.setFindingStatus(TRIAL_ID, findingId, status))
+    set({ findings: sharedService.setFindingStatus(TRIAL_ID, findingId, status).findings })
   },
 
   setFindings: (findings) => {
-    set(sharedService.saveFindings(TRIAL_ID, findings))
+    sharedService.saveFindings(TRIAL_ID, findings)
+    set({ findings })
   },
 }))
 
@@ -53,10 +60,12 @@ export const useDraftsStore = create<DraftsSlice>((set) => ({
   ...draftsService.load(TRIAL_ID),
 
   setPendingSelection: (pendingSelection) => {
-    set(draftsService.setPendingSelection(TRIAL_ID, pendingSelection))
+    draftsService.setPendingSelection(TRIAL_ID, pendingSelection)
+    set({ pendingSelection })
   },
 
   setWeightEdits: (weightEdits) => {
-    set(draftsService.setWeightEdits(TRIAL_ID, weightEdits))
+    draftsService.setWeightEdits(TRIAL_ID, weightEdits)
+    set({ weightEdits })
   },
 }))
