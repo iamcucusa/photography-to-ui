@@ -39,10 +39,10 @@ LAT = {}
 for code, _ in CTRY:
     LAT[code] = dict(enroll=rng.uniform(0.35, 0.75), startup=rng.uniform(150, 240),
                      benchBias=1.0, nonBenchBias=1.0, bimodal=False,
-                     predMult=rng.uniform(0.65, 1.55))  # wide spread keeps L2 corr < 0.9 at n=36
-LAT["POL"].update(enroll=0.52, startup=45, predMult=1.0)                       # S1
-LAT["BRA"].update(predMult=2.0)                                                # S2
-LAT["ESP"].update(enroll=0.75, startup=120, benchBias=0.5, nonBenchBias=1.45,
+                     predMult=rng.uniform(0.65, 1.45))  # wide spread keeps L2 corr < 0.9 at n=36
+LAT["POL"].update(enroll=0.62, startup=45, predMult=1.0)                       # S1
+LAT["BRA"].update(predMult=2.15)                                               # S2
+LAT["ESP"].update(enroll=0.75, startup=95, benchBias=0.5, nonBenchBias=1.45,
                   predMult=1.0)                                                # S3
 LAT["CAN"].update(enroll=0.55, startup=165, bimodal=True, predMult=1.0)        # S4
 
@@ -53,12 +53,25 @@ for code, _ in CTRY:
     for s in range(1, nsites + 1):
         site = f"site-{code}-{s:02d}"
         if L["bimodal"]:
-            site_q = rng.choice([0.22, 1.55, 1.55])  # majority-high: good median, wide spread
+            # Deterministic majority-high split: every third site is weak, so
+            # the median stays good while the spread stays wide (S4) at any
+            # draw sequence.
+            site_q = 0.22 if s % 3 == 0 else 1.55
         else:
             site_q = max(0.15, rng.gauss(1.0, 0.18))
-        invs = [f"inv-{code}-{rng.randint(1, nsites * 3):03d}" for _ in range(rng.randint(1, 3))]
-        picks = rng.sample(SRC, rng.randint(4, 7))
+        # Per-site investigator pool; each observation staffs a subset, so
+        # "present in more than one sourceTrialId" is a real distinction.
+        pool = sorted({f"inv-{code}-{rng.randint(1, nsites * 3):03d}" for _ in range(rng.randint(2, 4))})
+        if code == "ESP":
+            # S3 structure: mostly non-benchmark sources, so the 'all' median
+            # sits stably in the strong cluster and benchmark-only exposes
+            # the weakness. No fixture field marks this (L1).
+            picks = rng.sample([t for t in SRC if not t[1]], 4) + rng.sample(
+                [t for t in SRC if t[1]], 2)
+        else:
+            picks = rng.sample(SRC, rng.randint(4, 7))
         for tid, bench in picks:
+            invs = sorted(rng.sample(pool, rng.randint(1, min(2, len(pool)))))
             base = L["enroll"] * site_q * (L["benchBias"] if bench else L["nonBenchBias"])
             rate = min(3.0, max(0.05, rng.gauss(base, 0.06)))
             target = min(3.0, max(0.1, rng.gauss(L["enroll"] * 1.1, 0.08)))
