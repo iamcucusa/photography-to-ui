@@ -26,7 +26,9 @@ export default defineConfig({
     },
   },
   test: {
+    // Pure layers run in node; the App smoke test opts into jsdom per-file
+    // via a `@vitest-environment jsdom` docblock.
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 })

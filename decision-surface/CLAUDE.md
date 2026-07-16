@@ -154,11 +154,17 @@ conventions do not fit a state-driven product UI.
 - **Types.** All §G contract shapes live in `src/types.ts`, named exactly as
   the spec names them (`CountryMetrics`, `InvestigationState`, `Finding`,
   `SitePage`). No parallel or renamed shapes.
-- **Testing (yes, this consumer tests).** Vitest on the pure layers only:
-  `derive.ts` (the rank algorithm, quartiles), `url.ts` (serialize/parse
-  round-trip, canonical order, push/replace), the keyset pager, and Atlas's
-  finding validation (BL5). Colocated `*.test.ts`. No component or E2E tests
-  in v1; the flows in the spec are the manual test script.
+- **Testing (yes, this consumer tests).** Vitest, colocated. Most tests run in
+  node env on the pure and service layers: `derive.ts` (rank algorithm,
+  quartiles), `url.ts` (serialize/parse round-trip, canonical order,
+  push/replace), the keyset pager, Atlas's finding validation (BL5), and the
+  `shared`/`drafts`/`store` write semantics (the identity-stability the Atlas
+  effect depends on — the loop bug's regression guard). One jsdom smoke test,
+  `App.smoke.test.tsx` (opts into jsdom via a `@vitest-environment` docblock;
+  stubs ResizeObserver / scroll / `<dialog>`), walks the §H.2 demo path end to
+  end — it guards the orchestration layer where both real regressions lived.
+  No exhaustive component/interaction tests; the spec flows remain the manual
+  script.
 - **Fixtures.** Regenerated only by the seeded generator; the data-spec
   validator runs before commit. Never hand-edit a fixture.
 - **Accessibility.** Every pointer path has its keyboard path from the
