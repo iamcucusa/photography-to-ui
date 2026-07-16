@@ -143,6 +143,7 @@ function twoCountryFixtures(): Fixtures {
       { code: 'AAA', name: 'Alpha' },
       { code: 'BBB', name: 'Beta' },
     ],
+    sites: [],
     observations: [
       obs({
         id: 'o1',

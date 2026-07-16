@@ -19,6 +19,7 @@ at the boundary exactly as a real API response would be validated.
 |---|---|---|---|
 | `data/trial.json` | The active trial and its candidate country codes | 1 record | 2 KB |
 | `data/countries.json` | Reference data: code, name | 1 per country | 3 KB |
+| `data/sites.json` | Reference data: site id, display name | 1 per site | 60 KB |
 | `data/observations.json` | Site-level historical performance, the atomic grain, and the windowed grid's dataset | 1 per site per source trial | 2 MB max |
 | `data/predictions.json` | Model predictions per country for this trial | 1 per country | 5 KB |
 | `data/ranking-variables.json` | The default weight vector | 1 per variable | 2 KB |
@@ -111,6 +112,17 @@ Five defaults, 0.2 each: historical enrollment (Direct), performance ratio
 (Direct), startup time (Inverse), site-to-site variability (Inverse),
 predicted enrollment (Direct).
 
+### 3.6 `sites.json`
+
+Reference data: one human-readable display name per site, shown next to the
+site id in the evidence grid. Names are seeded city + institution pairs, at
+most 3 words, unique within their country. Cosmetic only — no metric derives
+from them (L1 applies: no plant is marked by its name).
+
+```
+[ { "id": "site-ARG-01", "name": "Córdoba Oncology Institute" }, ... ]
+```
+
 ## 4. Derivation rules (computed at runtime, never stored)
 
 For a provenance scope p in {all, benchmark, non-benchmark}, `obs(p)` filters
@@ -146,7 +158,7 @@ ties break alphabetically by `countryCode` for determinism.
 
 | ID | Constraint |
 |---|---|
-| C1 | All ids unique and lexicographically sortable (they are the keyset tiebreak); every `countryCode` exists in `countries.json`; every `siteId` embeds its country and never appears under two countries; every country in `candidateCountries` has observations |
+| C1 | All ids unique and lexicographically sortable (they are the keyset tiebreak); every `countryCode` exists in `countries.json`; every `siteId` embeds its country, never appears under two countries, and has exactly one display name in `sites.json` (≤ 3 words, unique within its country); every country in `candidateCountries` has observations |
 | C2 | `enrollmentRatePSM` and `targetEnrollmentRatePSM` in (0, 3]; `startupDays` integer in [30, 400] |
 | C3 | Every country has at least 5 sites, at least 1 benchmark and 1 non-benchmark observation |
 | C4 | Weights are fractions summing to 1.0 (tolerance 1e-9); every `metricKey` maps to a derivable field |

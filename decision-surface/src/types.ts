@@ -108,3 +108,9 @@ export interface Country {
   code: CountryCode3
   name: string
 }
+
+// Site reference data (data-spec §3.6): the display name for a siteId.
+export interface Site {
+  id: string
+  name: string
+}

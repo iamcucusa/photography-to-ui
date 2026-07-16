@@ -577,7 +577,7 @@ fixtures. Derivation formulas, constraints, and generation rules live in
 
 | Tier | Shapes | Stored | Written by | Read by |
 |---|---|---|---|---|
-| Source fixtures | `Observation`, `Prediction`, `RankingVariable` defaults, trial, countries | Static seeded JSON, immutable at runtime | The generator only | The data layer only |
+| Source fixtures | `Observation`, `Prediction`, `RankingVariable` defaults, trial, countries, site names | Static seeded JSON, immutable at runtime | The generator only | The data layer only |
 | Derived, never stored | `CountryMetrics`, `CountryDistribution`, `SitePage` | Computed on demand in the data layer | Nobody | UI and Atlas |
 | Runtime shared state | Selection, weights in force, finding statuses | Data layer persistence (demo: localStorage) | Ana only; finding status via her accept or reject (BL2, BL6) | Ana, Vera, Atlas |
 | Local drafts | Pending selection, weight edits in progress | localStorage, local to the user, never shared | Ana while editing | The editing zone and the `ContextBar` pending indicator |

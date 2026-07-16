@@ -1,0 +1,3690 @@
+[
+ {
+  "id": "site-ARG-01",
+  "name": "C\u00f3rdoba Oncology Institute"
+ },
+ {
+  "id": "site-ARG-02",
+  "name": "Mendoza Oncology Institute"
+ },
+ {
+  "id": "site-ARG-03",
+  "name": "Rosario Medical Center"
+ },
+ {
+  "id": "site-ARG-04",
+  "name": "Salta Research Clinic"
+ },
+ {
+  "id": "site-ARG-05",
+  "name": "Mendoza Memorial Hospital"
+ },
+ {
+  "id": "site-ARG-06",
+  "name": "C\u00f3rdoba Clinical Institute"
+ },
+ {
+  "id": "site-ARG-07",
+  "name": "Tucum\u00e1n Cancer Center"
+ },
+ {
+  "id": "site-ARG-08",
+  "name": "Salta Memorial Hospital"
+ },
+ {
+  "id": "site-ARG-09",
+  "name": "C\u00f3rdoba Medical Center"
+ },
+ {
+  "id": "site-ARG-10",
+  "name": "Mendoza University Hospital"
+ },
+ {
+  "id": "site-ARG-11",
+  "name": "Rosario Research Clinic"
+ },
+ {
+  "id": "site-ARG-12",
+  "name": "Tucum\u00e1n Clinical Institute"
+ },
+ {
+  "id": "site-ARG-13",
+  "name": "Rosario General Hospital"
+ },
+ {
+  "id": "site-ARG-14",
+  "name": "Mendoza General Hospital"
+ },
+ {
+  "id": "site-ARG-15",
+  "name": "Mendoza Medical Center"
+ },
+ {
+  "id": "site-ARG-16",
+  "name": "Salta University Hospital"
+ },
+ {
+  "id": "site-ARG-17",
+  "name": "Tucum\u00e1n Medical Center"
+ },
+ {
+  "id": "site-ARG-18",
+  "name": "Rosario Cancer Center"
+ },
+ {
+  "id": "site-ARG-19",
+  "name": "C\u00f3rdoba Research Clinic"
+ },
+ {
+  "id": "site-ARG-20",
+  "name": "Tucum\u00e1n University Hospital"
+ },
+ {
+  "id": "site-ARG-21",
+  "name": "C\u00f3rdoba General Hospital"
+ },
+ {
+  "id": "site-ARG-22",
+  "name": "Salta Oncology Institute"
+ },
+ {
+  "id": "site-ARG-23",
+  "name": "Mendoza Clinical Institute"
+ },
+ {
+  "id": "site-ARG-24",
+  "name": "C\u00f3rdoba Cancer Center"
+ },
+ {
+  "id": "site-ARG-25",
+  "name": "Salta Cancer Center"
+ },
+ {
+  "id": "site-ARG-26",
+  "name": "Tucum\u00e1n Memorial Hospital"
+ },
+ {
+  "id": "site-AUS-01",
+  "name": "Adelaide University Hospital"
+ },
+ {
+  "id": "site-AUS-02",
+  "name": "Perth Memorial Hospital"
+ },
+ {
+  "id": "site-AUS-03",
+  "name": "Melbourne University Hospital"
+ },
+ {
+  "id": "site-AUS-04",
+  "name": "Perth University Hospital"
+ },
+ {
+  "id": "site-AUS-05",
+  "name": "Adelaide Memorial Hospital"
+ },
+ {
+  "id": "site-AUS-06",
+  "name": "Brisbane Medical Center"
+ },
+ {
+  "id": "site-AUS-07",
+  "name": "Melbourne General Hospital"
+ },
+ {
+  "id": "site-AUS-08",
+  "name": "Adelaide Cancer Center"
+ },
+ {
+  "id": "site-AUS-09",
+  "name": "Sydney Cancer Center"
+ },
+ {
+  "id": "site-AUS-10",
+  "name": "Sydney Medical Center"
+ },
+ {
+  "id": "site-AUS-11",
+  "name": "Brisbane Oncology Institute"
+ },
+ {
+  "id": "site-AUS-12",
+  "name": "Perth Clinical Institute"
+ },
+ {
+  "id": "site-AUS-13",
+  "name": "Sydney Research Clinic"
+ },
+ {
+  "id": "site-AUS-14",
+  "name": "Perth Cancer Center"
+ },
+ {
+  "id": "site-AUS-15",
+  "name": "Perth General Hospital"
+ },
+ {
+  "id": "site-AUS-16",
+  "name": "Melbourne Medical Center"
+ },
+ {
+  "id": "site-AUS-17",
+  "name": "Adelaide Research Clinic"
+ },
+ {
+  "id": "site-AUS-18",
+  "name": "Sydney Oncology Institute"
+ },
+ {
+  "id": "site-AUS-19",
+  "name": "Brisbane University Hospital"
+ },
+ {
+  "id": "site-AUS-20",
+  "name": "Brisbane General Hospital"
+ },
+ {
+  "id": "site-AUS-21",
+  "name": "Sydney General Hospital"
+ },
+ {
+  "id": "site-AUS-22",
+  "name": "Perth Research Clinic"
+ },
+ {
+  "id": "site-AUS-23",
+  "name": "Perth Oncology Institute"
+ },
+ {
+  "id": "site-AUS-24",
+  "name": "Brisbane Cancer Center"
+ },
+ {
+  "id": "site-AUS-25",
+  "name": "Melbourne Clinical Institute"
+ },
+ {
+  "id": "site-AUS-26",
+  "name": "Melbourne Cancer Center"
+ },
+ {
+  "id": "site-AUS-27",
+  "name": "Melbourne Oncology Institute"
+ },
+ {
+  "id": "site-AUS-28",
+  "name": "Adelaide Medical Center"
+ },
+ {
+  "id": "site-AUS-29",
+  "name": "Perth Medical Center"
+ },
+ {
+  "id": "site-AUS-30",
+  "name": "Melbourne Memorial Hospital"
+ },
+ {
+  "id": "site-AUT-01",
+  "name": "Innsbruck Medical Center"
+ },
+ {
+  "id": "site-AUT-02",
+  "name": "Salzburg Cancer Center"
+ },
+ {
+  "id": "site-AUT-03",
+  "name": "Graz Oncology Institute"
+ },
+ {
+  "id": "site-AUT-04",
+  "name": "Graz University Hospital"
+ },
+ {
+  "id": "site-AUT-05",
+  "name": "Vienna Research Clinic"
+ },
+ {
+  "id": "site-AUT-06",
+  "name": "Linz Cancer Center"
+ },
+ {
+  "id": "site-AUT-07",
+  "name": "Vienna General Hospital"
+ },
+ {
+  "id": "site-AUT-08",
+  "name": "Linz Medical Center"
+ },
+ {
+  "id": "site-AUT-09",
+  "name": "Linz Memorial Hospital"
+ },
+ {
+  "id": "site-AUT-10",
+  "name": "Salzburg Memorial Hospital"
+ },
+ {
+  "id": "site-AUT-11",
+  "name": "Innsbruck General Hospital"
+ },
+ {
+  "id": "site-AUT-12",
+  "name": "Linz Research Clinic"
+ },
+ {
+  "id": "site-AUT-13",
+  "name": "Linz General Hospital"
+ },
+ {
+  "id": "site-AUT-14",
+  "name": "Vienna Oncology Institute"
+ },
+ {
+  "id": "site-AUT-15",
+  "name": "Innsbruck University Hospital"
+ },
+ {
+  "id": "site-AUT-16",
+  "name": "Innsbruck Clinical Institute"
+ },
+ {
+  "id": "site-AUT-17",
+  "name": "Innsbruck Memorial Hospital"
+ },
+ {
+  "id": "site-AUT-18",
+  "name": "Graz Medical Center"
+ },
+ {
+  "id": "site-AUT-19",
+  "name": "Graz Memorial Hospital"
+ },
+ {
+  "id": "site-AUT-20",
+  "name": "Graz General Hospital"
+ },
+ {
+  "id": "site-AUT-21",
+  "name": "Graz Research Clinic"
+ },
+ {
+  "id": "site-AUT-22",
+  "name": "Vienna Medical Center"
+ },
+ {
+  "id": "site-AUT-23",
+  "name": "Salzburg University Hospital"
+ },
+ {
+  "id": "site-AUT-24",
+  "name": "Salzburg General Hospital"
+ },
+ {
+  "id": "site-AUT-25",
+  "name": "Salzburg Oncology Institute"
+ },
+ {
+  "id": "site-AUT-26",
+  "name": "Salzburg Research Clinic"
+ },
+ {
+  "id": "site-AUT-27",
+  "name": "Salzburg Medical Center"
+ },
+ {
+  "id": "site-AUT-28",
+  "name": "Innsbruck Research Clinic"
+ },
+ {
+  "id": "site-AUT-29",
+  "name": "Linz Oncology Institute"
+ },
+ {
+  "id": "site-AUT-30",
+  "name": "Graz Cancer Center"
+ },
+ {
+  "id": "site-BEL-01",
+  "name": "Antwerp Medical Center"
+ },
+ {
+  "id": "site-BEL-02",
+  "name": "Leuven Cancer Center"
+ },
+ {
+  "id": "site-BEL-03",
+  "name": "Ghent General Hospital"
+ },
+ {
+  "id": "site-BEL-04",
+  "name": "Brussels Clinical Institute"
+ },
+ {
+  "id": "site-BEL-05",
+  "name": "Leuven Oncology Institute"
+ },
+ {
+  "id": "site-BEL-06",
+  "name": "Li\u00e8ge General Hospital"
+ },
+ {
+  "id": "site-BEL-07",
+  "name": "Li\u00e8ge Cancer Center"
+ },
+ {
+  "id": "site-BEL-08",
+  "name": "Brussels Oncology Institute"
+ },
+ {
+  "id": "site-BEL-09",
+  "name": "Leuven Memorial Hospital"
+ },
+ {
+  "id": "site-BEL-10",
+  "name": "Brussels University Hospital"
+ },
+ {
+  "id": "site-BEL-11",
+  "name": "Brussels General Hospital"
+ },
+ {
+  "id": "site-BEL-12",
+  "name": "Leuven Medical Center"
+ },
+ {
+  "id": "site-BEL-13",
+  "name": "Li\u00e8ge Medical Center"
+ },
+ {
+  "id": "site-BEL-14",
+  "name": "Li\u00e8ge Oncology Institute"
+ },
+ {
+  "id": "site-BEL-15",
+  "name": "Li\u00e8ge Research Clinic"
+ },
+ {
+  "id": "site-BEL-16",
+  "name": "Brussels Cancer Center"
+ },
+ {
+  "id": "site-BEL-17",
+  "name": "Ghent Memorial Hospital"
+ },
+ {
+  "id": "site-BEL-18",
+  "name": "Li\u00e8ge Clinical Institute"
+ },
+ {
+  "id": "site-BEL-19",
+  "name": "Antwerp Oncology Institute"
+ },
+ {
+  "id": "site-BEL-20",
+  "name": "Leuven General Hospital"
+ },
+ {
+  "id": "site-BEL-21",
+  "name": "Ghent Medical Center"
+ },
+ {
+  "id": "site-BEL-22",
+  "name": "Antwerp Memorial Hospital"
+ },
+ {
+  "id": "site-BEL-23",
+  "name": "Antwerp University Hospital"
+ },
+ {
+  "id": "site-BEL-24",
+  "name": "Antwerp Clinical Institute"
+ },
+ {
+  "id": "site-BEL-25",
+  "name": "Ghent Research Clinic"
+ },
+ {
+  "id": "site-BEL-26",
+  "name": "Antwerp Research Clinic"
+ },
+ {
+  "id": "site-BEL-27",
+  "name": "Leuven Clinical Institute"
+ },
+ {
+  "id": "site-BEL-28",
+  "name": "Brussels Medical Center"
+ },
+ {
+  "id": "site-BEL-29",
+  "name": "Antwerp General Hospital"
+ },
+ {
+  "id": "site-BEL-30",
+  "name": "Ghent Clinical Institute"
+ },
+ {
+  "id": "site-BEL-31",
+  "name": "Antwerp Cancer Center"
+ },
+ {
+  "id": "site-BEL-32",
+  "name": "Ghent Cancer Center"
+ },
+ {
+  "id": "site-BEL-33",
+  "name": "Ghent University Hospital"
+ },
+ {
+  "id": "site-BEL-34",
+  "name": "Li\u00e8ge Memorial Hospital"
+ },
+ {
+  "id": "site-BGR-01",
+  "name": "Ruse Cancer Center"
+ },
+ {
+  "id": "site-BGR-02",
+  "name": "Burgas Medical Center"
+ },
+ {
+  "id": "site-BGR-03",
+  "name": "Varna University Hospital"
+ },
+ {
+  "id": "site-BGR-04",
+  "name": "Burgas Oncology Institute"
+ },
+ {
+  "id": "site-BGR-05",
+  "name": "Varna Cancer Center"
+ },
+ {
+  "id": "site-BGR-06",
+  "name": "Ruse Clinical Institute"
+ },
+ {
+  "id": "site-BGR-07",
+  "name": "Varna Clinical Institute"
+ },
+ {
+  "id": "site-BGR-08",
+  "name": "Sofia General Hospital"
+ },
+ {
+  "id": "site-BGR-09",
+  "name": "Plovdiv General Hospital"
+ },
+ {
+  "id": "site-BGR-10",
+  "name": "Varna Medical Center"
+ },
+ {
+  "id": "site-BGR-11",
+  "name": "Sofia Research Clinic"
+ },
+ {
+  "id": "site-BGR-12",
+  "name": "Ruse Oncology Institute"
+ },
+ {
+  "id": "site-BGR-13",
+  "name": "Ruse Memorial Hospital"
+ },
+ {
+  "id": "site-BGR-14",
+  "name": "Sofia Clinical Institute"
+ },
+ {
+  "id": "site-BGR-15",
+  "name": "Ruse Medical Center"
+ },
+ {
+  "id": "site-BGR-16",
+  "name": "Varna Memorial Hospital"
+ },
+ {
+  "id": "site-BGR-17",
+  "name": "Sofia Medical Center"
+ },
+ {
+  "id": "site-BGR-18",
+  "name": "Varna Research Clinic"
+ },
+ {
+  "id": "site-BRA-01",
+  "name": "Salvador Clinical Institute"
+ },
+ {
+  "id": "site-BRA-02",
+  "name": "Curitiba General Hospital"
+ },
+ {
+  "id": "site-BRA-03",
+  "name": "Fortaleza Memorial Hospital"
+ },
+ {
+  "id": "site-BRA-04",
+  "name": "Curitiba Clinical Institute"
+ },
+ {
+  "id": "site-BRA-05",
+  "name": "Salvador Cancer Center"
+ },
+ {
+  "id": "site-BRA-06",
+  "name": "Salvador Research Clinic"
+ },
+ {
+  "id": "site-BRA-07",
+  "name": "Campinas University Hospital"
+ },
+ {
+  "id": "site-BRA-08",
+  "name": "Fortaleza Medical Center"
+ },
+ {
+  "id": "site-BRA-09",
+  "name": "Fortaleza Research Clinic"
+ },
+ {
+  "id": "site-BRA-10",
+  "name": "Recife Medical Center"
+ },
+ {
+  "id": "site-BRA-11",
+  "name": "Campinas Memorial Hospital"
+ },
+ {
+  "id": "site-BRA-12",
+  "name": "Curitiba University Hospital"
+ },
+ {
+  "id": "site-BRA-13",
+  "name": "Campinas Clinical Institute"
+ },
+ {
+  "id": "site-BRA-14",
+  "name": "Recife General Hospital"
+ },
+ {
+  "id": "site-BRA-15",
+  "name": "Recife University Hospital"
+ },
+ {
+  "id": "site-BRA-16",
+  "name": "Campinas Medical Center"
+ },
+ {
+  "id": "site-BRA-17",
+  "name": "Curitiba Medical Center"
+ },
+ {
+  "id": "site-BRA-18",
+  "name": "Fortaleza Clinical Institute"
+ },
+ {
+  "id": "site-BRA-19",
+  "name": "Campinas Cancer Center"
+ },
+ {
+  "id": "site-BRA-20",
+  "name": "Curitiba Research Clinic"
+ },
+ {
+  "id": "site-BRA-21",
+  "name": "Curitiba Cancer Center"
+ },
+ {
+  "id": "site-BRA-22",
+  "name": "Campinas Oncology Institute"
+ },
+ {
+  "id": "site-BRA-23",
+  "name": "Salvador General Hospital"
+ },
+ {
+  "id": "site-BRA-24",
+  "name": "Salvador University Hospital"
+ },
+ {
+  "id": "site-BRA-25",
+  "name": "Recife Memorial Hospital"
+ },
+ {
+  "id": "site-BRA-26",
+  "name": "Recife Oncology Institute"
+ },
+ {
+  "id": "site-CAN-01",
+  "name": "Calgary Cancer Center"
+ },
+ {
+  "id": "site-CAN-02",
+  "name": "Calgary Medical Center"
+ },
+ {
+  "id": "site-CAN-03",
+  "name": "Montreal Medical Center"
+ },
+ {
+  "id": "site-CAN-04",
+  "name": "Montreal Memorial Hospital"
+ },
+ {
+  "id": "site-CAN-05",
+  "name": "Toronto University Hospital"
+ },
+ {
+  "id": "site-CAN-06",
+  "name": "Toronto Clinical Institute"
+ },
+ {
+  "id": "site-CAN-07",
+  "name": "Montreal Clinical Institute"
+ },
+ {
+  "id": "site-CAN-08",
+  "name": "Toronto Memorial Hospital"
+ },
+ {
+  "id": "site-CAN-09",
+  "name": "Calgary Oncology Institute"
+ },
+ {
+  "id": "site-CAN-10",
+  "name": "Ottawa Oncology Institute"
+ },
+ {
+  "id": "site-CAN-11",
+  "name": "Montreal Cancer Center"
+ },
+ {
+  "id": "site-CAN-12",
+  "name": "Montreal Research Clinic"
+ },
+ {
+  "id": "site-CAN-13",
+  "name": "Toronto General Hospital"
+ },
+ {
+  "id": "site-CAN-14",
+  "name": "Ottawa General Hospital"
+ },
+ {
+  "id": "site-CAN-15",
+  "name": "Toronto Research Clinic"
+ },
+ {
+  "id": "site-CAN-16",
+  "name": "Calgary Research Clinic"
+ },
+ {
+  "id": "site-CAN-17",
+  "name": "Calgary General Hospital"
+ },
+ {
+  "id": "site-CAN-18",
+  "name": "Montreal Oncology Institute"
+ },
+ {
+  "id": "site-CAN-19",
+  "name": "Vancouver Clinical Institute"
+ },
+ {
+  "id": "site-CAN-20",
+  "name": "Montreal University Hospital"
+ },
+ {
+  "id": "site-CAN-21",
+  "name": "Vancouver Medical Center"
+ },
+ {
+  "id": "site-CAN-22",
+  "name": "Toronto Cancer Center"
+ },
+ {
+  "id": "site-CAN-23",
+  "name": "Vancouver General Hospital"
+ },
+ {
+  "id": "site-CAN-24",
+  "name": "Vancouver Oncology Institute"
+ },
+ {
+  "id": "site-CAN-25",
+  "name": "Ottawa University Hospital"
+ },
+ {
+  "id": "site-CHE-01",
+  "name": "Geneva Cancer Center"
+ },
+ {
+  "id": "site-CHE-02",
+  "name": "Geneva Memorial Hospital"
+ },
+ {
+  "id": "site-CHE-03",
+  "name": "Zurich Oncology Institute"
+ },
+ {
+  "id": "site-CHE-04",
+  "name": "Zurich Research Clinic"
+ },
+ {
+  "id": "site-CHE-05",
+  "name": "Basel Medical Center"
+ },
+ {
+  "id": "site-CHE-06",
+  "name": "Bern Clinical Institute"
+ },
+ {
+  "id": "site-CHE-07",
+  "name": "Lausanne General Hospital"
+ },
+ {
+  "id": "site-CHE-08",
+  "name": "Zurich Cancer Center"
+ },
+ {
+  "id": "site-CHE-09",
+  "name": "Lausanne Oncology Institute"
+ },
+ {
+  "id": "site-CHE-10",
+  "name": "Basel Clinical Institute"
+ },
+ {
+  "id": "site-CHE-11",
+  "name": "Geneva Oncology Institute"
+ },
+ {
+  "id": "site-CHE-12",
+  "name": "Lausanne University Hospital"
+ },
+ {
+  "id": "site-CHE-13",
+  "name": "Bern Research Clinic"
+ },
+ {
+  "id": "site-CHE-14",
+  "name": "Zurich Memorial Hospital"
+ },
+ {
+  "id": "site-CHE-15",
+  "name": "Zurich University Hospital"
+ },
+ {
+  "id": "site-CHE-16",
+  "name": "Basel Memorial Hospital"
+ },
+ {
+  "id": "site-CHE-17",
+  "name": "Zurich Clinical Institute"
+ },
+ {
+  "id": "site-CHE-18",
+  "name": "Lausanne Clinical Institute"
+ },
+ {
+  "id": "site-CHE-19",
+  "name": "Basel Cancer Center"
+ },
+ {
+  "id": "site-CHE-20",
+  "name": "Bern Cancer Center"
+ },
+ {
+  "id": "site-CHE-21",
+  "name": "Geneva Medical Center"
+ },
+ {
+  "id": "site-CHE-22",
+  "name": "Basel Oncology Institute"
+ },
+ {
+  "id": "site-CHE-23",
+  "name": "Geneva Clinical Institute"
+ },
+ {
+  "id": "site-CHE-24",
+  "name": "Basel General Hospital"
+ },
+ {
+  "id": "site-CHE-25",
+  "name": "Bern Memorial Hospital"
+ },
+ {
+  "id": "site-CHE-26",
+  "name": "Bern Oncology Institute"
+ },
+ {
+  "id": "site-CHE-27",
+  "name": "Basel Research Clinic"
+ },
+ {
+  "id": "site-CHE-28",
+  "name": "Lausanne Memorial Hospital"
+ },
+ {
+  "id": "site-CHE-29",
+  "name": "Geneva General Hospital"
+ },
+ {
+  "id": "site-CHE-30",
+  "name": "Geneva University Hospital"
+ },
+ {
+  "id": "site-CHE-31",
+  "name": "Lausanne Medical Center"
+ },
+ {
+  "id": "site-CHL-01",
+  "name": "Antofagasta General Hospital"
+ },
+ {
+  "id": "site-CHL-02",
+  "name": "Temuco General Hospital"
+ },
+ {
+  "id": "site-CHL-03",
+  "name": "Antofagasta Clinical Institute"
+ },
+ {
+  "id": "site-CHL-04",
+  "name": "Antofagasta Medical Center"
+ },
+ {
+  "id": "site-CHL-05",
+  "name": "Santiago Cancer Center"
+ },
+ {
+  "id": "site-CHL-06",
+  "name": "Valpara\u00edso Research Clinic"
+ },
+ {
+  "id": "site-CHL-07",
+  "name": "Valpara\u00edso Medical Center"
+ },
+ {
+  "id": "site-CHL-08",
+  "name": "Santiago Medical Center"
+ },
+ {
+  "id": "site-CHL-09",
+  "name": "Santiago Clinical Institute"
+ },
+ {
+  "id": "site-CHL-10",
+  "name": "Temuco Medical Center"
+ },
+ {
+  "id": "site-CHL-11",
+  "name": "Temuco Cancer Center"
+ },
+ {
+  "id": "site-CHL-12",
+  "name": "Concepci\u00f3n Cancer Center"
+ },
+ {
+  "id": "site-CHL-13",
+  "name": "Concepci\u00f3n Clinical Institute"
+ },
+ {
+  "id": "site-COL-01",
+  "name": "Bogot\u00e1 Research Clinic"
+ },
+ {
+  "id": "site-COL-02",
+  "name": "Medell\u00edn Clinical Institute"
+ },
+ {
+  "id": "site-COL-03",
+  "name": "Medell\u00edn Cancer Center"
+ },
+ {
+  "id": "site-COL-04",
+  "name": "Cartagena Research Clinic"
+ },
+ {
+  "id": "site-COL-05",
+  "name": "Cartagena Medical Center"
+ },
+ {
+  "id": "site-COL-06",
+  "name": "Bogot\u00e1 General Hospital"
+ },
+ {
+  "id": "site-COL-07",
+  "name": "Cali University Hospital"
+ },
+ {
+  "id": "site-COL-08",
+  "name": "Medell\u00edn Oncology Institute"
+ },
+ {
+  "id": "site-COL-09",
+  "name": "Barranquilla Memorial Hospital"
+ },
+ {
+  "id": "site-COL-10",
+  "name": "Cartagena Clinical Institute"
+ },
+ {
+  "id": "site-COL-11",
+  "name": "Medell\u00edn Research Clinic"
+ },
+ {
+  "id": "site-COL-12",
+  "name": "Medell\u00edn Medical Center"
+ },
+ {
+  "id": "site-COL-13",
+  "name": "Bogot\u00e1 Oncology Institute"
+ },
+ {
+  "id": "site-COL-14",
+  "name": "Cartagena University Hospital"
+ },
+ {
+  "id": "site-COL-15",
+  "name": "Barranquilla Clinical Institute"
+ },
+ {
+  "id": "site-COL-16",
+  "name": "Barranquilla Medical Center"
+ },
+ {
+  "id": "site-CZE-01",
+  "name": "Ostrava Medical Center"
+ },
+ {
+  "id": "site-CZE-02",
+  "name": "Olomouc Memorial Hospital"
+ },
+ {
+  "id": "site-CZE-03",
+  "name": "Brno University Hospital"
+ },
+ {
+  "id": "site-CZE-04",
+  "name": "Prague Memorial Hospital"
+ },
+ {
+  "id": "site-CZE-05",
+  "name": "Ostrava Cancer Center"
+ },
+ {
+  "id": "site-CZE-06",
+  "name": "Ostrava Clinical Institute"
+ },
+ {
+  "id": "site-CZE-07",
+  "name": "Ostrava Research Clinic"
+ },
+ {
+  "id": "site-CZE-08",
+  "name": "Ostrava Memorial Hospital"
+ },
+ {
+  "id": "site-CZE-09",
+  "name": "Prague Clinical Institute"
+ },
+ {
+  "id": "site-CZE-10",
+  "name": "Olomouc Medical Center"
+ },
+ {
+  "id": "site-CZE-11",
+  "name": "Brno Cancer Center"
+ },
+ {
+  "id": "site-CZE-12",
+  "name": "Plze\u0148 Oncology Institute"
+ },
+ {
+  "id": "site-CZE-13",
+  "name": "Brno Clinical Institute"
+ },
+ {
+  "id": "site-CZE-14",
+  "name": "Brno Oncology Institute"
+ },
+ {
+  "id": "site-CZE-15",
+  "name": "Brno Medical Center"
+ },
+ {
+  "id": "site-CZE-16",
+  "name": "Plze\u0148 Clinical Institute"
+ },
+ {
+  "id": "site-DEU-01",
+  "name": "Munich Memorial Hospital"
+ },
+ {
+  "id": "site-DEU-02",
+  "name": "Cologne Research Clinic"
+ },
+ {
+  "id": "site-DEU-03",
+  "name": "Munich General Hospital"
+ },
+ {
+  "id": "site-DEU-04",
+  "name": "Hamburg Memorial Hospital"
+ },
+ {
+  "id": "site-DEU-05",
+  "name": "Hamburg General Hospital"
+ },
+ {
+  "id": "site-DEU-06",
+  "name": "Cologne General Hospital"
+ },
+ {
+  "id": "site-DEU-07",
+  "name": "Frankfurt Memorial Hospital"
+ },
+ {
+  "id": "site-DEU-08",
+  "name": "Hamburg Oncology Institute"
+ },
+ {
+  "id": "site-DEU-09",
+  "name": "Berlin General Hospital"
+ },
+ {
+  "id": "site-DEU-10",
+  "name": "Cologne Clinical Institute"
+ },
+ {
+  "id": "site-DEU-11",
+  "name": "Berlin Research Clinic"
+ },
+ {
+  "id": "site-DEU-12",
+  "name": "Munich Medical Center"
+ },
+ {
+  "id": "site-DEU-13",
+  "name": "Berlin Cancer Center"
+ },
+ {
+  "id": "site-DEU-14",
+  "name": "Cologne Medical Center"
+ },
+ {
+  "id": "site-DEU-15",
+  "name": "Frankfurt Oncology Institute"
+ },
+ {
+  "id": "site-DEU-16",
+  "name": "Berlin Clinical Institute"
+ },
+ {
+  "id": "site-DEU-17",
+  "name": "Cologne Oncology Institute"
+ },
+ {
+  "id": "site-DEU-18",
+  "name": "Frankfurt Clinical Institute"
+ },
+ {
+  "id": "site-DEU-19",
+  "name": "Hamburg Cancer Center"
+ },
+ {
+  "id": "site-DEU-20",
+  "name": "Frankfurt University Hospital"
+ },
+ {
+  "id": "site-DEU-21",
+  "name": "Hamburg University Hospital"
+ },
+ {
+  "id": "site-DEU-22",
+  "name": "Cologne University Hospital"
+ },
+ {
+  "id": "site-DEU-23",
+  "name": "Munich University Hospital"
+ },
+ {
+  "id": "site-DEU-24",
+  "name": "Frankfurt Medical Center"
+ },
+ {
+  "id": "site-DNK-01",
+  "name": "Aalborg University Hospital"
+ },
+ {
+  "id": "site-DNK-02",
+  "name": "Esbjerg Medical Center"
+ },
+ {
+  "id": "site-DNK-03",
+  "name": "Aarhus General Hospital"
+ },
+ {
+  "id": "site-DNK-04",
+  "name": "Odense University Hospital"
+ },
+ {
+  "id": "site-DNK-05",
+  "name": "Copenhagen Clinical Institute"
+ },
+ {
+  "id": "site-DNK-06",
+  "name": "Esbjerg University Hospital"
+ },
+ {
+  "id": "site-DNK-07",
+  "name": "Odense Memorial Hospital"
+ },
+ {
+  "id": "site-DNK-08",
+  "name": "Aarhus University Hospital"
+ },
+ {
+  "id": "site-DNK-09",
+  "name": "Esbjerg General Hospital"
+ },
+ {
+  "id": "site-DNK-10",
+  "name": "Aalborg Oncology Institute"
+ },
+ {
+  "id": "site-DNK-11",
+  "name": "Aarhus Research Clinic"
+ },
+ {
+  "id": "site-DNK-12",
+  "name": "Aarhus Medical Center"
+ },
+ {
+  "id": "site-DNK-13",
+  "name": "Esbjerg Cancer Center"
+ },
+ {
+  "id": "site-DNK-14",
+  "name": "Esbjerg Memorial Hospital"
+ },
+ {
+  "id": "site-DNK-15",
+  "name": "Esbjerg Oncology Institute"
+ },
+ {
+  "id": "site-DNK-16",
+  "name": "Copenhagen General Hospital"
+ },
+ {
+  "id": "site-DNK-17",
+  "name": "Copenhagen Cancer Center"
+ },
+ {
+  "id": "site-DNK-18",
+  "name": "Odense Oncology Institute"
+ },
+ {
+  "id": "site-ESP-01",
+  "name": "Bilbao Medical Center"
+ },
+ {
+  "id": "site-ESP-02",
+  "name": "Seville Medical Center"
+ },
+ {
+  "id": "site-ESP-03",
+  "name": "Madrid General Hospital"
+ },
+ {
+  "id": "site-ESP-04",
+  "name": "Seville University Hospital"
+ },
+ {
+  "id": "site-ESP-05",
+  "name": "Seville Cancer Center"
+ },
+ {
+  "id": "site-ESP-06",
+  "name": "Seville Research Clinic"
+ },
+ {
+  "id": "site-ESP-07",
+  "name": "Seville Clinical Institute"
+ },
+ {
+  "id": "site-ESP-08",
+  "name": "Madrid Clinical Institute"
+ },
+ {
+  "id": "site-ESP-09",
+  "name": "Madrid University Hospital"
+ },
+ {
+  "id": "site-ESP-10",
+  "name": "Valencia Research Clinic"
+ },
+ {
+  "id": "site-ESP-11",
+  "name": "Valencia Clinical Institute"
+ },
+ {
+  "id": "site-ESP-12",
+  "name": "Barcelona Memorial Hospital"
+ },
+ {
+  "id": "site-ESP-13",
+  "name": "Bilbao General Hospital"
+ },
+ {
+  "id": "site-ESP-14",
+  "name": "Seville Oncology Institute"
+ },
+ {
+  "id": "site-ESP-15",
+  "name": "Madrid Oncology Institute"
+ },
+ {
+  "id": "site-ESP-16",
+  "name": "Barcelona Medical Center"
+ },
+ {
+  "id": "site-ESP-17",
+  "name": "Bilbao Research Clinic"
+ },
+ {
+  "id": "site-ESP-18",
+  "name": "Bilbao Memorial Hospital"
+ },
+ {
+  "id": "site-ESP-19",
+  "name": "Bilbao University Hospital"
+ },
+ {
+  "id": "site-ESP-20",
+  "name": "Barcelona Clinical Institute"
+ },
+ {
+  "id": "site-ESP-21",
+  "name": "Bilbao Clinical Institute"
+ },
+ {
+  "id": "site-ESP-22",
+  "name": "Valencia Medical Center"
+ },
+ {
+  "id": "site-ESP-23",
+  "name": "Barcelona Research Clinic"
+ },
+ {
+  "id": "site-ESP-24",
+  "name": "Seville General Hospital"
+ },
+ {
+  "id": "site-ESP-25",
+  "name": "Madrid Cancer Center"
+ },
+ {
+  "id": "site-ESP-26",
+  "name": "Valencia General Hospital"
+ },
+ {
+  "id": "site-ESP-27",
+  "name": "Madrid Research Clinic"
+ },
+ {
+  "id": "site-ESP-28",
+  "name": "Seville Memorial Hospital"
+ },
+ {
+  "id": "site-ESP-29",
+  "name": "Madrid Medical Center"
+ },
+ {
+  "id": "site-ESP-30",
+  "name": "Valencia University Hospital"
+ },
+ {
+  "id": "site-ESP-31",
+  "name": "Valencia Oncology Institute"
+ },
+ {
+  "id": "site-ESP-32",
+  "name": "Barcelona Cancer Center"
+ },
+ {
+  "id": "site-ESP-33",
+  "name": "Barcelona General Hospital"
+ },
+ {
+  "id": "site-FIN-01",
+  "name": "Espoo General Hospital"
+ },
+ {
+  "id": "site-FIN-02",
+  "name": "Turku Cancer Center"
+ },
+ {
+  "id": "site-FIN-03",
+  "name": "Tampere General Hospital"
+ },
+ {
+  "id": "site-FIN-04",
+  "name": "Helsinki Medical Center"
+ },
+ {
+  "id": "site-FIN-05",
+  "name": "Turku Clinical Institute"
+ },
+ {
+  "id": "site-FIN-06",
+  "name": "Tampere Research Clinic"
+ },
+ {
+  "id": "site-FIN-07",
+  "name": "Espoo Clinical Institute"
+ },
+ {
+  "id": "site-FIN-08",
+  "name": "Helsinki Memorial Hospital"
+ },
+ {
+  "id": "site-FIN-09",
+  "name": "Oulu Oncology Institute"
+ },
+ {
+  "id": "site-FIN-10",
+  "name": "Tampere Clinical Institute"
+ },
+ {
+  "id": "site-FIN-11",
+  "name": "Espoo Cancer Center"
+ },
+ {
+  "id": "site-FIN-12",
+  "name": "Helsinki University Hospital"
+ },
+ {
+  "id": "site-FIN-13",
+  "name": "Espoo Medical Center"
+ },
+ {
+  "id": "site-FIN-14",
+  "name": "Espoo Memorial Hospital"
+ },
+ {
+  "id": "site-FIN-15",
+  "name": "Helsinki Oncology Institute"
+ },
+ {
+  "id": "site-FIN-16",
+  "name": "Espoo University Hospital"
+ },
+ {
+  "id": "site-FIN-17",
+  "name": "Helsinki General Hospital"
+ },
+ {
+  "id": "site-FIN-18",
+  "name": "Helsinki Clinical Institute"
+ },
+ {
+  "id": "site-FIN-19",
+  "name": "Turku General Hospital"
+ },
+ {
+  "id": "site-FIN-20",
+  "name": "Oulu Memorial Hospital"
+ },
+ {
+  "id": "site-FIN-21",
+  "name": "Oulu University Hospital"
+ },
+ {
+  "id": "site-FIN-22",
+  "name": "Oulu Research Clinic"
+ },
+ {
+  "id": "site-FIN-23",
+  "name": "Tampere Cancer Center"
+ },
+ {
+  "id": "site-FIN-24",
+  "name": "Turku Oncology Institute"
+ },
+ {
+  "id": "site-FRA-01",
+  "name": "Paris Memorial Hospital"
+ },
+ {
+  "id": "site-FRA-02",
+  "name": "Paris Clinical Institute"
+ },
+ {
+  "id": "site-FRA-03",
+  "name": "Marseille General Hospital"
+ },
+ {
+  "id": "site-FRA-04",
+  "name": "Paris Medical Center"
+ },
+ {
+  "id": "site-FRA-05",
+  "name": "Paris Cancer Center"
+ },
+ {
+  "id": "site-FRA-06",
+  "name": "Lille University Hospital"
+ },
+ {
+  "id": "site-FRA-07",
+  "name": "Lyon Clinical Institute"
+ },
+ {
+  "id": "site-FRA-08",
+  "name": "Marseille University Hospital"
+ },
+ {
+  "id": "site-FRA-09",
+  "name": "Marseille Medical Center"
+ },
+ {
+  "id": "site-FRA-10",
+  "name": "Lyon Cancer Center"
+ },
+ {
+  "id": "site-FRA-11",
+  "name": "Lille Research Clinic"
+ },
+ {
+  "id": "site-FRA-12",
+  "name": "Paris Research Clinic"
+ },
+ {
+  "id": "site-GBR-01",
+  "name": "Manchester Oncology Institute"
+ },
+ {
+  "id": "site-GBR-02",
+  "name": "Birmingham Cancer Center"
+ },
+ {
+  "id": "site-GBR-03",
+  "name": "Leeds Memorial Hospital"
+ },
+ {
+  "id": "site-GBR-04",
+  "name": "Glasgow Cancer Center"
+ },
+ {
+  "id": "site-GBR-05",
+  "name": "Leeds Oncology Institute"
+ },
+ {
+  "id": "site-GBR-06",
+  "name": "Glasgow General Hospital"
+ },
+ {
+  "id": "site-GBR-07",
+  "name": "Birmingham Research Clinic"
+ },
+ {
+  "id": "site-GBR-08",
+  "name": "Leeds Research Clinic"
+ },
+ {
+  "id": "site-GBR-09",
+  "name": "Birmingham Memorial Hospital"
+ },
+ {
+  "id": "site-GBR-10",
+  "name": "Birmingham Oncology Institute"
+ },
+ {
+  "id": "site-GBR-11",
+  "name": "Glasgow Research Clinic"
+ },
+ {
+  "id": "site-GBR-12",
+  "name": "London Clinical Institute"
+ },
+ {
+  "id": "site-GBR-13",
+  "name": "Manchester Clinical Institute"
+ },
+ {
+  "id": "site-GBR-14",
+  "name": "Manchester Research Clinic"
+ },
+ {
+  "id": "site-GBR-15",
+  "name": "Glasgow Clinical Institute"
+ },
+ {
+  "id": "site-GBR-16",
+  "name": "Manchester Memorial Hospital"
+ },
+ {
+  "id": "site-GBR-17",
+  "name": "London University Hospital"
+ },
+ {
+  "id": "site-GBR-18",
+  "name": "Birmingham University Hospital"
+ },
+ {
+  "id": "site-GBR-19",
+  "name": "London Cancer Center"
+ },
+ {
+  "id": "site-GBR-20",
+  "name": "Leeds General Hospital"
+ },
+ {
+  "id": "site-GBR-21",
+  "name": "London Medical Center"
+ },
+ {
+  "id": "site-GBR-22",
+  "name": "Leeds Clinical Institute"
+ },
+ {
+  "id": "site-GBR-23",
+  "name": "London Research Clinic"
+ },
+ {
+  "id": "site-GBR-24",
+  "name": "London General Hospital"
+ },
+ {
+  "id": "site-GBR-25",
+  "name": "London Oncology Institute"
+ },
+ {
+  "id": "site-GBR-26",
+  "name": "London Memorial Hospital"
+ },
+ {
+  "id": "site-GBR-27",
+  "name": "Birmingham General Hospital"
+ },
+ {
+  "id": "site-GBR-28",
+  "name": "Leeds Medical Center"
+ },
+ {
+  "id": "site-GRC-01",
+  "name": "Athens Clinical Institute"
+ },
+ {
+  "id": "site-GRC-02",
+  "name": "Athens Memorial Hospital"
+ },
+ {
+  "id": "site-GRC-03",
+  "name": "Athens Medical Center"
+ },
+ {
+  "id": "site-GRC-04",
+  "name": "Patras University Hospital"
+ },
+ {
+  "id": "site-GRC-05",
+  "name": "Larissa University Hospital"
+ },
+ {
+  "id": "site-GRC-06",
+  "name": "Larissa Medical Center"
+ },
+ {
+  "id": "site-GRC-07",
+  "name": "Heraklion Medical Center"
+ },
+ {
+  "id": "site-GRC-08",
+  "name": "Thessaloniki Clinical Institute"
+ },
+ {
+  "id": "site-GRC-09",
+  "name": "Heraklion Memorial Hospital"
+ },
+ {
+  "id": "site-GRC-10",
+  "name": "Heraklion University Hospital"
+ },
+ {
+  "id": "site-GRC-11",
+  "name": "Athens University Hospital"
+ },
+ {
+  "id": "site-GRC-12",
+  "name": "Larissa Clinical Institute"
+ },
+ {
+  "id": "site-GRC-13",
+  "name": "Thessaloniki Oncology Institute"
+ },
+ {
+  "id": "site-GRC-14",
+  "name": "Thessaloniki General Hospital"
+ },
+ {
+  "id": "site-GRC-15",
+  "name": "Athens General Hospital"
+ },
+ {
+  "id": "site-GRC-16",
+  "name": "Thessaloniki Cancer Center"
+ },
+ {
+  "id": "site-GRC-17",
+  "name": "Athens Oncology Institute"
+ },
+ {
+  "id": "site-GRC-18",
+  "name": "Athens Cancer Center"
+ },
+ {
+  "id": "site-GRC-19",
+  "name": "Heraklion Research Clinic"
+ },
+ {
+  "id": "site-GRC-20",
+  "name": "Larissa Cancer Center"
+ },
+ {
+  "id": "site-GRC-21",
+  "name": "Patras General Hospital"
+ },
+ {
+  "id": "site-GRC-22",
+  "name": "Patras Memorial Hospital"
+ },
+ {
+  "id": "site-GRC-23",
+  "name": "Larissa Oncology Institute"
+ },
+ {
+  "id": "site-GRC-24",
+  "name": "Thessaloniki Research Clinic"
+ },
+ {
+  "id": "site-GRC-25",
+  "name": "Larissa Research Clinic"
+ },
+ {
+  "id": "site-GRC-26",
+  "name": "Heraklion General Hospital"
+ },
+ {
+  "id": "site-GRC-27",
+  "name": "Thessaloniki Memorial Hospital"
+ },
+ {
+  "id": "site-GRC-28",
+  "name": "Patras Medical Center"
+ },
+ {
+  "id": "site-GRC-29",
+  "name": "Heraklion Oncology Institute"
+ },
+ {
+  "id": "site-GRC-30",
+  "name": "Larissa General Hospital"
+ },
+ {
+  "id": "site-GRC-31",
+  "name": "Patras Cancer Center"
+ },
+ {
+  "id": "site-HUN-01",
+  "name": "Gy\u0151r General Hospital"
+ },
+ {
+  "id": "site-HUN-02",
+  "name": "Gy\u0151r Memorial Hospital"
+ },
+ {
+  "id": "site-HUN-03",
+  "name": "P\u00e9cs General Hospital"
+ },
+ {
+  "id": "site-HUN-04",
+  "name": "Gy\u0151r University Hospital"
+ },
+ {
+  "id": "site-HUN-05",
+  "name": "Budapest Medical Center"
+ },
+ {
+  "id": "site-HUN-06",
+  "name": "Szeged Clinical Institute"
+ },
+ {
+  "id": "site-HUN-07",
+  "name": "Szeged Cancer Center"
+ },
+ {
+  "id": "site-HUN-08",
+  "name": "Szeged Memorial Hospital"
+ },
+ {
+  "id": "site-HUN-09",
+  "name": "Szeged Oncology Institute"
+ },
+ {
+  "id": "site-HUN-10",
+  "name": "Szeged Research Clinic"
+ },
+ {
+  "id": "site-HUN-11",
+  "name": "Debrecen Research Clinic"
+ },
+ {
+  "id": "site-HUN-12",
+  "name": "Szeged Medical Center"
+ },
+ {
+  "id": "site-HUN-13",
+  "name": "Budapest University Hospital"
+ },
+ {
+  "id": "site-HUN-14",
+  "name": "Debrecen Clinical Institute"
+ },
+ {
+  "id": "site-HUN-15",
+  "name": "Gy\u0151r Cancer Center"
+ },
+ {
+  "id": "site-HUN-16",
+  "name": "P\u00e9cs Medical Center"
+ },
+ {
+  "id": "site-HUN-17",
+  "name": "Budapest Oncology Institute"
+ },
+ {
+  "id": "site-HUN-18",
+  "name": "Gy\u0151r Research Clinic"
+ },
+ {
+  "id": "site-HUN-19",
+  "name": "Szeged General Hospital"
+ },
+ {
+  "id": "site-HUN-20",
+  "name": "Gy\u0151r Oncology Institute"
+ },
+ {
+  "id": "site-HUN-21",
+  "name": "Gy\u0151r Clinical Institute"
+ },
+ {
+  "id": "site-IND-01",
+  "name": "Mumbai Medical Center"
+ },
+ {
+  "id": "site-IND-02",
+  "name": "Chennai General Hospital"
+ },
+ {
+  "id": "site-IND-03",
+  "name": "Bangalore Medical Center"
+ },
+ {
+  "id": "site-IND-04",
+  "name": "Bangalore University Hospital"
+ },
+ {
+  "id": "site-IND-05",
+  "name": "Hyderabad Oncology Institute"
+ },
+ {
+  "id": "site-IND-06",
+  "name": "Bangalore General Hospital"
+ },
+ {
+  "id": "site-IND-07",
+  "name": "Hyderabad Memorial Hospital"
+ },
+ {
+  "id": "site-IND-08",
+  "name": "Bangalore Clinical Institute"
+ },
+ {
+  "id": "site-IND-09",
+  "name": "Chennai Cancer Center"
+ },
+ {
+  "id": "site-IND-10",
+  "name": "Delhi Medical Center"
+ },
+ {
+  "id": "site-IND-11",
+  "name": "Hyderabad Medical Center"
+ },
+ {
+  "id": "site-IND-12",
+  "name": "Mumbai General Hospital"
+ },
+ {
+  "id": "site-IND-13",
+  "name": "Bangalore Cancer Center"
+ },
+ {
+  "id": "site-IND-14",
+  "name": "Delhi Cancer Center"
+ },
+ {
+  "id": "site-IND-15",
+  "name": "Chennai Clinical Institute"
+ },
+ {
+  "id": "site-IND-16",
+  "name": "Delhi University Hospital"
+ },
+ {
+  "id": "site-IND-17",
+  "name": "Delhi Oncology Institute"
+ },
+ {
+  "id": "site-IND-18",
+  "name": "Mumbai Oncology Institute"
+ },
+ {
+  "id": "site-IND-19",
+  "name": "Delhi General Hospital"
+ },
+ {
+  "id": "site-IND-20",
+  "name": "Chennai Research Clinic"
+ },
+ {
+  "id": "site-IND-21",
+  "name": "Mumbai Clinical Institute"
+ },
+ {
+  "id": "site-IND-22",
+  "name": "Hyderabad Research Clinic"
+ },
+ {
+  "id": "site-IND-23",
+  "name": "Chennai Memorial Hospital"
+ },
+ {
+  "id": "site-IND-24",
+  "name": "Delhi Research Clinic"
+ },
+ {
+  "id": "site-IND-25",
+  "name": "Bangalore Memorial Hospital"
+ },
+ {
+  "id": "site-IND-26",
+  "name": "Mumbai Research Clinic"
+ },
+ {
+  "id": "site-IND-27",
+  "name": "Chennai Medical Center"
+ },
+ {
+  "id": "site-IND-28",
+  "name": "Mumbai Memorial Hospital"
+ },
+ {
+  "id": "site-IND-29",
+  "name": "Mumbai Cancer Center"
+ },
+ {
+  "id": "site-IND-30",
+  "name": "Hyderabad Clinical Institute"
+ },
+ {
+  "id": "site-IND-31",
+  "name": "Chennai Oncology Institute"
+ },
+ {
+  "id": "site-IND-32",
+  "name": "Delhi Clinical Institute"
+ },
+ {
+  "id": "site-IND-33",
+  "name": "Hyderabad University Hospital"
+ },
+ {
+  "id": "site-IND-34",
+  "name": "Mumbai University Hospital"
+ },
+ {
+  "id": "site-IND-35",
+  "name": "Bangalore Oncology Institute"
+ },
+ {
+  "id": "site-IND-36",
+  "name": "Chennai University Hospital"
+ },
+ {
+  "id": "site-IND-37",
+  "name": "Bangalore Research Clinic"
+ },
+ {
+  "id": "site-IND-38",
+  "name": "Delhi Memorial Hospital"
+ },
+ {
+  "id": "site-IND-39",
+  "name": "Hyderabad General Hospital"
+ },
+ {
+  "id": "site-ISR-01",
+  "name": "Haifa Clinical Institute"
+ },
+ {
+  "id": "site-ISR-02",
+  "name": "Ashdod Clinical Institute"
+ },
+ {
+  "id": "site-ISR-03",
+  "name": "Rehovot Medical Center"
+ },
+ {
+  "id": "site-ISR-04",
+  "name": "Rehovot University Hospital"
+ },
+ {
+  "id": "site-ISR-05",
+  "name": "Netanya Memorial Hospital"
+ },
+ {
+  "id": "site-ISR-06",
+  "name": "Netanya Oncology Institute"
+ },
+ {
+  "id": "site-ISR-07",
+  "name": "Jerusalem Clinical Institute"
+ },
+ {
+  "id": "site-ISR-08",
+  "name": "Rehovot Cancer Center"
+ },
+ {
+  "id": "site-ISR-09",
+  "name": "Ashdod University Hospital"
+ },
+ {
+  "id": "site-ISR-10",
+  "name": "Haifa Medical Center"
+ },
+ {
+  "id": "site-ISR-11",
+  "name": "Jerusalem General Hospital"
+ },
+ {
+  "id": "site-ISR-12",
+  "name": "Netanya Medical Center"
+ },
+ {
+  "id": "site-ISR-13",
+  "name": "Rehovot General Hospital"
+ },
+ {
+  "id": "site-ISR-14",
+  "name": "Ashdod Cancer Center"
+ },
+ {
+  "id": "site-ISR-15",
+  "name": "Ashdod Oncology Institute"
+ },
+ {
+  "id": "site-ISR-16",
+  "name": "Rehovot Clinical Institute"
+ },
+ {
+  "id": "site-ISR-17",
+  "name": "Ashdod Memorial Hospital"
+ },
+ {
+  "id": "site-ISR-18",
+  "name": "Ashdod Research Clinic"
+ },
+ {
+  "id": "site-ISR-19",
+  "name": "Haifa Memorial Hospital"
+ },
+ {
+  "id": "site-ISR-20",
+  "name": "Haifa University Hospital"
+ },
+ {
+  "id": "site-ITA-01",
+  "name": "Naples University Hospital"
+ },
+ {
+  "id": "site-ITA-02",
+  "name": "Naples Medical Center"
+ },
+ {
+  "id": "site-ITA-03",
+  "name": "Milan Oncology Institute"
+ },
+ {
+  "id": "site-ITA-04",
+  "name": "Milan Medical Center"
+ },
+ {
+  "id": "site-ITA-05",
+  "name": "Milan University Hospital"
+ },
+ {
+  "id": "site-ITA-06",
+  "name": "Rome Oncology Institute"
+ },
+ {
+  "id": "site-ITA-07",
+  "name": "Turin Oncology Institute"
+ },
+ {
+  "id": "site-ITA-08",
+  "name": "Rome Cancer Center"
+ },
+ {
+  "id": "site-ITA-09",
+  "name": "Turin Clinical Institute"
+ },
+ {
+  "id": "site-ITA-10",
+  "name": "Naples General Hospital"
+ },
+ {
+  "id": "site-ITA-11",
+  "name": "Turin General Hospital"
+ },
+ {
+  "id": "site-ITA-12",
+  "name": "Turin Cancer Center"
+ },
+ {
+  "id": "site-ITA-13",
+  "name": "Bologna Oncology Institute"
+ },
+ {
+  "id": "site-ITA-14",
+  "name": "Milan Cancer Center"
+ },
+ {
+  "id": "site-ITA-15",
+  "name": "Turin University Hospital"
+ },
+ {
+  "id": "site-ITA-16",
+  "name": "Naples Research Clinic"
+ },
+ {
+  "id": "site-ITA-17",
+  "name": "Bologna Clinical Institute"
+ },
+ {
+  "id": "site-ITA-18",
+  "name": "Rome Clinical Institute"
+ },
+ {
+  "id": "site-ITA-19",
+  "name": "Rome Research Clinic"
+ },
+ {
+  "id": "site-ITA-20",
+  "name": "Bologna Medical Center"
+ },
+ {
+  "id": "site-ITA-21",
+  "name": "Bologna General Hospital"
+ },
+ {
+  "id": "site-ITA-22",
+  "name": "Rome University Hospital"
+ },
+ {
+  "id": "site-ITA-23",
+  "name": "Milan Memorial Hospital"
+ },
+ {
+  "id": "site-ITA-24",
+  "name": "Naples Clinical Institute"
+ },
+ {
+  "id": "site-JPN-01",
+  "name": "Nagoya General Hospital"
+ },
+ {
+  "id": "site-JPN-02",
+  "name": "Tokyo University Hospital"
+ },
+ {
+  "id": "site-JPN-03",
+  "name": "Sapporo Cancer Center"
+ },
+ {
+  "id": "site-JPN-04",
+  "name": "Sapporo University Hospital"
+ },
+ {
+  "id": "site-JPN-05",
+  "name": "Osaka General Hospital"
+ },
+ {
+  "id": "site-JPN-06",
+  "name": "Tokyo General Hospital"
+ },
+ {
+  "id": "site-JPN-07",
+  "name": "Sapporo Memorial Hospital"
+ },
+ {
+  "id": "site-JPN-08",
+  "name": "Osaka University Hospital"
+ },
+ {
+  "id": "site-JPN-09",
+  "name": "Tokyo Memorial Hospital"
+ },
+ {
+  "id": "site-JPN-10",
+  "name": "Osaka Clinical Institute"
+ },
+ {
+  "id": "site-JPN-11",
+  "name": "Nagoya Memorial Hospital"
+ },
+ {
+  "id": "site-JPN-12",
+  "name": "Osaka Oncology Institute"
+ },
+ {
+  "id": "site-JPN-13",
+  "name": "Sapporo Research Clinic"
+ },
+ {
+  "id": "site-JPN-14",
+  "name": "Tokyo Cancer Center"
+ },
+ {
+  "id": "site-JPN-15",
+  "name": "Nagoya Cancer Center"
+ },
+ {
+  "id": "site-JPN-16",
+  "name": "Fukuoka Memorial Hospital"
+ },
+ {
+  "id": "site-JPN-17",
+  "name": "Sapporo Clinical Institute"
+ },
+ {
+  "id": "site-JPN-18",
+  "name": "Nagoya Research Clinic"
+ },
+ {
+  "id": "site-JPN-19",
+  "name": "Tokyo Oncology Institute"
+ },
+ {
+  "id": "site-JPN-20",
+  "name": "Fukuoka General Hospital"
+ },
+ {
+  "id": "site-JPN-21",
+  "name": "Fukuoka Medical Center"
+ },
+ {
+  "id": "site-JPN-22",
+  "name": "Tokyo Research Clinic"
+ },
+ {
+  "id": "site-JPN-23",
+  "name": "Fukuoka Clinical Institute"
+ },
+ {
+  "id": "site-JPN-24",
+  "name": "Nagoya University Hospital"
+ },
+ {
+  "id": "site-JPN-25",
+  "name": "Tokyo Medical Center"
+ },
+ {
+  "id": "site-JPN-26",
+  "name": "Nagoya Medical Center"
+ },
+ {
+  "id": "site-JPN-27",
+  "name": "Nagoya Clinical Institute"
+ },
+ {
+  "id": "site-JPN-28",
+  "name": "Osaka Memorial Hospital"
+ },
+ {
+  "id": "site-JPN-29",
+  "name": "Tokyo Clinical Institute"
+ },
+ {
+  "id": "site-KOR-01",
+  "name": "Incheon General Hospital"
+ },
+ {
+  "id": "site-KOR-02",
+  "name": "Daejeon Oncology Institute"
+ },
+ {
+  "id": "site-KOR-03",
+  "name": "Busan University Hospital"
+ },
+ {
+  "id": "site-KOR-04",
+  "name": "Daejeon Medical Center"
+ },
+ {
+  "id": "site-KOR-05",
+  "name": "Incheon Memorial Hospital"
+ },
+ {
+  "id": "site-KOR-06",
+  "name": "Seoul Cancer Center"
+ },
+ {
+  "id": "site-KOR-07",
+  "name": "Daejeon General Hospital"
+ },
+ {
+  "id": "site-KOR-08",
+  "name": "Daegu Cancer Center"
+ },
+ {
+  "id": "site-KOR-09",
+  "name": "Daejeon Cancer Center"
+ },
+ {
+  "id": "site-KOR-10",
+  "name": "Daegu Oncology Institute"
+ },
+ {
+  "id": "site-KOR-11",
+  "name": "Seoul Oncology Institute"
+ },
+ {
+  "id": "site-KOR-12",
+  "name": "Incheon Research Clinic"
+ },
+ {
+  "id": "site-KOR-13",
+  "name": "Busan Memorial Hospital"
+ },
+ {
+  "id": "site-KOR-14",
+  "name": "Incheon Oncology Institute"
+ },
+ {
+  "id": "site-KOR-15",
+  "name": "Daegu Research Clinic"
+ },
+ {
+  "id": "site-KOR-16",
+  "name": "Daegu University Hospital"
+ },
+ {
+  "id": "site-KOR-17",
+  "name": "Seoul General Hospital"
+ },
+ {
+  "id": "site-KOR-18",
+  "name": "Daejeon Clinical Institute"
+ },
+ {
+  "id": "site-KOR-19",
+  "name": "Incheon Clinical Institute"
+ },
+ {
+  "id": "site-KOR-20",
+  "name": "Daegu General Hospital"
+ },
+ {
+  "id": "site-KOR-21",
+  "name": "Busan Research Clinic"
+ },
+ {
+  "id": "site-KOR-22",
+  "name": "Busan Medical Center"
+ },
+ {
+  "id": "site-KOR-23",
+  "name": "Busan General Hospital"
+ },
+ {
+  "id": "site-MEX-01",
+  "name": "Puebla Medical Center"
+ },
+ {
+  "id": "site-MEX-02",
+  "name": "Guadalajara General Hospital"
+ },
+ {
+  "id": "site-MEX-03",
+  "name": "M\u00e9rida Medical Center"
+ },
+ {
+  "id": "site-MEX-04",
+  "name": "Monterrey Medical Center"
+ },
+ {
+  "id": "site-MEX-05",
+  "name": "M\u00e9rida Research Clinic"
+ },
+ {
+  "id": "site-MEX-06",
+  "name": "Puebla Clinical Institute"
+ },
+ {
+  "id": "site-MEX-07",
+  "name": "Puebla Cancer Center"
+ },
+ {
+  "id": "site-MEX-08",
+  "name": "Guadalajara Medical Center"
+ },
+ {
+  "id": "site-MEX-09",
+  "name": "Toluca Cancer Center"
+ },
+ {
+  "id": "site-MEX-10",
+  "name": "M\u00e9rida Oncology Institute"
+ },
+ {
+  "id": "site-MEX-11",
+  "name": "Guadalajara Memorial Hospital"
+ },
+ {
+  "id": "site-MEX-12",
+  "name": "M\u00e9rida Cancer Center"
+ },
+ {
+  "id": "site-MEX-13",
+  "name": "Guadalajara Research Clinic"
+ },
+ {
+  "id": "site-MEX-14",
+  "name": "Toluca Medical Center"
+ },
+ {
+  "id": "site-MEX-15",
+  "name": "Monterrey Oncology Institute"
+ },
+ {
+  "id": "site-MEX-16",
+  "name": "Guadalajara Oncology Institute"
+ },
+ {
+  "id": "site-MEX-17",
+  "name": "Puebla Memorial Hospital"
+ },
+ {
+  "id": "site-MEX-18",
+  "name": "Toluca Memorial Hospital"
+ },
+ {
+  "id": "site-MEX-19",
+  "name": "Monterrey Clinical Institute"
+ },
+ {
+  "id": "site-MEX-20",
+  "name": "M\u00e9rida Clinical Institute"
+ },
+ {
+  "id": "site-MEX-21",
+  "name": "Guadalajara University Hospital"
+ },
+ {
+  "id": "site-MEX-22",
+  "name": "Monterrey Cancer Center"
+ },
+ {
+  "id": "site-MEX-23",
+  "name": "Toluca Research Clinic"
+ },
+ {
+  "id": "site-NLD-01",
+  "name": "Utrecht Oncology Institute"
+ },
+ {
+  "id": "site-NLD-02",
+  "name": "Groningen Medical Center"
+ },
+ {
+  "id": "site-NLD-03",
+  "name": "Rotterdam Oncology Institute"
+ },
+ {
+  "id": "site-NLD-04",
+  "name": "Rotterdam Memorial Hospital"
+ },
+ {
+  "id": "site-NLD-05",
+  "name": "Rotterdam Cancer Center"
+ },
+ {
+  "id": "site-NLD-06",
+  "name": "Leiden General Hospital"
+ },
+ {
+  "id": "site-NLD-07",
+  "name": "Groningen Clinical Institute"
+ },
+ {
+  "id": "site-NLD-08",
+  "name": "Leiden University Hospital"
+ },
+ {
+  "id": "site-NLD-09",
+  "name": "Utrecht Research Clinic"
+ },
+ {
+  "id": "site-NLD-10",
+  "name": "Amsterdam Memorial Hospital"
+ },
+ {
+  "id": "site-NLD-11",
+  "name": "Utrecht Cancer Center"
+ },
+ {
+  "id": "site-NLD-12",
+  "name": "Leiden Clinical Institute"
+ },
+ {
+  "id": "site-NLD-13",
+  "name": "Groningen Research Clinic"
+ },
+ {
+  "id": "site-NLD-14",
+  "name": "Leiden Cancer Center"
+ },
+ {
+  "id": "site-NLD-15",
+  "name": "Groningen Cancer Center"
+ },
+ {
+  "id": "site-NLD-16",
+  "name": "Amsterdam Oncology Institute"
+ },
+ {
+  "id": "site-NLD-17",
+  "name": "Rotterdam Medical Center"
+ },
+ {
+  "id": "site-NLD-18",
+  "name": "Groningen Oncology Institute"
+ },
+ {
+  "id": "site-NLD-19",
+  "name": "Amsterdam General Hospital"
+ },
+ {
+  "id": "site-NLD-20",
+  "name": "Leiden Medical Center"
+ },
+ {
+  "id": "site-NOR-01",
+  "name": "Trondheim Cancer Center"
+ },
+ {
+  "id": "site-NOR-02",
+  "name": "Oslo Memorial Hospital"
+ },
+ {
+  "id": "site-NOR-03",
+  "name": "Stavanger University Hospital"
+ },
+ {
+  "id": "site-NOR-04",
+  "name": "Oslo Oncology Institute"
+ },
+ {
+  "id": "site-NOR-05",
+  "name": "Oslo Medical Center"
+ },
+ {
+  "id": "site-NOR-06",
+  "name": "Trondheim Oncology Institute"
+ },
+ {
+  "id": "site-NOR-07",
+  "name": "Troms\u00f8 Memorial Hospital"
+ },
+ {
+  "id": "site-NOR-08",
+  "name": "Bergen Research Clinic"
+ },
+ {
+  "id": "site-NOR-09",
+  "name": "Troms\u00f8 Oncology Institute"
+ },
+ {
+  "id": "site-NOR-10",
+  "name": "Oslo University Hospital"
+ },
+ {
+  "id": "site-NOR-11",
+  "name": "Bergen Cancer Center"
+ },
+ {
+  "id": "site-NOR-12",
+  "name": "Stavanger Memorial Hospital"
+ },
+ {
+  "id": "site-NOR-13",
+  "name": "Stavanger General Hospital"
+ },
+ {
+  "id": "site-NOR-14",
+  "name": "Troms\u00f8 General Hospital"
+ },
+ {
+  "id": "site-NOR-15",
+  "name": "Trondheim Memorial Hospital"
+ },
+ {
+  "id": "site-NOR-16",
+  "name": "Stavanger Cancer Center"
+ },
+ {
+  "id": "site-NOR-17",
+  "name": "Bergen Oncology Institute"
+ },
+ {
+  "id": "site-NOR-18",
+  "name": "Stavanger Oncology Institute"
+ },
+ {
+  "id": "site-NOR-19",
+  "name": "Trondheim Clinical Institute"
+ },
+ {
+  "id": "site-NOR-20",
+  "name": "Bergen Memorial Hospital"
+ },
+ {
+  "id": "site-NOR-21",
+  "name": "Stavanger Research Clinic"
+ },
+ {
+  "id": "site-NOR-22",
+  "name": "Oslo General Hospital"
+ },
+ {
+  "id": "site-NOR-23",
+  "name": "Troms\u00f8 Clinical Institute"
+ },
+ {
+  "id": "site-NOR-24",
+  "name": "Oslo Cancer Center"
+ },
+ {
+  "id": "site-NOR-25",
+  "name": "Trondheim Research Clinic"
+ },
+ {
+  "id": "site-NOR-26",
+  "name": "Bergen Clinical Institute"
+ },
+ {
+  "id": "site-NOR-27",
+  "name": "Bergen General Hospital"
+ },
+ {
+  "id": "site-NOR-28",
+  "name": "Troms\u00f8 University Hospital"
+ },
+ {
+  "id": "site-NOR-29",
+  "name": "Bergen Medical Center"
+ },
+ {
+  "id": "site-NOR-30",
+  "name": "Oslo Clinical Institute"
+ },
+ {
+  "id": "site-NOR-31",
+  "name": "Oslo Research Clinic"
+ },
+ {
+  "id": "site-NOR-32",
+  "name": "Troms\u00f8 Medical Center"
+ },
+ {
+  "id": "site-NOR-33",
+  "name": "Troms\u00f8 Research Clinic"
+ },
+ {
+  "id": "site-NOR-34",
+  "name": "Stavanger Clinical Institute"
+ },
+ {
+  "id": "site-NOR-35",
+  "name": "Troms\u00f8 Cancer Center"
+ },
+ {
+  "id": "site-NOR-36",
+  "name": "Stavanger Medical Center"
+ },
+ {
+  "id": "site-NOR-37",
+  "name": "Trondheim Medical Center"
+ },
+ {
+  "id": "site-NOR-38",
+  "name": "Trondheim University Hospital"
+ },
+ {
+  "id": "site-NOR-39",
+  "name": "Trondheim General Hospital"
+ },
+ {
+  "id": "site-NOR-40",
+  "name": "Bergen University Hospital"
+ },
+ {
+  "id": "site-NZL-01",
+  "name": "Hamilton Memorial Hospital"
+ },
+ {
+  "id": "site-NZL-02",
+  "name": "Hamilton Oncology Institute"
+ },
+ {
+  "id": "site-NZL-03",
+  "name": "Dunedin General Hospital"
+ },
+ {
+  "id": "site-NZL-04",
+  "name": "Christchurch Clinical Institute"
+ },
+ {
+  "id": "site-NZL-05",
+  "name": "Christchurch Memorial Hospital"
+ },
+ {
+  "id": "site-NZL-06",
+  "name": "Auckland Research Clinic"
+ },
+ {
+  "id": "site-NZL-07",
+  "name": "Hamilton General Hospital"
+ },
+ {
+  "id": "site-NZL-08",
+  "name": "Christchurch General Hospital"
+ },
+ {
+  "id": "site-NZL-09",
+  "name": "Wellington Memorial Hospital"
+ },
+ {
+  "id": "site-NZL-10",
+  "name": "Hamilton Medical Center"
+ },
+ {
+  "id": "site-NZL-11",
+  "name": "Hamilton Research Clinic"
+ },
+ {
+  "id": "site-NZL-12",
+  "name": "Wellington General Hospital"
+ },
+ {
+  "id": "site-NZL-13",
+  "name": "Dunedin University Hospital"
+ },
+ {
+  "id": "site-NZL-14",
+  "name": "Wellington Research Clinic"
+ },
+ {
+  "id": "site-NZL-15",
+  "name": "Dunedin Memorial Hospital"
+ },
+ {
+  "id": "site-NZL-16",
+  "name": "Christchurch Oncology Institute"
+ },
+ {
+  "id": "site-NZL-17",
+  "name": "Auckland Oncology Institute"
+ },
+ {
+  "id": "site-NZL-18",
+  "name": "Christchurch Cancer Center"
+ },
+ {
+  "id": "site-NZL-19",
+  "name": "Dunedin Medical Center"
+ },
+ {
+  "id": "site-NZL-20",
+  "name": "Auckland Medical Center"
+ },
+ {
+  "id": "site-NZL-21",
+  "name": "Auckland Clinical Institute"
+ },
+ {
+  "id": "site-NZL-22",
+  "name": "Auckland General Hospital"
+ },
+ {
+  "id": "site-NZL-23",
+  "name": "Wellington Cancer Center"
+ },
+ {
+  "id": "site-NZL-24",
+  "name": "Wellington Medical Center"
+ },
+ {
+  "id": "site-NZL-25",
+  "name": "Christchurch Research Clinic"
+ },
+ {
+  "id": "site-NZL-26",
+  "name": "Hamilton Clinical Institute"
+ },
+ {
+  "id": "site-NZL-27",
+  "name": "Auckland Memorial Hospital"
+ },
+ {
+  "id": "site-NZL-28",
+  "name": "Christchurch Medical Center"
+ },
+ {
+  "id": "site-NZL-29",
+  "name": "Dunedin Research Clinic"
+ },
+ {
+  "id": "site-NZL-30",
+  "name": "Christchurch University Hospital"
+ },
+ {
+  "id": "site-NZL-31",
+  "name": "Wellington University Hospital"
+ },
+ {
+  "id": "site-NZL-32",
+  "name": "Dunedin Cancer Center"
+ },
+ {
+  "id": "site-NZL-33",
+  "name": "Dunedin Oncology Institute"
+ },
+ {
+  "id": "site-NZL-34",
+  "name": "Dunedin Clinical Institute"
+ },
+ {
+  "id": "site-NZL-35",
+  "name": "Wellington Oncology Institute"
+ },
+ {
+  "id": "site-POL-01",
+  "name": "Warsaw Medical Center"
+ },
+ {
+  "id": "site-POL-02",
+  "name": "Wroc\u0142aw Research Clinic"
+ },
+ {
+  "id": "site-POL-03",
+  "name": "Krak\u00f3w Memorial Hospital"
+ },
+ {
+  "id": "site-POL-04",
+  "name": "Pozna\u0144 Memorial Hospital"
+ },
+ {
+  "id": "site-POL-05",
+  "name": "Pozna\u0144 General Hospital"
+ },
+ {
+  "id": "site-POL-06",
+  "name": "Gda\u0144sk Cancer Center"
+ },
+ {
+  "id": "site-POL-07",
+  "name": "Wroc\u0142aw Medical Center"
+ },
+ {
+  "id": "site-POL-08",
+  "name": "Pozna\u0144 Oncology Institute"
+ },
+ {
+  "id": "site-POL-09",
+  "name": "Krak\u00f3w Oncology Institute"
+ },
+ {
+  "id": "site-POL-10",
+  "name": "Pozna\u0144 Research Clinic"
+ },
+ {
+  "id": "site-POL-11",
+  "name": "Krak\u00f3w Research Clinic"
+ },
+ {
+  "id": "site-POL-12",
+  "name": "Warsaw Research Clinic"
+ },
+ {
+  "id": "site-POL-13",
+  "name": "Krak\u00f3w Clinical Institute"
+ },
+ {
+  "id": "site-POL-14",
+  "name": "Gda\u0144sk Medical Center"
+ },
+ {
+  "id": "site-POL-15",
+  "name": "Pozna\u0144 Cancer Center"
+ },
+ {
+  "id": "site-POL-16",
+  "name": "Warsaw General Hospital"
+ },
+ {
+  "id": "site-PRT-01",
+  "name": "Braga Research Clinic"
+ },
+ {
+  "id": "site-PRT-02",
+  "name": "Lisbon Oncology Institute"
+ },
+ {
+  "id": "site-PRT-03",
+  "name": "Braga Oncology Institute"
+ },
+ {
+  "id": "site-PRT-04",
+  "name": "Lisbon University Hospital"
+ },
+ {
+  "id": "site-PRT-05",
+  "name": "Coimbra Oncology Institute"
+ },
+ {
+  "id": "site-PRT-06",
+  "name": "Braga Cancer Center"
+ },
+ {
+  "id": "site-PRT-07",
+  "name": "Coimbra Medical Center"
+ },
+ {
+  "id": "site-PRT-08",
+  "name": "Porto University Hospital"
+ },
+ {
+  "id": "site-PRT-09",
+  "name": "Coimbra Research Clinic"
+ },
+ {
+  "id": "site-PRT-10",
+  "name": "Lisbon Memorial Hospital"
+ },
+ {
+  "id": "site-PRT-11",
+  "name": "Faro University Hospital"
+ },
+ {
+  "id": "site-PRT-12",
+  "name": "Braga General Hospital"
+ },
+ {
+  "id": "site-PRT-13",
+  "name": "Porto Cancer Center"
+ },
+ {
+  "id": "site-PRT-14",
+  "name": "Coimbra Memorial Hospital"
+ },
+ {
+  "id": "site-PRT-15",
+  "name": "Faro Medical Center"
+ },
+ {
+  "id": "site-PRT-16",
+  "name": "Coimbra General Hospital"
+ },
+ {
+  "id": "site-PRT-17",
+  "name": "Faro General Hospital"
+ },
+ {
+  "id": "site-PRT-18",
+  "name": "Porto General Hospital"
+ },
+ {
+  "id": "site-PRT-19",
+  "name": "Coimbra University Hospital"
+ },
+ {
+  "id": "site-PRT-20",
+  "name": "Braga University Hospital"
+ },
+ {
+  "id": "site-PRT-21",
+  "name": "Faro Oncology Institute"
+ },
+ {
+  "id": "site-ROU-01",
+  "name": "Bucharest Clinical Institute"
+ },
+ {
+  "id": "site-ROU-02",
+  "name": "Timi\u0219oara Research Clinic"
+ },
+ {
+  "id": "site-ROU-03",
+  "name": "Timi\u0219oara Oncology Institute"
+ },
+ {
+  "id": "site-ROU-04",
+  "name": "Timi\u0219oara Clinical Institute"
+ },
+ {
+  "id": "site-ROU-05",
+  "name": "Cluj University Hospital"
+ },
+ {
+  "id": "site-ROU-06",
+  "name": "Timi\u0219oara Memorial Hospital"
+ },
+ {
+  "id": "site-ROU-07",
+  "name": "Ia\u0219i Research Clinic"
+ },
+ {
+  "id": "site-ROU-08",
+  "name": "Ia\u0219i Cancer Center"
+ },
+ {
+  "id": "site-ROU-09",
+  "name": "Bucharest University Hospital"
+ },
+ {
+  "id": "site-ROU-10",
+  "name": "Bra\u0219ov Research Clinic"
+ },
+ {
+  "id": "site-ROU-11",
+  "name": "Bucharest Research Clinic"
+ },
+ {
+  "id": "site-ROU-12",
+  "name": "Bra\u0219ov Clinical Institute"
+ },
+ {
+  "id": "site-ROU-13",
+  "name": "Ia\u0219i Memorial Hospital"
+ },
+ {
+  "id": "site-ROU-14",
+  "name": "Timi\u0219oara Medical Center"
+ },
+ {
+  "id": "site-ROU-15",
+  "name": "Cluj Research Clinic"
+ },
+ {
+  "id": "site-ROU-16",
+  "name": "Ia\u0219i General Hospital"
+ },
+ {
+  "id": "site-ROU-17",
+  "name": "Ia\u0219i University Hospital"
+ },
+ {
+  "id": "site-ROU-18",
+  "name": "Ia\u0219i Clinical Institute"
+ },
+ {
+  "id": "site-ROU-19",
+  "name": "Cluj Medical Center"
+ },
+ {
+  "id": "site-ROU-20",
+  "name": "Bucharest General Hospital"
+ },
+ {
+  "id": "site-ROU-21",
+  "name": "Bra\u0219ov Medical Center"
+ },
+ {
+  "id": "site-ROU-22",
+  "name": "Timi\u0219oara University Hospital"
+ },
+ {
+  "id": "site-ROU-23",
+  "name": "Bucharest Medical Center"
+ },
+ {
+  "id": "site-ROU-24",
+  "name": "Cluj Cancer Center"
+ },
+ {
+  "id": "site-ROU-25",
+  "name": "Bra\u0219ov Memorial Hospital"
+ },
+ {
+  "id": "site-ROU-26",
+  "name": "Cluj Memorial Hospital"
+ },
+ {
+  "id": "site-ROU-27",
+  "name": "Bucharest Memorial Hospital"
+ },
+ {
+  "id": "site-ROU-28",
+  "name": "Bra\u0219ov General Hospital"
+ },
+ {
+  "id": "site-ROU-29",
+  "name": "Bucharest Oncology Institute"
+ },
+ {
+  "id": "site-ROU-30",
+  "name": "Cluj General Hospital"
+ },
+ {
+  "id": "site-ROU-31",
+  "name": "Bra\u0219ov University Hospital"
+ },
+ {
+  "id": "site-ROU-32",
+  "name": "Ia\u0219i Medical Center"
+ },
+ {
+  "id": "site-ROU-33",
+  "name": "Timi\u0219oara Cancer Center"
+ },
+ {
+  "id": "site-ROU-34",
+  "name": "Bra\u0219ov Oncology Institute"
+ },
+ {
+  "id": "site-ROU-35",
+  "name": "Ia\u0219i Oncology Institute"
+ },
+ {
+  "id": "site-ROU-36",
+  "name": "Timi\u0219oara General Hospital"
+ },
+ {
+  "id": "site-ROU-37",
+  "name": "Cluj Oncology Institute"
+ },
+ {
+  "id": "site-ROU-38",
+  "name": "Cluj Clinical Institute"
+ },
+ {
+  "id": "site-ROU-39",
+  "name": "Bra\u0219ov Cancer Center"
+ },
+ {
+  "id": "site-ROU-40",
+  "name": "Bucharest Cancer Center"
+ },
+ {
+  "id": "site-SVK-01",
+  "name": "\u017dilina General Hospital"
+ },
+ {
+  "id": "site-SVK-02",
+  "name": "\u017dilina University Hospital"
+ },
+ {
+  "id": "site-SVK-03",
+  "name": "Nitra Memorial Hospital"
+ },
+ {
+  "id": "site-SVK-04",
+  "name": "Pre\u0161ov Memorial Hospital"
+ },
+ {
+  "id": "site-SVK-05",
+  "name": "Pre\u0161ov Medical Center"
+ },
+ {
+  "id": "site-SVK-06",
+  "name": "Bratislava University Hospital"
+ },
+ {
+  "id": "site-SVK-07",
+  "name": "Nitra Research Clinic"
+ },
+ {
+  "id": "site-SVK-08",
+  "name": "\u017dilina Memorial Hospital"
+ },
+ {
+  "id": "site-SVK-09",
+  "name": "Bratislava Oncology Institute"
+ },
+ {
+  "id": "site-SVK-10",
+  "name": "Ko\u0161ice General Hospital"
+ },
+ {
+  "id": "site-SVK-11",
+  "name": "Pre\u0161ov Research Clinic"
+ },
+ {
+  "id": "site-SVK-12",
+  "name": "Nitra Oncology Institute"
+ },
+ {
+  "id": "site-SVK-13",
+  "name": "Bratislava General Hospital"
+ },
+ {
+  "id": "site-SVK-14",
+  "name": "Pre\u0161ov Oncology Institute"
+ },
+ {
+  "id": "site-SVK-15",
+  "name": "Ko\u0161ice Medical Center"
+ },
+ {
+  "id": "site-SVK-16",
+  "name": "\u017dilina Clinical Institute"
+ },
+ {
+  "id": "site-SVK-17",
+  "name": "Pre\u0161ov General Hospital"
+ },
+ {
+  "id": "site-SVK-18",
+  "name": "Nitra University Hospital"
+ },
+ {
+  "id": "site-SVK-19",
+  "name": "\u017dilina Oncology Institute"
+ },
+ {
+  "id": "site-SVK-20",
+  "name": "Bratislava Memorial Hospital"
+ },
+ {
+  "id": "site-SVK-21",
+  "name": "Ko\u0161ice University Hospital"
+ },
+ {
+  "id": "site-SVK-22",
+  "name": "\u017dilina Research Clinic"
+ },
+ {
+  "id": "site-SVK-23",
+  "name": "Nitra Cancer Center"
+ },
+ {
+  "id": "site-SVK-24",
+  "name": "Pre\u0161ov Cancer Center"
+ },
+ {
+  "id": "site-SVK-25",
+  "name": "Ko\u0161ice Research Clinic"
+ },
+ {
+  "id": "site-SVK-26",
+  "name": "Ko\u0161ice Cancer Center"
+ },
+ {
+  "id": "site-SVK-27",
+  "name": "Nitra General Hospital"
+ },
+ {
+  "id": "site-SVK-28",
+  "name": "\u017dilina Medical Center"
+ },
+ {
+  "id": "site-SVK-29",
+  "name": "Bratislava Medical Center"
+ },
+ {
+  "id": "site-SVK-30",
+  "name": "Ko\u0161ice Memorial Hospital"
+ },
+ {
+  "id": "site-SVK-31",
+  "name": "Bratislava Research Clinic"
+ },
+ {
+  "id": "site-SWE-01",
+  "name": "Lund Clinical Institute"
+ },
+ {
+  "id": "site-SWE-02",
+  "name": "Uppsala Research Clinic"
+ },
+ {
+  "id": "site-SWE-03",
+  "name": "Gothenburg Cancer Center"
+ },
+ {
+  "id": "site-SWE-04",
+  "name": "Lund Medical Center"
+ },
+ {
+  "id": "site-SWE-05",
+  "name": "Malm\u00f6 University Hospital"
+ },
+ {
+  "id": "site-SWE-06",
+  "name": "Malm\u00f6 Research Clinic"
+ },
+ {
+  "id": "site-SWE-07",
+  "name": "Stockholm Oncology Institute"
+ },
+ {
+  "id": "site-SWE-08",
+  "name": "Malm\u00f6 Medical Center"
+ },
+ {
+  "id": "site-SWE-09",
+  "name": "Stockholm Research Clinic"
+ },
+ {
+  "id": "site-SWE-10",
+  "name": "Gothenburg Memorial Hospital"
+ },
+ {
+  "id": "site-SWE-11",
+  "name": "Malm\u00f6 Clinical Institute"
+ },
+ {
+  "id": "site-SWE-12",
+  "name": "Stockholm University Hospital"
+ },
+ {
+  "id": "site-SWE-13",
+  "name": "Stockholm Memorial Hospital"
+ },
+ {
+  "id": "site-SWE-14",
+  "name": "Uppsala Medical Center"
+ },
+ {
+  "id": "site-SWE-15",
+  "name": "Gothenburg Oncology Institute"
+ },
+ {
+  "id": "site-SWE-16",
+  "name": "Malm\u00f6 General Hospital"
+ },
+ {
+  "id": "site-SWE-17",
+  "name": "Stockholm Clinical Institute"
+ },
+ {
+  "id": "site-SWE-18",
+  "name": "Gothenburg University Hospital"
+ },
+ {
+  "id": "site-SWE-19",
+  "name": "Lund Research Clinic"
+ },
+ {
+  "id": "site-SWE-20",
+  "name": "Lund Oncology Institute"
+ },
+ {
+  "id": "site-SWE-21",
+  "name": "Uppsala University Hospital"
+ },
+ {
+  "id": "site-SWE-22",
+  "name": "Gothenburg Research Clinic"
+ },
+ {
+  "id": "site-SWE-23",
+  "name": "Stockholm Medical Center"
+ },
+ {
+  "id": "site-SWE-24",
+  "name": "Gothenburg Medical Center"
+ },
+ {
+  "id": "site-SWE-25",
+  "name": "Gothenburg Clinical Institute"
+ },
+ {
+  "id": "site-SWE-26",
+  "name": "Stockholm Cancer Center"
+ },
+ {
+  "id": "site-SWE-27",
+  "name": "Malm\u00f6 Memorial Hospital"
+ },
+ {
+  "id": "site-SWE-28",
+  "name": "Lund University Hospital"
+ },
+ {
+  "id": "site-SWE-29",
+  "name": "Uppsala Oncology Institute"
+ },
+ {
+  "id": "site-TUR-01",
+  "name": "Antalya Clinical Institute"
+ },
+ {
+  "id": "site-TUR-02",
+  "name": "Istanbul Clinical Institute"
+ },
+ {
+  "id": "site-TUR-03",
+  "name": "Istanbul General Hospital"
+ },
+ {
+  "id": "site-TUR-04",
+  "name": "Bursa Research Clinic"
+ },
+ {
+  "id": "site-TUR-05",
+  "name": "Bursa Oncology Institute"
+ },
+ {
+  "id": "site-TUR-06",
+  "name": "Izmir Cancer Center"
+ },
+ {
+  "id": "site-TUR-07",
+  "name": "Ankara Cancer Center"
+ },
+ {
+  "id": "site-TUR-08",
+  "name": "Antalya Medical Center"
+ },
+ {
+  "id": "site-TUR-09",
+  "name": "Bursa Medical Center"
+ },
+ {
+  "id": "site-TUR-10",
+  "name": "Ankara Research Clinic"
+ },
+ {
+  "id": "site-TUR-11",
+  "name": "Antalya General Hospital"
+ },
+ {
+  "id": "site-TUR-12",
+  "name": "Antalya Research Clinic"
+ },
+ {
+  "id": "site-TUR-13",
+  "name": "Izmir Oncology Institute"
+ },
+ {
+  "id": "site-TUR-14",
+  "name": "Istanbul Cancer Center"
+ },
+ {
+  "id": "site-TUR-15",
+  "name": "Izmir Memorial Hospital"
+ },
+ {
+  "id": "site-TUR-16",
+  "name": "Bursa University Hospital"
+ },
+ {
+  "id": "site-TUR-17",
+  "name": "Izmir Research Clinic"
+ },
+ {
+  "id": "site-TUR-18",
+  "name": "Bursa Memorial Hospital"
+ },
+ {
+  "id": "site-TUR-19",
+  "name": "Bursa General Hospital"
+ },
+ {
+  "id": "site-TUR-20",
+  "name": "Izmir Clinical Institute"
+ },
+ {
+  "id": "site-TUR-21",
+  "name": "Ankara General Hospital"
+ },
+ {
+  "id": "site-TUR-22",
+  "name": "Antalya University Hospital"
+ },
+ {
+  "id": "site-TUR-23",
+  "name": "Antalya Memorial Hospital"
+ },
+ {
+  "id": "site-TUR-24",
+  "name": "Istanbul Research Clinic"
+ },
+ {
+  "id": "site-TUR-25",
+  "name": "Istanbul University Hospital"
+ },
+ {
+  "id": "site-TUR-26",
+  "name": "Bursa Cancer Center"
+ },
+ {
+  "id": "site-TUR-27",
+  "name": "Istanbul Medical Center"
+ },
+ {
+  "id": "site-USA-01",
+  "name": "Boston Memorial Hospital"
+ },
+ {
+  "id": "site-USA-02",
+  "name": "Denver University Hospital"
+ },
+ {
+  "id": "site-USA-03",
+  "name": "Boston General Hospital"
+ },
+ {
+  "id": "site-USA-04",
+  "name": "Boston University Hospital"
+ },
+ {
+  "id": "site-USA-05",
+  "name": "Denver Research Clinic"
+ },
+ {
+  "id": "site-USA-06",
+  "name": "Chicago Memorial Hospital"
+ },
+ {
+  "id": "site-USA-07",
+  "name": "Houston Medical Center"
+ },
+ {
+  "id": "site-USA-08",
+  "name": "Houston Clinical Institute"
+ },
+ {
+  "id": "site-USA-09",
+  "name": "Chicago General Hospital"
+ },
+ {
+  "id": "site-USA-10",
+  "name": "Atlanta Research Clinic"
+ },
+ {
+  "id": "site-USA-11",
+  "name": "Houston Cancer Center"
+ },
+ {
+  "id": "site-USA-12",
+  "name": "Boston Medical Center"
+ },
+ {
+  "id": "site-USA-13",
+  "name": "Denver Cancer Center"
+ },
+ {
+  "id": "site-USA-14",
+  "name": "Atlanta Medical Center"
+ },
+ {
+  "id": "site-USA-15",
+  "name": "Atlanta General Hospital"
+ },
+ {
+  "id": "site-USA-16",
+  "name": "Atlanta Clinical Institute"
+ },
+ {
+  "id": "site-USA-17",
+  "name": "Houston General Hospital"
+ },
+ {
+  "id": "site-USA-18",
+  "name": "Atlanta Memorial Hospital"
+ },
+ {
+  "id": "site-USA-19",
+  "name": "Chicago Cancer Center"
+ },
+ {
+  "id": "site-USA-20",
+  "name": "Boston Cancer Center"
+ },
+ {
+  "id": "site-USA-21",
+  "name": "Houston University Hospital"
+ },
+ {
+  "id": "site-USA-22",
+  "name": "Chicago Clinical Institute"
+ },
+ {
+  "id": "site-USA-23",
+  "name": "Atlanta University Hospital"
+ },
+ {
+  "id": "site-USA-24",
+  "name": "Denver General Hospital"
+ },
+ {
+  "id": "site-USA-25",
+  "name": "Atlanta Cancer Center"
+ },
+ {
+  "id": "site-USA-26",
+  "name": "Chicago Research Clinic"
+ },
+ {
+  "id": "site-ZAF-01",
+  "name": "Bloemfontein Clinical Institute"
+ },
+ {
+  "id": "site-ZAF-02",
+  "name": "Johannesburg Memorial Hospital"
+ },
+ {
+  "id": "site-ZAF-03",
+  "name": "Johannesburg University Hospital"
+ },
+ {
+  "id": "site-ZAF-04",
+  "name": "Pretoria Research Clinic"
+ },
+ {
+  "id": "site-ZAF-05",
+  "name": "Durban Cancer Center"
+ },
+ {
+  "id": "site-ZAF-06",
+  "name": "Durban Research Clinic"
+ },
+ {
+  "id": "site-ZAF-07",
+  "name": "Bloemfontein Cancer Center"
+ },
+ {
+  "id": "site-ZAF-08",
+  "name": "Pretoria Cancer Center"
+ },
+ {
+  "id": "site-ZAF-09",
+  "name": "Durban Oncology Institute"
+ },
+ {
+  "id": "site-ZAF-10",
+  "name": "Pretoria University Hospital"
+ },
+ {
+  "id": "site-ZAF-11",
+  "name": "Bloemfontein General Hospital"
+ },
+ {
+  "id": "site-ZAF-12",
+  "name": "Soweto Research Clinic"
+ },
+ {
+  "id": "site-ZAF-13",
+  "name": "Soweto Memorial Hospital"
+ },
+ {
+  "id": "site-ZAF-14",
+  "name": "Durban Medical Center"
+ },
+ {
+  "id": "site-ZAF-15",
+  "name": "Pretoria Clinical Institute"
+ },
+ {
+  "id": "site-ZAF-16",
+  "name": "Bloemfontein Research Clinic"
+ },
+ {
+  "id": "site-ZAF-17",
+  "name": "Johannesburg General Hospital"
+ },
+ {
+  "id": "site-ZAF-18",
+  "name": "Bloemfontein University Hospital"
+ },
+ {
+  "id": "site-ZAF-19",
+  "name": "Soweto General Hospital"
+ },
+ {
+  "id": "site-ZAF-20",
+  "name": "Durban Memorial Hospital"
+ },
+ {
+  "id": "site-ZAF-21",
+  "name": "Bloemfontein Oncology Institute"
+ },
+ {
+  "id": "site-ZAF-22",
+  "name": "Johannesburg Oncology Institute"
+ },
+ {
+  "id": "site-ZAF-23",
+  "name": "Pretoria General Hospital"
+ }
+]

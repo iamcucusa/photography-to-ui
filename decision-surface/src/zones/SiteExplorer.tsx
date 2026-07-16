@@ -52,6 +52,10 @@ export function SiteExplorer({ state, fixtures }: SiteExplorerProps) {
   const pages = useSitePages(fixtures, state.provenance, sites.sortField, sites.sortOrder)
   const rows = useMemo(() => pages.data?.pages.flatMap((p) => p.rows) ?? [], [pages.data])
   const total = countSites(fixtures.observations, state.provenance)
+  const siteNames = useMemo(
+    () => new Map(fixtures.sites.map((s) => [s.id, s.name])),
+    [fixtures.sites],
+  )
 
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -161,11 +165,23 @@ export function SiteExplorer({ state, fixtures }: SiteExplorerProps) {
                   aria-rowindex={item.index + 2}
                   style={{ transform: `translateY(${item.start}px)` }}
                 >
-                  {COLUMNS.map((col) => (
-                    <span key={col.field} role="cell">
-                      {col.format(row)}
-                    </span>
-                  ))}
+                  {COLUMNS.map((col) =>
+                    col.field === 'siteId' ? (
+                      <span
+                        key={col.field}
+                        role="cell"
+                        className="cell-site"
+                        title={`${siteNames.get(row.siteId) ?? row.siteId} · ${row.siteId}`}
+                      >
+                        {siteNames.get(row.siteId) ?? row.siteId}{' '}
+                        <code className="site-id">{row.siteId}</code>
+                      </span>
+                    ) : (
+                      <span key={col.field} role="cell">
+                        {col.format(row)}
+                      </span>
+                    ),
+                  )}
                 </div>
               )
             })}

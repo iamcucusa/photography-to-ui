@@ -6,6 +6,7 @@ import { defaultState } from '../state/url'
 import { mergeFindings, runAtlas, validateFinding } from './checks'
 import trial from '../data/fixtures/trial.json'
 import countries from '../data/fixtures/countries.json'
+import sites from '../data/fixtures/sites.json'
 import observations from '../data/fixtures/observations.json'
 import predictions from '../data/fixtures/predictions.json'
 import rankingVariables from '../data/fixtures/ranking-variables.json'
@@ -13,6 +14,7 @@ import rankingVariables from '../data/fixtures/ranking-variables.json'
 const fixtures = decodeFixtures({
   trial,
   countries,
+  sites,
   observations,
   predictions,
   rankingVariables,

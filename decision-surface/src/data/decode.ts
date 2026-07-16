@@ -2,11 +2,12 @@
 // real API response would be: every record checked against the data-spec §3
 // shapes, extra keys rejected, typed shapes only past this point.
 
-import type { Country, Observation, Prediction, RankingVariable, Trial } from '../types'
+import type { Country, Observation, Prediction, RankingVariable, Site, Trial } from '../types'
 
 export interface Fixtures {
   trial: Trial
   countries: Country[]
+  sites: Site[]
   observations: Observation[]
   predictions: Prediction[]
   rankingVariables: RankingVariable[]
@@ -147,9 +148,15 @@ export function decodeCountry(u: unknown, path: string): Country {
   return { code: str(r.code, `${path}.code`), name: str(r.name, `${path}.name`) }
 }
 
+export function decodeSite(u: unknown, path: string): Site {
+  const r = obj(u, path, ['id', 'name'])
+  return { id: str(r.id, `${path}.id`), name: str(r.name, `${path}.name`) }
+}
+
 export function decodeFixtures(raw: {
   trial: unknown
   countries: unknown
+  sites: unknown
   observations: unknown
   predictions: unknown
   rankingVariables: unknown
@@ -157,6 +164,7 @@ export function decodeFixtures(raw: {
   return {
     trial: decodeTrial(raw.trial, 'trial'),
     countries: arr(raw.countries, 'countries').map((v, i) => decodeCountry(v, `countries[${i}]`)),
+    sites: arr(raw.sites, 'sites').map((v, i) => decodeSite(v, `sites[${i}]`)),
     observations: arr(raw.observations, 'observations').map((v, i) =>
       decodeObservation(v, `observations[${i}]`),
     ),
@@ -172,9 +180,10 @@ export function decodeFixtures(raw: {
 // Dynamic imports keep the fixtures out of the initial JS chunk: they load
 // as a separate async chunk after first paint (§H.3 fixture budget).
 export async function loadFixtures(): Promise<Fixtures> {
-  const [trial, countries, observations, predictions, rankingVariables] = await Promise.all([
+  const [trial, countries, sites, observations, predictions, rankingVariables] = await Promise.all([
     import('./fixtures/trial.json'),
     import('./fixtures/countries.json'),
+    import('./fixtures/sites.json'),
     import('./fixtures/observations.json'),
     import('./fixtures/predictions.json'),
     import('./fixtures/ranking-variables.json'),
@@ -182,6 +191,7 @@ export async function loadFixtures(): Promise<Fixtures> {
   return decodeFixtures({
     trial: trial.default,
     countries: countries.default,
+    sites: sites.default,
     observations: observations.default,
     predictions: predictions.default,
     rankingVariables: rankingVariables.default,

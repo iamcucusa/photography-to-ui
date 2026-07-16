@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { DecodeError, decodeObservation, decodeRankingVariable, decodeTrial } from './decode'
+import {
+  DecodeError,
+  decodeObservation,
+  decodeRankingVariable,
+  decodeSite,
+  decodeTrial,
+} from './decode'
 
 const validObservation = {
   id: 'obs-00001',
@@ -47,5 +53,11 @@ describe('decode (runtime validation at the boundary)', () => {
   it('decodes the trial shape', () => {
     const trial = { id: 'trial-001', name: 'T', candidateCountries: ['ARG'] }
     expect(decodeTrial(trial, 'trial')).toEqual(trial)
+  })
+
+  it('decodes site reference records and rejects extra keys', () => {
+    const site = { id: 'site-ARG-01', name: 'Córdoba Oncology Institute' }
+    expect(decodeSite(site, 'sites[0]')).toEqual(site)
+    expect(() => decodeSite({ ...site, ranking: 1 }, 'sites[0]')).toThrow(/no extra keys/)
   })
 })

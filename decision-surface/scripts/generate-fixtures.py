@@ -91,6 +91,57 @@ predictions = [dict(countryCode=code,
     predictedStartupDays=int(min(400, max(30, LAT[code]["startup"] * rng.uniform(0.85, 1.1)))))
     for code, _ in CTRY]
 
+# Site display names (reference data, data-spec §3.6). Drawn from a SECOND
+# seeded stream so this pass never disturbs the draws above — observations,
+# predictions, and the planted scenarios stay byte-identical (C9).
+rng2 = random.Random(SEED + 1)
+TYPES = ["University Hospital", "Medical Center", "Oncology Institute", "General Hospital",
+         "Cancer Center", "Research Clinic", "Clinical Institute", "Memorial Hospital"]
+CITIES = {
+    "ARG": ["Córdoba", "Rosario", "Mendoza", "Salta", "Tucumán"],
+    "AUS": ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
+    "AUT": ["Vienna", "Graz", "Linz", "Salzburg", "Innsbruck"],
+    "BEL": ["Brussels", "Antwerp", "Ghent", "Liège", "Leuven"],
+    "BGR": ["Sofia", "Plovdiv", "Varna", "Burgas", "Ruse"],
+    "BRA": ["Recife", "Salvador", "Curitiba", "Campinas", "Fortaleza"],
+    "CAN": ["Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa"],
+    "CHE": ["Zurich", "Geneva", "Basel", "Bern", "Lausanne"],
+    "CHL": ["Santiago", "Valparaíso", "Concepción", "Temuco", "Antofagasta"],
+    "COL": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"],
+    "CZE": ["Prague", "Brno", "Ostrava", "Olomouc", "Plzeň"],
+    "DEU": ["Berlin", "Munich", "Hamburg", "Cologne", "Frankfurt"],
+    "DNK": ["Copenhagen", "Aarhus", "Odense", "Aalborg", "Esbjerg"],
+    "ESP": ["Madrid", "Barcelona", "Valencia", "Seville", "Bilbao"],
+    "FIN": ["Helsinki", "Tampere", "Turku", "Oulu", "Espoo"],
+    "FRA": ["Paris", "Lyon", "Marseille", "Toulouse", "Lille"],
+    "GBR": ["London", "Manchester", "Birmingham", "Leeds", "Glasgow"],
+    "GRC": ["Athens", "Thessaloniki", "Patras", "Heraklion", "Larissa"],
+    "HUN": ["Budapest", "Debrecen", "Szeged", "Pécs", "Győr"],
+    "IND": ["Mumbai", "Delhi", "Bangalore", "Chennai", "Hyderabad"],
+    "ISR": ["Jerusalem", "Haifa", "Rehovot", "Netanya", "Ashdod"],
+    "ITA": ["Milan", "Rome", "Turin", "Naples", "Bologna"],
+    "JPN": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo"],
+    "KOR": ["Seoul", "Busan", "Incheon", "Daegu", "Daejeon"],
+    "MEX": ["Guadalajara", "Monterrey", "Puebla", "Mérida", "Toluca"],
+    "NLD": ["Amsterdam", "Rotterdam", "Utrecht", "Leiden", "Groningen"],
+    "NOR": ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"],
+    "NZL": ["Auckland", "Wellington", "Christchurch", "Hamilton", "Dunedin"],
+    "POL": ["Warsaw", "Kraków", "Gdańsk", "Wrocław", "Poznań"],
+    "PRT": ["Lisbon", "Porto", "Coimbra", "Braga", "Faro"],
+    "ROU": ["Bucharest", "Cluj", "Timișoara", "Iași", "Brașov"],
+    "SVK": ["Bratislava", "Košice", "Žilina", "Nitra", "Prešov"],
+    "SWE": ["Stockholm", "Gothenburg", "Malmö", "Uppsala", "Lund"],
+    "TUR": ["Istanbul", "Ankara", "Izmir", "Bursa", "Antalya"],
+    "USA": ["Boston", "Houston", "Chicago", "Denver", "Atlanta"],
+    "ZAF": ["Johannesburg", "Durban", "Pretoria", "Bloemfontein", "Soweto"],
+}
+sites = []
+for code, _ in CTRY:
+    ids = sorted({o["siteId"] for o in observations if o["countryCode"] == code})
+    pool = [f"{city} {t}" for city in CITIES[code] for t in TYPES]  # 40 unique names
+    for site_id, name in zip(ids, rng2.sample(pool, len(ids))):
+        sites.append(dict(id=site_id, name=name))
+
 rankvars = [
   dict(id="rv-01", name="historical-enrollment", title="Historical enrollment rate",
        metricKey="historicalMedianEnrollmentRate", weight=0.2, isDefault=True, varType="Numeric", contribution="Direct"),
@@ -107,8 +158,9 @@ trial = dict(id="trial-001", name="Phase III oncology study",
              candidateCountries=[c for c, _ in CTRY])
 countries = [dict(code=c, name=n) for c, n in CTRY]
 
-files = {"trial.json": trial, "countries.json": countries, "observations.json": observations,
-         "predictions.json": predictions, "ranking-variables.json": rankvars}
+files = {"trial.json": trial, "countries.json": countries, "sites.json": sites,
+         "observations.json": observations, "predictions.json": predictions,
+         "ranking-variables.json": rankvars}
 for fn, data in files.items():
     with open(os.path.join(OUT, fn), "w") as f:
         json.dump(data, f, indent=1, sort_keys=True)
@@ -127,7 +179,16 @@ for o in observations:
     ok &= o["countryCode"] in o["siteId"]  # siteId embeds its country
     ok &= site_ctry.setdefault(o["siteId"], o["countryCode"]) == o["countryCode"]
 ok &= all(any(o["countryCode"] == c for o in observations) for c in trial["candidateCountries"])
-check("C1", ok, "ids unique+sortable, referential integrity")
+# sites.json reference integrity: every observed siteId named exactly once,
+# names unique within their country and at most 3 words
+site_names = {s["id"]: s["name"] for s in sites}
+ok &= len(site_names) == len(sites)
+ok &= {o["siteId"] for o in observations} == set(site_names)
+for code, _ in CTRY:
+    names = [s["name"] for s in sites if s["id"].startswith(f"site-{code}-")]
+    ok &= len(set(names)) == len(names)
+ok &= all(1 <= len(n.split()) <= 3 for n in site_names.values())
+check("C1", ok, "ids unique+sortable, referential integrity incl. sites.json")
 # C2
 check("C2", all(0 < o["enrollmentRatePSM"] <= 3 and 0 < o["targetEnrollmentRatePSM"] <= 3
      and isinstance(o["startupDays"], int) and 30 <= o["startupDays"] <= 400 for o in observations), "ranges")
@@ -187,7 +248,8 @@ shapes = {"observations.json": {"id","siteId","countryCode","sourceTrialId","ben
                                 "enrollmentRatePSM","targetEnrollmentRatePSM","startupDays","investigatorIds"},
           "predictions.json": {"countryCode","predictedEnrollmentRatePSM","predictedStartupDays"},
           "ranking-variables.json": {"id","name","title","metricKey","weight","isDefault","varType","contribution"},
-          "countries.json": {"code","name"}}
+          "countries.json": {"code","name"},
+          "sites.json": {"id","name"}}
 ok = True
 for fn, keyset in shapes.items():
     data = json.load(open(os.path.join(OUT, fn)))
