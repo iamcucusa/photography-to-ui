@@ -29,7 +29,7 @@ exist. Do not invent behavior.
 ```
 npm run dev          # from this dir — vite dev server, port 5176
 npm run build        # tsc && vite build → ../dist/decision-surface/
-npm run check        # tsc --noEmit
+npm run check        # tsc --noEmit && vitest run (the pure-layer tests gate CI)
 ```
 
 Register in root `package.json` workspaces and add `dev:decision` when

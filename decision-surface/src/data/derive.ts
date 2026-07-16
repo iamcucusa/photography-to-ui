@@ -30,6 +30,17 @@ export type MetricStats = Pick<
   | 'siteToSiteVariability'
 >
 
+// §G.1 writes: weights land as {id, weight}[] in shared state; the data
+// layer applies them onto the fixture defaults before recomputing.
+export function applyWeights(
+  variables: RankingVariable[],
+  writes: { id: string; weight: number }[] | null,
+): RankingVariable[] {
+  if (!writes) return variables
+  const byId = new Map(writes.map((w) => [w.id, w.weight]))
+  return variables.map((v) => (byId.has(v.id) ? { ...v, weight: byId.get(v.id)! } : v))
+}
+
 export function filterByProvenance(obs: Observation[], provenance: Provenance): Observation[] {
   if (provenance === 'all') return obs
   const wantBenchmark = provenance === 'benchmark'
