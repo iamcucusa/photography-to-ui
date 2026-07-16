@@ -52,8 +52,11 @@ export function SiteExplorer({ state, fixtures }: SiteExplorerProps) {
   const pages = useSitePages(fixtures, state.provenance, sites.sortField, sites.sortOrder)
   const rows = useMemo(() => pages.data?.pages.flatMap((p) => p.rows) ?? [], [pages.data])
   const total = countSites(fixtures.observations, state.provenance)
+  // `?? []` guards against a stale fixtures object missing `sites` (e.g. an
+  // HMR-cached decode from before the field existed): the grid degrades to
+  // showing the id alone instead of crashing on `.map`.
   const siteNames = useMemo(
-    () => new Map(fixtures.sites.map((s) => [s.id, s.name])),
+    () => new Map((fixtures.sites ?? []).map((s) => [s.id, s.name])),
     [fixtures.sites],
   )
 
