@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cucusa</title>
+    <script>
+      // GitHub Pages serves this file (from the site root) for any unknown
+      // path. Deep links into sub-apps with client-side routes need to reach
+      // their own index.html, so forward the remainder of the path as a ?p
+      // query the sub-app restores pre-paint. Everything else goes home.
+      ;(function () {
+        var apps = ['/photography-to-ui/decision-surface/']
+        var here = location.pathname
+        for (var i = 0; i < apps.length; i++) {
+          if (here.indexOf(apps[i]) === 0) {
+            var rest = here.slice(apps[i].length) + location.search + location.hash
+            location.replace(apps[i] + '?p=' + encodeURIComponent(rest))
+            return
+          }
+        }
+        location.replace('/photography-to-ui/')
+      })()
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/photography-to-ui/" />
+    </noscript>
+  </head>
+  <body>
+    <p><a href="/photography-to-ui/">Continue to the site</a></p>
+  </body>
+</html>

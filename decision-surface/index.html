@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Country Data Overview</title>
     <script>
+      // Deep-link restore: the site-root 404.html forwards unknown paths here
+      // as ?p=<rest>. Rewrite the URL before any app code reads it, so
+      // /case-study and /trial/... links survive static hosting.
+      try {
+        var params = new URLSearchParams(location.search)
+        var p = params.get('p')
+        if (p !== null) {
+          history.replaceState(null, '', location.pathname + decodeURIComponent(p))
+        }
+      } catch {}
+    </script>
+    <script>
       // Apply the persisted color mode before first paint. Dark is the
       // default (:root); only "light" sets the attribute.
       try {

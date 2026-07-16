@@ -3,8 +3,10 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
 import { copyFileSync } from 'node:fs'
 
-// GitHub Pages serves 404.html for unknown paths; copying index.html into it
-// lets the History-API route /trial/:trialId deep-link on static hosting.
+// Copy index.html to 404.html in this app's own out dir. GitHub Pages only
+// honors the SITE-ROOT 404.html (photography-to-ui/public/404.html forwards
+// deep links here as ?p=, restored pre-paint in index.html); this subdir copy
+// is for hosts that serve per-directory fallbacks.
 const spaFallback = () => ({
   name: 'spa-404-fallback',
   closeBundle() {
