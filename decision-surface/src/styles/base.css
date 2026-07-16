@@ -1,0 +1,55 @@
+/* decision-surface base — token-driven, no hardcoded color anywhere (workspace rule). */
+
+:root {
+  /* The interaction contract's motion durations (design-spec §F, motion tokens).
+     The workspace token set carries 120/200/300 ms; the contract needs
+     120/200/320/600 ms, so this consumer defines its contract values locally. */
+  --ds-duration-fast: 120ms;
+  --ds-duration-standard: 200ms;
+  --ds-duration-settle: 320ms;
+  --ds-duration-pulse: 600ms;
+  /* One standard ease-out curve for all motion (tokens/motion.json easing.default). */
+  --ds-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* I7: reduced motion collapses durations to zero, end states kept. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ds-duration-fast: 0ms;
+    --ds-duration-standard: 0ms;
+    --ds-duration-settle: 0ms;
+    --ds-duration-pulse: 0ms;
+  }
+}
+
+html {
+  color-scheme: dark;
+}
+
+html[data-theme='light'] {
+  color-scheme: light;
+}
+
+/* Kill transitions for the theme-switch frame so the recolor is instant. */
+[data-theme-switching] *,
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+  transition: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--text-md);
+  line-height: var(--line-height-base);
+}
+
+.surface {
+  padding: var(--space-lg);
+}

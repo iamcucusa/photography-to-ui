@@ -18,6 +18,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev:brain"],
       "port": 5175
+    },
+    {
+      "name": "decision-surface",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:decision"],
+      "port": 5176
     }
   ]
 }
