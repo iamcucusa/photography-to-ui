@@ -121,8 +121,7 @@ export function CaseStudy() {
             state serves both.
           </p>
           <UrlChip />
-          <div className="cs-chips" aria-label="Role and stack">
-            <span className="chip chip-role">Solo: product · design · engineering</span>
+          <div className="cs-chips" aria-label="Stack">
             <span className="chip">React 19</span>
             <span className="chip">TypeScript strict</span>
             <span className="chip">d3</span>

@@ -157,11 +157,6 @@
   padding: 2px var(--space-sm);
 }
 
-.chip-role {
-  color: var(--color-text-accent);
-  border-color: var(--color-border-accent);
-}
-
 /* ---------- actions ---------- */
 
 .cs-actions {
