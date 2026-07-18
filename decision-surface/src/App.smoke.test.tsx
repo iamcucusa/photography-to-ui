@@ -61,6 +61,32 @@ describe('demo path smoke test (§H.2)', () => {
     expect(window.location.search).toContain('sites=')
   })
 
+  it('a debounced search never reverts a filter set during its window', async () => {
+    const user = await loadedApp()
+    // Type (arming the 250 ms debounce), then flip provenance inside the
+    // window. The deferred write must not clobber the newer filter — the
+    // regression this guards silently reverted prov to 'all'.
+    await user.type(screen.getByRole('searchbox', { name: /search countries/i }), 'sp')
+    await user.click(screen.getByRole('button', { name: 'Benchmark' }))
+    await waitFor(
+      () => {
+        expect(window.location.search).toContain('prov=benchmark')
+        expect(window.location.search).toContain('q=sp')
+      },
+      { timeout: 2000 },
+    )
+  })
+
+  it('Countries: Selected follows a pending selection before commit (BL9)', async () => {
+    const user = await loadedApp()
+    await user.click(screen.getAllByRole('checkbox', { name: /select/i })[0])
+    await user.click(screen.getByRole('button', { name: 'Selected' }))
+    await waitFor(() => expect(window.location.search).toContain('scope=selected'))
+    // The checked-but-uncommitted country stays visible; no empty state.
+    expect(screen.queryByText(/no countries match/i)).toBeNull()
+    expect(screen.getByText(/1 of 36 countries/i)).toBeTruthy()
+  })
+
   it('steers weights under the 100% rule (BL3)', async () => {
     const user = await loadedApp()
     await user.click(screen.getByRole('button', { name: /ranking criteria/i }))

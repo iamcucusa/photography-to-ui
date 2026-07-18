@@ -261,6 +261,16 @@ describe('sortRows / filterRows (view-level, never Atlas input)', () => {
     expect(filterRows(rows, 'alp', 'all').map((r) => r.countryCode)).toEqual(['AAA'])
     expect(filterRows(rows, '', 'selected').map((r) => r.countryCode)).toEqual(['BBB'])
   })
+
+  it('selected scope follows the in-view selection when a pending draft exists (BL9)', () => {
+    // committed = BBB, but the user has checked AAA (pending): the scope
+    // filter must follow the checkboxes on screen, not the committed set.
+    expect(filterRows(rows, '', 'selected', new Set(['AAA'])).map((r) => r.countryCode)).toEqual([
+      'AAA',
+    ])
+    // an empty pending draft under selected scope shows nothing, visibly
+    expect(filterRows(rows, '', 'selected', new Set())).toEqual([])
+  })
 })
 
 describe('deriveDistribution (§G.2)', () => {

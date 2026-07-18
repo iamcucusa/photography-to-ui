@@ -153,7 +153,7 @@ export function CountryList({
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'PageUp' && e.key !== 'PageDown') return
       const target = e.target as HTMLElement | null
-      if (target?.closest('input, textarea, dialog, .site-explorer')) return
+      if (target?.closest('input, textarea, dialog, .site-explorer, .distribution-panel')) return
       const scroller = scrollRef.current
       if (!scroller) return
       e.preventDefault()

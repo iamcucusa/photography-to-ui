@@ -497,7 +497,7 @@ state: links share intent (sort, filters), never scroll offsets.
 | Interaction | Trigger | Reads | Writes | Feedback and motion |
 |---|---|---|---|---|
 | Provenance switch | segmented control | derived rows for the scope | view: `prov` (push) | Metrics crossfade 150 ms; rank column does not move (rank is scope-independent, §G.1) |
-| Country scope switch | segmented control | derived rows, committed selection | view: `scope` (push) | List filters with 200 ms transition; empty state per Flow A 3a-E |
+| Country scope switch | segmented control | derived rows, the selection in view (pending draft if one exists, else committed — BL9: pending is visible) | view: `scope` (push) | List filters with 200 ms transition; empty state per Flow A 3a-E |
 | Evidence family switch | segmented control | derived rows | view: `family` (push) | Column block crossfades 150 ms; no row movement |
 | Search | typing, debounced 250 ms | derived rows | view: `q` (replace) | Live narrowing; clear control always visible while active |
 | Clear filters | empty state action | none | view: `prov`, `scope`, `q` to defaults (push) | Returns to overview in one action |

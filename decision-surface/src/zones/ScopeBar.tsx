@@ -5,9 +5,9 @@
 // view (tabs), trial source changes what the evidence means (bordered
 // toggles), countries scope narrows it (text toggle), search is utility.
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { CountriesScope, EvidenceFamily, InvestigationState, Provenance } from '../types'
-import { writeState } from '../state/url'
+import { readStateCached, writeState } from '../state/url'
 
 interface OptionGroupProps<T extends string> {
   label: string
@@ -61,13 +61,23 @@ export function ScopeBar({ state, onOpenRanking, siteExplorerOpen }: ScopeBarPro
     setSearchText(state.list.filterText)
   }
 
+  // A pending debounce is stale the moment the URL's filter text moves under
+  // it (back button, clear-filters, show-me): cancel it. Also on unmount.
+  useEffect(() => {
+    clearTimeout(debounceRef.current)
+  }, [state.list.filterText])
+  useEffect(() => () => clearTimeout(debounceRef.current), [])
+
   const search = (text: string) => {
     setSearchText(text)
     clearTimeout(debounceRef.current)
     // Continuous input replaces the history entry (debounced 250 ms) —
-    // back walks investigation moves, not keystrokes.
+    // back walks investigation moves, not keystrokes. The write reads the
+    // CURRENT state when the debounce fires: other filters may have changed
+    // during the window and a stale closure would silently revert them.
     debounceRef.current = setTimeout(() => {
-      writeState({ ...state, list: { ...state.list, filterText: text } }, 'replace')
+      const current = readStateCached() ?? state
+      writeState({ ...current, list: { ...current.list, filterText: text } }, 'replace')
     }, 250)
   }
 

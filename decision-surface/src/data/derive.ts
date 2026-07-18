@@ -300,11 +300,16 @@ export function filterRows(
   rows: CountryMetrics[],
   filterText: string,
   countriesScope: 'all' | 'selected',
+  // The selection the user currently SEES (pending draft if one exists, else
+  // committed). The 'selected' scope must follow the checkboxes on screen, or
+  // a pending selection filters to nothing (BL9: pending is visible state).
+  selectedInView?: ReadonlySet<CountryCode3>,
 ): CountryMetrics[] {
   const text = filterText.trim().toLowerCase()
+  const inScope = (row: CountryMetrics) =>
+    countriesScope === 'all' ||
+    (selectedInView ? selectedInView.has(row.countryCode) : row.selected)
   return rows.filter(
-    (row) =>
-      (countriesScope === 'all' || row.selected) &&
-      (text === '' || row.countryName.toLowerCase().includes(text)),
+    (row) => inScope(row) && (text === '' || row.countryName.toLowerCase().includes(text)),
   )
 }

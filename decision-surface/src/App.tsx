@@ -78,14 +78,22 @@ function Workspace() {
     [fixtures, provenance, variables, committedSelection],
   )
 
+  // The selection as the user sees it: pending draft if one exists, else
+  // committed. The 'selected' scope filters by THIS, so checked-but-uncommitted
+  // countries stay visible under Countries: Selected (BL9).
+  const selectionInView = useMemo(
+    () => new Set(pendingSelection ?? committedSelection),
+    [pendingSelection, committedSelection],
+  )
+
   const viewRows = useMemo(() => {
     if (state === null) return []
     return sortRows(
-      filterRows(allRows, state.list.filterText, state.countriesScope),
+      filterRows(allRows, state.list.filterText, state.countriesScope, selectionInView),
       state.list.sortField,
       state.list.sortOrder,
     )
-  }, [allRows, state])
+  }, [allRows, state, selectionInView])
 
   // I5: Atlas is triggered only by shared-state change — the initial
   // hydration counts as the first — and writes only Finding records.
@@ -101,9 +109,13 @@ function Workspace() {
   }, [fixtures, weights, committedKey, setFindings])
 
   // BL2/BL9: checkbox toggles write only the pending draft; the draft clears
-  // itself when it matches the committed selection again.
+  // itself when it matches the committed selection again. Read the draft from
+  // the store, not render props: React batches rapid toggles into one render,
+  // and prop-based reads would make the second toggle overwrite the first.
   const toggleSelect = (countryCode: string) => {
-    const current = new Set(pendingSelection ?? committedSelection)
+    const current = new Set(
+      useDraftsStore.getState().pendingSelection ?? useSharedStore.getState().selection,
+    )
     if (current.has(countryCode)) current.delete(countryCode)
     else current.add(countryCode)
     const next = [...current].sort()

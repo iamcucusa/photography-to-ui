@@ -88,21 +88,23 @@ export function SiteExplorer({ state, fixtures }: SiteExplorerProps) {
     return () => document.getElementById('site-evidence-trigger')?.focus()
   }, [])
 
-  // A new sort serves a fresh first page; the windowed list resets to top.
+  // A new sort or provenance serves a fresh first page; the windowed list
+  // resets to top so the scroll offset never outlives the rows under it.
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 })
-  }, [sites.sortField, sites.sortOrder])
+  }, [sites.sortField, sites.sortOrder, state.provenance])
 
   const close = () => writeState({ ...state, sites: null }, 'push')
 
   // Esc closes the grid (interaction contract); listener lives on window so
-  // it works wherever focus sits inside the panel.
+  // it works wherever focus sits inside the panel. Esc closes the TOPMOST
+  // layer only: yield when a dialog or the distribution panel is above us.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        close()
-      }
+      if (e.key !== 'Escape') return
+      if (document.querySelector('dialog[open], .distribution-panel')) return
+      e.preventDefault()
+      close()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)

@@ -48,12 +48,13 @@ export function DistributionPanel({ state, fixtures }: DistributionPanelProps) {
 
   const close = () => writeState({ ...state, distribution: null }, 'push')
 
+  // Esc closes the topmost layer only: a modal dialog above us takes it.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        close()
-      }
+      if (e.key !== 'Escape') return
+      if (document.querySelector('dialog[open]')) return
+      e.preventDefault()
+      close()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
