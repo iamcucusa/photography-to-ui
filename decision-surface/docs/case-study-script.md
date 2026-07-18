@@ -1,94 +1,90 @@
 # Presenter run sheet: Country Data Overview (≤15 min)
 
-The case-study page (`/case-study`) is the teleprompter: one section per beat, in order.
-Present from it, click into the live app for beat 03, come back to the page for the close.
-Total ~14 min with the demo as the ~6-min spine, which leaves slack for questions.
+The case-study page (`/case-study`) is the teleprompter: one section per beat, in
+order. The structure is a decision-under-uncertainty narrative; the live demo sits
+inside beat 04, where the decision is shown rather than described. Total ~14 min.
 
 **Before you start:** open two tabs, the case-study page and a clean
 `…/decision-surface/trial/trial-001`. Clear the app's localStorage so the demo starts
-neutral (no committed selection). Pick the theme you'll present in.
+neutral. Pick the theme you'll present in.
 
 ---
 
-## 00:00 · Hook (1 min) · Hero section
+## 00:00 · Skim (1 min) · Hero
 
-- "This is a decision surface. It turns thousands of scattered records into one ranked,
-  defensible decision, and it serves that decision to a human **and** an agent from the
-  same state."
-- Thesis, said once, slowly: *"Charts are for humans. Agents read the structured data
-  underneath. One serializable state serves both."*
+- Read the three skim lines almost verbatim, slowly: challenge, decision, impact.
+- Thesis once: *"Charts are for humans. Agents read the structured data underneath. One
+  serializable state serves both."*
 - One line on you: solo, covering product, design, and engineering. Frontend-only by
   design.
 
-## 01:00 · The problem, and why it's yours (1.5 min) · Section 01
+## 01:00 · The starting point (1.5 min) · Section 01
 
-- The domain: choosing which countries a clinical trial runs in. Thousands of site-level
-  records, a wrong pick costs months, every call must survive a reviewer.
-- **The bridge, said explicitly:** "The domain is clinical trials, but the hard problems
-  are exactly Dash0's: data-dense exploration at scale, performance over massive
-  datasets, restorable investigation state, and an agent reading the signals under the
-  charts. The trial analyst and the on-call engineer at 2 a.m. are the same user."
+- The domain in two sentences: country selection, thousands of site records, a wrong
+  pick costs months, every call must survive a reviewer.
+- **The ambiguity, named:** "The hard part was never the data; it was the audience.
+  An analyst who decides, a reviewer who retraces weeks later, and an agent that reads
+  the same evidence. Where does an investigation live so all three can hold the same
+  one? That question had no obvious answer, and it's the decision this case study is
+  about."
+- The domain-honesty line, verbatim from the page: "I learned the shape of this data to
+  design for it. I don't claim the analyst's job." Then the bridge: dense data,
+  restorable state, an agent under the charts. The on-call engineer at 2 a.m. and the
+  trial analyst are the same user.
 
-## 02:30 · Three readers (1.5 min) · Section 02
+## 02:30 · Forces in tension (1 min) · Section 02
 
-- Ana decides; she is the only writer of shared state. Vera verifies: read-only, and one
-  link restores Ana's exact view. Atlas proposes: it reads the data, not the charts, and
-  has one output, an evidence-carrying finding.
-- The product move: "The assumption I challenged is that a UI serves one user. This
-  serves a human and an agent, each in its own encoding. Force either into the other's
-  and you fail both."
+- Walk the four tensions quickly; they justify everything that follows. Land on:
+  "Speed for one reader, retraceability for another, typed rows for the third."
 
-## 04:00 · LIVE DEMO (6 min) · Section 03, switch to the app tab
+## 03:30 · Alternatives (1.5 min) · Section 03
 
-Drive slowly; narrate the *why*, not the clicks.
+- Give each alternative its honest one-liner and why it lost. The store-plus-share
+  rejection is the one to say in full: "State you must remember to share is state that
+  gets lost. Vera can't paste her way back at review time."
+- Frame: "I wanted the rejected paths on the page because that's how decisions get
+  reviewed, options first, then the call."
+
+## 05:00 · The decision, LIVE (6 min) · Section 04, switch to the app tab
+
+Say the decision first: "Investigation state is the URL. One writer, fixed parameter
+order, defaults omitted. Byte-equal links mean equal state." Then prove it, narrating
+the three lenses while driving:
 
 1. **Answer first.** Open the plain trial URL. "The ranked shortlist is the first thing
-   on screen. No dashboard to assemble."
-2. **Trial source flip.** Switch Trial source to Benchmark. "Metrics change, but watch
-   the rank column: it holds still. Rank is scope-independent by design, so filtering
-   never quietly re-orders the answer under you."
-3. **Steer a weight.** Open Ranking criteria, move one weight, save. "The list re-ranks
-   in front of you with a 320 ms settle; the motion exists so the cause is visible. Rank
-   changes only through weights, nowhere else."
-4. **Scale.** Open Site evidence. Scroll hard. "Thousands of observations, never more
-   than ~40 rows in the DOM. Keyset-paginated, flat latency at any depth. This is the
-   pattern that survives going from thousands to billions."
-5. **The agent.** Point to an Atlas card. Click **Show me**. "It found that one country's
-   rank rests on a single weight. Show me restores the exact view the claim is about,
-   countries highlighted. No claim renders without its evidence and a restorable view."
-6. **The primitive.** Copy the URL, paste in a fresh tab. "Identical investigation. The
-   link *is* the state. That's what lets Vera reopen exactly what Ana saw, and it's what
-   an agent hands back with a finding."
+   on screen."
+2. **Product lens.** Flip Trial source to Benchmark; steer a weight in Ranking
+   criteria. "Every move lands in the URL as I make it. The link is the unit of trust."
+3. **Design lens.** Point at the rank column during the flip: "Metrics changed, rank
+   held still. Filtering never quietly reorders the answer. And notice what's NOT in
+   the URL: scroll, cursors, drafts. Links share intent, not offsets."
+4. **Engineering lens.** Open Site evidence, scroll hard: "5,121 records, about forty
+   rows mounted, keyset pages, flat latency at any depth. And the one list that is NOT
+   virtualized is deliberate: the re-rank animation proves cause, and windowing would
+   have killed it."
+5. **The agent.** Click "Show me" on an Atlas finding: "The exact view its claim is
+   about, highlighted. No claim renders without a restorable view."
+6. **The primitive.** Copy the URL, paste in a fresh tab: "Identical investigation.
+   That's the decision, working."
 
-## 10:00 · Architecture (2 min) · back to the page, Section 04
+## 11:00 · Outcome (1.5 min) · back to the page, Section 05
 
-- The tiers, one-way flow, derive-on-read: "The derived tier is computed on read, never
-  stored, so the overview and the drill-down can't contradict. One truth-source."
-- The two decisions, each as fork, choice, trade-off: **state in the URL** (link equality
-  is state equality; the cost is serialization discipline, one canonical serializer as
-  the only URL writer) and **keyset + windowing** (flat-latency scale; the seam where a
-  real backend plugs in. The demo runs it client-side, but the contract is
-  production-shaped).
+- "Everything I just did, you can redo in under a minute; the page lists the four
+  steps." Then the receipts, lightly: 70 tests; 98.8 KB initial JS against a 180 KB
+  build-enforced budget, and that includes this page; 56 contrast checks in both
+  themes; seeded fixtures passing 13 of 13 integrity checks.
+- The leverage line: "The keyset contract is the seam where a real backend plugs in
+  without touching the app, and the interaction contract is cited by ID in code and
+  commits, so review has a shared vocabulary."
 
-## 12:00 · Rigor (1.5 min) · Section 05
+## 12:30 · Reflection + close (1.5 min) · Section 06
 
-- "Budgets that fail the build: initial JS 98.6 KB against a 180 KB ceiling, and that
-  includes this case-study page; the grid caps at 40 mounted rows; keyset pages serve
-  under 30 ms." Point at the table.
-- "70 tests, 54 contrast checks across both themes, zero hardcoded color enforced in CI,
-  and the fixtures come from a seeded generator that passes 13 of 13 data-integrity
-  checks including anti-leakage. Picky developers notice when it's done this well."
-
-## 13:30 · The AI thread + close (1.5 min) · Section 06
-
-- The findings contract: `Finding { claim · derivedFrom · suggestedState · status }`.
-  "Atlas reads the typed rows, not the pixels. At 2 a.m. you don't want an answer. You
-  want the answer and the exact view that proves it."
-- What's next: a real backend behind the keyset contract (the socket is already the
-  right shape); derivation off the main thread; multi-user shared state.
-- **Provenance, said plainly:** "The human loop re-implements patterns proven in a
-  production system whose frontend I led. The URL-state, the agent tier, and the
-  findings contract are new design for this case study."
+- Honest, three beats: boundary tests should have come before the state-home bug, not
+  after; the hardest craft call was restraint (not virtualizing the list whose motion
+  carries the thesis); an agent earns trust by showing its evidence.
+- Provenance, plainly: "The human loop re-implements patterns proven in a production
+  system whose frontend I led. The URL-state, the agent tier, and the findings contract
+  are new design for this case study."
 - Close on the thesis: *"Charts for humans, structured data for agents. One state, and
   the link is the proof."*
 
@@ -96,20 +92,22 @@ Drive slowly; narrate the *why*, not the clicks.
 
 ## If the live demo breaks
 
-Don't debug on stage. Fall back to Section 03's numbered checklist on the page (it reads
-as a scripted walk of exactly what the demo shows) and keep narrating the *why*. The
-copy-URL primitive can be shown statically with the URL chip in the hero. Recover to the
-architecture section; the story doesn't depend on the pixels being live.
+Don't debug on stage. Beat 04's lenses read as prose without the pixels; narrate them
+from the page, use the hero URL chip for the primitive, and recover at Outcome. The
+story is the decision, not the demo.
 
 ## Anticipated questions (have these ready)
 
-- *"Does the keyset paging actually scale, or is it a demo trick?"* The contract is real
-  (sort by (field, id), opaque cursor, never offsets); the data source is client-side
-  fixtures. Swapping a service in changes one layer. That's why the seam is drawn where
-  it is.
-- *"Why is state in the URL and not a store?"* Because the requirement is that any view
-  is restorable and shareable by a human, a reviewer, or an agent. A store can't be
-  pasted into a Slack message at 2 a.m.
-- *"What would break first at 10× the data?"* Main-thread derivation. It's memoized and
+- *"Why not a router?"* One workspace, no page tree. A router is a dependency to solve
+  what one small serializer solves exactly, and the serializer is what makes links
+  byte-equal, which is the property everything else stands on.
+- *"Does the keyset paging actually scale?"* The contract is real: sort by (field, id),
+  opaque cursor, never offsets. The data source is client-side fixtures; swapping a
+  service in changes one layer. That's why the seam is drawn there.
+- *"What broke while building it?"* A store write that re-set unchanged fields, gave
+  them new identities, and looped a render effect until React unmounted the tree. It's
+  the reason the state-home boundaries now have regression tests, and the reason I'd
+  write those tests first next time.
+- *"What would break first at 10× the data?"* Main-thread derivation. Memoized and
   under budget at this scale; past it, aggregation moves to a worker. I'd rather show
-  you the honest limit than pretend there isn't one.
+  the honest limit than pretend there isn't one.

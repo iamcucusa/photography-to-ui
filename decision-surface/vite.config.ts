@@ -1,17 +1,20 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
-import { copyFileSync } from 'node:fs'
+import { copyFileSync, mkdirSync } from 'node:fs'
 
-// Copy index.html to 404.html in this app's own out dir. GitHub Pages only
-// honors the SITE-ROOT 404.html (photography-to-ui/public/404.html forwards
-// deep links here as ?p=, restored pre-paint in index.html); this subdir copy
-// is for hosts that serve per-directory fallbacks.
+// Static-hosting fallbacks. GitHub Pages only honors the SITE-ROOT 404.html
+// (photography-to-ui/public/404.html forwards deep links here as ?p=,
+// restored pre-paint in index.html); the subdir 404 copy is for hosts with
+// per-directory fallbacks. The case-study route additionally gets a REAL
+// index.html so the shareable portfolio URL serves HTTP 200 with no redirect.
 const spaFallback = () => ({
   name: 'spa-404-fallback',
   closeBundle() {
     const out = resolve(__dirname, '../dist/decision-surface')
     copyFileSync(resolve(out, 'index.html'), resolve(out, '404.html'))
+    mkdirSync(resolve(out, 'case-study'), { recursive: true })
+    copyFileSync(resolve(out, 'index.html'), resolve(out, 'case-study/index.html'))
   },
 })
 

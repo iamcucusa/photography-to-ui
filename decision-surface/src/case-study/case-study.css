@@ -84,12 +84,43 @@
   padding-left: var(--space-md);
 }
 
-.cs-def {
+/* The 30-second skim: challenge / decision / impact, read down the left edge. */
+.cs-skim {
   margin: 0 0 var(--space-lg);
+  display: grid;
+  gap: var(--space-sm);
+  border-top: 1px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding: var(--space-md) 0;
+}
+
+.cs-skim > div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.cs-skim dt {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-normal);
+  color: var(--color-text-accent);
+  padding-top: 2px;
+}
+
+.cs-skim dd {
+  margin: 0;
   font-size: var(--text-md);
-  line-height: var(--line-height-loose);
-  color: var(--color-text-secondary);
-  max-width: 62ch;
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  max-width: 58ch;
+}
+
+@media (max-width: 560px) {
+  .cs-skim > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xs);
+  }
 }
 
 /* ---------- url chip (the killer primitive, made visible) ---------- */
@@ -193,14 +224,6 @@
   letter-spacing: var(--letter-spacing-tight);
 }
 
-.cs-h3 {
-  margin: var(--space-lg) 0 var(--space-sm);
-  font-size: var(--text-md);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-normal);
-  color: var(--color-text-cool);
-}
-
 .cs-lead {
   margin: 0 0 var(--space-md);
   font-size: var(--text-md);
@@ -221,19 +244,7 @@
   color: var(--color-text-muted);
 }
 
-/* ---------- bridge callout ---------- */
-
-.cs-bridge {
-  border-left: 2px solid var(--color-accent);
-  padding-left: var(--space-md);
-  margin-top: var(--space-md);
-}
-
-.cs-bridge-title {
-  margin: 0 0 var(--space-sm);
-  font-size: var(--text-md);
-  color: var(--color-text-accent);
-}
+/* ---------- tensions list ---------- */
 
 .cs-maplist {
   list-style: none;
@@ -250,43 +261,63 @@
   color: var(--color-text-accent);
 }
 
-/* ---------- readers triad ---------- */
+.cs-section > .cs-note {
+  color: var(--color-text-secondary);
+}
 
-.cs-readers {
+/* ---------- alternatives (name + why rejected) ---------- */
+
+.cs-alts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-lg);
-  margin-bottom: var(--space-md);
+  gap: var(--space-md);
 }
 
-@media (max-width: 720px) {
-  .cs-readers {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-.reader {
-  border-top: 2px solid var(--color-border-strong);
+.cs-alts li {
+  border-top: var(--divider-subtle);
   padding-top: var(--space-sm);
 }
 
-.reader-name {
+.alt-name {
   margin: 0 0 var(--space-xs);
-  font-size: var(--text-lg);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--text-md);
+  color: var(--color-text-primary);
 }
 
-.reader-role {
+.alt-rejected {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+  border-left: 2px solid var(--color-border-strong);
+  padding-left: var(--space-sm);
+}
+
+/* ---------- the decision, braided through three lenses ---------- */
+
+.cs-lenses {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.lens {
+  border-left: 2px solid var(--color-accent);
+  padding-left: var(--space-md);
+}
+
+.lens-label {
+  margin: 0 0 var(--space-xs);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-normal);
   color: var(--color-text-accent);
-  font-weight: var(--font-weight-regular);
 }
 
-.cs-readers + .cs-note,
-.cs-section > .cs-note {
-  color: var(--color-text-secondary);
+.lens .cs-body {
+  margin-bottom: 0;
 }
 
 /* ---------- demo checklist ---------- */
@@ -320,99 +351,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- tiers ---------- */
-
-.cs-tiers {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
-  font-size: var(--text-sm);
-}
-
-.tier {
-  border: 1px solid var(--color-border-subtle);
-  padding: var(--space-xs) var(--space-sm);
-  color: var(--color-text-primary);
-}
-
-.tier-arrow {
-  color: var(--color-text-accent);
-}
-
-/* ---------- decisions ---------- */
-
-.cs-decisions {
-  display: grid;
-  gap: var(--space-lg);
-  margin-top: var(--space-md);
-}
-
-.decision {
-  border-top: 2px solid var(--color-border-strong);
-  padding-top: var(--space-sm);
-}
-
-.decision-title {
-  margin: 0 0 var(--space-sm);
-  font-size: var(--text-lg);
-  font-weight: var(--font-weight-bold);
-}
-
-.decision-line {
-  margin: 0 0 var(--space-xs);
-  font-size: var(--text-sm);
-  line-height: var(--line-height-base);
-  color: var(--color-text-secondary);
-}
-
-.decision-tag {
-  display: inline-block;
-  min-width: 5.5rem;
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-normal);
-  color: var(--color-text-muted);
-}
-
-.decision-tag-choice {
-  color: var(--color-text-accent);
-}
-
-/* ---------- budgets table ---------- */
-
-.cs-budgets {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: var(--space-lg);
-  font-variant-numeric: tabular-nums;
-}
-
-.cs-budgets th,
-.cs-budgets td {
-  text-align: left;
-  padding: var(--space-xs) var(--space-sm) var(--space-xs) 0;
-  border-bottom: var(--divider-subtle);
-  font-weight: var(--font-weight-regular);
-}
-
-.cs-budgets th {
-  color: var(--color-text-primary);
-  font-size: var(--text-sm);
-}
-
-.cs-budget-value {
-  color: var(--color-text-accent);
-  font-size: var(--text-sm);
-  white-space: nowrap;
-}
-
-.cs-budget-limit {
-  color: var(--color-text-muted);
-  font-size: var(--text-xs);
-}
-
 /* ---------- receipts ---------- */
 
 .cs-receipts {
@@ -429,26 +367,6 @@
 .cs-receipts strong {
   color: var(--color-text-accent);
   font-weight: var(--font-weight-medium);
-}
-
-/* ---------- finding figure ---------- */
-
-.cs-finding {
-  margin: 0 0 var(--space-md);
-  border-left: 2px solid var(--color-accent);
-  padding: var(--space-sm) 0 var(--space-sm) var(--space-md);
-}
-
-.cs-finding-claim {
-  margin: 0 0 var(--space-sm);
-  font-size: var(--text-md);
-  color: var(--color-text-primary);
-}
-
-.cs-finding-schema {
-  margin: 0;
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
 }
 
 /* ---------- close ---------- */

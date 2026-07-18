@@ -1,8 +1,9 @@
-// The case-study landing surface — a portfolio narrative that frames the live
-// app, and the spine of a ≤15-minute interview walk. Built in decision-surface's
-// own line-based design system (tokens only, the --ds-* motion vocabulary), so
-// the case study is itself proof of the craft it describes. Additive: rendered
-// only at /case-study (App entry branch); shares nothing with the live app.
+// The case-study landing surface, structured as a decision-under-uncertainty
+// narrative (~700 words): skim hero, ambiguous start, tensions, alternatives,
+// ONE decision braided through product / design / engineering, outcome,
+// reflection. Built in decision-surface's own line-based system so the page is
+// itself proof of the craft it describes. Additive: rendered only at
+// /case-study; shares nothing with the live app.
 
 import { trialHref } from '../state/url'
 import { useTheme } from '../useTheme'
@@ -24,8 +25,7 @@ function ThemeToggle() {
   )
 }
 
-// A small monospace representation of a serialized investigation URL — the
-// killer primitive made visible.
+// The decision, made visible: a serialized investigation.
 function UrlChip() {
   return (
     <code className="cs-urlchip" aria-label="An investigation serialized in the URL">
@@ -34,61 +34,50 @@ function UrlChip() {
   )
 }
 
-const READERS = [
+const TENSIONS = [
+  'Ana needs speed; Vera needs the exact view back; Atlas needs typed rows, not pixels.',
+  'Expert density on one screen, yet a first-time reviewer must be able to read it.',
+  'Deep scroll over thousands of records, yet motion that shows cause, not decoration.',
+  'Frontend-only by design, with every boundary drawn where a real backend would plug in.',
+]
+
+const ALTERNATIVES = [
   {
-    name: 'Ana',
-    role: 'decides',
-    body: 'The feasibility analyst. The only writer of shared state; she steers the ranking and commits the shortlist.',
+    name: 'A client store as the truth, with a Share button that serializes on demand.',
+    rejected:
+      'State you must remember to share is state that gets lost. Vera can’t paste her way back at review time.',
   },
   {
-    name: 'Vera',
-    role: 'verifies',
-    body: 'The reviewer, accountable for a decision she didn’t watch being made. One link restores Ana’s exact view: same data, filters, sort. Full surface, zero write paths.',
+    name: 'A router library with route params.',
+    rejected:
+      'One workspace, no page tree. A dependency to solve what one small serializer solves exactly.',
   },
   {
-    name: 'Atlas',
-    role: 'proposes',
-    body: 'The agent. Reads the data under the charts, not the charts. One output: a finding that carries its evidence and a restorable view. Proposes; never commits.',
+    name: 'Hash-fragment state.',
+    rejected: 'Links stop reading as places, and the address bar stops telling the truth.',
   },
 ]
 
-const DEMO_STEPS = [
-  'Open the plain URL. The ranked answer is the first thing on screen.',
-  'Switch the trial source to Benchmark. The metrics change, and the rank column holds still: rank is scope-independent by design.',
-  'Open Ranking criteria and shift one weight. The list re-ranks in front of you, with a 320 ms settle so the cause is visible.',
-  'Open Site evidence and scroll: thousands of records, never more than ~40 rows in the DOM.',
-  'An Atlas card appears. “Show me” restores the exact view its claim is about, countries highlighted.',
-  'Copy the URL and paste it in a fresh tab. The identical investigation reopens.',
-]
-
-const DECISIONS = [
+const LENSES = [
   {
-    title: 'State lives in the URL',
-    fork: 'A client store as the source of truth, or the URL.',
-    choice:
-      'The URL. Link equality is state equality, so any view can be reopened by anyone: Ana, Vera, or an agent’s finding.',
-    tradeoff:
-      'Serialization discipline: one canonical serializer is the only writer of the URL, and scroll positions are never state.',
+    lens: 'Product',
+    body: 'The link is the unit of trust. Ana hands Vera the exact view that produced the shortlist. Atlas attaches one to every finding; a claim without its restorable view never renders.',
   },
   {
-    title: 'Keyset pagination + windowing',
-    fork: 'Offset pagination, or cursor-based keyset over a windowed grid.',
-    choice:
-      'Keyset. Flat-latency deep scroll over thousands → billions of rows, ≤40 mounted in the DOM, and the exact seam where a real backend plugs in.',
-    tradeoff:
-      'The demo runs it client-side over fixtures, but the contract is production-shaped: swapping in a service changes one layer, not the app.',
+    lens: 'Design',
+    body: 'The URL disciplines the interface. Rank holds still while filters change, so filtering never quietly reorders the answer. Drafts stay visibly pending and never leak into the link. Scroll is never state: links share intent, not offsets, and Back walks investigation moves, not keystrokes. I rejected the maximal version; a link that replays your scroll position is noise wearing a permalink.',
+  },
+  {
+    lens: 'Engineering',
+    body: 'The price is discipline across three state homes: URL, shared store, local drafts. The one bug that escaped came from blurring them, a store write that gave untouched fields new identities and looped a render effect until React unmounted the tree. It’s fixed and regression-tested; boundaries that subtle deserve tests, not conventions. And windowing stops where causality starts: the ranked list keeps its 36 rows mounted so the re-rank animation can prove cause, while the evidence grid virtualizes 5,121 records at forty mounted rows.',
   },
 ]
 
-const BUDGETS = [
-  {
-    label: 'Initial JS',
-    value: '98.6 KB',
-    limit: '180 KB budget, build-enforced (this page included)',
-  },
-  { label: 'Evidence grid', value: '≤40 rows', limit: 'mounted over thousands of records' },
-  { label: 'Keyset page', value: '<30 ms', limit: 'flat-latency at any scroll depth' },
-  { label: 'Rank recompute', value: '<50 ms', limit: 'steer → reordered paint' },
+const PROOFS = [
+  'Open the app. The ranked answer is the first thing on screen.',
+  'Filter, steer a weight, open the evidence grid. The URL keeps up.',
+  'Press “Show me” on an Atlas finding. The exact view returns, highlighted.',
+  'Copy the URL into a fresh tab. The identical investigation reopens.',
 ]
 
 export function CaseStudy() {
@@ -100,18 +89,36 @@ export function CaseStudy() {
       </header>
 
       <main className="cs-main">
-        {/* 1 — Hero / thesis */}
+        {/* Hero: the 30-second skim */}
         <section className="cs-hero">
           <p className="cs-eyebrow">Case study · Frontend product engineering</p>
           <h1 className="cs-title">Country Data Overview</h1>
+          <dl className="cs-skim">
+            <div>
+              <dt>Challenge</dt>
+              <dd>
+                One screen where a trial team picks countries from 5,121 site records, and defends
+                that pick under review.
+              </dd>
+            </div>
+            <div>
+              <dt>Decision</dt>
+              <dd>
+                The whole investigation lives in the URL. One canonical serializer; link equality is
+                state equality.
+              </dd>
+            </div>
+            <div>
+              <dt>Impact</dt>
+              <dd>
+                Any view is restorable in one click by an analyst, a reviewer, or an agent’s
+                finding. Live below.
+              </dd>
+            </div>
+          </dl>
           <p className="cs-thesis">
             Charts are for humans. Agents read the structured data underneath. One serializable
             state serves both.
-          </p>
-          <p className="cs-def">
-            A decision surface that turns thousands of scattered performance records into a ranked,
-            steerable shortlist, where every investigation is a shareable link and a human and an
-            agent work from the same state.
           </p>
           <UrlChip />
           <div className="cs-chips" aria-label="Role and stack">
@@ -122,185 +129,121 @@ export function CaseStudy() {
             <span className="chip">TanStack Query · Virtual</span>
             <span className="chip">Zustand</span>
             <span className="chip">DTCG tokens</span>
-            <span className="chip">frontend-only, by design</span>
           </div>
           <div className="cs-actions">
             <a className="cs-cta" href={DEMO_HREF}>
               Open the live investigation →
             </a>
-            <a className="cs-cta-quiet" href="#demo">
-              or skip to the demo ↓
+            <a className="cs-cta-quiet" href="#decision">
+              or read the decision ↓
             </a>
           </div>
         </section>
 
-        {/* 2 — The problem / Dash0 bridge */}
         <section className="cs-section">
-          <p className="cs-section-num">01 · The problem</p>
-          <h2 className="cs-h2">Overwhelming data, one defensible decision</h2>
+          <p className="cs-section-num">01 · The starting point</p>
+          <h2 className="cs-h2">Three readers, no obvious home for the truth</h2>
           <p className="cs-lead">
-            Choosing which countries a clinical trial runs in means reading thousands of site-level
-            records across dozens of countries: enrollment rates, startup times, site-to-site
-            variability. Raw, no human can eyeball it. A wrong pick costs months; every call must
-            survive a reviewer.
+            Choosing the countries for a clinical trial means reading thousands of site-level
+            records: enrollment rates, startup times, site-to-site spread. A wrong pick costs
+            months, and every call must survive a reviewer.
           </p>
-          <div className="cs-bridge">
-            <p className="cs-bridge-title">Different domain, the same hard problems.</p>
-            <ul className="cs-maplist">
-              <li>Data-dense exploration at scale</li>
-              <li>Performance over massive datasets</li>
-              <li>Restorable investigation state</li>
-              <li>An agent reading the signals under the charts</li>
-            </ul>
-            <p className="cs-body">
-              The trial analyst and the on-call engineer at 2&nbsp;a.m. are the same user: someone
-              who has to turn too much data into a decision they can defend. The techniques here
-              (windowed rendering, keyset paging, investigation-in-a-URL) are the ones a real-time
-              observability surface lives or dies on.
-            </p>
-          </div>
+          <p className="cs-body">
+            The ambiguity was never the data; it was the audience. Ana analyzes and decides. Vera
+            signs off weeks later, accountable for a decision she didn’t watch happen. Atlas, an
+            in-app agent, reads the same evidence to catch what a tired human misses. Three readers,
+            one open question: where does an investigation live so all three can hold the same one?
+          </p>
+          <p className="cs-note">
+            Different domain, the same problems observability tooling lives with: dense data,
+            restorable state, an agent under the charts. I learned the shape of this data to design
+            for it. I don’t claim the analyst’s job.
+          </p>
         </section>
 
-        {/* 3 — Three readers */}
         <section className="cs-section">
-          <p className="cs-section-num">02 · Who it’s for</p>
-          <h2 className="cs-h2">One surface, three readers</h2>
-          <div className="cs-readers">
-            {READERS.map((r) => (
-              <article key={r.name} className="reader">
-                <h3 className="reader-name">
-                  {r.name} <span className="reader-role">{r.role}</span>
-                </h3>
-                <p className="cs-body">{r.body}</p>
-              </article>
+          <p className="cs-section-num">02 · Forces in tension</p>
+          <h2 className="cs-h2">What pulled against what</h2>
+          <ul className="cs-maplist">
+            {TENSIONS.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="cs-section">
+          <p className="cs-section-num">03 · Alternatives</p>
+          <h2 className="cs-h2">The alternatives I weighed</h2>
+          <ul className="cs-alts">
+            {ALTERNATIVES.map((alt) => (
+              <li key={alt.name}>
+                <p className="alt-name">{alt.name}</p>
+                <p className="alt-rejected">{alt.rejected}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="cs-section" id="decision">
+          <p className="cs-section-num">04 · The decision</p>
+          <h2 className="cs-h2">The investigation lives in the URL</h2>
+          <p className="cs-lead">
+            One module is its only writer: parameters in a fixed order, defaults omitted, so equal
+            states produce byte-equal links. Link equality is state equality.
+          </p>
+          <div className="cs-lenses">
+            {LENSES.map((l) => (
+              <div key={l.lens} className="lens">
+                <p className="lens-label">{l.lens}</p>
+                <p className="cs-body">{l.body}</p>
+              </div>
             ))}
           </div>
-          <p className="cs-note">
-            The assumption I challenged: a UI serves one user. This one serves a human <em>and</em>{' '}
-            an agent, each in its own encoding. Force either into the other’s, and you fail both.
-          </p>
         </section>
 
-        {/* 4 — Live demo */}
-        <section className="cs-section" id="demo">
-          <p className="cs-section-num">03 · See it work</p>
-          <h2 className="cs-h2">Ninety seconds, live</h2>
+        <section className="cs-section">
+          <p className="cs-section-num">05 · Outcome</p>
+          <h2 className="cs-h2">What that made true</h2>
+          <p className="cs-body">
+            Every claim below is checkable in the live app in under a minute.
+          </p>
           <ol className="cs-checklist">
-            {DEMO_STEPS.map((step, i) => (
-              <li key={i}>{step}</li>
+            {PROOFS.map((p) => (
+              <li key={p}>{p}</li>
             ))}
           </ol>
-          <div className="cs-actions">
-            <a className="cs-cta" href={DEMO_HREF}>
-              Open the live investigation →
-            </a>
-          </div>
-          <p className="cs-note">
-            This is the live product, not a recording. Best explored with your own hands.
-          </p>
-        </section>
-
-        {/* 5 — Architecture */}
-        <section className="cs-section">
-          <p className="cs-section-num">04 · Architecture</p>
-          <h2 className="cs-h2">Structural decisions, not just features</h2>
-          <div className="cs-tiers" aria-label="The tiered data model">
-            <span className="tier">Seeded fixtures</span>
-            <span className="tier-arrow">→</span>
-            <span className="tier">Derived tier (compute on read)</span>
-            <span className="tier-arrow">→</span>
-            <span className="tier">View state (the URL) · shared &amp; draft state</span>
-          </div>
-          <p className="cs-body">
-            Data flows one way. The derived tier is computed on read, never stored, so the overview
-            and the drill-down can’t contradict: one truth-source, aggregation below the view. Then
-            two decisions carry the weight:
-          </p>
-          <div className="cs-decisions">
-            {DECISIONS.map((d) => (
-              <article key={d.title} className="decision">
-                <h3 className="decision-title">{d.title}</h3>
-                <p className="decision-line">
-                  <span className="decision-tag">Fork</span> {d.fork}
-                </p>
-                <p className="decision-line">
-                  <span className="decision-tag decision-tag-choice">Chose</span> {d.choice}
-                </p>
-                <p className="decision-line">
-                  <span className="decision-tag">Trade-off</span> {d.tradeoff}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* 6 — Rigor / receipts */}
-        <section className="cs-section">
-          <p className="cs-section-num">05 · Done well, provably</p>
-          <h2 className="cs-h2">Budgets that fail the build</h2>
-          <table className="cs-budgets">
-            <tbody>
-              {BUDGETS.map((b) => (
-                <tr key={b.label}>
-                  <th scope="row">{b.label}</th>
-                  <td className="cs-budget-value">{b.value}</td>
-                  <td className="cs-budget-limit">{b.limit}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <ul className="cs-receipts">
+          <ul className="cs-receipts" aria-label="Evidence">
             <li>
-              <strong>70</strong> tests · 10 files
+              <strong>70</strong> tests
             </li>
             <li>
-              <strong>54</strong> contrast checks · dark + light
+              <strong>98.8 KB</strong> initial JS vs a 180 KB build-enforced budget (this page
+              included)
             </li>
             <li>
-              <strong>0</strong> hardcoded colors · CI-enforced
+              <strong>56</strong> contrast checks, both themes
             </li>
             <li>
-              seeded data · <strong>13/13</strong> validation with anti-leakage
+              seeded fixtures, <strong>13 of 13</strong> integrity checks
             </li>
           </ul>
           <p className="cs-body">
-            The interaction contract is written down and cited by ID in the code and the commit
-            history: ten business rules a reviewer enforces, and seven invariants that keep the URL
-            canonical and the agent honest.
+            Two second-order effects: the keyset contract is the seam where a real backend plugs in
+            without touching the app, and the interaction contract is cited by ID in code and
+            commits, so review has a shared vocabulary.
           </p>
         </section>
 
-        {/* 7 — AI thread + next + close */}
         <section className="cs-section">
-          <p className="cs-section-num">06 · The reader under the charts</p>
-          <h2 className="cs-h2">What an agent needs to be trusted</h2>
-          <figure className="cs-finding">
-            <p className="cs-finding-claim">
-              Poland ranks #2 mostly on one variable: median startup time. Take that weight away and
-              it falls to #10.
-            </p>
-            <p className="cs-finding-schema">
-              <code>
-                Finding {'{'} claim · derivedFrom · suggestedState · status {'}'}
-              </code>
-            </p>
-          </figure>
+          <p className="cs-section-num">06 · Reflection</p>
+          <h2 className="cs-h2">What I’d do differently</h2>
           <p className="cs-body">
-            Atlas reads the typed rows, not the pixels. Every finding carries its evidence{' '}
-            <em>and</em> a restorable view; no claim renders without both. That’s the shape of
-            AI-assisted debugging: at 2&nbsp;a.m. you don’t want an answer, you want the answer and
-            the exact view that proves it.
+            Next time the boundary tests come first, not after the bug. The hardest craft call was
+            restraint: not virtualizing the one list whose animation carries the thesis. And an
+            agent earns trust the way a colleague does, by showing its evidence and letting you
+            check. Next: a real backend behind the keyset seam, derivation off the main thread,
+            multi-user investigations.
           </p>
-
-          <h3 className="cs-h3">What I’d build next</h3>
-          <ul className="cs-next">
-            <li>
-              A real backend behind the keyset contract; the socket is already the right shape.
-            </li>
-            <li>Derivation off the main thread as the dataset grows past this scale.</li>
-            <li>Multi-user shared state, so Ana and Vera can be live on one investigation.</li>
-          </ul>
-
           <p className="cs-provenance">
             The human loop re-implements patterns proven in a production system whose frontend I
             led. The investigation-in-a-URL, the agent tier, and the findings contract are new
