@@ -146,7 +146,7 @@ export function CaseStudy() {
           <p className="cs-lead">
             Choosing the countries for a clinical trial means reading thousands of site-level
             records: enrollment rates, startup times, site-to-site spread. A wrong pick costs
-            months, and every call must survive a reviewer.
+            months, and in trials months mean patients waiting. Every call must survive a reviewer.
           </p>
           <p className="cs-body">
             The ambiguity was never the data; it was the audience. Ana analyzes and decides. Vera
@@ -245,9 +245,10 @@ export function CaseStudy() {
             multi-user investigations.
           </p>
           <p className="cs-provenance">
-            The human loop re-implements patterns proven in a production system whose frontend I
-            led. The investigation-in-a-URL, the agent tier, and the findings contract are new
-            design for this case study.
+            The human loop re-implements patterns proven in production: a clinical-trial site
+            selection tool whose frontend I led, in a program that counted its wins in days cut from
+            development timelines. The investigation-in-a-URL, the agent tier, and the findings
+            contract are new design for this case study.
           </p>
           <p className="cs-close">
             Charts for humans, structured data for agents. One state, and the link is the proof.

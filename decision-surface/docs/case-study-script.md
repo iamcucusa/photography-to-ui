@@ -84,7 +84,10 @@ the three lenses while driving:
   carries the thesis); an agent earns trust by showing its evidence.
 - Provenance, plainly: "The human loop re-implements patterns proven in a production
   system whose frontend I led. The URL-state, the agent tier, and the findings contract
-  are new design for this case study."
+  are new design for this case study." If it fits the moment, add the stakes: "That
+  system was chartered to cut about four weeks from clinical development timelines.
+  In trials, calendar time is patient time; that's what a better site-selection surface
+  buys."
 - Close on the thesis: *"Charts for humans, structured data for agents. One state, and
   the link is the proof."*
 
@@ -97,6 +100,15 @@ from the page, use the hero URL chip for the primitive, and recover at Outcome. 
 story is the decision, not the demo.
 
 ## Anticipated questions (have these ready)
+
+- *"Tell me about the production system."* (Spoken only; the public page stays
+  anonymized by design, and internal names/numbers stay out of the repo.) It's
+  Pegasus, an internal data-driven tool for operational planning and site selection
+  in clinical trials, one of the first use cases on the company's data platform.
+  Its charter: contribute roughly 28 days of savings to development timelines inside
+  a larger ~227-day acceleration program. It was a large cross-functional team; my
+  owned scope was the frontend. This case study re-implements that human loop solo,
+  and everything agent-and-URL-shaped is new design, not a copy.
 
 - *"Why not a router?"* One workspace, no page tree. A router is a dependency to solve
   what one small serializer solves exactly, and the serializer is what makes links
