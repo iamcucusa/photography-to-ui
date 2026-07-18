@@ -134,9 +134,6 @@ export function CaseStudy() {
             <a className="cs-cta" href={DEMO_HREF}>
               Open the live investigation →
             </a>
-            <a className="cs-cta-quiet" href="#decision">
-              or read the decision ↓
-            </a>
           </div>
         </section>
 

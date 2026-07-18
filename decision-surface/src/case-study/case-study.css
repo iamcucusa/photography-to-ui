@@ -190,17 +190,6 @@
   border-color: var(--color-accent-highlight);
 }
 
-.cs-cta-quiet {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  text-decoration: none;
-}
-
-.cs-cta-quiet:hover {
-  color: var(--color-text-primary);
-  text-decoration: underline;
-}
-
 /* ---------- sections ---------- */
 
 .cs-section {
