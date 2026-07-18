@@ -222,12 +222,6 @@
   color: var(--color-text-secondary);
 }
 
-.cs-note {
-  margin: var(--space-md) 0 0;
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-}
-
 /* ---------- tensions list ---------- */
 
 .cs-maplist {
@@ -243,10 +237,6 @@
 .cs-maplist li::before {
   content: '· ';
   color: var(--color-text-accent);
-}
-
-.cs-section > .cs-note {
-  color: var(--color-text-secondary);
 }
 
 /* ---------- alternatives (name + why rejected) ---------- */

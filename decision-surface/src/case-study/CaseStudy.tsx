@@ -38,7 +38,6 @@ const TENSIONS = [
   'Ana needs speed; Vera needs the exact view back; Atlas needs typed rows, not pixels.',
   'Expert density on one screen, yet a first-time reviewer must be able to read it.',
   'Deep scroll over thousands of records, yet motion that shows cause, not decoration.',
-  'Frontend-only by design, with every boundary drawn where a real backend would plug in.',
 ]
 
 const ALTERNATIVES = [
@@ -139,7 +138,7 @@ export function CaseStudy() {
         <section className="cs-section">
           <p className="cs-section-num">01 · The starting point</p>
           <h2 className="cs-h2">Three readers, no obvious home for the truth</h2>
-          <p className="cs-lead">
+          <p className="cs-body">
             Choosing the countries for a clinical trial means reading thousands of site-level
             records: enrollment rates, startup times, site-to-site spread. A wrong pick costs
             months, and in trials months mean patients waiting. Every call must survive a reviewer.
@@ -150,10 +149,9 @@ export function CaseStudy() {
             in-app agent, reads the same evidence to catch what a tired human misses. Three readers,
             one open question: where does an investigation live so all three can hold the same one?
           </p>
-          <p className="cs-note">
+          <p className="cs-body">
             None of this is unique to clinical trials: dense evidence, a restorable investigation,
-            an agent reading beneath the charts. I learned the shape of this data to design for it.
-            I don’t claim the analyst’s job.
+            an agent reading beneath the charts.
           </p>
         </section>
 
