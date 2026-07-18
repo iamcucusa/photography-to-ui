@@ -155,9 +155,9 @@ export function CaseStudy() {
             one open question: where does an investigation live so all three can hold the same one?
           </p>
           <p className="cs-note">
-            Different domain, the same problems observability tooling lives with: dense data,
-            restorable state, an agent under the charts. I learned the shape of this data to design
-            for it. I don’t claim the analyst’s job.
+            None of this is unique to clinical trials: dense evidence, a restorable investigation,
+            an agent reading beneath the charts. I learned the shape of this data to design for it.
+            I don’t claim the analyst’s job.
           </p>
         </section>
 

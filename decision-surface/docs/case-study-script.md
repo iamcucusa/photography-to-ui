@@ -28,9 +28,13 @@ neutral. Pick the theme you'll present in.
   one? That question had no obvious answer, and it's the decision this case study is
   about."
 - The domain-honesty line, verbatim from the page: "I learned the shape of this data to
-  design for it. I don't claim the analyst's job." Then the bridge: dense data,
-  restorable state, an agent under the charts. The on-call engineer at 2 a.m. and the
-  trial analyst are the same user.
+  design for it. I don't claim the analyst's job."
+- **The bridge is SPOKEN, never written.** The page deliberately stops at "none of this
+  is unique to clinical trials" so the reviewer can draw the line themselves. In the
+  room, you draw it: "These are your problems. Dense data at scale, restorable
+  investigation state, an agent reading the signals under the charts. The on-call
+  engineer in the first minutes of an incident and the trial analyst are the same
+  user." If they've drawn it before you say it, even better; let them.
 
 ## 02:30 · Forces in tension (1 min) · Section 02
 
