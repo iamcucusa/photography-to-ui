@@ -21,8 +21,8 @@
     },
     {
       "name": "decision-surface",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev:decision"],
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vite", "--port", "5176", "--host", "127.0.0.1", "decision-surface"],
       "port": 5176
     }
   ]
