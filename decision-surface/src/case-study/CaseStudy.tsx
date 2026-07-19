@@ -37,6 +37,7 @@ function UrlChip() {
 const TENSIONS = [
   'Ana needs speed; Vera needs the exact view back; Atlas needs typed rows, not pixels.',
   'Expert density on one screen, yet a first-time reviewer must be able to read it.',
+  'One table unifies many sources for speed, yet every number must answer for where it came from.',
   'Deep scroll over thousands of records, yet motion that shows cause, not decoration.',
 ]
 
@@ -44,7 +45,7 @@ const ALTERNATIVES = [
   {
     name: 'A client store as the truth, with a Share button that serializes on demand.',
     rejected:
-      'State you must remember to share is state that gets lost. Vera can’t paste her way back at review time.',
+      'A view you must remember to share is a view that gets lost. Vera can’t paste her way back at review time.',
   },
   {
     name: 'A router library with route params.',
@@ -60,7 +61,7 @@ const ALTERNATIVES = [
 const LENSES = [
   {
     lens: 'Product',
-    body: 'The link is the unit of trust. Ana hands Vera the exact view that produced the shortlist. Atlas attaches one to every finding; a claim without its restorable view never renders.',
+    body: 'The link is the unit of trust. Ana hands Vera the exact view that produced the proposal. That proposal comes from a team, and one member of the team is an agent; the standard doesn’t change. Atlas attaches a restorable view to every finding, and a claim without one never renders.',
   },
   {
     lens: 'Design',
@@ -68,7 +69,7 @@ const LENSES = [
   },
   {
     lens: 'Engineering',
-    body: 'The price is discipline across three state homes: URL, shared store, local drafts. The one bug that escaped came from blurring them, a store write that gave untouched fields new identities and looped a render effect until React unmounted the tree. It’s fixed and regression-tested; boundaries that subtle deserve tests, not conventions. And windowing stops where causality starts: the ranked list keeps its 36 rows mounted so the re-rank animation can prove cause, while the evidence grid virtualizes 5,121 records at 40 mounted rows.',
+    body: 'The price is discipline across three homes for state: the URL, a shared store, and local drafts, each with its own writer and its own rules. The one bug that escaped came from blurring that boundary: a save rewrote fields it hadn’t changed, React saw them as new, and a data effect re-ran in a loop until the app went down. It’s fixed with a regression test on the boundary itself; rules that subtle deserve tests, not conventions. The payoff is freedom at the heavy end: because links carry intent and never scroll offsets, the evidence grid windows 5,121 records down to 40 rendered rows, and the URL never notices.',
   },
 ]
 
@@ -96,15 +97,16 @@ export function CaseStudy() {
             <div>
               <dt>Challenge</dt>
               <dd>
-                One screen where a trial team picks countries from 5,121 site records, and defends
-                that pick under review.
+                Country selection for a clinical trial runs on evidence scattered across registries,
+                internal history, and benchmark databases, and dense once unified: 5,121 site
+                records behind one screen, one pick, defended under review.
               </dd>
             </div>
             <div>
               <dt>Decision</dt>
               <dd>
-                The whole investigation lives in the URL. One canonical serializer; link equality is
-                state equality.
+                The whole investigation lives in the URL: every filter, weight, and view written
+                into the address. Link equality is state equality.
               </dd>
             </div>
             <div>
@@ -139,19 +141,26 @@ export function CaseStudy() {
           <p className="cs-section-num">01 · The starting point</p>
           <h2 className="cs-h2">Three readers, no obvious home for the truth</h2>
           <p className="cs-body">
-            Choosing the countries for a clinical trial means reading thousands of site-level
-            records: enrollment rates, startup times, site-to-site spread. A wrong pick costs
-            months, and in trials months mean patients waiting. Every call must survive a reviewer.
+            Choosing the countries for a clinical trial means reading site-level evidence:
+            enrollment rates, startup times, site-to-site spread. That evidence lives scattered
+            across public registries, internal trial history, and licensed benchmark databases, so
+            the work has long run on exports and spreadsheets. The stakes are unforgiving: one in
+            ten selected sites never enrolls a single patient, a wrong pick costs months, and in
+            trials months mean patients waiting.
           </p>
           <p className="cs-body">
-            The ambiguity was never the data; it was the audience. Ana analyzes and decides. Vera
-            signs off weeks later, accountable for a decision she didn’t watch happen. Atlas, an
-            in-app agent, reads the same evidence to catch what a tired human misses. Three readers,
-            one open question: where does an investigation live so all three can hold the same one?
+            Pulling the sources into one ranked view is the obvious fix, and it trades the old
+            problem for two new ones: density and trust. Thousands of records now sit behind a
+            single screen that has to stay readable, and the moment numbers from many systems share
+            a table, every reader asks what each number weighs and where it came from. And the
+            readers span an organization. Ana, on the global feasibility team, builds the country
+            proposal. Vera, the trial manager for her country, reviews and revises it weeks later,
+            accountable for a call she didn’t watch happen. Atlas, an in-app agent on Ana’s team,
+            reads the same evidence to catch what a tired human misses.
           </p>
           <p className="cs-body">
-            None of this is unique to clinical trials: dense evidence, a restorable investigation,
-            an agent reading beneath the charts.
+            Three readers, one open question: where does an investigation live so all of them can
+            hold the same one, weeks apart?
           </p>
         </section>
 
@@ -182,8 +191,9 @@ export function CaseStudy() {
           <p className="cs-section-num">04 · The decision</p>
           <h2 className="cs-h2">The investigation lives in the URL</h2>
           <p className="cs-lead">
-            One module is its only writer: parameters in a fixed order, defaults omitted, so equal
-            states produce byte-equal links. Link equality is state equality.
+            One module is its only writer: parameters in a fixed order, defaults omitted, so the
+            same investigation always writes the same link, byte for byte. Link equality is state
+            equality.
           </p>
           <div className="cs-lenses">
             {LENSES.map((l) => (
@@ -241,8 +251,11 @@ export function CaseStudy() {
           <p className="cs-provenance">
             The human loop re-implements patterns proven in production: a clinical-trial site
             selection tool whose frontend I led, in a program that counted its wins in days cut from
-            development timelines. The investigation-in-a-URL, the agent tier, and the findings
-            contract are new design for this case study.
+            development timelines. In usability testing there, users kept asking two questions: how
+            is this rank calculated, and where does this number come from. The transparency this
+            rebuild treats as architecture began as answers people actually asked for. The
+            investigation-in-a-URL, the agent tier, and the findings contract are new design for
+            this case study.
           </p>
           <p className="cs-close">
             Charts for humans, structured data for agents. One state, and the link is the proof.

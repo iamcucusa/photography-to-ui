@@ -20,26 +20,30 @@ neutral. Pick the theme you'll present in.
 
 ## 01:00 · The starting point (1.5 min) · Section 01
 
-- The domain in two sentences: country selection, thousands of site records, a wrong
-  pick costs months, every call must survive a reviewer.
-- **The ambiguity, named:** "The hard part was never the data; it was the audience.
-  An analyst who decides, a reviewer who retraces weeks later, and an agent that reads
-  the same evidence. Where does an investigation live so all three can hold the same
-  one? That question had no obvious answer, and it's the decision this case study is
-  about."
-- The domain-honesty line, verbatim from the page: "I learned the shape of this data to
-  design for it. I don't claim the analyst's job."
-- **The bridge is SPOKEN, never written.** The page deliberately stops at "none of this
-  is unique to clinical trials" so the reviewer can draw the line themselves. In the
-  room, you draw it: "These are your problems. Dense data at scale, restorable
-  investigation state, an agent reading the signals under the charts. The on-call
-  engineer in the first minutes of an incident and the trial analyst are the same
-  user." If they've drawn it before you say it, even better; let them.
+- **The three-era arc, spoken as a story.** Era one, scattered: "This evidence lives in
+  public registries, internal trial history, and licensed benchmark databases, so for
+  years the work ran on exports and spreadsheets. One in ten selected sites never
+  enrolls a single patient; a wrong pick costs months, and months are patient time."
+  Era two, unified: "Pulling it into one ranked view is the obvious fix, and it trades
+  the old problem for two new ones: density and trust. The moment numbers from many
+  systems share a table, everyone asks what each number weighs and where it came from."
+- **The cast, with its org chart:** "Ana proposes from the global feasibility team.
+  Vera, the trial manager for her country, reviews weeks later, accountable for a call
+  she didn't watch happen. And Atlas, the agent, works on Ana's team, reading the same
+  evidence. Where does an investigation live so all of them can hold the same one?
+  That question had no obvious answer, and it's the decision this case study is about."
+- **The bridge is SPOKEN, never written.** The page deliberately stops at the open
+  question so the reviewer can draw the line themselves. In the room, you draw it:
+  "These are your problems. Evidence stitched from many systems, dense data at scale,
+  restorable investigation state, an agent reading the signals under the charts. The
+  on-call engineer in the first minutes of an incident and the trial analyst are the
+  same user." If they've drawn it before you say it, even better; let them.
 
 ## 02:30 · Forces in tension (1 min) · Section 02
 
-- Walk the three tensions quickly; they justify everything that follows. Land on:
-  "Speed for one reader, retraceability for another, typed rows for the third."
+- Walk the four tensions quickly; they justify everything that follows. Land on:
+  "Speed for one reader, retraceability for another, typed rows for the third, and
+  every number accountable for its source."
 
 ## 03:30 · Alternatives (1.5 min) · Section 03
 
@@ -87,11 +91,13 @@ the three lenses while driving:
   after; the hardest craft call was restraint (not virtualizing the list whose motion
   carries the thesis); an agent earns trust by showing its evidence.
 - Provenance, plainly: "The human loop re-implements patterns proven in a production
-  system whose frontend I led. The URL-state, the agent tier, and the findings contract
-  are new design for this case study." If it fits the moment, add the stakes: "That
-  system was chartered to cut about four weeks from clinical development timelines.
-  In trials, calendar time is patient time; that's what a better site-selection surface
-  buys."
+  system whose frontend I led. In usability testing there, users kept asking two
+  questions: how is this rank calculated, and where does this number come from. The
+  transparency this rebuild treats as architecture began as answers people actually
+  asked for. The URL-state, the agent tier, and the findings contract are new design
+  for this case study." If it fits the moment, add the stakes: "That system was
+  chartered to cut about four weeks from clinical development timelines. In trials,
+  calendar time is patient time; that's what a better site-selection surface buys."
 - Close on the thesis: *"Charts for humans, structured data for agents. One state, and
   the link is the proof."*
 
