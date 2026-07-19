@@ -17,10 +17,16 @@
       } catch {}
     </script>
     <script>
-      // Apply the persisted color mode before first paint. Dark is the
-      // default (:root); only "light" sets the attribute.
+      // Apply the color mode before first paint. Each surface has its own
+      // default and its own remembered choice: the case study opens light,
+      // the app opens dark; a visitor's explicit toggle wins on return.
+      // Runs after the ?p= restore above, so the pathname is already real.
       try {
-        if (localStorage.getItem('cucusa-theme') === 'light') {
+        var isCaseStudy = /\/case-study\/?$/.test(location.pathname)
+        var themeKey = isCaseStudy ? 'ds-theme-case-study' : 'ds-theme-app'
+        var stored = localStorage.getItem(themeKey)
+        var light = stored === 'light' || (stored === null && isCaseStudy)
+        if (light) {
           document.documentElement.setAttribute('data-theme', 'light')
         }
       } catch {}

@@ -1,8 +1,14 @@
 import { useCallback, useSyncExternalStore } from 'react'
+import { isCaseStudyRoute } from './state/url'
 
 export type ThemeMode = 'dark' | 'light'
 
-const STORAGE_KEY = 'cucusa-theme'
+// Per-surface theme memory (matches the pre-paint script in index.html):
+// the case study defaults light, the app defaults dark, and each surface
+// remembers its own explicit choice without affecting the other.
+function storageKey(): string {
+  return isCaseStudyRoute() ? 'ds-theme-case-study' : 'ds-theme-app'
+}
 
 // The <html> data-theme attribute is the single source of truth — the inline
 // head script sets it pre-paint, this hook reads and mutates it. Dark is the
@@ -35,7 +41,7 @@ export function useTheme(): { mode: ThemeMode; toggle: () => void } {
       root.removeAttribute('data-theme')
     }
     try {
-      localStorage.setItem(STORAGE_KEY, next)
+      localStorage.setItem(storageKey(), next)
     } catch {
       // storage unavailable — mode still applies for this session
     }

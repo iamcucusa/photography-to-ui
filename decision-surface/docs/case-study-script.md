@@ -6,7 +6,8 @@ inside beat 04, where the decision is shown rather than described. Total ~14 min
 
 **Before you start:** open two tabs, the case-study page and a clean
 `…/decision-surface/trial/trial-001`. Clear the app's localStorage so the demo starts
-neutral. Pick the theme you'll present in.
+neutral. Themes are per surface by default: the page opens light, the demo opens
+dark; each tab's toggle remembers its own choice.
 
 ---
 

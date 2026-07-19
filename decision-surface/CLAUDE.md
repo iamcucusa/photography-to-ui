@@ -94,7 +94,10 @@ src/
   tokens. No high-level chart wrapper.
 - App deps live here, not in the root: `d3-scale`, `d3-shape`, `d3-array`,
   `@tanstack/react-query`, `@tanstack/react-virtual`, `zustand`.
-- Follows the workspace theme; no pinning needed (data UI, not glow art).
+- Theme is per surface, not workspace-shared: the case study defaults light,
+  the app defaults dark, each with its own remembered choice
+  (`ds-theme-case-study` / `ds-theme-app`; pre-paint script in `index.html` +
+  `useTheme.ts`).
 
 ## Hard rules (from the spec, enforce in review)
 
