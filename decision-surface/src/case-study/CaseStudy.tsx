@@ -68,13 +68,13 @@ const LENSES = [
   },
   {
     lens: 'Engineering',
-    body: 'The price is discipline across three state homes: URL, shared store, local drafts. The one bug that escaped came from blurring them, a store write that gave untouched fields new identities and looped a render effect until React unmounted the tree. It’s fixed and regression-tested; boundaries that subtle deserve tests, not conventions. And windowing stops where causality starts: the ranked list keeps its 36 rows mounted so the re-rank animation can prove cause, while the evidence grid virtualizes 5,121 records at forty mounted rows.',
+    body: 'The price is discipline across three state homes: URL, shared store, local drafts. The one bug that escaped came from blurring them, a store write that gave untouched fields new identities and looped a render effect until React unmounted the tree. It’s fixed and regression-tested; boundaries that subtle deserve tests, not conventions. And windowing stops where causality starts: the ranked list keeps its 36 rows mounted so the re-rank animation can prove cause, while the evidence grid virtualizes 5,121 records at 40 mounted rows.',
   },
 ]
 
 const PROOFS = [
   'Open the app. The ranked answer is the first thing on screen.',
-  'Filter, steer a weight, open the evidence grid. The URL keeps up.',
+  'Filter, steer a weight, open Site evidence. The URL keeps up.',
   'Press “Show me” on an Atlas finding. The exact view returns, highlighted.',
   'Copy the URL into a fresh tab. The identical investigation reopens.',
 ]
@@ -208,10 +208,10 @@ export function CaseStudy() {
           </ol>
           <ul className="cs-receipts" aria-label="Evidence">
             <li>
-              <strong>70</strong> tests
+              <strong>74</strong> tests
             </li>
             <li>
-              <strong>98.8 KB</strong> initial JS vs a 180 KB build-enforced budget (this page
+              <strong>98.3 KB</strong> initial JS vs a 180 KB build-enforced budget (this page
               included)
             </li>
             <li>

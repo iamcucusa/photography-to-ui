@@ -136,11 +136,7 @@ function Workspace() {
     return (
       <div className="app-status" role="alert">
         <p>Couldn’t load this trial’s evidence.</p>
-        <button
-          type="button"
-          className="btn btn-accent"
-          onClick={() => void fixturesQuery.refetch()}
-        >
+        <button type="button" className="btn-primary" onClick={() => void fixturesQuery.refetch()}>
           Retry
         </button>
       </div>

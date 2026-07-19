@@ -38,7 +38,7 @@ neutral. Pick the theme you'll present in.
 
 ## 02:30 · Forces in tension (1 min) · Section 02
 
-- Walk the four tensions quickly; they justify everything that follows. Land on:
+- Walk the three tensions quickly; they justify everything that follows. Land on:
   "Speed for one reader, retraceability for another, typed rows for the third."
 
 ## 03:30 · Alternatives (1.5 min) · Section 03
@@ -74,7 +74,7 @@ the three lenses while driving:
 ## 11:00 · Outcome (1.5 min) · back to the page, Section 05
 
 - "Everything I just did, you can redo in under a minute; the page lists the four
-  steps." Then the receipts, lightly: 70 tests; 98.8 KB initial JS against a 180 KB
+  steps." Then the receipts, lightly: 74 tests; 98.3 KB initial JS against a 180 KB
   build-enforced budget, and that includes this page; 56 contrast checks in both
   themes; seeded fixtures passing 13 of 13 integrity checks.
 - The leverage line: "The keyset contract is the seam where a real backend plugs in
