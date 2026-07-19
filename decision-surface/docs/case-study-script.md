@@ -13,8 +13,8 @@ neutral. Pick the theme you'll present in.
 ## 00:00 · Skim (1 min) · Hero
 
 - Read the three skim lines almost verbatim, slowly: challenge, decision, impact.
-- Thesis once: *"Charts are for humans. Agents read the structured data underneath. One
-  serializable state serves both."*
+- Thesis once: _"Charts are for humans. Agents read the structured data underneath. One
+  serializable state serves both."_
 - One line on you: solo, covering product, design, and engineering. Frontend-only by
   design.
 
@@ -48,8 +48,8 @@ neutral. Pick the theme you'll present in.
 ## 03:30 · Alternatives (1.5 min) · Section 03
 
 - Give each alternative its honest one-liner and why it lost. The store-plus-share
-  rejection is the one to say in full: "State you must remember to share is state that
-  gets lost. Vera can't paste her way back at review time."
+  rejection is the one to say in full: "A view you must remember to share is a view
+  that gets lost. Vera can't paste her way back at review time."
 - Frame: "I wanted the rejected paths on the page because that's how decisions get
   reviewed, options first, then the call."
 
@@ -61,8 +61,11 @@ the three lenses while driving:
 
 1. **Answer first.** Open the plain trial URL. "The ranked shortlist is the first thing
    on screen."
-2. **Product lens.** Flip Trial source to Benchmark; steer a weight in Ranking
-   criteria. "Every move lands in the URL as I make it. The link is the unit of trust."
+2. **Product lens.** Flip Trial source to Benchmark: "Every view move lands in the URL
+   as I make it. The link is the unit of trust." Then steer a weight in Ranking
+   criteria and save: "And weights deliberately don't ride the link. They're part of
+   the saved investigation, the decision's truth, and rank recomputes the moment I
+   save."
 3. **Design lens.** Point at the rank column during the flip: "Metrics changed, rank
    held still. Filtering never quietly reorders the answer. And notice what's NOT in
    the URL: scroll, cursors, drafts. Links share intent, not offsets."
@@ -98,8 +101,8 @@ the three lenses while driving:
   for this case study." If it fits the moment, add the stakes: "That system was
   chartered to cut about four weeks from clinical development timelines. In trials,
   calendar time is patient time; that's what a better site-selection surface buys."
-- Close on the thesis: *"Charts for humans, structured data for agents. One state, and
-  the link is the proof."*
+- Close on the thesis: _"Charts for humans, structured data for agents. One state, and
+  the link is the proof."_
 
 ---
 
@@ -111,7 +114,7 @@ story is the decision, not the demo.
 
 ## Anticipated questions (have these ready)
 
-- *"Tell me about the production system."* (Spoken only; the public page stays
+- _"Tell me about the production system."_ (Spoken only; the public page stays
   anonymized by design, and internal names/numbers stay out of the repo.) It's
   Pegasus, an internal data-driven tool for operational planning and site selection
   in clinical trials, one of the first use cases on the company's data platform.
@@ -120,16 +123,21 @@ story is the decision, not the demo.
   owned scope was the frontend. This case study re-implements that human loop solo,
   and everything agent-and-URL-shaped is new design, not a copy.
 
-- *"Why not a router?"* One workspace, no page tree. A router is a dependency to solve
+- _"Why aren't the weights in the URL?"_ Deliberate split: the link shares where you're
+  looking (filters, sorts, open views); the saved investigation holds what the team
+  decided (weights, selection). A link that changed the ranking model on paste would
+  make every old link a liar. Restoring weights across users is the multi-user next
+  step named in Reflection.
+- _"Why not a router?"_ One workspace, no page tree. A router is a dependency to solve
   what one small serializer solves exactly, and the serializer is what makes links
   byte-equal, which is the property everything else stands on.
-- *"Does the keyset paging actually scale?"* The contract is real: sort by (field, id),
+- _"Does the keyset paging actually scale?"_ The contract is real: sort by (field, id),
   opaque cursor, never offsets. The data source is client-side fixtures; swapping a
   service in changes one layer. That's why the seam is drawn there.
-- *"What broke while building it?"* A store write that re-set unchanged fields, gave
+- _"What broke while building it?"_ A store write that re-set unchanged fields, gave
   them new identities, and looped a render effect until React unmounted the tree. It's
   the reason the state-home boundaries now have regression tests, and the reason I'd
   write those tests first next time.
-- *"What would break first at 10× the data?"* Main-thread derivation. Memoized and
+- _"What would break first at 10× the data?"_ Main-thread derivation. Memoized and
   under budget at this scale; past it, aggregation moves to a worker. I'd rather show
   the honest limit than pretend there isn't one.

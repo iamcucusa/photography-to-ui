@@ -69,13 +69,13 @@ const LENSES = [
   },
   {
     lens: 'Engineering',
-    body: 'The price is discipline across three homes for state: the URL, a shared store, and local drafts, each with its own writer and its own rules. The one bug that escaped came from blurring that boundary: a save rewrote fields it hadn’t changed, React saw them as new, and a data effect re-ran in a loop until the app went down. It’s fixed with a regression test on the boundary itself; rules that subtle deserve tests, not conventions. The payoff is freedom at the heavy end: because links carry intent and never scroll offsets, the evidence grid windows 5,121 records down to 40 rendered rows, and the URL never notices.',
+    body: 'The price is discipline across three homes for state: the URL, a shared store, and local drafts, each with its own writer and its own rules. The one bug that escaped came from blurring that boundary: a save rewrote fields it hadn’t changed, React saw them as new, and a data effect re-ran in a loop until the app went down. It’s fixed with a regression test on the boundary itself; rules that subtle deserve tests, not conventions. The payoff is freedom at the heavy end: because scroll and cursors never enter the URL, the evidence grid windows 5,121 records down to 40 rendered rows, and the link never notices.',
   },
 ]
 
 const PROOFS = [
   'Open the app. The ranked answer is the first thing on screen.',
-  'Filter, steer a weight, open Site evidence. The URL keeps up.',
+  'Filter, flip the trial source, open Site evidence. The URL keeps up.',
   'Press “Show me” on an Atlas finding. The exact view returns, highlighted.',
   'Copy the URL into a fresh tab. The identical investigation reopens.',
 ]
@@ -105,7 +105,7 @@ export function CaseStudy() {
             <div>
               <dt>Decision</dt>
               <dd>
-                The whole investigation lives in the URL: every filter, weight, and view written
+                The whole investigation lives in the URL: every filter, sort, and open view written
                 into the address. Link equality is state equality.
               </dd>
             </div>
