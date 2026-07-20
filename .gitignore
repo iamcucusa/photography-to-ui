@@ -45,3 +45,6 @@ photography-to-ui/public/assets/**/*.webp
 
 # proto: raw vectorized mockup trace (1.8MB, dev-only A/B reference)
 switching-brain/public/proto-ref.svg
+
+# Presenter run sheet: local-only, never committed (contains spoken-only material)
+decision-surface/docs/case-study-script.md
