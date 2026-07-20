@@ -56,9 +56,17 @@
   transition: background-color var(--ds-duration-fast) var(--ds-ease);
 }
 
+/* Hover deepens (magenta-1): accent-highlight is a 25% wash token and
+   on-accent text fails on it in light mode. */
 .btn-primary:hover:not(:disabled) {
-  background: var(--color-accent-highlight);
-  border-color: var(--color-accent-highlight);
+  background: var(--color-magenta-1);
+  border-color: var(--color-magenta-1);
+}
+
+.btn-primary:active:not(:disabled) {
+  background: var(--color-magenta-1);
+  border-color: var(--color-magenta-1);
+  transform: translateY(1px);
 }
 
 .btn-primary:disabled {

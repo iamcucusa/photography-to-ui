@@ -33,6 +33,12 @@ describe('CaseStudy landing surface', () => {
     }
   })
 
+  it("renders the hero chip as Atlas's real benchmark-finding link (pinned in checks.test)", () => {
+    render(<CaseStudy />)
+    const chip = screen.getByLabelText(/link Atlas attaches to its benchmark finding/i)
+    expect(chip.textContent).toBe('…/trial/trial-001?prov=benchmark&hl=AUT,ESP,MEX,TUR')
+  })
+
   it('every launch CTA opens the live trial (entry-branch contract)', () => {
     render(<CaseStudy />)
     const ctas = screen.getAllByRole('link', { name: /open the live investigation/i })

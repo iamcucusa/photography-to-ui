@@ -5,10 +5,53 @@
 // itself proof of the craft it describes. Additive: rendered only at
 // /case-study; shares nothing with the live app.
 
+import { useEffect, useRef } from 'react'
 import { trialHref } from '../state/url'
 import { useTheme } from '../useTheme'
+import pkg from '../../package.json'
 
 const DEMO_HREF = trialHref('trial-001')
+
+// The stack, as the real manifest: imported from this consumer's actual
+// package.json at build time, so every version shown is true by construction.
+// Runtime dependencies only — the judgment surface, short enough to read
+// whole. The full file lives one click away in the repo.
+const STACK_JSON = JSON.stringify(
+  { name: pkg.name, version: pkg.version, dependencies: pkg.dependencies },
+  null,
+  2,
+)
+
+// The manifest disclosure: a native details with popover manners — click
+// outside or Escape closes it, since the open panel overlays hero content.
+function StackDisclosure() {
+  const ref = useRef<HTMLDetailsElement>(null)
+  useEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      const el = ref.current
+      if (el?.open && e.target instanceof Node && !el.contains(e.target)) el.open = false
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && ref.current?.open) ref.current.open = false
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
+  return (
+    <details ref={ref} className="cs-stack">
+      <summary aria-label="Tech stack, shown as this project’s real package.json">
+        package.json
+      </summary>
+      <pre className="cs-stack-code">
+        <code>{STACK_JSON}</code>
+      </pre>
+    </details>
+  )
+}
 
 function ThemeToggle() {
   const { mode, toggle } = useTheme()
@@ -25,12 +68,26 @@ function ThemeToggle() {
   )
 }
 
-// The decision, made visible: a serialized investigation.
+// The decision, made visible. Not an invented example: this is the exact
+// link Atlas attaches to its benchmark finding in the live demo (pinned by
+// test to the product, so the hero can never drift from what "Show me"
+// actually writes). It is a real anchor: the artifact proves itself on
+// click, while the CTA below keeps the neutral answer-first entry.
+const CHIP_QUERY = '?prov=benchmark&hl=AUT,ESP,MEX,TUR'
+
 function UrlChip() {
   return (
-    <code className="cs-urlchip" aria-label="An investigation serialized in the URL">
-      …/trial/trial-001<span className="cs-urlchip-q">?prov=benchmark&amp;hl=ESP,POL</span>
-    </code>
+    <a
+      className="cs-urlchip"
+      href={DEMO_HREF + CHIP_QUERY}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Open the link Atlas attaches to its benchmark finding in a new tab"
+    >
+      <code>
+        …/trial/trial-001<span className="cs-urlchip-q">{CHIP_QUERY}</span>
+      </code>
+    </a>
   )
 }
 
@@ -69,7 +126,7 @@ const LENSES = [
   },
   {
     lens: 'Engineering',
-    body: 'The price is discipline across three homes for state: the URL, a shared store, and local drafts, each with its own writer and its own rules. The one bug that escaped came from blurring that boundary: a save rewrote fields it hadn’t changed, React saw them as new, and a data effect re-ran in a loop until the app went down. It’s fixed with a regression test on the boundary itself; rules that subtle deserve tests, not conventions. The payoff is freedom at the heavy end: because scroll and cursors never enter the URL, the evidence grid windows 5,121 records down to 40 rendered rows, and the link never notices.',
+    body: 'The price is discipline across three homes for state: the URL, a shared store, and local drafts, each with its own writer and its own rules. The URL’s writer is canonical: fixed parameter order, defaults omitted, the same investigation always the same link, byte for byte. The one bug that escaped came from blurring that boundary: a save rewrote fields it hadn’t changed, React saw them as new, and a data effect re-ran in a loop until the app went down. It’s fixed with a regression test on the boundary itself; rules that subtle deserve tests, not conventions. The payoff is freedom at the heavy end: because scroll and cursors never enter the URL, the evidence grid windows 5,121 records down to 40 rendered rows, and the link never notices.',
   },
 ]
 
@@ -93,13 +150,14 @@ export function CaseStudy() {
         <section className="cs-hero">
           <p className="cs-eyebrow">Case study · Frontend product engineering</p>
           <h1 className="cs-title">Country Data Overview</h1>
+          <StackDisclosure />
           <dl className="cs-skim">
             <div>
               <dt>Challenge</dt>
               <dd>
                 Country selection for a clinical trial runs on evidence scattered across registries,
-                internal history, and benchmark databases, and dense once unified: 5,121 site
-                records behind one screen, one pick, defended under review.
+                internal history, and benchmark databases, and dense once unified: <br />
+                5,121 site records behind one screen, one pick, defended under review.
               </dd>
             </div>
             <div>
@@ -113,27 +171,24 @@ export function CaseStudy() {
               <dt>Impact</dt>
               <dd>
                 Any view is restorable in one click by an analyst, a reviewer, or an agent’s
-                finding. Live below.
+                finding.
               </dd>
             </div>
           </dl>
+        </section>
+
+        {/* The statement: thesis as an editorial pull-quote, both entrances beneath */}
+        <section className="cs-statement">
           <p className="cs-thesis">
-            Charts are for humans. Agents read the structured data underneath. One serializable
-            state serves both.
+            Humans read the view. <br />
+            Agents read the typed evidence underneath. <br />
+            One serialized investigation serves both.
           </p>
-          <UrlChip />
-          <div className="cs-chips" aria-label="Stack">
-            <span className="chip">React 19</span>
-            <span className="chip">TypeScript strict</span>
-            <span className="chip">d3</span>
-            <span className="chip">TanStack Query · Virtual</span>
-            <span className="chip">Zustand</span>
-            <span className="chip">DTCG tokens</span>
-          </div>
           <div className="cs-actions">
-            <a className="cs-cta" href={DEMO_HREF}>
+            <a className="cs-cta" href={DEMO_HREF} target="_blank" rel="noopener noreferrer">
               Open the live investigation →
             </a>
+            <UrlChip />
           </div>
         </section>
 
@@ -142,25 +197,27 @@ export function CaseStudy() {
           <h2 className="cs-h2">Three readers, no obvious home for the truth</h2>
           <p className="cs-body">
             Choosing the countries for a clinical trial means reading site-level evidence:
-            enrollment rates, startup times, site-to-site spread. That evidence lives scattered
-            across public registries, internal trial history, and licensed benchmark databases, so
-            the work has long run on exports and spreadsheets. The stakes are unforgiving: one in
-            ten selected sites never enrolls a single patient, a wrong pick costs months, and in
-            trials months mean patients waiting.
+            enrollment rates, startup times, site-to-site spread. <br />
+            That evidence lives scattered across public registries, internal trial history, and
+            licensed benchmark databases, so the work has long run on exports and spreadsheets.{' '}
+            <br />
+            The stakes are unforgiving: one in ten selected sites never enrolls a single patient, a
+            wrong pick costs months, and in trials months mean patients waiting.
           </p>
           <p className="cs-body">
             Pulling the sources into one ranked view is the obvious fix, and it trades the old
-            problem for two new ones: density and trust. Thousands of records now sit behind a
-            single screen that has to stay readable, and the moment numbers from many systems share
-            a table, every reader asks what each number weighs and where it came from. And the
-            readers span an organization. Ana, on the global feasibility team, builds the country
-            proposal. Vera, the trial manager for her country, reviews and revises it weeks later,
-            accountable for a call she didn’t watch happen. Atlas, an in-app agent on Ana’s team,
-            reads the same evidence to catch what a tired human misses.
+            problem for two new ones: density and trust. <br />
+            Thousands of records now sit behind a single screen that has to stay readable, and the
+            moment numbers from many systems share a table, every reader asks what each number
+            weighs and where it came from. <br />
+            The readers span an organization. Ana, on the global feasibility team, builds the
+            country proposal. Vera, the trial manager for her country, reviews and revises it weeks
+            later, accountable for a call she didn’t watch happen. Atlas, an in-app agent on Ana’s
+            team, reads the same evidence to catch what a tired human misses. Three readers, one
+            open question:
           </p>
           <p className="cs-body">
-            Three readers, one open question: where does an investigation live so all of them can
-            hold the same one, weeks apart?
+            where does an investigation live so all of them can hold the same one, weeks apart?
           </p>
         </section>
 
@@ -190,11 +247,6 @@ export function CaseStudy() {
         <section className="cs-section" id="decision">
           <p className="cs-section-num">04 · The decision</p>
           <h2 className="cs-h2">The investigation lives in the URL</h2>
-          <p className="cs-lead">
-            One module is its only writer: parameters in a fixed order, defaults omitted, so the
-            same investigation always writes the same link, byte for byte. Link equality is state
-            equality.
-          </p>
           <div className="cs-lenses">
             {LENSES.map((l) => (
               <div key={l.lens} className="lens">
@@ -218,10 +270,10 @@ export function CaseStudy() {
           </ol>
           <ul className="cs-receipts" aria-label="Evidence">
             <li>
-              <strong>74</strong> tests
+              <strong>76</strong> tests
             </li>
             <li>
-              <strong>98.3 KB</strong> initial JS vs a 180 KB build-enforced budget (this page
+              <strong>99.4 KB</strong> initial JS vs a 180 KB build-enforced budget (this page
               included)
             </li>
             <li>
@@ -258,10 +310,11 @@ export function CaseStudy() {
             this case study.
           </p>
           <p className="cs-close">
-            Charts for humans, structured data for agents. One state, and the link is the proof.
+            The view for humans, the typed evidence for agents. One state, and the link is the
+            proof.
           </p>
           <div className="cs-actions">
-            <a className="cs-cta" href={DEMO_HREF}>
+            <a className="cs-cta" href={DEMO_HREF} target="_blank" rel="noopener noreferrer">
               Open the live investigation →
             </a>
           </div>

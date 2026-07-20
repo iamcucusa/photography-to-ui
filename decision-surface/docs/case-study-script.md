@@ -14,8 +14,8 @@ dark; each tab's toggle remembers its own choice.
 ## 00:00 · Skim (1 min) · Hero
 
 - Read the three skim lines almost verbatim, slowly: challenge, decision, impact.
-- Thesis once: _"Charts are for humans. Agents read the structured data underneath. One
-  serializable state serves both."_
+- Thesis once: _"Humans read the view. Agents read the typed evidence underneath. One
+  serialized investigation serves both."_
 - One line on you: solo, covering product, design, and engineering. Frontend-only by
   design.
 
@@ -82,7 +82,7 @@ the three lenses while driving:
 ## 11:00 · Outcome (1.5 min) · back to the page, Section 05
 
 - "Everything I just did, you can redo in under a minute; the page lists the four
-  steps." Then the receipts, lightly: 74 tests; 98.3 KB initial JS against a 180 KB
+  steps." Then the receipts, lightly: 76 tests; 99.4 KB initial JS against a 180 KB
   build-enforced budget, and that includes this page; 56 contrast checks in both
   themes; seeded fixtures passing 13 of 13 integrity checks.
 - The leverage line: "The keyset contract is the seam where a real backend plugs in
@@ -102,8 +102,8 @@ the three lenses while driving:
   for this case study." If it fits the moment, add the stakes: "That system was
   chartered to cut about four weeks from clinical development timelines. In trials,
   calendar time is patient time; that's what a better site-selection surface buys."
-- Close on the thesis: _"Charts for humans, structured data for agents. One state, and
-  the link is the proof."_
+- Close on the thesis: _"The view for humans, the typed evidence for agents. One state,
+  and the link is the proof."_
 
 ---
 

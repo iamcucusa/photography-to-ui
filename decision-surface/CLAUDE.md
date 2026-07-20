@@ -7,8 +7,8 @@ ranking weights, per-country distributions, and the whole investigation
 serialized in the URL so one link restores the exact view. An in-app agent
 (Atlas) reads the same typed data tier and proposes evidence-carrying findings.
 
-Thesis: *charts are for humans; agents read the structured data underneath.
-One shared, serializable state serves both.* Built as the portfolio case study
+Thesis: _humans read the view; agents read the typed evidence underneath.
+One serialized investigation serves both._ Built as the portfolio case study
 for the Dash0 interview; the docs are part of the deliverable.
 
 ## Source of truth
@@ -117,14 +117,14 @@ src/
 
 ## Performance budgets (fail the build, not the demo)
 
-| Budget | Limit |
-|---|---|
-| Initial JS | 180 KB gzip (React, d3 modules, TanStack Query and Virtual, Zustand, app) |
-| Fixtures | 2 MB raw, ~250 KB gzip transfer, fetched after first paint |
-| Evidence grid | 60 fps scroll, max 40 mounted rows, keyset page under 30 ms |
-| Rank recompute → reordered paint | 50 ms at 60 countries |
-| Interaction → visual response | 100 ms; no long task over 50 ms |
-| Deployed Lighthouse performance | 90+ |
+| Budget                           | Limit                                                                     |
+| -------------------------------- | ------------------------------------------------------------------------- |
+| Initial JS                       | 180 KB gzip (React, d3 modules, TanStack Query and Virtual, Zustand, app) |
+| Fixtures                         | 2 MB raw, ~250 KB gzip transfer, fetched after first paint                |
+| Evidence grid                    | 60 fps scroll, max 40 mounted rows, keyset page under 30 ms               |
+| Rank recompute → reordered paint | 50 ms at 60 countries                                                     |
+| Interaction → visual response    | 100 ms; no long task over 50 ms                                           |
+| Deployed Lighthouse performance  | 90+                                                                       |
 
 ## MVP order (interview scope, spec §H.2)
 

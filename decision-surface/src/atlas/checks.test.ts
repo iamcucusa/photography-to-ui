@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Finding } from '../types'
 import { decodeFixtures } from '../data/decode'
 import { applyWeights } from '../data/derive'
-import { defaultState } from '../state/url'
+import { defaultState, serializeState } from '../state/url'
 import { mergeFindings, runAtlas, validateFinding } from './checks'
 import trial from '../data/fixtures/trial.json'
 import countries from '../data/fixtures/countries.json'
@@ -94,6 +94,16 @@ describe('runAtlas on the real fixtures (S1 and S3 detectable from derived data 
     expect(flip).toBeDefined()
     expect(flip?.suggestedState.provenance).toBe('benchmark')
     expect(flip?.suggestedState.highlight).toContain('ESP')
+  })
+
+  it("serializes the flip finding to the case study's hero chip, byte for byte", () => {
+    // The hero's URL chip is this finding's real link, not an invented
+    // example. If fixtures or this check change the movers, the page must
+    // fail here rather than silently drift from the product.
+    const flip = findings.find((f) => f.id === 'finding-provenance-flip')!
+    expect(serializeState(flip.suggestedState)).toBe(
+      'trial/trial-001?prov=benchmark&hl=AUT,ESP,MEX,TUR',
+    )
   })
 
   it('fires on the planted countries, not broadly (probe rule: ≤ 2 others)', () => {

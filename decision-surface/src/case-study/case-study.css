@@ -4,7 +4,7 @@
    minimal and covered by the global reduced-motion kill in app.css (I7). */
 
 .cs {
-  max-width: 1100px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 var(--space-lg) var(--space-xl);
 }
@@ -48,15 +48,16 @@
   text-decoration: underline;
 }
 
-.cs-main {
-  max-width: 72ch;
-}
+/* The editorial canvas: the container is wide; measure is controlled per
+   element (prose capped at ~70ch), not by narrowing the whole page. */
 
 /* ---------- hero ---------- */
 
+/* Whitespace, not rules, separates the hero from the statement: the opening
+   act reads as one piece, closed by the statement's single bottom rule. */
 .cs-hero {
-  padding: var(--space-xl) 0;
-  border-bottom: 2px solid var(--color-border-strong);
+  position: relative;
+  padding: var(--space-xl) 0 var(--space-lg);
 }
 
 .cs-eyebrow {
@@ -69,35 +70,25 @@
 
 .cs-title {
   margin: 0 0 var(--space-lg);
-  font-size: var(--text-xxl);
+  font-size: clamp(var(--text-xxl), 4.5vw, 4.25rem);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
 }
 
-.cs-thesis {
-  margin: 0 0 var(--space-lg);
-  font-size: var(--text-xl);
-  line-height: var(--line-height-base);
-  color: var(--color-text-primary);
-  border-left: 2px solid var(--color-accent);
-  padding-left: var(--space-md);
-}
-
-/* The 30-second skim: challenge / decision / impact, read down the left edge. */
+/* The 30-second skim: challenge / decision / impact. Label over text; three
+   columns across the hero on desktop, a stacked read on smaller screens. */
 .cs-skim {
-  margin: 0 0 var(--space-lg);
+  margin: 0;
   display: grid;
-  gap: var(--space-sm);
-  border-top: 1px solid var(--color-border-strong);
-  border-bottom: 1px solid var(--color-border-strong);
-  padding: var(--space-md) 0;
+  gap: var(--space-md);
+  padding: var(--space-md) 0 0;
 }
 
 .cs-skim > div {
   display: grid;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  gap: var(--space-md);
+  gap: var(--space-xs);
+  align-content: start;
 }
 
 .cs-skim dt {
@@ -105,7 +96,6 @@
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-normal);
   color: var(--color-text-accent);
-  padding-top: 2px;
 }
 
 .cs-skim dd {
@@ -116,45 +106,127 @@
   max-width: 58ch;
 }
 
-@media (max-width: 560px) {
-  .cs-skim > div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-xs);
+/* Desktop: the challenge holds one side; decision and impact stack on the
+   other. Two half-width columns keep every paragraph at a readable measure. */
+@media (min-width: 1024px) {
+  .cs-skim {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-xl);
   }
+
+  .cs-skim > div:first-child {
+    grid-row: 1 / 3;
+  }
+}
+
+/* ---------- the statement: thesis as pull-quote, both entrances below ---------- */
+
+.cs-statement {
+  padding: calc(var(--space-xl) * 1.5) 0;
+  text-align: center;
+}
+
+/* One sentence per line (hard breaks in the markup); narrow screens rewrap
+   with balanced lines. */
+.cs-thesis {
+  margin: 0 auto;
+  font-size: clamp(var(--text-xl), 3.2vw, 2.6rem);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  text-wrap: balance;
+}
+
+.cs-statement .cs-actions {
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
+
+.cs-statement .cs-urlchip {
+  margin-bottom: 0;
 }
 
 /* ---------- url chip (the killer primitive, made visible) ---------- */
 
+/* A real anchor: the artifact proves itself on click. Link resets keep the
+   code-chip look; hover and focus borrow the app's accent-wash affordance. */
 .cs-urlchip {
   display: inline-block;
   font-size: var(--text-sm);
+  font-family: inherit;
   color: var(--color-text-secondary);
+  text-decoration: none;
   background: var(--color-bg-inset);
   border-left: 2px solid var(--color-accent);
   padding: var(--space-xs) var(--space-sm);
   margin-bottom: var(--space-lg);
   overflow-x: auto;
   max-width: 100%;
+  transition: background var(--ds-duration-fast) var(--ds-ease);
+}
+
+.cs-urlchip:hover {
+  background: var(--color-accent-wash);
 }
 
 .cs-urlchip-q {
   color: var(--color-text-accent);
 }
 
-/* ---------- chips ---------- */
+/* ---------- stack disclosure (the manifest, on click) ----------
+   Anchored to the hero's top corner opposite the title; the open panel
+   overlays instead of flowing, so revealing it never moves the hero. */
 
-.cs-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs) var(--space-sm);
-  margin-bottom: var(--space-lg);
+.cs-stack {
+  position: absolute;
+  top: var(--space-xl);
+  right: 0;
+  font-size: var(--text-sm);
 }
 
-.chip {
-  font-size: var(--text-xs);
+.cs-stack summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+  list-style: none;
   color: var(--color-text-secondary);
-  border: 1px solid var(--color-border-subtle);
-  padding: 2px var(--space-sm);
+  padding: var(--space-xs) 0;
+  transition: color var(--ds-duration-fast) var(--ds-ease);
+}
+
+.cs-stack summary::-webkit-details-marker {
+  display: none;
+}
+
+.cs-stack summary::before {
+  content: '▸';
+  color: var(--color-text-accent);
+}
+
+.cs-stack[open] summary::before {
+  content: '▾';
+}
+
+.cs-stack summary:hover {
+  color: var(--color-text-primary);
+}
+
+.cs-stack-code {
+  position: absolute;
+  top: calc(100% + var(--space-xs));
+  right: 0;
+  z-index: 10;
+  width: min(24rem, 86vw);
+  max-height: 60vh;
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-strong);
+  border-left: 2px solid var(--color-accent);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-base);
+  overflow: auto;
 }
 
 /* ---------- actions ---------- */
@@ -167,6 +239,9 @@
   margin-top: var(--space-md);
 }
 
+/* Solid accent action. Hover DEEPENS (magenta-1) rather than washing out:
+   --color-accent-highlight is a 25% tint meant for washes, and white text
+   dies on it in light mode. Deeper ground raises text contrast instead. */
 .cs-cta {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
@@ -177,19 +252,27 @@
   border: 1px solid var(--color-accent);
   padding: var(--space-sm) var(--space-md);
   text-decoration: none;
-  transition: background-color var(--ds-duration-fast) var(--ds-ease);
+  transition:
+    background-color var(--ds-duration-fast) var(--ds-ease),
+    border-color var(--ds-duration-fast) var(--ds-ease),
+    transform var(--ds-duration-fast) var(--ds-ease);
 }
 
 .cs-cta:hover {
-  background: var(--color-accent-highlight);
-  border-color: var(--color-accent-highlight);
+  background: var(--color-magenta-1);
+  border-color: var(--color-magenta-1);
+}
+
+.cs-cta:active {
+  background: var(--color-magenta-1);
+  border-color: var(--color-magenta-1);
+  transform: translateY(1px);
 }
 
 /* ---------- sections ---------- */
 
 .cs-section {
   padding: var(--space-xl) 0;
-  border-bottom: var(--divider-subtle);
 }
 
 .cs-section-num {
@@ -206,13 +289,7 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
-}
-
-.cs-lead {
-  margin: 0 0 var(--space-md);
-  font-size: var(--text-md);
-  line-height: var(--line-height-loose);
-  color: var(--color-text-primary);
+  text-wrap: balance;
 }
 
 .cs-body {
@@ -220,22 +297,62 @@
   font-size: var(--text-md);
   line-height: var(--line-height-loose);
   color: var(--color-text-secondary);
+  max-width: 70ch;
+}
+
+/* Desktop refinements: sections flow left-aligned at reading measure; the
+   alternatives run as three columns and the receipts as a stat band. */
+@media (min-width: 1024px) {
+  .cs-alts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .cs-receipts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-lg);
+    padding: var(--space-md) 0;
+  }
+
+  .cs-receipts li {
+    display: grid;
+    gap: var(--space-xs);
+    align-content: start;
+  }
+
+  .cs-receipts strong {
+    font-size: var(--text-xl);
+    line-height: var(--line-height-tight);
+  }
 }
 
 /* ---------- tensions list ---------- */
 
+/* The tensions: a left-set bulleted list, one per line, accent markers with
+   a hanging indent so wrapped lines stay aligned under the text. */
 .cs-maplist {
   list-style: none;
   margin: 0 0 var(--space-md);
   padding: 0;
   display: grid;
-  gap: var(--space-xs);
-  font-size: var(--text-sm);
+  gap: var(--space-sm);
+  font-size: var(--text-md);
+  line-height: var(--line-height-base);
   color: var(--color-text-primary);
+  max-width: 70ch;
+}
+
+.cs-maplist li {
+  position: relative;
+  padding-left: 1.4rem;
 }
 
 .cs-maplist li::before {
-  content: '· ';
+  content: '•';
+  position: absolute;
+  left: 0;
   color: var(--color-text-accent);
 }
 
@@ -250,7 +367,6 @@
 }
 
 .cs-alts li {
-  border-top: var(--divider-subtle);
   padding-top: var(--space-sm);
 }
 
@@ -278,8 +394,9 @@
 }
 
 .lens {
-  border-left: 2px solid var(--color-accent);
-  padding-left: var(--space-md);
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
 }
 
 .lens-label {
