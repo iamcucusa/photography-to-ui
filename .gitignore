@@ -15,6 +15,11 @@ dist-ssr
 # Local scratch: working notes, drafts, anything not meant to be published.
 .local/
 
+# Real term list for the disclosure gate. Never commit: a tracked file naming
+# them is a public index of exactly what the gate exists to hide.
+# See .disclosure-terms.example for the format.
+.disclosure-terms.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,0 +1,35 @@
+# Disclosure term list — FORMAT EXAMPLE
+#
+# Copy to `.disclosure-terms.local` and replace these placeholders with the real
+# names. The .local file is gitignored and MUST stay that way: a tracked file
+# listing real companies is a public index of every process you are in, which is
+# strictly worse than the leak it is meant to prevent.
+#
+# Format:
+#   - one term per line
+#   - blank lines ignored
+#   - `#` starts a comment, inline or full-line
+#   - terms are word-bounded and case-insensitive, so "Acme" matches "Acme" and
+#     "ACME" but never "Acmestone"
+#   - multi-word terms are fine: "North Ridge Partners"
+#
+# Checked by scripts/check-disclosure.mjs, which runs in `npm run check` and
+# therefore blocks the deploy. When the .local file is absent the gate still
+# runs, checking only the committed generic patterns, so CI never depends on an
+# untracked file.
+#
+# Every name below is fictional and exists only to show the shape.
+
+# Companies in an active process
+Acme Dynamics
+Northwind Systems
+Contoso
+
+# Agencies and intermediaries
+North Ridge Partners
+Blue Harbor Talent
+
+# Prior employers and their internal products
+Initech
+Umbrella Analytics
+Project Nightingale          # an internal tool name, not a company

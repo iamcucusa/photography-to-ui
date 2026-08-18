@@ -62,11 +62,11 @@ cucusa (workspace root — orchestration only)
 
 **This repository is public.** Every tracked file and every commit message is world-readable, and git history is not reliably erasable — a redaction in a later commit does not remove the earlier blob. Write every file and every commit message as if a stranger will read it, because they can. These rules are enforced by `npm run check:disclosure`, which blocks the deploy.
 
-- **Never name a company, recruiter, or intermediary connected to a hiring process** — not in files, not in commit messages, not in code comments.
-- **Never state that a workspace, feature, or document was built for an interview, application, take-home, or a specific employer.** Artifacts are self-directed work and need no origin story. "Built as a self-directed case study" is right; "built for the X interview" is not.
+- **Never name a company, recruiter, or intermediary connected to a hiring process** — not in files, not in commit messages, not in code comments. <!-- disclosure-ignore: this section defines the terms it forbids -->
+- **Never state that a workspace, feature, or document was built for an interview, application, take-home, or a specific employer.** Artifacts are self-directed work and need no origin story. "Built as a self-directed case study" is right; "built for the X interview" is not. <!-- disclosure-ignore -->
 - **Never name a prior employer's internal product, describe its function or domain, quote its internal research findings, or cite its program metrics.** Describing a technique you used or a scope you owned is fine. Describing their internals is not. "I led the frontend of a clinical-trial site selection tool" passes; naming that tool, or citing its usability studies or delivery metrics, does not.
 - **Name the domain, not the employer.** `decision-surface/docs/design-spec.md:742` models this: "the observability-industry viz standard". The technical point survives; the attribution does not.
-- **Watch possessive framing, which no term list catches.** "Their stack", "their killer primitive", "the client asked for" leak the frame with no name present. The disclosure gate cannot see these — you have to.
+- **Watch possessive framing, which no term list catches.** "Their stack", "their killer primitive", "the client asked for" leak the frame with no name present. The disclosure gate cannot see these — you have to. <!-- disclosure-ignore -->
 - **Anything that needs the real context goes in local-only notes.** `.local/` is gitignored for exactly this. Never a tracked file, never a commit message.
 - **Term lists are never committed.** A tracked file listing real company names is a public index of every process you are in. `.disclosure-terms.local` is gitignored; `.disclosure-terms.example` documents the format with fictional placeholders.
 
