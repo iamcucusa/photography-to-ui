@@ -8,8 +8,8 @@ serialized in the URL so one link restores the exact view. An in-app agent
 (Atlas) reads the same typed data tier and proposes evidence-carrying findings.
 
 Thesis: _humans read the view; agents read the typed evidence underneath.
-One serialized investigation serves both._ Built as the portfolio case study
-for the Dash0 interview; the docs are part of the deliverable.
+One serialized investigation serves both._ Built as a self-directed case study
+in frontend product engineering; the specs are part of the artifact.
 
 ## Source of truth
 
@@ -126,7 +126,7 @@ src/
 | Interaction → visual response    | 100 ms; no long task over 50 ms                                           |
 | Deployed Lighthouse performance  | 90+                                                                       |
 
-## MVP order (interview scope, spec §H.2)
+## Build order (first-iteration scope, spec §H.2)
 
 1. Ranked `CountryList` from fixtures (derived tier live).
 2. `ScopeBar` + URL round-trip: copy link, new tab, exact view restores.

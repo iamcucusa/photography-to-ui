@@ -12,6 +12,9 @@ node_modules
 dist-ssr
 *.local
 
+# Local scratch: working notes, drafts, anything not meant to be published.
+.local/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -46,5 +49,5 @@ photography-to-ui/public/assets/**/*.webp
 # proto: raw vectorized mockup trace (1.8MB, dev-only A/B reference)
 switching-brain/public/proto-ref.svg
 
-# Presenter run sheet: local-only, never committed (contains spoken-only material)
+# Local-only working notes
 decision-surface/docs/case-study-script.md

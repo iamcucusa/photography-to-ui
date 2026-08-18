@@ -2,10 +2,10 @@
 
 > Requirements for the case-study build: a standalone, mostly client-side
 > project. This document says what the product must do, in one voice. Where a
-> requirement matches something Pegasus already did, it is stated as a
-> requirement anyway. Background analysis (why these requirements, what Pegasus
-> proved) lives in the Pegasus analysis docs (kept outside this repo).
-> Read those for context, never as build instructions.
+> requirement matches something a prior production system already solved, it is
+> stated as a requirement anyway. Background analysis behind these requirements
+> is kept outside this repo.
+> Read it for context, never as build instructions.
 > The mock-data contract (fixtures, constraints, anti-leakage) is
 > `data-spec.md`; it implements §G and never overrides it.
 > Personas, used by name throughout: **Ana**, the feasibility analyst who decides
@@ -721,31 +721,31 @@ and never renders (BL5). Findings are proposals; only humans change `selected`
 or weights (BL6). Status changes are visible to Atlas, so the next run learns
 from them.
 
-## H. Scope of the first version (the interview MVP)
+## H. Scope of the first version
 
-The first iteration is the MVP shown at the Dash0 interview. It is built as a
-new consumer, `decision-surface`, inside the cucusa design-system workspace
-(React 19, TypeScript strict, Vite, DTCG tokens, npm workspaces). The docs are
-part of the deliverable: what is not built is presented as spec, and that is a
+The first iteration is the MVP. It is built as a new consumer,
+`decision-surface`, inside the cucusa design-system workspace (React 19,
+TypeScript strict, Vite, DTCG tokens, npm workspaces). The docs are
+part of the artifact: what is not built is presented as spec, and that is a
 strength, not a gap. The consumer's operating manual is
 `decision-surface/CLAUDE.md`; this spec and the data spec are copied into
 `decision-surface/docs/` so the consumer is self-contained.
 
-### H.1 Tech scope (deliberately Dash0-shaped)
+### H.1 Tech scope (deliberately observability-shaped)
 
-| Choice | What | Why it maps to Dash0 |
+| Choice | What | Why it maps to the problem domain |
 |---|---|---|
-| React 19 + TypeScript strict, Vite | Their stack, function components and hooks only | Direct stack match |
-| URL-serialized investigation state | Native History API behind the F.2 canonical serializer, no router library | Their killer primitive: one link restores the exact view |
+| React 19 + TypeScript strict, Vite | Function components and hooks only | Modern typed React, the mainstream product-UI stack |
+| URL-serialized investigation state | Native History API behind the F.2 canonical serializer, no router library | The killer primitive for shared investigations: one link restores the exact view |
 | DTCG design tokens as CSS custom properties | Zero hardcoded color, CI-enforced by the workspace coverage checker | Design system as infrastructure |
 | Typed data layer over static fixtures | Decode-validated per the data spec; derivations per §G; serves keyset pages for the grid; no backend by design | The structured tier under the viz, the thing the agent reads |
 | d3 (scale, shape, array) rendering to SVG | Quartiles and buckets computed and drawn with d3 primitives, styled by tokens | The observability-industry viz standard; owned to the element, no high-level chart wrapper |
-| TanStack Query + TanStack Virtual | `useInfiniteQuery` over the data layer's keyset pages; windowed rendering of the evidence grid | Their scale pattern: flat-latency deep scroll, tens of DOM rows over thousands of records |
+| TanStack Query + TanStack Virtual | `useInfiniteQuery` over the data layer's keyset pages; windowed rendering of the evidence grid | The scale pattern for dense evidence: flat-latency deep scroll, tens of DOM rows over thousands of records |
 | Zustand for app state | Shared state, drafts, and ephemeral UI in small selector-based stores; the URL stays the canonical view state | Strong, scalable state without provider towers; the store map is 1:1 with the §G.0 tiers |
 | localStorage for shared state and drafts | Behind the same data-layer interface a service would use (§G.0) | Tier boundaries real, transport swappable |
 | Atlas as an in-app module | Runs the §C checks over the typed tier, emits §G.4 findings | The second reader, same substrate, no external service |
 
-### H.2 MVP scope for the interview
+### H.2 MVP scope
 
 **Must (demoable):**
 1. Ranked `CountryList` from fixtures, derived tier live (§G.1 rank algorithm).
@@ -791,7 +791,7 @@ is the contract."
 | Evidence grid | 60 fps scroll; at most 40 mounted rows; keyset page serve under 30 ms | TanStack Virtual config + dev perf assertion |
 | Rank recompute to reordered paint | 50 ms at 60 countries | Dev-mode perf assertion around the derive call |
 | Any interaction to visual response | 100 ms; no long task over 50 ms | Manual profile before the demo |
-| Deployed page (static hosting) | Lighthouse performance 90+ | One audit run pre-interview |
+| Deployed page (static hosting) | Lighthouse performance 90+ | One audit run before publishing |
 | Render model | Motion via CSS transitions on the contract's tokens, no rAF loops or animation libraries; virtualized scroll re-renders windowed rows only, nothing outside the grid | Code review + the evidence-grid budget above |
 
 ### H.4 Scope rules
@@ -801,11 +801,11 @@ is the contract."
 - Country-level decisions only. Site evidence is explorable (read-only,
   windowed) in v1; site-level selection is the same pattern one level down,
   later.
-- Non-goals, stated in the interview if asked: a real backend (the data layer
-  boundary, including the keyset contract, is exactly where one would plug
-  in), and site-level writes.
+- Non-goals, stated explicitly: a real backend (the data layer boundary,
+  including the keyset contract, is exactly where one would plug in), and
+  site-level writes.
 
-**Provenance note (for the interview, not for execution).** The human loop
+**Provenance note (context, not build instruction).** The human loop
 (ranked list, filters, weight steering, explicit commit, aggregation below the
 view) re-implements patterns proven in a production system I led the frontend
 for. The investigation state in the URL, the agent tier, and the findings

@@ -301,13 +301,11 @@ export function CaseStudy() {
             multi-user investigations.
           </p>
           <p className="cs-provenance">
-            The human loop re-implements patterns proven in production: a clinical-trial site
-            selection tool whose frontend I led, in a program that counted its wins in days cut from
-            development timelines. In usability testing there, users kept asking two questions: how
-            is this rank calculated, and where does this number come from. The transparency this
-            rebuild treats as architecture began as answers people actually asked for. The
-            investigation-in-a-URL, the agent tier, and the findings contract are new design for
-            this case study.
+            The human loop re-implements patterns proven in production. I led the frontend of a
+            clinical-trial site selection tool, where the questions users asked most were how a rank
+            is calculated and where a number comes from. The transparency this rebuild treats as
+            architecture began as answers to those questions. The investigation-in-a-URL, the agent
+            tier, and the findings contract are new design for this case study.
           </p>
           <p className="cs-close">
             The view for humans, the typed evidence for agents. One state, and the link is the
