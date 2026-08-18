@@ -89,11 +89,21 @@ const EXCLUDED_PATHS = new Set(['package-lock.json', 'docs/src/contrast-data.jso
 const EXCLUDED_EXT =
   /\.(css|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|eot|mp4|webm|pdf|zip)$/i
 
+// The two files that define the patterns necessarily contain them. Excluding
+// them is not a loophole, it is the same reason a dictionary may print the word
+// it defines. Note the cost: prose in these two files is unscanned, so a real
+// leak hidden in a comment here would pass. They are short and reviewed; every
+// other file, including the CLAUDE.md that states the rules, stays scanned and
+// uses same-line `disclosure-ignore` markers instead.
+const SELF_EXCLUDED = new Set([
+  '.disclosure-terms.example',
+  'scripts/check-disclosure.mjs',
+])
+
 function isExcluded(relPath) {
   if (EXCLUDED_PATHS.has(relPath)) return true
   if (EXCLUDED_EXT.test(relPath)) return true
-  // The example terms file documents the format; its placeholders are fiction.
-  if (relPath === '.disclosure-terms.example') return true
+  if (SELF_EXCLUDED.has(relPath)) return true
   return false
 }
 
@@ -188,6 +198,10 @@ const argv = process.argv.slice(2)
 const fullMode = argv.includes('--full')
 const commitMsgIndex = argv.indexOf('--commit-msg')
 const commitMsgPath = commitMsgIndex !== -1 ? argv[commitMsgIndex + 1] : null
+// --raw: the input is a real commit message, not an editor template, so there
+// is no git comment block to strip. Without this, a body line starting with `#`
+// (a markdown heading) would be skipped — a silent false negative.
+const rawMode = argv.includes('--raw')
 
 const localTerms = loadLocalTerms()
 const localLabel = localTerms.length
@@ -201,11 +215,15 @@ if (commitMsgPath) {
   // public and as permanent as the diff it describes.
   const abs = resolve(ROOT, commitMsgPath)
   if (existsSync(abs)) {
-    // Strip the comment block git appends to the template.
-    const text = readFileSync(abs, 'utf-8')
-      .split('\n')
-      .filter((l) => !l.startsWith('#'))
-      .join('\n')
+    const source = readFileSync(abs, 'utf-8')
+    // Strip the comment block git appends to the editor template, unless the
+    // caller says this is already a real message (--raw).
+    const text = rawMode
+      ? source
+      : source
+          .split('\n')
+          .filter((l) => !l.startsWith('#'))
+          .join('\n')
     violations.push(...scanText(text, '(commit message)', localTerms))
   }
   console.log(`Checking disclosure (commit message) — ${localLabel}`)
