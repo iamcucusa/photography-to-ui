@@ -73,6 +73,9 @@ src/
 
 ## Design-system consumption (workspace rules apply)
 
+- **This repository is public.** The root `CLAUDE.md` → Disclosure rules apply to
+  every file and commit message here, and most sharply to the specs in `docs/`
+  and the narrative copy in `src/case-study/`.
 - **No hardcoded color anywhere in `src`.** The root coverage checker rejects
   hex / rgba / `color-mix`. All color through `var(--color-*)` tokens.
 - **Soft dark ground, this consumer only.** Pure `--color-bg-canvas` (sky-1)

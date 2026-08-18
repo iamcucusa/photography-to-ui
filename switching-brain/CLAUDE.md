@@ -6,6 +6,8 @@ Thesis: _the design-engineer brain is not split between hemispheres — it is a 
 
 This is the experimentation / content-creation consumer. Unlike the other consumers it carries its own viz dependency (`d3-force`); keep app-specific deps here, not in the workspace root.
 
+This repository is public: the root `CLAUDE.md` → Disclosure rules apply to every file and commit message here.
+
 ## Commands
 
 ```

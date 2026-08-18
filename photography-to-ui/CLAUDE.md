@@ -2,6 +2,8 @@
 
 Brand exploration, art direction, and design playground. This is the primary consumer of the Cucusa design system — where ideas are tested before they land in other consumers.
 
+This repository is public: the root `CLAUDE.md` → Disclosure rules apply to every file and commit message here, and to all post copy in `src/post/`.
+
 ## What this app is
 
 An interactive portfolio site that translates photography into product UI decisions. The homepage has insight panels (Typography, Colors, Photography, Interaction, System, Coming Soon) that reveal interactive component explorers. The Post page is a LinkedIn content gallery with cards, carousels, and filters.

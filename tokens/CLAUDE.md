@@ -2,6 +2,8 @@
 
 The Cucusa design system. W3C DTCG-compliant token source with Style Dictionary 4 build pipeline.
 
+This repository is public: the root `CLAUDE.md` → Disclosure rules apply to every file and commit message here.
+
 ## What this package is
 
 The single source of truth for all design decisions: color, typography, spacing, shape, elevation, and motion. Photography inputs (urban, architectural, natural) inform the color palettes. Every consumer of this design system imports from here.

@@ -58,6 +58,18 @@ cucusa (workspace root — orchestration only)
 - **Light mode**: Implemented — sparse DTCG overrides in `tokens/modes/light/`, toggle in playground + docs, switching-brain pinned dark. See `tokens/CLAUDE.md` Modes section.
 - **Token coverage threshold**: Implemented — `npm run check:coverage` scans all consumers automatically via workspace discovery. CI rejects hardcoded hex/rgba/color-mix. Lines that render token values AS documentation content (e.g. the docs catalog printing `color-mix()` recipes) opt out with a same-line `token-coverage-ignore` comment.
 
+## Disclosure rules
+
+**This repository is public.** Every tracked file and every commit message is world-readable, and git history is not reliably erasable — a redaction in a later commit does not remove the earlier blob. Write every file and every commit message as if a stranger will read it, because they can. These rules are enforced by `npm run check:disclosure`, which blocks the deploy.
+
+- **Never name a company, recruiter, or intermediary connected to a hiring process** — not in files, not in commit messages, not in code comments.
+- **Never state that a workspace, feature, or document was built for an interview, application, take-home, or a specific employer.** Artifacts are self-directed work and need no origin story. "Built as a self-directed case study" is right; "built for the X interview" is not.
+- **Never name a prior employer's internal product, describe its function or domain, quote its internal research findings, or cite its program metrics.** Describing a technique you used or a scope you owned is fine. Describing their internals is not. "I led the frontend of a clinical-trial site selection tool" passes; naming that tool, or citing its usability studies or delivery metrics, does not.
+- **Name the domain, not the employer.** `decision-surface/docs/design-spec.md:742` models this: "the observability-industry viz standard". The technical point survives; the attribution does not.
+- **Watch possessive framing, which no term list catches.** "Their stack", "their killer primitive", "the client asked for" leak the frame with no name present. The disclosure gate cannot see these — you have to.
+- **Anything that needs the real context goes in local-only notes.** `.local/` is gitignored for exactly this. Never a tracked file, never a commit message.
+- **Term lists are never committed.** A tracked file listing real company names is a public index of every process you are in. `.disclosure-terms.local` is gitignored; `.disclosure-terms.example` documents the format with fictional placeholders.
+
 ## Stack
 
 - React 19, TypeScript 6 (strict), Vite 8, Node 24 (pinned in `.nvmrc`, read by CI and nvm — keep local and CI on this one pin)
@@ -66,7 +78,7 @@ cucusa (workspace root — orchestration only)
 - JetBrains Mono as the sole typeface (monospace everywhere)
 - Style Dictionary 4 (DTCG token pipeline; dark `:root` default + sparse light overrides under `[data-theme='light']`)
 - ESLint 9 (flat config) + Prettier for formatting
-- No test runner. No Storybook.
+- Vitest in `decision-surface` only (10 files, 76 tests, run by `npm run check`). No test runner in the other consumers. No Storybook.
 
 ## Commands
 
@@ -81,7 +93,10 @@ npm run dev:brain    # Start switching-brain dev server (port 5175)
 npm run dev:decision # Start decision-surface dev server (port 5176)
 npm run build        # Build photography-to-ui only
 npm run build:all    # tokens → photography-to-ui → docs → switching-brain → decision-surface
-npm run check        # tsc (all consumers) + eslint + prettier
+npm run check        # THE GATE, in order: validate → staleness → contrast → coverage
+                     #   → docs-coverage → disclosure → tsc (all consumers) + vitest
+                     #   → eslint → prettier. CI runs this before build:all; non-zero blocks the deploy
+npm run check:disclosure # Company / job-process references — see Disclosure rules above
 npm run lint         # ESLint only
 npm run format       # Prettier write
 ```

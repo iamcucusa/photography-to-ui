@@ -2,6 +2,8 @@
 
 Visual token catalog for the Cucusa design system. A dedicated consumer that renders every token from `tokens/` as an interactive reference.
 
+This repository is public: the root `CLAUDE.md` → Disclosure rules apply to every file and commit message here, including audit insight copy.
+
 ## What this app is
 
 A living documentation site that reads DTCG JSON directly and renders tokens visually. It serves developers (human and AI) who need to know what tokens exist, what they look like, and how to use them.
