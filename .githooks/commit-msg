@@ -1,0 +1,14 @@
+#!/bin/sh
+# Disclosure check on the pending commit message.
+#
+# A commit message is as public and as permanent as the diff it describes, and
+# `npm run check` never sees it. CI cannot help either: by the time a workflow
+# runs, the push has already published the message. This hook is the only point
+# where a message can still be fixed for free.
+#
+# Opt-in per clone (core.hooksPath is local config, it does not travel):
+#   git config core.hooksPath .githooks
+#
+# See CLAUDE.md -> Disclosure rules.
+
+exec node "$(git rev-parse --show-toplevel)/scripts/check-disclosure.mjs" --commit-msg "$1"

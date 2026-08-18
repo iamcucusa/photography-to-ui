@@ -70,6 +70,17 @@ cucusa (workspace root — orchestration only)
 - **Anything that needs the real context goes in local-only notes.** `.local/` is gitignored for exactly this. Never a tracked file, never a commit message.
 - **Term lists are never committed.** A tracked file listing real company names is a public index of every process you are in. `.disclosure-terms.local` is gitignored; `.disclosure-terms.example` documents the format with fictional placeholders.
 
+**Commit messages are not covered by CI.** `npm run check` scans tracked files only, and a workflow cannot help: by the time it runs, the push has already published the message. Two **opt-in** git hooks close that gap, enabled per clone (`core.hooksPath` is local config and does not travel — re-run this on every machine and every fresh clone):
+
+```
+git config core.hooksPath .githooks
+```
+
+- `.githooks/commit-msg` — checks the pending message, so a fix costs one retype.
+- `.githooks/pre-push` — checks every outgoing commit message at the last moment before publication. This is the backstop: it catches commits authored before the hooks were installed, or made with `--no-verify`. Unpushed commits are free to reword; published ones cost a history rewrite.
+
+These are reminders, not gates. They are local, they do not exist in a fresh clone until enabled, and `--no-verify` walks past `commit-msg`. The deploy-blocking enforcement is `npm run check`, and it does not see commit messages at all.
+
 ## Stack
 
 - React 19, TypeScript 6 (strict), Vite 8, Node 24 (pinned in `.nvmrc`, read by CI and nvm — keep local and CI on this one pin)
