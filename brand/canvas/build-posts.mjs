@@ -1,4 +1,4 @@
-import { C, lum, cr, FONTS, ARCH, MONO, page, mono, logos, photo, out } from './lib.mjs'
+import { C, lum, cr, FONTS, ARCH, MONO, page, mono, logos, photo, out, AVATAR_URL } from './lib.mjs'
 
 /** LinkedIn posts page: four posts and the phone check, 1080×1350. */
 console.log('post boards →')
@@ -145,3 +145,54 @@ const phoneBody = `<div style="width:1080px;height:1350px;box-sizing:border-box;
 </div>`
 out('Phone-Check', page({title:'Phone check', w:1080, h:1350, body:phoneBody}))
 
+
+/* ── Carousel cover: The 3 layers of API contracts ───────────────────────────
+   Navy ground. The three layers ARE the brand's isometric stack (top = product,
+   base = runtime), labelled to the right. Avatar + two paper speech bubbles as
+   the hook, square CTA bottom-right for "next slide". */
+const layers = [
+  { n: '01', name: 'Product', trait: 'Flexible', stroke: C.magM, ink: C.magL },
+  { n: '02', name: 'Evolution', trait: 'Versioned', stroke: C.skyM, ink: C.skyL },
+  { n: '03', name: 'Runtime', trait: 'Predictable', stroke: C.sandM, ink: C.sandL },
+]
+const W = 480, HH = W / 2, OFF = 130
+const layerPath = (y, stroke, solid) => {
+  const hatch = solid ? '' : [0.25, 0.5, 0.75].map((t) => `<line x1="${(W / 2) * t}" y1="${y + HH / 2 - (HH / 2) * t}" x2="${W / 2 + (W / 2) * t}" y2="${y + HH - (HH / 2) * t}" stroke="${stroke}" stroke-width="3" stroke-dasharray="12 10"/>`).join('')
+  const nodes = [[W / 2, y], [W, y + HH / 2], [W / 2, y + HH], [0, y + HH / 2]].map(([x, yy]) => `<rect x="${x - 7}" y="${yy - 7}" width="14" height="14" fill="${C.paper}"/>`).join('')
+  return `<path d="M${W / 2} ${y} L${W} ${y + HH / 2} L${W / 2} ${y + HH} L0 ${y + HH / 2} Z" stroke="${stroke}" stroke-width="6" fill="${C.navy}"/>${hatch}${nodes}`
+}
+const stackSvg = `<svg width="${W + 16}" height="${HH + 2 * OFF + 16}" viewBox="-8 -8 ${W + 16} ${HH + 2 * OFF + 16}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three stacked layers: product on top, evolution, runtime at the base">
+  <line x1="0" y1="${HH / 2}" x2="0" y2="${HH / 2 + 2 * OFF}" stroke="${C.slateM}" stroke-width="3" stroke-dasharray="3 9"/>
+  <line x1="${W}" y1="${HH / 2}" x2="${W}" y2="${HH / 2 + 2 * OFF}" stroke="${C.slateM}" stroke-width="3" stroke-dasharray="3 9"/>
+  ${layerPath(2 * OFF, C.sandM, false)}${layerPath(OFF, C.skyM, false)}${layerPath(0, C.magM, true)}
+</svg>`
+const labelRows = layers.map((l) => `<div style="display:flex;flex-direction:column;gap:6px;height:${OFF}px;justify-content:center">
+      <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;color:${C.slateL}">${l.n}</div>
+      <div style="font-family:${ARCH};font-size:56px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:${C.paper}">${l.name}</div>
+      <div style="font-family:${MONO};font-size:36px;font-weight:500;line-height:1.2;color:${l.ink}">${l.trait}</div>
+    </div>`).join('\n')
+const bubble = (inner) => `<div style="background:${C.paper};color:${C.navy};font-family:${MONO};font-size:36px;font-weight:400;line-height:1.3;padding:12px 24px;align-self:flex-start">${inner}</div>`
+const apiInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.navy};color:${C.paper}">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">TypeScript · API contracts</div>
+    <a href="#next" aria-label="Next slide" style="width:104px;height:104px;border:4px solid ${C.paper};box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;text-decoration:none"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 24H40M26 10L40 24L26 38" stroke="${C.magL}" stroke-width="5" stroke-linecap="square"/></svg></a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="font-family:${ARCH};font-size:104px;font-weight:800;line-height:1;letter-spacing:-0.025em;color:${C.paper}">The 3 layers of</div>
+    <div style="font-family:${ARCH};font-size:136px;font-weight:800;font-stretch:82%;line-height:0.95;letter-spacing:-0.03em;color:${C.magL}">API contracts</div>
+  </div>
+  <div style="display:flex;gap:48px;align-items:center">
+    ${stackSvg}
+    <div style="display:flex;flex-direction:column;justify-content:space-between;height:${HH + 2 * OFF}px;padding:${HH / 2 - OFF / 2}px 0">${labelRows}</div>
+  </div>
+  <div style="display:flex;align-items:flex-end;justify-content:flex-start">
+    <div style="display:flex;gap:24px;align-items:flex-end">
+      <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:160px;height:160px;border-radius:50%;object-fit:cover;border:5px solid ${C.magL};box-sizing:border-box;flex-shrink:0">
+      <div style="display:flex;flex-direction:column;gap:14px;padding-bottom:8px">
+        ${bubble(`<span style="font-weight:700;color:${C.magD}">any</span> lets everything pass`)}
+        ${bubble(`here's how to fix it for good…`)}
+      </div>
+    </div>
+  </div>
+</div>`
+out('Post-API-Contracts', page({ title: 'Post: the 3 layers of API contracts', w: 1080, h: 1350, body: apiInner, bg: C.navy, fg: C.paper }))
