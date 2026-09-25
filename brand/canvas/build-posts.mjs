@@ -196,3 +196,37 @@ const apiInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;p
   </div>
 </div>`
 out('Post-API-Contracts', page({ title: 'Post: the 3 layers of API contracts', w: 1080, h: 1350, body: apiInner, bg: C.navy, fg: C.paper }))
+
+/* ── Grow people without breaking the system ─────────────────────────────────
+   Illustration concept "steps on the grid": people are nodes, the system is the
+   grid. Five isometric tiles rise as a staircase, each tied to the ground by a
+   dotted line (the system holds every step). Three person-nodes climb it,
+   joined by dotted hand-links; the one who has grown most is the magenta node
+   at the top. Tile strokes go sand → sky → magenta, base to top. */
+const TW = 220, TH = TW / 2, SX = 150, RISE = 135
+const stepAt = (k) => [k * SX, -k * (RISE - SX / 2)]                       // along the ground axis, then up
+const tile = (k, stroke) => {
+  const [x, y] = stepAt(k)
+  return `<path d="M${x + TW / 2} ${y} L${x + TW} ${y + TH / 2} L${x + TW / 2} ${y + TH} L${x} ${y + TH / 2} Z" stroke="${stroke}" stroke-width="6" fill="${C.navy}"/>`
+}
+const BASE = 330
+const tieDown = (k) => { const [x, y] = stepAt(k); return `<line x1="${x + TW / 2}" y1="${y + TH}" x2="${x + TW / 2}" y2="${BASE}" stroke="${C.slateM}" stroke-width="3" stroke-dasharray="3 9"/>` }
+const person = (k, fill) => { const [x, y] = stepAt(k); return `<rect x="${x + TW / 2 - 15}" y="${y + TH / 2 - 15}" width="30" height="30" fill="${fill}"/>` }
+const hand = (a, b) => { const [xa, ya] = stepAt(a), [xb, yb] = stepAt(b); return `<line x1="${xa + TW / 2 + 15}" y1="${ya + TH / 2}" x2="${xb + TW / 2 - 15}" y2="${yb + TH / 2}" stroke="${C.skyL}" stroke-width="4" stroke-dasharray="4 10"/>` }
+const strokes = [C.sandM, C.sandM, C.skyM, C.skyM, C.magM]
+const growSvg = `<svg width="920" height="640" viewBox="-20 -280 880 612" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five isometric steps rise from left to right, each tied to the ground by a dotted line. Three people, drawn as nodes, climb them holding hands; the highest one is magenta.">
+  <line x1="-20" y1="${BASE}" x2="860" y2="${BASE}" stroke="${C.slateM}" stroke-width="3" stroke-dasharray="14 12"/>
+  ${[4, 3, 2, 1, 0].map(tieDown).join('')}
+  ${[4, 3, 2, 1, 0].map((k) => tile(k, strokes[k])).join('')}
+  ${hand(0, 2)}${hand(2, 4)}
+  ${person(0, C.paper)}${person(2, C.paper)}${person(4, C.magL)}
+</svg>`
+const growInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.navy};color:${C.paper}">
+  <div style="display:flex;flex-direction:column;gap:28px">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">Engineering leadership</div>
+    <div style="font-family:${ARCH};font-size:104px;font-weight:800;line-height:1;letter-spacing:-0.025em;color:${C.paper}"><span style="color:${C.magL}">Grow</span> people<br>without breaking<br>the <span style="color:${C.magL}">system</span></div>
+  </div>
+  ${growSvg}
+  ${author(C.paper, C.slateL)}
+</div>`
+out('Post-Grow-People', page({ title: 'Post: grow people without breaking the system', w: 1080, h: 1350, body: growInner, bg: C.navy, fg: C.paper }))
