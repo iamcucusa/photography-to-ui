@@ -6,12 +6,13 @@ const eyebrow = (t, color=C['slate-deep'], size=13) => `<div style="font-family:
 const h = (t, size, color=C.navy, weight=800, extra='') => `<div style="font-family:${ARCH};font-size:${size}px;font-weight:${weight};line-height:1;letter-spacing:-0.025em;color:${color};${extra}">${t}</div>`
 
 /* ---------- POSTS (1080×1350) ---------- */
-const author = (fg, rule) => `<div style="display:flex;justify-content:space-between;align-items:center;border-top:4px solid ${fg};padding-top:28px">
-  <div style="display:flex;align-items:center;gap:20px">
-    <div style="width:56px;height:56px;border:4px solid ${fg};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:${ARCH};font-size:26px;font-weight:900;color:${fg}">G</div>
-    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${fg}">Grace Henriquez</div>
+/** Author lock-up, same on every post: 112px photo ringed in the post's ink, name in Archivo, role in mono. */
+const author = (fg, muted) => `<div style="display:flex;align-items:center;gap:24px;border-top:4px solid ${fg};padding-top:28px">
+  <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${fg};box-sizing:border-box;flex-shrink:0">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="font-family:${ARCH};font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:${fg}">Grace Henriquez</div>
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;line-height:1.2;letter-spacing:0.08em;text-transform:uppercase;color:${muted}">Staff Product Engineer</div>
   </div>
-  <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${rule}">cucusa</div>
 </div>`
 
 const statementInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C['magenta-deep']};color:${C.paper}">
@@ -110,20 +111,14 @@ const quoteInner = `<div style="width:1080px;height:1350px;box-sizing:border-box
     <div style="font-family:${ARCH};font-size:200px;font-weight:900;line-height:0.6;color:${C['magenta-deep']}">“</div>
     <div style="font-family:${ARCH};font-size:128px;font-weight:800;line-height:0.98;letter-spacing:-0.03em;color:${C.navy}">Good UI is not a layer.</div>
   </div>
-  <div style="display:flex;gap:0;align-items:stretch">
-    <div style="background:${C['sand-light']};padding:28px 32px;display:flex;flex-direction:column;gap:6px;flex-grow:1">
-      <div style="font-family:${ARCH};font-size:44px;font-weight:800;line-height:1;color:${C.navy}">Grace Henriquez</div>
-      <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.navy}">Frontend architecture · cucusa</div>
-    </div>
-    <div style="width:140px;background:${C.navy};display:flex;align-items:center;justify-content:center;font-family:${ARCH};font-size:64px;font-weight:900;color:${C.paper}">G</div>
-  </div>
+  ${author(C.navy, C['slate-deep'])}
 </div>`
 out('Post-Quote', page({title:'Post: quote', w:1080, h:1350, body:quoteInner}))
 
 /* phone check */
 const phone = (inner, caption) => `<div style="width:390px;height:844px;box-sizing:border-box;border:4px solid ${C.navy};border-radius:44px;padding:56px 12px 24px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px;overflow:hidden">
   <div style="display:flex;align-items:center;gap:10px;padding:0 4px">
-    <div style="width:40px;height:40px;border-radius:20px;background:${C.navy};display:flex;align-items:center;justify-content:center;font-family:${ARCH};font-size:18px;font-weight:900;color:${C.paper}">G</div>
+    <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:40px;height:40px;border-radius:50%;object-fit:cover">
     <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:${ARCH};font-size:14px;font-weight:700;color:${C.navy}">Grace Henriquez</span><span style="font-family:${MONO};font-size:11px;color:${C['slate-deep']}">Frontend architecture · 2h</span></div>
   </div>
   <div style="font-family:${ARCH};font-size:14px;line-height:1.4;color:${C.navy};padding:0 4px">${caption}</div>
