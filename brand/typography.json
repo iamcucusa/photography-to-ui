@@ -1,0 +1,54 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Cucusa brand typography v2 — Archivo for display, JetBrains Mono for reading sizes. Three surface-specific scales, fixed in px because each surface is designed once and only ever scales down. Playground values: not consumed by tokens/ yet.",
+  "font": {
+    "family": {
+      "display": {
+        "$type": "fontFamily",
+        "$value": ["Archivo", "Helvetica Neue", "Arial", "sans-serif"],
+        "$description": "Display face. Variable width 62–125 and weight 100–900. Loaded from Google Fonts in the canvas; needs self-hosting before it enters tokens/."
+      },
+      "text": {
+        "$type": "fontFamily",
+        "$value": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        "$description": "Text face, kept as the engineering signature. Body, labels, code, numbers, axes. Never above the H2 step."
+      }
+    }
+  },
+  "scale": {
+    "$description": "Sizes are px on the design canvas. 'screen' is the approximate size once the platform scales the artwork.",
+    "post": {
+      "$description": "LinkedIn post, 1080×1350. Phone shows it at ~×0.33. Label 36px is the floor: 12px on screen.",
+      "display": { "$type": "dimension", "$value": "144px", "$description": "Archivo 800, leading 0.95, tracking -0.03em. One statement, 2–5 words. ~48px on screen." },
+      "h1":      { "$type": "dimension", "$value": "104px", "$description": "Archivo 800, leading 1.00, tracking -0.025em. Post headline, ≤3 lines, ≤17 chars per line. ~35px on screen." },
+      "h2":      { "$type": "dimension", "$value": "72px",  "$description": "Archivo 700, leading 1.10, tracking -0.02em. Second thought, section title. ~24px on screen." },
+      "lead":    { "$type": "dimension", "$value": "56px",  "$description": "Archivo 500, leading 1.25, tracking -0.01em. Subtitle, attribution. ~19px on screen." },
+      "body":    { "$type": "dimension", "$value": "44px",  "$description": "JetBrains Mono 400, leading 1.40. Explanations, table cells, ≤35 chars per line. ~15px on screen." },
+      "label":   { "$type": "dimension", "$value": "36px",  "$description": "JetBrains Mono 500 caps, leading 1.20, tracking +0.08em. Eyebrows, tags, axes. The floor: ~12px on screen." }
+    },
+    "web": {
+      "$description": "Blog and portfolio: the same hierarchy re-based on an 18px body, where the reader controls zoom.",
+      "display": { "$type": "dimension", "$value": "72px" },
+      "h1":      { "$type": "dimension", "$value": "56px" },
+      "h2":      { "$type": "dimension", "$value": "40px" },
+      "lead":    { "$type": "dimension", "$value": "24px" },
+      "body":    { "$type": "dimension", "$value": "18px" },
+      "label":   { "$type": "dimension", "$value": "13px" }
+    },
+    "banner": {
+      "$description": "LinkedIn profile banner, 1584×396. Desktop top card shows it at ~804px (×0.51), phone at ~393px (×0.25). The headline carries the message alone; everything else is texture on a phone.",
+      "headline": { "$type": "dimension", "$value": "64px", "$description": "Archivo 800, width 85%, leading 1.02, tracking -0.02em. Two hand-broken lines in a 980–1080px column. ~32px on desktop." },
+      "roles":    { "$type": "dimension", "$value": "30px", "$description": "JetBrains Mono 500, leading 1.2, sand-light on navy. ~15px on desktop." },
+      "footer":   { "$type": "dimension", "$value": "26px", "$description": "JetBrains Mono 400, slate-light on navy. Under a rule on the 288px grid line, 14px below it, ~50px of air to the edge. ~13px on desktop." }
+    }
+  },
+  "layout": {
+    "banner": {
+      "$description": "Geometry measured from the live profile, in banner px.",
+      "photo": { "$type": "dimension", "$value": "330px", "$description": "Profile photo diameter at banner scale (168px on the 804px top card), placed 60px from the left, 190px from the top, overlapping the bottom edge." },
+      "copy-start": { "$type": "dimension", "$value": "460px", "$description": "Left edge of the copy column when the photo is in place; 560px when it is not." },
+      "copy-end": { "$type": "dimension", "$value": "1540px", "$description": "Right edge of the copy column. Phones crop the sides." },
+      "grid": { "$type": "dimension", "$value": "48px", "$description": "Background rule grid pitch, in rule-navy." }
+    }
+  }
+}

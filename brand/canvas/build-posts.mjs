@@ -1,0 +1,147 @@
+import { C, lum, cr, FONTS, ARCH, MONO, page, mono, logos, photo, out } from './lib.mjs'
+
+/** LinkedIn posts page: four posts and the phone check, 1080×1350. */
+console.log('post boards →')
+const eyebrow = (t, color=C['slate-deep'], size=13) => `<div style="font-family:${MONO};font-size:${size}px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:${color}">${t}</div>`
+const h = (t, size, color=C.navy, weight=800, extra='') => `<div style="font-family:${ARCH};font-size:${size}px;font-weight:${weight};line-height:1;letter-spacing:-0.025em;color:${color};${extra}">${t}</div>`
+
+/* ---------- POSTS (1080×1350) ---------- */
+const author = (fg, rule) => `<div style="display:flex;justify-content:space-between;align-items:center;border-top:4px solid ${fg};padding-top:28px">
+  <div style="display:flex;align-items:center;gap:20px">
+    <div style="width:56px;height:56px;border:4px solid ${fg};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:${ARCH};font-size:26px;font-weight:900;color:${fg}">G</div>
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${fg}">Grace Henriquez</div>
+  </div>
+  <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${rule}">cucusa</div>
+</div>`
+
+const statementInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C['magenta-deep']};color:${C.paper}">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper}">Career · 03</div>
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper};border:4px solid ${C.paper};padding:8px 18px">Staff</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:48px">
+    <div style="font-family:${ARCH};font-size:144px;font-weight:800;line-height:0.95;letter-spacing:-0.03em;color:${C.paper}">Senior → Staff isn't a promotion.</div>
+    <div style="font-family:${MONO};font-size:44px;font-weight:400;line-height:1.4;color:${C.paper};max-width:820px">It's a shift in responsibility and influence.</div>
+    <svg width="920" height="120" viewBox="0 0 920 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="0" y1="100" x2="380" y2="100" stroke="${C.paper}" stroke-width="8"/>
+      <line x1="380" y1="100" x2="540" y2="20" stroke="${C.paper}" stroke-width="8"/>
+      <line x1="540" y1="20" x2="920" y2="20" stroke="${C.paper}" stroke-width="8"/>
+      <rect x="360" y="80" width="40" height="40" fill="${C.paper}"/>
+      <rect x="520" y="0" width="40" height="40" fill="${C.paper}"/>
+      <line x1="0" y1="100" x2="0" y2="120" stroke="${C.paper}" stroke-width="8"/>
+      <line x1="916" y1="0" x2="916" y2="20" stroke="${C.paper}" stroke-width="8"/>
+    </svg>
+  </div>
+  ${author(C.paper, C.paper)}
+</div>`
+out('Post-Statement', page({title:'Post: statement', w:1080, h:1350, body:statementInner, bg:C['magenta-deep'], fg:C.paper}))
+
+/* diagram post */
+function layer(y, stroke){
+  const d = `M320 ${y} L640 ${y+160} L320 ${y+320} L0 ${y+160} Z`
+  const hatch = [0.2,0.4,0.6,0.8].map(t=>`<line x1="${320*t}" y1="${y+160-160*t}" x2="${320+320*t}" y2="${y+320-160*t}" stroke="${stroke}" stroke-width="4" stroke-dasharray="14 12"/>`).join('')
+  const nodes = [[320,y],[640,y+160],[320,y+320],[0,y+160]].map(([x,yy])=>`<rect x="${x-10}" y="${yy-10}" width="20" height="20" fill="${C.navy}"/>`).join('')
+  return `<path d="${d}" stroke="${stroke}" stroke-width="7" fill="${C.paper}"/>${hatch}${nodes}`
+}
+const diagramInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.paper};color:${C.navy}">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C['slate-deep']}">Frontend · state</div>
+    <div style="font-family:${ARCH};font-size:104px;font-weight:800;line-height:1;letter-spacing:-0.025em;color:${C.navy}">Most frontend bugs are not UI bugs.</div>
+    <div style="font-family:${ARCH};font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-0.02em;color:${C['magenta-deep']}">They're state bugs.</div>
+  </div>
+  <svg width="920" height="580" viewBox="0 0 920 680" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three stacked layers: UI state, derived state, server state, joined by dotted connectors">
+    <line x1="0" y1="180" x2="0" y2="500" stroke="${C['slate-mid']}" stroke-width="4" stroke-dasharray="4 10"/>
+    <line x1="640" y1="180" x2="640" y2="500" stroke="${C['slate-mid']}" stroke-width="4" stroke-dasharray="4 10"/>
+    <line x1="320" y1="340" x2="320" y2="660" stroke="${C['slate-mid']}" stroke-width="4" stroke-dasharray="4 10"/>
+    ${layer(340, C['sand-mid'])}
+    ${layer(180, C['sky-mid'])}
+    ${layer(20, C['magenta-mid'])}
+    <text x="672" y="190" font-family="JetBrains Mono, monospace" font-size="36" font-weight="500" fill="${C.navy}">UI state</text>
+    <text x="672" y="270" font-family="JetBrains Mono, monospace" font-size="30" font-style="italic" fill="${C['magenta-deep']}">stale data</text>
+    <text x="672" y="350" font-family="JetBrains Mono, monospace" font-size="36" font-weight="500" fill="${C.navy}">Derived</text>
+    <text x="672" y="430" font-family="JetBrains Mono, monospace" font-size="30" font-style="italic" fill="${C['sky-deep']}">race conditions</text>
+    <text x="672" y="510" font-family="JetBrains Mono, monospace" font-size="36" font-weight="500" fill="${C.navy}">Server</text>
+    <text x="672" y="590" font-family="JetBrains Mono, monospace" font-size="30" font-style="italic" fill="${C['sand-deep']}">two sources of truth</text>
+  </svg>
+  <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.3;color:${C['slate-deep']}">State has time, ownership and sync dimensions. UI doesn't.</div>
+</div>`
+out('Post-Diagram', page({title:'Post: diagram', w:1080, h:1350, body:diagramInner}))
+
+/* infographic post */
+const arche = [
+  {n:'Tech Lead', a:'Delivery leadership', s:'A design system components library across 10 apps'},
+  {n:'Architect', a:'Platform architecture', s:'Micro-frontends with a shared DS and routing'},
+  {n:'Problem Solver', a:'Production incidents', s:'A memory leak from reactive state subscriptions'},
+  {n:'Right Hand', a:'Leadership alignment', s:'Migrate and scale a legacy Angular platform'},
+]
+const infoInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.navy};color:${C.paper}">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C['slate-light']}">Frontend · staff</div>
+      <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.navy};background:${C['sand-light']};padding:8px 18px">4 archetypes</div>
+    </div>
+    <div style="font-family:${ARCH};font-size:72px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:${C.paper}">The <span style="color:${C['magenta-light']}">4</span> Staff Engineer<br>archetypes</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    ${arche.map((r,i)=>`<div style="display:flex;border:3px solid ${C['slate-light']}">
+      <div style="width:280px;flex-shrink:0;background:${i%2===0?C['magenta-light']:C['sky-light']};padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:12px">
+        <div style="font-family:${ARCH};font-size:44px;font-weight:800;line-height:1;letter-spacing:-0.02em;color:${C.navy}">${r.n}</div>
+        <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;color:${C.navy}">0${i+1}</div>
+      </div>
+      <div style="flex-grow:1;padding:16px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px">
+        <div style="font-family:${MONO};font-size:44px;font-weight:500;line-height:1.3;color:${C.paper}">${r.a}</div>
+        <div style="font-family:${MONO};font-size:36px;font-weight:400;line-height:1.3;color:${C['slate-light']}">${r.s}</div>
+      </div>
+    </div>`).join('\n')}
+  </div>
+  ${author(C.paper, C['slate-light'])}
+</div>`
+out('Post-Infographic', page({title:'Post: infographic', w:1080, h:1350, body:infoInner, bg:C.navy, fg:C.paper}))
+
+/* quote post */
+const quoteInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.paper};color:${C.navy}">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C['slate-deep']}">Design · 07</div>
+    <div style="display:flex;gap:10px">
+      <div style="width:36px;height:36px;background:${C['magenta-deep']}"></div><div style="width:36px;height:36px;background:${C['sky-deep']}"></div><div style="width:36px;height:36px;background:${C['sand-deep']}"></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:40px">
+    <div style="font-family:${ARCH};font-size:200px;font-weight:900;line-height:0.6;color:${C['magenta-deep']}">“</div>
+    <div style="font-family:${ARCH};font-size:128px;font-weight:800;line-height:0.98;letter-spacing:-0.03em;color:${C.navy}">Good UI is not a layer.</div>
+  </div>
+  <div style="display:flex;gap:0;align-items:stretch">
+    <div style="background:${C['sand-light']};padding:28px 32px;display:flex;flex-direction:column;gap:6px;flex-grow:1">
+      <div style="font-family:${ARCH};font-size:44px;font-weight:800;line-height:1;color:${C.navy}">Grace Henriquez</div>
+      <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.navy}">Frontend architecture · cucusa</div>
+    </div>
+    <div style="width:140px;background:${C.navy};display:flex;align-items:center;justify-content:center;font-family:${ARCH};font-size:64px;font-weight:900;color:${C.paper}">G</div>
+  </div>
+</div>`
+out('Post-Quote', page({title:'Post: quote', w:1080, h:1350, body:quoteInner}))
+
+/* phone check */
+const phone = (inner, caption) => `<div style="width:390px;height:844px;box-sizing:border-box;border:4px solid ${C.navy};border-radius:44px;padding:56px 12px 24px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px;overflow:hidden">
+  <div style="display:flex;align-items:center;gap:10px;padding:0 4px">
+    <div style="width:40px;height:40px;border-radius:20px;background:${C.navy};display:flex;align-items:center;justify-content:center;font-family:${ARCH};font-size:18px;font-weight:900;color:${C.paper}">G</div>
+    <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:${ARCH};font-size:14px;font-weight:700;color:${C.navy}">Grace Henriquez</span><span style="font-family:${MONO};font-size:11px;color:${C['slate-deep']}">Frontend architecture · 2h</span></div>
+  </div>
+  <div style="font-family:${ARCH};font-size:14px;line-height:1.4;color:${C.navy};padding:0 4px">${caption}</div>
+  <div style="width:358px;height:448px;overflow:hidden;flex-shrink:0">
+    <div style="width:1080px;height:1350px;transform:scale(0.3315);transform-origin:0 0">${inner}</div>
+  </div>
+  <div style="display:flex;gap:18px;padding:6px 4px;font-family:${MONO};font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:${C['slate-deep']}"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+</div>`
+const phoneBody = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.paper};color:${C.navy}">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    ${eyebrow('Phone check · 1080px post at ×0.33 · 358px wide in the feed', C['slate-deep'], 18)}
+    ${h('Label 36px → 12px. Body 44px → 15px.', 44)}
+  </div>
+  <div style="display:flex;gap:80px;justify-content:center">
+    ${phone(statementInner, 'Senior → Staff isn’t a promotion.')}
+    ${phone(diagramInner, 'Most frontend bugs are not UI bugs.')}
+  </div>
+  <div style="font-family:${MONO};font-size:18px;line-height:1.5;color:${C['slate-deep']}">Both posts are the real artboards scaled, not re-set. Nothing on either is below 12px on screen; every text pairing is ≥5.7:1.</div>
+</div>`
+out('Phone-Check', page({title:'Phone check', w:1080, h:1350, body:phoneBody}))
+

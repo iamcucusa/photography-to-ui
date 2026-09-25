@@ -32,6 +32,10 @@ cucusa (workspace root — orchestration only)
 │     data tier, in-app agent (Atlas). Own deps (d3-*, TanStack, zustand,
 │     vitest). See decision-surface/CLAUDE.md + its docs/ specs.
 │
+├── brand/                 identity v2 playground — NOT a workspace, nothing consumes it
+│     Palette solver, type scales, canvas board generators, assets.
+│     Validates the rebrand until it is ready to replace tokens/. See brand/CLAUDE.md
+│
 └── (future consumers)     landing pages, blog
 ```
 
@@ -139,6 +143,11 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
   src/components/    # DS-styled chrome: RateControl, SelfMap, InspectCard, Legend
   public/data/nodes.json  # Seed data — fetched at runtime, swappable with no rebuild
   vite.config.ts     # Builds to dist/switching-brain/
+brand/               # Identity v2 playground — palette solver, type scales, board generators (see brand/CLAUDE.md)
+  palette.mjs        # The solver: hue/sat/luminance spec → palette.json (DTCG-shaped, generated)
+  typography.json    # Archivo + JetBrains Mono, three px scales (post, web, banner)
+  canvas/            # Generators for the Design-canvas boards; dist/ is gitignored
+  assets/            # Logo SVGs (by index) + profile photo
 decision-surface/    # @cucusa/decision-surface — Country Data Overview (see decision-surface/CLAUDE.md)
   docs/              # design-spec.md + data-spec.md — the consumer's source of truth
   scripts/           # Seeded fixture generator + validator (python3), bundle-budget check

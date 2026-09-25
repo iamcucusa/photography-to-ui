@@ -56,3 +56,6 @@ switching-brain/public/proto-ref.svg
 
 # Local-only working notes
 decision-surface/docs/case-study-script.md
+
+# brand/ playground: generated canvas boards (regenerate with `node brand/canvas/build.mjs`)
+brand/canvas/dist/
