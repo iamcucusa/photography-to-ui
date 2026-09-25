@@ -264,3 +264,44 @@ const photoInner = `<div style="position:relative;width:1080px;height:1350px;box
   </div>
 </div>`
 out('Post-Photo-200OK', page({ title: 'Post: me reviewing an API response after seeing 200 OK', w: 1080, h: 1350, body: photoInner, bg: C.navy, fg: C.paper }))
+
+/* ---------- AI ADOPTION GAP (navy): two meters on one 0–100 scale ---------- */
+/** The 56% bar is sky, the 15% bar magenta: the pair clears the dataviz CVD check on navy
+ *  (magenta vs slate did not), and both are labelled directly. A dashed sky outline on the 15%
+ *  track marks where 56% reaches; the bracket under it is the gap.
+ *  Export name on the canvas: grace-henriquez-linkedin-post-1080x1350-design-systems-ai-adoption-gap.
+ *  The report's publisher is named on the canvas only (brand/CLAUDE.md → Disclosure), so the
+ *  citation here carries a placeholder. */
+const GAP_SOURCE = '[SOURCE]'
+const GAP_W = 920, gap56 = Math.round(GAP_W * 0.56), gap15 = Math.round(GAP_W * 0.15)
+const gapStat = (n, text) => `<div style="display:flex;align-items:flex-end;gap:36px">
+      <div style="font-family:${ARCH};font-size:144px;font-weight:800;line-height:0.85;letter-spacing:-0.03em;color:${C.paper};flex-shrink:0">${n}</div>
+      <div style="font-family:${MONO};font-size:44px;font-weight:400;line-height:1.3;color:${C.paper};padding-bottom:4px">${text}</div>
+    </div>`
+const gapInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.navy};color:${C.paper}">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">Design systems · AI</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:28px">
+    ${gapStat('56%', 'of design system teams use AI')}
+    <svg width="${GAP_W}" height="40" viewBox="0 0 ${GAP_W} 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar: 56 percent of a 100 percent track">
+      <rect x="0" y="0" width="${GAP_W}" height="40" fill="${C.ruleN}"/>
+      <rect x="0" y="0" width="${gap56}" height="40" fill="${C.skyL}"/>
+    </svg>
+    <div style="height:28px"></div>
+    ${gapStat('15%', 'say it lives up to the hype')}
+    <svg width="${GAP_W}" height="136" viewBox="0 0 ${GAP_W} 136" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar: 15 percent of a 100 percent track. A dashed outline marks where 56 percent would reach; the space between is labelled the gap">
+      <rect x="0" y="0" width="${GAP_W}" height="40" fill="${C.ruleN}"/>
+      <rect x="2" y="2" width="${gap56 - 4}" height="36" stroke="${C.skyL}" stroke-width="4" stroke-dasharray="10 8" fill="none"/>
+      <rect x="0" y="0" width="${gap15}" height="40" fill="${C.magL}"/>
+      <path d="M${gap15 + 4} 60 V76 H${gap56 - 2} V60" stroke="${C.paper}" stroke-width="4" fill="none"/>
+      <text x="${Math.round((gap15 + gap56) / 2)}" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="36" font-weight="500" letter-spacing="2.9" fill="${C.paper}">THE GAP</text>
+    </svg>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="font-family:${ARCH};font-size:56px;font-weight:500;line-height:1.2;letter-spacing:-0.01em;color:${C.paper};text-wrap:pretty">Most of that gap comes from how we wrote our design systems.</div>
+    <div style="font-family:${MONO};font-size:36px;font-weight:400;line-height:1.3;color:${C.slateL}">${GAP_SOURCE}, 2026 report · 147 teams</div>
+  </div>
+  ${author(C.paper)}
+</div>`
+out('Post-AI-Gap', page({ title: 'Post concept A: the gap', w: 1080, h: 1350, body: gapInner, bg: C.navy, fg: C.paper }))

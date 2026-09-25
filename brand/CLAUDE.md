@@ -47,3 +47,5 @@ When the two disagree, the canvas shows the latest thinking and this folder show
 ## Disclosure
 
 The logo files are `logo-01/02/03.svg` and their accessible names are "Logo 1/2/3" on purpose. Do not rename them after the companies, and do not put company names in this folder, in the generators, or in commit messages. The board copy on the canvas is private; this folder is not.
+
+A post that cites a company keeps the name on the canvas only. Its generator carries a `[SOURCE]` placeholder where the name goes (see `Post-AI-Gap` in `canvas/build-posts.mjs`), so regenerating a board never publishes the name and the placeholder shows what to fill before republishing.
