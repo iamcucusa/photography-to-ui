@@ -6,13 +6,10 @@ const eyebrow = (t, color=C['slate-deep'], size=13) => `<div style="font-family:
 const h = (t, size, color=C.navy, weight=800, extra='') => `<div style="font-family:${ARCH};font-size:${size}px;font-weight:${weight};line-height:1;letter-spacing:-0.025em;color:${color};${extra}">${t}</div>`
 
 /* ---------- POSTS (1080×1350) ---------- */
-/** Author lock-up, same on every post: 112px photo ringed in the post's ink, name in Archivo, role in mono. */
-const author = (fg, muted) => `<div style="display:flex;align-items:center;gap:24px;border-top:4px solid ${fg};padding-top:28px">
+/** Author lock-up, same on every post: 112px photo ringed in the post's ink, name in Archivo. */
+const author = (fg) => `<div style="display:flex;align-items:center;gap:24px;border-top:4px solid ${fg};padding-top:28px">
   <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${fg};box-sizing:border-box;flex-shrink:0">
-  <div style="display:flex;flex-direction:column;gap:8px">
-    <div style="font-family:${ARCH};font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:${fg}">Grace Henriquez</div>
-    <div style="font-family:${MONO};font-size:36px;font-weight:500;line-height:1.2;letter-spacing:0.08em;text-transform:uppercase;color:${muted}">Staff Product Engineer</div>
-  </div>
+  <div style="font-family:${ARCH};font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:${fg}">Grace Henriquez</div>
 </div>`
 
 const statementInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C['magenta-deep']};color:${C.paper}">
