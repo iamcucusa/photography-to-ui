@@ -247,7 +247,7 @@ const photoInner = `<div style="position:relative;width:1080px;height:1350px;box
     <div style="display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;flex-direction:column;background:${C.navy}">
         <div style="background:${C.skyD};padding:8px 32px;font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper}">Response</div>
-        <div style="padding:14px 32px 18px;display:flex;flex-direction:column;gap:0">
+        <div style="padding:32px 32px 24px;display:flex;flex-direction:column;gap:0">
           <div style="font-family:${MONO};font-size:36px;line-height:1.15;color:${C.paper}">{</div>
           ${codeLine('data', 'null', C.slateL)}${codeLine('status', '"success"', C.magL)}${codeLine('error', 'undefined', C.slateL)}${codeLine('message', '"something went wrong"', C.magL)}
           <div style="font-family:${MONO};font-size:36px;line-height:1.15;color:${C.paper}">}</div>
