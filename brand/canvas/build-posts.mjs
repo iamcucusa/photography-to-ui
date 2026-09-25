@@ -224,33 +224,37 @@ const growInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;
 out('Post-Grow-People', page({ title: 'Post: grow people without breaking the system', w: 1080, h: 1350, body: growInner, bg: C.navy, fg: C.paper }))
 
 /* ── Photo post: "200 OK" (humour) ───────────────────────────────────────────
-   The rule for photography under type: the photo is full-bleed and flat-tinted
-   navy at 35% so it recedes; every word sits on a SOLID panel (navy, or
-   magenta-deep for the punchline), never on the image itself, so contrast is
-   the panel's, not the photo's. Panels hang on the 80px margin grid, ragged.
-   The photo is a canvas asset (a TV still: not committed to the repo). */
+   The photo IS the post, so it stays the hero: 1:1 (the still is 4:5 like the
+   frame), tinted navy at only 25%, and the subject's face (x 583–896, y 321–746
+   at 1080 scale) is never covered. Type still never sits raw on the image: the
+   headline runs as per-line navy highlight blocks, the punchline is a small
+   magenta-deep block, the code is a navy panel below the chin, and the author
+   sits on a full-bleed navy band at the foot. Least coverage that keeps the
+   contrast guaranteed. The still is a canvas asset, not a repo file. */
 const PHOTO_200OK = '/_blob/42689bce512c37d4de3f4c3e840d32ae'
 const tint = (hex, a) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)},${a})`
-const panel = (inner, bg = C.navy, extra = '') => `<div style="background:${bg};padding:28px 40px;align-self:flex-start;${extra}">${inner}</div>`
-const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:40px;line-height:1.4;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
+const hl = (t) => `<div style="display:inline-block;background:${C.navy};color:${C.paper};font-family:${ARCH};font-size:72px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;padding:6px 20px">${t}</div>`
+const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
 const photoInner = `<div style="position:relative;width:1080px;height:1350px;box-sizing:border-box;overflow:hidden;background:${C.navy};color:${C.paper}">
-  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:0;width:1080px;height:1350px;object-fit:cover;object-position:68% 22%">
-  <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;background:${tint(C.navy, 0.35)}"></div>
-  <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between">
-    <div style="display:flex;flex-direction:column;gap:0;align-items:flex-start">
-      ${panel(`<div style="font-family:${ARCH};font-size:72px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:${C.paper}">Me reviewing<br>an API response<br>after seeing</div>`)}
-      ${panel(`<div style="font-family:${ARCH};font-size:144px;font-weight:800;line-height:0.95;letter-spacing:-0.03em;color:${C.paper}">200 OK</div>`, C.magD, 'margin-left:40px;')}
-    </div>
-    <div style="display:flex;flex-direction:column;gap:24px">
-      <div style="background:${C.navy};border-top:4px solid ${C.magL};padding:28px 40px 32px;display:flex;flex-direction:column;gap:12px">
-        <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">Response</div>
-        <div style="font-family:${MONO};font-size:40px;line-height:1.4;color:${C.paper}">{</div>
-        ${codeLine('data', 'null', C.slateL)}${codeLine('status', '"success"', C.magL)}${codeLine('error', 'undefined', C.slateL)}${codeLine('message', '"something went wrong"', C.magL)}
-        <div style="font-family:${MONO};font-size:40px;line-height:1.4;color:${C.paper}">}</div>
+  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:0;width:1080px;height:1350px;object-fit:cover;object-position:50% 50%">
+  <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;background:${tint(C.navy, 0.25)}"></div>
+  <div style="position:absolute;left:80px;top:80px;display:flex;flex-direction:column;align-items:flex-start;gap:0">
+    ${hl('Me reviewing')}${hl('an API response')}${hl('after seeing')}
+    <div style="margin-top:16px;background:${C.magD};color:${C.paper};font-family:${ARCH};font-size:120px;font-weight:800;line-height:0.95;letter-spacing:-0.03em;padding:24px 32px">200 OK</div>
+  </div>
+  <div style="position:absolute;left:80px;right:80px;top:790px;background:${C.navy};border-top:4px solid ${C.magL};padding:20px 36px 24px;display:flex;flex-direction:column;gap:6px">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">Response</div>
+    <div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}">{</div>
+    ${codeLine('data', 'null', C.slateL)}${codeLine('status', '"success"', C.magL)}${codeLine('error', 'undefined', C.slateL)}${codeLine('message', '"something went wrong"', C.magL)}
+    <div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}">}</div>
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;background:${C.navy};padding:24px 80px 32px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:24px">
+        <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:96px;height:96px;border-radius:50%;object-fit:cover;border:4px solid ${C.paper};box-sizing:border-box;flex-shrink:0">
+        <div style="font-family:${ARCH};font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:${C.paper}">Grace Henriquez</div>
       </div>
-      <div style="background:${C.navy};padding:0 40px 32px">
-        ${author(C.paper, `<div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.sandL}">#fridayfun</div>`)}
-      </div>
+      <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.sandL}">#fridayfun</div>
     </div>
   </div>
 </div>`

@@ -33,7 +33,7 @@ When the two disagree, the canvas shows the latest thinking and this folder show
 
 **Type.** Archivo (variable width and weight) at display sizes, JetBrains Mono at reading sizes, and mono never above the H2 step. Scales are fixed in px per surface because each surface is designed once and only scales down. The post floor is 36px (12px on a phone); the banner floor is 26px (13px on the desktop top card).
 
-**Photography under type.** A photo is full-bleed and flat-tinted navy at 35 % so it recedes; every word sits on a solid panel (navy, or magenta-deep for the punchline), never on the image, so contrast is the panel's and not the photo's. Panels hang ragged on the 80px margin grid. Photos are canvas assets, not repo files, unless they are Grace's own.
+**Photography under type.** When the photo is the point, it stays the hero: 1:1 where the ratio allows, a flat navy tint of 20–30 % (never a gradient), and the subject's face is never covered. Type still never sits raw on the image: the headline runs as per-line navy highlight blocks, the punchline is a small magenta-deep block, longer text is a navy panel placed below the subject, and the author sits on a full-bleed navy band at the foot. Least coverage that keeps every pairing one from the matrix. Photos are canvas assets, not repo files, unless they are Grace's own.
 
 **Banner geometry**, measured from the live profile: the top card is ~804px wide, the photo is ~168px there, which is a 330px circle at (60, 190) in banner px. Copy runs from x = 460 (560 without the photo) to 1540. The footer rule sits on the 288px grid line.
 
