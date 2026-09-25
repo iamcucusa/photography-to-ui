@@ -230,18 +230,19 @@ out('Post-Grow-People', page({ title: 'Post: grow people without breaking the sy
    instead of black; the headline is Archivo, the punchline bigger and in
    magenta-light; the panel is navy with a sky-deep header; code sits on the
    36px floor (the original's 20px is 7px on a phone). Type sits on the photo
-   only where the tint makes it navy-dark (the wall); the face (x 583–896,
-   y 321–746) stays clear. The still is a canvas asset, not a repo file. */
+   only where the tint makes it navy-dark (the wall); the photo is cropped taller and
+   left-aligned (1520px, shifted up 170px) so the chin clears the panel; the
+   setup lines are semi-condensed so the hair clears the headline. The still is a canvas asset, not a repo file. */
 const PHOTO_200OK = '/_blob/42689bce512c37d4de3f4c3e840d32ae'
 const tint = (hex, a) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)},${a})`
 const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
 const photoInner = `<div style="position:relative;width:1080px;height:1350px;box-sizing:border-box;overflow:hidden;background:${C.navy};color:${C.paper}">
-  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:0;width:1080px;height:1350px;object-fit:cover;object-position:50% 50%">
+  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:-170px;width:1080px;height:1520px;object-fit:cover;object-position:0% 0%">
   <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;background:${tint(C.navy, 0.4)}"></div>
   <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;box-sizing:border-box;padding:80px 80px 0;display:flex;flex-direction:column;justify-content:space-between">
     <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
-      <div style="font-family:${ARCH};font-size:72px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:${C.paper}">Me reviewing<br>an API response<br>after seeing</div>
-      <div style="font-family:${ARCH};font-size:120px;font-weight:800;line-height:0.95;letter-spacing:-0.03em;color:${C.magL}">200 OK</div>
+      <div style="font-family:${ARCH};font-size:72px;font-weight:800;font-stretch:85%;line-height:1.1;letter-spacing:-0.02em;color:${C.paper}">Me reviewing<br>an API response<br>after seeing</div>
+      <div style="font-family:${ARCH};font-size:120px;font-weight:800;font-stretch:85%;line-height:0.95;letter-spacing:-0.03em;color:${C.magL}">200 OK</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:32px">
       <div style="display:flex;flex-direction:column;background:${C.navy}">
