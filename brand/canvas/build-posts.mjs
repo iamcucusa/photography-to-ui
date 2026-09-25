@@ -30,7 +30,7 @@ const statementInner = `<div style="width:1080px;height:1350px;box-sizing:border
       <line x1="916" y1="0" x2="916" y2="20" stroke="${C.paper}" stroke-width="8"/>
     </svg>
   </div>
-  ${author(C.paper, C.paper)}
+  ${author(C.paper)}
 </div>`
 out('Post-Statement', page({title:'Post: statement', w:1080, h:1350, body:statementInner, bg:C['magenta-deep'], fg:C.paper}))
 
@@ -92,7 +92,7 @@ const infoInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;
       </div>
     </div>`).join('\n')}
   </div>
-  ${author(C.paper, C['slate-light'])}
+  ${author(C.paper)}
 </div>`
 out('Post-Infographic', page({title:'Post: infographic', w:1080, h:1350, body:infoInner, bg:C.navy, fg:C.paper}))
 
@@ -219,7 +219,7 @@ const growInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;
     <div style="font-family:${ARCH};font-size:104px;font-weight:800;line-height:1;letter-spacing:-0.025em;color:${C.paper}"><span style="color:${C.magL}">Grow</span> people<br>without breaking<br>the <span style="color:${C.magL}">system</span></div>
   </div>
   ${growSvg}
-  ${author(C.paper, C.slateL)}
+  ${author(C.paper)}
 </div>`
 out('Post-Grow-People', page({ title: 'Post: grow people without breaking the system', w: 1080, h: 1350, body: growInner, bg: C.navy, fg: C.paper }))
 
@@ -230,32 +230,32 @@ out('Post-Grow-People', page({ title: 'Post: grow people without breaking the sy
    instead of black; the headline is Archivo, the punchline bigger and in
    magenta-light; the panel is navy with a sky-deep header; code sits on the
    36px floor (the original's 20px is 7px on a phone). Type sits on the photo
-   only where the tint makes it navy-dark (the wall); the photo is cropped taller and
-   left-aligned (1520px, shifted up 170px) so the chin clears the panel; the
-   setup lines are semi-condensed so the hair clears the headline. The still is a canvas asset, not a repo file. */
+   only where the tint makes it navy-dark (the wall); the photo stays at the original 1:1
+   scale (chin ≈ y 800); the panel is compact (tight header, 1.15 leading,
+   80px footer avatar) so it starts near y 900, below the chin, as the original does. The still is a canvas asset, not a repo file. */
 const PHOTO_200OK = '/_blob/42689bce512c37d4de3f4c3e840d32ae'
 const tint = (hex, a) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)},${a})`
-const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
+const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:36px;line-height:1.15;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
 const photoInner = `<div style="position:relative;width:1080px;height:1350px;box-sizing:border-box;overflow:hidden;background:${C.navy};color:${C.paper}">
-  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:-170px;width:1080px;height:1520px;object-fit:cover;object-position:45% 0%">
+  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:0;width:1080px;height:1350px;object-fit:cover;object-position:50% 50%">
   <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;background:${tint(C.navy, 0.4)}"></div>
   <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;box-sizing:border-box;padding:80px 80px 0;display:flex;flex-direction:column;justify-content:space-between">
     <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
       <div style="font-family:${ARCH};font-size:72px;font-weight:800;font-stretch:85%;line-height:1.1;letter-spacing:-0.02em;color:${C.paper}">Me reviewing<br>an API response<br>after seeing</div>
       <div style="font-family:${ARCH};font-size:120px;font-weight:800;font-stretch:85%;line-height:0.95;letter-spacing:-0.03em;color:${C.magL}">200 OK</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;flex-direction:column;background:${C.navy}">
-        <div style="background:${C.skyD};padding:14px 32px;font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper}">Response</div>
-        <div style="padding:20px 32px 24px;display:flex;flex-direction:column;gap:4px">
-          <div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}">{</div>
+        <div style="background:${C.skyD};padding:8px 32px;font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper}">Response</div>
+        <div style="padding:14px 32px 18px;display:flex;flex-direction:column;gap:0">
+          <div style="font-family:${MONO};font-size:36px;line-height:1.15;color:${C.paper}">{</div>
           ${codeLine('data', 'null', C.slateL)}${codeLine('status', '"success"', C.magL)}${codeLine('error', 'undefined', C.slateL)}${codeLine('message', '"something went wrong"', C.magL)}
-          <div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}">}</div>
+          <div style="font-family:${MONO};font-size:36px;line-height:1.15;color:${C.paper}">}</div>
         </div>
       </div>
-      <div style="margin:0 -80px;background:${C.navy};padding:24px 80px 32px;display:flex;align-items:center;justify-content:space-between">
+      <div style="margin:0 -80px;background:${C.navy};padding:16px 80px 20px;display:flex;align-items:center;justify-content:space-between">
         <div style="display:flex;align-items:center;gap:24px">
-          <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:96px;height:96px;border-radius:50%;object-fit:cover;border:4px solid ${C.paper};box-sizing:border-box;flex-shrink:0">
+          <img src="${AVATAR_URL}" alt="Grace Henriquez" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:4px solid ${C.paper};box-sizing:border-box;flex-shrink:0">
           <div style="font-family:${ARCH};font-size:44px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:${C.paper}">Grace Henriquez</div>
         </div>
         <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.sandL}">#fridayfun</div>
