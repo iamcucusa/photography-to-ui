@@ -237,7 +237,7 @@ const PHOTO_200OK = '/_blob/42689bce512c37d4de3f4c3e840d32ae'
 const tint = (hex, a) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)},${a})`
 const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:36px;line-height:1.3;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
 const photoInner = `<div style="position:relative;width:1080px;height:1350px;box-sizing:border-box;overflow:hidden;background:${C.navy};color:${C.paper}">
-  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:-170px;width:1080px;height:1520px;object-fit:cover;object-position:0% 0%">
+  <img src="${PHOTO_200OK}" alt="" style="position:absolute;left:0;top:-170px;width:1080px;height:1520px;object-fit:cover;object-position:45% 0%">
   <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;background:${tint(C.navy, 0.4)}"></div>
   <div style="position:absolute;left:0;top:0;width:1080px;height:1350px;box-sizing:border-box;padding:80px 80px 0;display:flex;flex-direction:column;justify-content:space-between">
     <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
