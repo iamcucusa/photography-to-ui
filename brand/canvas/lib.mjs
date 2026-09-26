@@ -42,8 +42,17 @@ export const LOGOS = [logoSvg('logo-01.svg', 24, 'Logo 1'), logoSvg('logo-02.svg
 export const logos = (color) =>
   `<div style="display:flex;gap:40px;align-items:center;height:44px;color:${color}">${LOGOS.join('')}</div>`
 
-/** The avatar lives in the canvas's own asset store; this is its id there. Re-upload → update. */
-export const AVATAR_URL = '/_blob/541fb94b94d3ac559c224ee0b9cca8e4'
+// ── Canvases. Links and per-canvas asset ids live in canvases.json, the single source of truth
+//    for local and cloud sessions alike. An id is only valid on the canvas it was uploaded to.
+export const CANVASES = JSON.parse(readFileSync(resolve(HERE, 'canvases.json'), 'utf8'))
+/** Asset url for a board that will be published to `canvas` ('reference' | 'posts'). Fails loudly if missing. */
+export function asset(canvas, name) {
+  const url = CANVASES[canvas]?.assets?.[name]
+  if (!url) throw new Error(`canvases.json: no asset "${name}" on the ${canvas} canvas — upload or copy it there and record its /_blob id`)
+  return url
+}
+export const AVATAR = { brand: asset('reference', 'avatar'), posts: asset('posts', 'avatar') }
+export const AVATAR_URL = AVATAR.brand
 export const photo = (d, left, top) =>
   `<img src="${AVATAR_URL}" alt="Grace Henriquez" style="position:absolute;left:${left}px;top:${top}px;width:${d}px;height:${d}px;border-radius:50%;object-fit:cover;border:4px solid #FFFFFF;box-sizing:border-box;background:#FFFFFF">`
 

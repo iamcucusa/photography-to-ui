@@ -1,0 +1,21 @@
+{
+  "$comment": "Which Design canvas each board goes to, and the asset ids each canvas holds. Assets are per canvas: an id is only valid on the canvas it was uploaded to. See brand/CLAUDE.md → Working here for the posts-canvas rollover.",
+  "reference": {
+    "title": "Cucusa Brand Identity v2",
+    "url": "https://claude.ai/artifact/P6s8yoeWjMyYBbfY4n4HAQ",
+    "boards": "build-brand.mjs + build-banners.mjs",
+    "assets": {
+      "avatar": "/_blob/541fb94b94d3ac559c224ee0b9cca8e4"
+    }
+  },
+  "posts": {
+    "title": "Cucusa LinkedIn Posts 01",
+    "url": "https://claude.ai/artifact/PHZNDmzvsUAgcgLopmuWFB",
+    "boards": "build-posts.mjs",
+    "assets": {
+      "avatar": "/_blob/dcd9ce14f97e2ded5387ddefbf69da3e",
+      "photo-200ok": "/_blob/2690a27fa441422d834ebfd089e8cff1"
+    }
+  },
+  "postsArchive": []
+}

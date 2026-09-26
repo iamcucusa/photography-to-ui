@@ -1,6 +1,11 @@
-import { C, lum, cr, FONTS, ARCH, MONO, page, mono, logos, photo, out, AVATAR_URL } from './lib.mjs'
+import { C, lum, cr, FONTS, ARCH, MONO, page, mono, logos, photo, out, AVATAR, asset } from './lib.mjs'
 
-/** LinkedIn posts page: four posts and the phone check, 1080×1350. */
+/**
+ * LinkedIn posts, 1080×1350: nine posts and the phone check. These go to the rolling posts
+ * canvas (canvases.json → posts), never to the brand reference canvas, so every asset id
+ * here is that canvas's.
+ */
+const AVATAR_URL = AVATAR.posts
 console.log('post boards →')
 const eyebrow = (t, color=C['slate-deep'], size=13) => `<div style="font-family:${MONO};font-size:${size}px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:${color}">${t}</div>`
 const h = (t, size, color=C.navy, weight=800, extra='') => `<div style="font-family:${ARCH};font-size:${size}px;font-weight:${weight};line-height:1;letter-spacing:-0.025em;color:${color};${extra}">${t}</div>`
@@ -108,7 +113,7 @@ const quoteInner = `<div style="width:1080px;height:1350px;box-sizing:border-box
     <div style="font-family:${ARCH};font-size:200px;font-weight:900;line-height:0.6;color:${C['magenta-deep']}">“</div>
     <div style="font-family:${ARCH};font-size:128px;font-weight:800;line-height:0.98;letter-spacing:-0.03em;color:${C.navy}">Good UI is not a layer.</div>
   </div>
-  ${author(C.navy, C['slate-deep'])}
+  ${author(C.navy)}
 </div>`
 out('Post-Quote', page({title:'Post: quote', w:1080, h:1350, body:quoteInner}))
 
@@ -166,7 +171,7 @@ const labelRows = layers.map((l) => `<div style="display:flex;flex-direction:col
 const bubble = (inner) => `<div style="background:${C.paper};color:${C.navy};font-family:${MONO};font-size:36px;font-weight:400;line-height:1.3;padding:12px 24px;align-self:flex-start">${inner}</div>`
 const apiInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.navy};color:${C.paper}">
   <div style="display:flex;justify-content:space-between;align-items:center">
-    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">TypeScript · API contracts</div>
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.slateL}">API CONTRACTS</div>
     <a href="#next" aria-label="Next slide" style="width:104px;height:104px;border:4px solid ${C.paper};box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;text-decoration:none"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 24H40M26 10L40 24L26 38" stroke="${C.magL}" stroke-width="5" stroke-linecap="square"/></svg></a>
   </div>
   <div style="display:flex;flex-direction:column;gap:8px">
@@ -233,7 +238,7 @@ out('Post-Grow-People', page({ title: 'Post: grow people without breaking the sy
    only where the tint makes it navy-dark (the wall); the photo stays at the original 1:1
    scale (chin ≈ y 800); the panel is compact (tight header, 1.15 leading,
    80px footer avatar) so it starts near y 900, below the chin, as the original does. The still is a canvas asset, not a repo file. */
-const PHOTO_200OK = '/_blob/42689bce512c37d4de3f4c3e840d32ae'
+const PHOTO_200OK = asset('posts', 'photo-200ok')
 const tint = (hex, a) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)},${a})`
 const codeLine = (k, v, vc) => `<div style="font-family:${MONO};font-size:36px;line-height:1.15;color:${C.paper}"><span style="color:${C.slateL}">  ${k}:</span> <span style="color:${vc}">${v}</span>,</div>`
 const photoInner = `<div style="position:relative;width:1080px;height:1350px;box-sizing:border-box;overflow:hidden;background:${C.navy};color:${C.paper}">
@@ -305,3 +310,32 @@ const gapInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;p
   ${author(C.paper)}
 </div>`
 out('Post-AI-Gap', page({ title: 'Post concept A: the gap', w: 1080, h: 1350, body: gapInner, bg: C.navy, fg: C.paper }))
+
+/* ---------- CONCEPT C: design systems an agent can read ---------- */
+// C · an agent can't ask. Statement layout on magenta-deep. Two token rows: a dashed paper outline for the
+// guess ("red-600"), a solid paper field with magenta text for the name that says what it is for.
+const tokenRow = (name, note, solid) => solid
+  ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:24px;background:${C.paper};border:4px solid ${C.paper};padding:18px 24px">
+        <div style="font-family:${MONO};font-size:44px;font-weight:700;color:${C.magD}">${name}</div>
+        <div style="font-family:${MONO};font-size:36px;font-weight:400;color:${C.magD}">${note}</div>
+      </div>`
+  : `<div style="display:flex;justify-content:space-between;align-items:center;gap:24px;border:4px dashed ${C.paper};padding:18px 24px">
+        <div style="font-family:${MONO};font-size:44px;font-weight:500;color:${C.paper}">${name}</div>
+        <div style="font-family:${MONO};font-size:36px;font-weight:400;color:${C.paper}">${note}</div>
+      </div>`
+const cantAskInner = `<div style="width:1080px;height:1350px;box-sizing:border-box;padding:80px;display:flex;flex-direction:column;justify-content:space-between;background:${C.magD};color:${C.paper}">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper};">Design systems · AI</div>
+    <div style="font-family:${MONO};font-size:36px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:${C.paper};border:4px solid ${C.paper};padding:8px 18px">Tokens</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:44px">
+    <div style="font-family:${ARCH};font-size:144px;font-weight:800;line-height:0.95;letter-spacing:-0.03em;color:${C.paper}">An agent can't ask.</div>
+    <div style="font-family:${MONO};font-size:44px;font-weight:400;line-height:1.4;color:${C.paper};max-width:880px">It reads names, props, types and docs. Where those are ambiguous, it guesses.</div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      ${tokenRow('red-600', 'a guess', false)}
+      ${tokenRow('color.text.danger', "says what it's for", true)}
+    </div>
+  </div>
+  ${author(C.paper)}
+</div>`
+out('Post-AI-Cant-Ask', page({ title: "Post concept C: an agent can't ask", w: 1080, h: 1350, body: cantAskInner, bg: C.magD, fg: C.paper }))
