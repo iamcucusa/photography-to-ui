@@ -32,7 +32,7 @@ When a canvas and this folder disagree, the canvas shows the latest thinking and
 
 ## The system in one screen
 
-**Colour.** Two grounds, paper `#FBFAF7` and navy `#10203A`. Four hues, magenta / sky / sand / slate, each with three steps solved to a luminance target so every step has one job: *deep* is text on paper and the ground under paper text (≥ 5.7:1); *mid* is lines, shapes and chart series, ≥ 3:1 on both grounds; *light* is text on navy and the ground under navy text (≥ 6:1). Same-hue stacks never pass. No step above Y 0.40, so nothing reads neon; saturation 64–80 %, so nothing reads pastel; fields are flat.
+**Colour.** Two grounds, paper `#F9FBFE` (a cool near-white, never a warm ivory) and navy `#10203A`. Four hues, magenta / sky / sand / slate, each with three steps solved to a luminance target so every step has one job: *deep* is text on paper and the ground under paper text (≥ 5.7:1); *mid* is lines, shapes and chart series, ≥ 3:1 on both grounds; *light* is text on navy and the ground under navy text (≥ 6:1). Same-hue stacks never pass. No step above Y 0.40, so nothing reads neon; saturation 64–80 %, so nothing reads pastel; fields are flat.
 
 **Type.** Archivo (variable width and weight) at display sizes, JetBrains Mono at reading sizes, and mono never above the H2 step. Scales are fixed in px per surface because each surface is designed once and only scales down. The post floor is 36px (12px on a phone); the banner floor is 26px (13px on the desktop top card).
 

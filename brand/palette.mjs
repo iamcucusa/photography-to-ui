@@ -60,15 +60,15 @@ function solve(h, s, Y) {
 
 // ── The spec: hue, saturation, luminance target ────────────────────
 const GROUNDS = {
-  paper: { value: '#FBFAF7', description: 'Default ground. Near-white with a trace of warmth so a post edge stays visible on a white feed.' },
+  paper: { value: '#F9FBFE', description: 'Default ground. Near-white tinted cool toward the slate hue (214°), solved to Y 0.965: as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.' },
   navy: { value: '#10203A', description: 'Ink on paper, and the dark ground. The professional layer.' },
 }
 const RULES = {
-  paper: { value: '#D9D4CB', description: 'Decorative dividers on paper. Structural lines use slate-mid.' },
+  paper: { value: '#D0D5DC', description: 'Decorative dividers on paper, the same cool hue as paper at the old divider luminance. Structural lines use slate-mid.' },
   navy: { value: '#2A3D56', description: 'Decorative dividers and grids on navy. Structural lines use slate-light.' },
 }
 const SURFACES = {
-  raised: { value: '#FFFFFF', description: 'A component that sits on paper: a field, an open list. White, so the control lifts off the warm ground without a shadow.' },
+  raised: { value: '#FFFFFF', description: 'A component that sits on paper: a field, an open list. White, one step lighter than paper; the border does the separating.' },
   hover: { value: '#EEEFF1', description: 'Hovered row inside a raised component: navy at 7 % over white. One row at a time, the one under the pointer.' },
 }
 const HUES = {

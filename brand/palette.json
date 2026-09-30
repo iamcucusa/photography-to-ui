@@ -4,13 +4,13 @@
   "color": {
     "$type": "color",
     "paper": {
-      "$value": "#FBFAF7",
-      "$description": "Default ground. Near-white with a trace of warmth so a post edge stays visible on a white feed.",
+      "$value": "#F9FBFE",
+      "$description": "Default ground. Near-white tinted cool toward the slate hue (214°), solved to Y 0.965: as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.",
       "$extensions": {
         "com.cucusa.brand": {
-          "luminance": 0.956,
+          "luminance": 0.963,
           "onPaper": 1,
-          "onNavy": 15.6
+          "onNavy": 15.71
         }
       }
     },
@@ -20,20 +20,20 @@
       "$extensions": {
         "com.cucusa.brand": {
           "luminance": 0.014,
-          "onPaper": 15.6,
+          "onPaper": 15.71,
           "onNavy": 1
         }
       }
     },
     "rule": {
       "paper": {
-        "$value": "#D9D4CB",
-        "$description": "Decorative dividers on paper. Structural lines use slate-mid.",
+        "$value": "#D0D5DC",
+        "$description": "Decorative dividers on paper, the same cool hue as paper at the old divider luminance. Structural lines use slate-mid.",
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.662,
-            "onPaper": 1.41,
-            "onNavy": 11.03
+            "onPaper": 1.42,
+            "onNavy": 11.04
           }
         }
       },
@@ -43,7 +43,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.045,
-            "onPaper": 10.59,
+            "onPaper": 10.66,
             "onNavy": 1.47
           }
         }
@@ -52,7 +52,7 @@
     "surface": {
       "raised": {
         "$value": "#FFFFFF",
-        "$description": "A component that sits on paper: a field, an open list. White, so the control lifts off the warm ground without a shadow.",
+        "$description": "A component that sits on paper: a field, an open list. White, one step lighter than paper; the border does the separating.",
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 1,
@@ -67,7 +67,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.863,
-            "onPaper": 1.1,
+            "onPaper": 1.11,
             "onNavy": 14.15
           }
         }
@@ -81,7 +81,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.111,
-            "onPaper": 6.23,
+            "onPaper": 6.27,
             "onNavy": 2.5
           }
         }
@@ -92,7 +92,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.194,
-            "onPaper": 4.11,
+            "onPaper": 4.14,
             "onNavy": 3.79
           }
         }
@@ -103,7 +103,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.334,
-            "onPaper": 2.62,
+            "onPaper": 2.64,
             "onNavy": 5.96
           }
         }
@@ -117,7 +117,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.112,
-            "onPaper": 6.21,
+            "onPaper": 6.25,
             "onNavy": 2.51
           }
         }
@@ -128,7 +128,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.149,
-            "onPaper": 5.06,
+            "onPaper": 5.09,
             "onNavy": 3.08
           }
         }
@@ -139,7 +139,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.335,
-            "onPaper": 2.61,
+            "onPaper": 2.63,
             "onNavy": 5.97
           }
         }
@@ -153,7 +153,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.111,
-            "onPaper": 6.24,
+            "onPaper": 6.28,
             "onNavy": 2.5
           }
         }
@@ -164,7 +164,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.248,
-            "onPaper": 3.37,
+            "onPaper": 3.39,
             "onNavy": 4.63
           }
         }
@@ -175,7 +175,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.334,
-            "onPaper": 2.62,
+            "onPaper": 2.64,
             "onNavy": 5.96
           }
         }
@@ -189,7 +189,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.111,
-            "onPaper": 6.24,
+            "onPaper": 6.28,
             "onNavy": 2.5
           }
         }
@@ -200,7 +200,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.196,
-            "onPaper": 4.1,
+            "onPaper": 4.12,
             "onNavy": 3.81
           }
         }
@@ -211,7 +211,7 @@
         "$extensions": {
           "com.cucusa.brand": {
             "luminance": 0.4,
-            "onPaper": 2.23,
+            "onPaper": 2.25,
             "onNavy": 6.98
           }
         }
