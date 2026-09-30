@@ -5,7 +5,8 @@
     "url": "https://claude.ai/artifact/P6s8yoeWjMyYBbfY4n4HAQ",
     "boards": "build-brand.mjs + build-banners.mjs",
     "assets": {
-      "avatar": "/_blob/541fb94b94d3ac559c224ee0b9cca8e4"
+      "avatar": "/_blob/541fb94b94d3ac559c224ee0b9cca8e4",
+      "avatar-96-ring-slate-deep": "/_blob/70e9ce25d405c09d2c2d2c4669416a6f"
     }
   },
   "posts": {

@@ -1,4 +1,6 @@
 import { C, lum, cr, FONTS, ARCH, MONO, page, mono, logos, photo, out } from './lib.mjs'
+import { readFileSync } from 'node:fs'
+import { asset } from './lib.mjs'
 
 /** Brand identity page: Palette, Contrast matrix, Pairing sets, Type system. */
 console.log('brand boards →')
@@ -26,7 +28,8 @@ function swatch(key, step){
   <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">${stepRole[step]}<br>Y ${Y} · paper ${onP}:1 · navy ${onN}:1</div>
 </div>`
 }
-const paletteBody = `<div style="width:1440px;height:960px;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:32px;background:${C.paper}">
+const H_PALETTE = 1540   // grounds row + four hue rows; the old 960 frame cut off the lower rows
+const paletteBody = `<div style="width:1440px;height:${H_PALETTE}px;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:32px;background:${C.paper}">
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
     <div style="display:flex;flex-direction:column;gap:14px">
       ${eyebrow('Cucusa · brand identity v2 · 01 color')}
@@ -35,17 +38,17 @@ const paletteBody = `<div style="width:1440px;height:960px;box-sizing:border-box
     <div style="font-family:${MONO};font-size:13px;line-height:1.5;color:${C['slate-deep']};max-width:520px">Three steps per hue, each solved to a luminance target so it has exactly one job. No neon (no step above Y 0.40), no pastel (saturation 64–80% everywhere), no gradients: fields are flat.</div>
   </div>
   <div style="display:flex;gap:32px;align-items:stretch">
-    <div style="width:320px;display:flex;flex-direction:column;gap:10px">
+    <div style="width:272px;display:flex;flex-direction:column;gap:10px">
       <div style="height:132px;background:${C.paper};border:3px solid ${C.navy};box-sizing:border-box;display:flex;align-items:flex-end;padding:14px 16px;font-family:${ARCH};font-size:34px;font-weight:800;color:${C.navy}">Aa</div>
       <div style="display:flex;justify-content:space-between;font-family:${MONO};font-size:13px;font-weight:600"><span>paper</span><span>${C.paper}</span></div>
       <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">DEFAULT GROUND · COOL NEAR-WHITE, NEVER A WARM IVORY<br>Y ${lum(C.paper).toFixed(3)} · vs navy ${cr(C.paper, C.navy).toFixed(1)}:1</div>
     </div>
-    <div style="width:320px;display:flex;flex-direction:column;gap:10px">
+    <div style="width:272px;display:flex;flex-direction:column;gap:10px">
       <div style="height:132px;background:${C.navy};display:flex;align-items:flex-end;padding:14px 16px;box-sizing:border-box;font-family:${ARCH};font-size:34px;font-weight:800;color:${C.paper}">Aa</div>
       <div style="display:flex;justify-content:space-between;font-family:${MONO};font-size:13px;font-weight:600"><span>navy</span><span>${C.navy}</span></div>
       <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">INK ON PAPER · DARK GROUND · PROFESSIONAL LAYER<br>Y ${lum(C.navy).toFixed(3)} · vs paper ${cr(C.navy, C.paper).toFixed(1)}:1</div>
     </div>
-    <div style="width:320px;display:flex;flex-direction:column;gap:10px">
+    <div style="width:272px;display:flex;flex-direction:column;gap:10px">
       <div style="height:132px;background:${C.mist};box-sizing:border-box;display:flex;align-items:flex-end;padding:14px 16px;gap:12px"><div style="font-family:${ARCH};font-size:34px;font-weight:800;color:${C.navy};line-height:1">Aa</div><div style="flex-grow:1;height:40px;background:${C['surface-raised']};border:1px solid ${C['slate-mid']};border-radius:2px"></div></div>
       <div style="display:flex;justify-content:space-between;font-family:${MONO};font-size:13px;font-weight:600"><span>mist</span><span>${C.mist}</span></div>
       <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">UI GROUND · POSTS THAT SHOW LIGHT UI · WHITE LIFTS ${cr(C['surface-raised'], C.mist).toFixed(1)}:1<br>Y ${lum(C.mist).toFixed(3)} · vs navy ${cr(C.mist, C.navy).toFixed(1)}:1</div>
@@ -71,10 +74,10 @@ const paletteBody = `<div style="width:1440px;height:960px;box-sizing:border-box
     <div style="flex-grow:1;display:flex;gap:16px">${swatch(hu.key,'deep')}${swatch(hu.key,'mid')}${swatch(hu.key,'light')}</div>
   </div>`).join('\n')}
 </div>`
-out('Palette', page({title:'Palette v2', w:1440, h:960, body:paletteBody}))
+out('Palette', page({title:'Palette v2', w:1440, h:H_PALETTE, body:paletteBody}))
 
 /* ---------- 2. CONTRAST MATRIX ---------- */
-const grounds = ['paper','navy','magenta-deep','magenta-light','sky-light','sand-light']
+const grounds = ['paper','navy','mist','magenta-deep','magenta-light','sky-light','sand-light']
 const inks = ['navy','paper','magenta-deep','magenta-mid','magenta-light','sky-deep','sky-mid','sky-light','sand-deep','sand-mid','sand-light','slate-deep','slate-light']
 const grade = r => r>=7?'AAA':r>=4.5?'AA':r>=3?'LG':'NO'
 const gradeText = {AAA:'any text', AA:'body 44px+', LG:'72px+ / shapes', NO:'do not pair'}
@@ -88,7 +91,8 @@ function cell(g,i){
     <div style="display:flex;justify-content:space-between;align-items:baseline;font-family:${MONO};font-size:11px;color:${badgeFg}"><span style="font-weight:700">${r.toFixed(1)}</span><span style="font-weight:${gr==='NO'?400:700};letter-spacing:0.06em">${gr}</span></div>
   </div>`
 }
-const contrastBody = `<div style="width:1440px;height:960px;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:28px;background:${C.paper}">
+const H_CONTRAST = 960 + 110   // one 104px row + 6px gap per ground beyond the first six
+const contrastBody = `<div style="width:1440px;height:${H_CONTRAST}px;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:28px;background:${C.paper}">
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
     <div style="display:flex;flex-direction:column;gap:14px">
       ${eyebrow('Cucusa · brand identity v2 · 01 color · pairing matrix')}
@@ -107,11 +111,11 @@ const contrastBody = `<div style="width:1440px;height:960px;box-sizing:border-bo
   </div>
   <div style="font-family:${MONO};font-size:12px;line-height:1.5;color:${C['slate-deep']};max-width:1100px">Ratios are WCAG 2.x. LinkedIn renders a 1080px post at roughly one third on a phone, so “body 44px+” means 15px on screen and “72px+” means 24px, the large-text threshold. The mid step is deliberately at about 4:1 on paper: it is for lines and shapes, never body copy. Same-hue stacks (magenta-light on magenta-deep) never pass; separate hues by a ground, not by a step.</div>
 </div>`
-out('Contrast', page({title:'Contrast matrix', w:1440, h:960, body:contrastBody}))
+out('Contrast', page({title:'Contrast matrix', w:1440, h:H_CONTRAST, body:contrastBody}))
 
 
 { // pairing sets
-const grounds = ['paper','navy','magenta-deep','magenta-light','sky-light','sand-light']
+const grounds = ['paper','navy','mist','magenta-deep','magenta-light','sky-light','sand-light']
 const inks = ['navy','paper','magenta-deep','magenta-mid','magenta-light','sky-deep','sky-mid','sky-light','sand-deep','sand-mid','sand-light','slate-deep','slate-mid','slate-light']
 const all = []
 for(const g of grounds) for(const i of inks) if(g!==i){ const r=cr(C[g],C[i]); all.push({g,i,r}) }
@@ -176,6 +180,8 @@ const scale = [
   {step:'Lead', li:56, ph:19, web:24, face:'Archivo 500', lh:'1.25', ls:'-0.01em', use:'Subtitle, quote attribution', fam:ARCH, w:500, sls:'-0.01em'},
   {step:'Body', li:44, ph:15, web:18, face:'JetBrains Mono 400', lh:'1.40', ls:'0', use:'Explanations, table cells · ≤35 chars per line', fam:MONO, w:400, sls:'0'},
   {step:'Label', li:36, ph:12, web:13, face:'JetBrains Mono 500 · caps', lh:'1.20', ls:'+0.08em', use:'Eyebrows, tags, axes · the floor for post type', fam:MONO, w:500, sls:'0.08em', caps:true},
+  {step:'Control', li:36, ph:12, web:18, face:'JetBrains Mono 400 · value 500', lh:'1.00', ls:'0', use:'Inside a component: field value, option · drawn at 2×', fam:MONO, w:400, sls:'0'},
+  {step:'Helper', li:32, ph:11, web:16, face:'JetBrains Mono 500 label · 400 text', lh:'1.25', ls:'0', use:'Component label, helper, error · the component floor', fam:MONO, w:400, sls:'0'},
 ]
 const num = v => `<div style="font-family:${MONO};font-size:15px;font-weight:500;color:${C.navy}">${v}</div>`
 const cell = v => `<div style="font-family:${MONO};font-size:13px;color:${C.navy}">${v}</div>`
@@ -188,7 +194,7 @@ const rows = scale.map(s => `<div style="${GRID};padding:20px 0;border-bottom:1p
       ${num(s.li+'px')}${num(s.ph+'px')}${num(s.web+'px')}${cell(s.face)}${cell(s.lh)}${cell(s.ls)}
     </div>`).join('\n')
 
-const body = `<div style="width:1440px;height:1960px;box-sizing:border-box;padding:64px;display:flex;flex-direction:column;gap:48px;background:${C.paper}">
+const body = `<div style="width:1440px;height:2120px;box-sizing:border-box;padding:64px;display:flex;flex-direction:column;gap:48px;background:${C.paper}">
   <div style="display:grid;grid-template-columns:minmax(0, 1fr) 520px;column-gap:48px;align-items:end">
     <div style="display:flex;flex-direction:column;gap:16px">
       ${label('Cucusa · brand identity v2 · 02 typography')}
@@ -274,7 +280,7 @@ a{color:${C.skyD}}a:hover{color:${C.navy}}
 </helmet>
 ${body}
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1960}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2120}}'>
 class Component extends DCLogic {
   renderVals() { return {}; }
 }
@@ -282,4 +288,101 @@ class Component extends DCLogic {
 </body>
 </html>
 `)
+}
+
+
+/* ---------- 3. COMPONENTS ----------
+   Every value comes from brand/components.json, palette.json and typography.json, drawn at post
+   scale (2x), the size a component appears at on a 1080 post. Copy is neutral on purpose. */
+{
+const K = JSON.parse(readFileSync(new URL('../components.json', import.meta.url), 'utf8'))
+const TY = JSON.parse(readFileSync(new URL('../typography.json', import.meta.url), 'utf8'))
+const X = K['post-scale'].$value
+const px = (t) => parseFloat(t.$value) * X
+const web = (t) => parseFloat(t.$value)
+const ref = (t) => { const v = t.$value; return v.startsWith('{') ? C[v.slice(7, -1).replace('.', '-')] : v }
+const F = K.field, L = K.listbox, O = K.option, CB = K.checkbox, HP = K.helper, RING = K['focus-ring'], IC = K['icon-stroke']
+const SW = px(IC), CAP = IC.$extensions['com.cucusa.brand'].linecap, JOIN = IC.$extensions['com.cucusa.brand'].linejoin
+const CTRL = web(TY.scale.web.control) * X, HELP = web(TY.scale.web.helper) * X
+const [PS, PE] = F['padding-inline'].$value.split(' ').map((v) => parseFloat(v) * X)
+const BW = px(F['border-width']), CBS = px(CB.size), ROW = px(O.height)
+const AVATAR96 = asset('reference', 'avatar-96-ring-slate-deep')
+const small = (t, color = C['slate-deep']) => `<div style="font-family:${MONO};font-size:12px;line-height:1.5;color:${color}">${t}</div>`
+const secLabel = (t) => `<div style="font-family:${MONO};font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:${C['slate-deep']}">${t}</div>`
+
+const chevron = (up) => `<svg width="${px(F.chevron)}" height="${px(F.chevron)}" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="${up ? 'M7 20L16 11L25 20' : 'M7 12L16 21L25 12'}" stroke="${C.navy}" stroke-width="${SW}" stroke-linecap="${CAP}" stroke-linejoin="${JOIN}"/></svg>`
+const box = (on) => on
+  ? `<span aria-hidden="true" style="width:${CBS}px;height:${CBS}px;flex-shrink:0;box-sizing:border-box;border-radius:${px(CB.radius)}px;background:${ref(CB.checked)};display:flex;align-items:center;justify-content:center"><svg width="${CBS}" height="${CBS}" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 15.5L13 20.5L22.5 10" stroke="${ref(CB.mark)}" stroke-width="${SW}" stroke-linecap="${CAP}" stroke-linejoin="${JOIN}"/></svg></span>`
+  : `<span aria-hidden="true" style="width:${CBS}px;height:${CBS}px;flex-shrink:0;box-sizing:border-box;border-radius:${px(CB.radius)}px;background:${ref(F.surface)};border:${BW}px solid ${ref(CB.border)}"></span>`
+const errIcon = (color) => `<svg width="${px(HP.icon)}" height="${px(HP.icon)}" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="14" r="11.5" stroke="${color}" stroke-width="${SW}"/><path d="M14 8.5V15" stroke="${color}" stroke-width="${SW}" stroke-linecap="${CAP}"/><circle cx="14" cy="19.5" r="1.8" fill="${color}"/></svg>`
+const label = (t) => `<div style="font-family:${MONO};font-size:${HELP}px;font-weight:500;line-height:1.25;color:${C.navy};margin-bottom:${px(F['label-gap'])}px">${t}</div>`
+const field = (state, value) => {
+  const open = state !== 'rest', err = state === 'error'
+  const bc = ref(err ? F.border.error : open ? F.border.open : F.border.rest)
+  const ring = open ? `box-shadow:0 0 0 ${px(RING.offset)}px ${C.mist},0 0 0 ${px(RING.offset) + px(RING.width)}px ${ref(RING.color)};` : ''
+  const placeholder = value === 'Select one'
+  return `<div style="width:100%;height:${px(F.height)}px;box-sizing:border-box;padding:0 ${PE}px 0 ${PS}px;border:${BW}px solid ${bc};border-radius:${px(F.radius)}px;background:${ref(F.surface)};${ring}display:flex;align-items:center;justify-content:space-between"><span style="font-family:${MONO};font-size:${CTRL}px;font-weight:500;color:${placeholder ? ref(F.placeholder) : ref(F.value)}">${value}</span>${chevron(open)}</div>`
+}
+const errLine = (t) => `<div style="margin-top:${px(HP.gap)}px;display:flex;align-items:center;gap:12px">${errIcon(ref(HP.error))}<span style="font-family:${MONO};font-size:${HELP}px;line-height:1.3;color:${ref(HP.error)};white-space:nowrap">${t}</span></div>`
+const cursor = (left) => `<svg width="30" height="42" viewBox="-2 -2 30 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;left:${left}px;top:${Math.round(ROW / 2) - 8}px"><path d="M0 0V30L7.5 23.5L12.5 35L18 32.6L13 21.5H23Z" fill="${C.navy}" stroke="${C['surface-raised']}" stroke-width="2.5" stroke-linejoin="round"/></svg>`
+const row = (t, on, hover) => `<div style="position:relative;height:${ROW}px;margin:0 ${px(O.inset)}px;padding:0 ${px(O['padding-inline'])}px;box-sizing:border-box;border-radius:${px(O.radius)}px;display:flex;align-items:center;gap:${px(O.gap)}px;background:${hover ? ref(O.hover) : ref(F.surface)}">${box(on)}<span style="font-family:${MONO};font-size:${CTRL}px;line-height:1;color:${ref(O.text)}">${t}</span>${hover ? cursor(px(O['padding-inline']) + CBS + px(O.gap) + Math.round(t.length * 0.6 * CTRL) + 18) : ''}</div>`
+const sh = L.shadow.$value
+const list = (rows) => `<div style="margin-top:${px(L.offset)}px;padding:${px(L['padding-block'])}px 0;background:${ref(F.surface)};border:${BW}px solid ${ref(L.border)};border-radius:${px(L.radius)}px;box-shadow:0 ${parseFloat(sh.offsetY) * X}px ${parseFloat(sh.blur) * X}px rgba(16,32,58,0.12);display:flex;flex-direction:column">${rows}</div>`
+const panel = (inner, pad = 40) => `<div style="background:${C.mist};padding:${pad}px">${inner}</div>`
+const note = (k, v) => `<div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid ${C['rule-paper']};padding-top:12px"><div style="font-family:${ARCH};font-size:18px;font-weight:800;color:${C.navy}">${k}</div>${small(v)}</div>`
+const card = (title, inner, caption) => `<div style="background:${C.paper};border:1px solid ${C['rule-paper']};padding:24px;display:flex;flex-direction:column;gap:16px"><div style="font-family:${ARCH};font-size:18px;font-weight:800;color:${C.navy}">${title}</div>${inner}${small(caption)}</div>`
+const corner = (r, t) => `<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start"><div style="width:72px;height:72px;box-sizing:border-box;border:${BW}px solid ${C.navy};border-radius:${r}px;background:${ref(F.surface)}"></div>${small(t, C.navy)}</div>`
+const swatch = (k) => `<div style="display:flex;flex-direction:column;gap:6px;flex-grow:1;flex-basis:0"><div style="height:56px;background:${C[k]};border:1px solid ${C['rule-paper']}"></div><div style="font-family:${MONO};font-size:12px;font-weight:600;color:${C.navy}">${k}</div>${small(`${C[k]} · navy ${cr(C.navy, C[k]).toFixed(1)}:1`)}</div>`
+
+const H_COMPONENTS = 1760
+const componentsBody = `<div style="width:1440px;height:${H_COMPONENTS}px;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:40px;background:${C.paper}">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      ${eyebrow('Cucusa · brand identity v2 · 03 components')}
+      ${h('Near-square, drawn at 2×.', 64)}
+    </div>
+    <div style="font-family:${MONO};font-size:13px;line-height:1.5;color:${C['slate-deep']};max-width:560px">When a post shows UI, it shows a real component, drawn from components.json at twice web scale on the mist ground. Corners are near-square, icon strokes end square, and the only shadow in the brand belongs to an open list.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    ${secLabel('01 · Field states')}
+    ${panel(`<div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:48px;align-items:start">
+      <div>${label('Rest')}${field('rest', 'Select one')}<div style="margin-top:24px">${small(`${F.border.rest.$value.slice(7, -1).replace('.', '-')} border, ${web(F['border-width'])} → ${BW}px · corner ${web(F.radius)} → ${px(F.radius)}px · field ${web(F.height)} → ${px(F.height)}px`)}</div></div>
+      <div>${label('Open, focused')}${field('open', 'Select one')}<div style="margin-top:24px">${small(`navy border · magenta-mid ring ${web(RING.width)} + ${web(RING.offset)} → ${px(RING.width)} + ${px(RING.offset)}px, the gap in the ground colour`)}</div></div>
+      <div>${label('Error')}${field('error', '3 selected')}${errLine('Pick one ground.')}<div style="margin-top:24px">${small('magenta-deep at the same border width · circled exclamation and a message, never a heavier border')}</div></div>
+    </div>`)}
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    ${secLabel('02 · The open list')}
+    ${panel(`<div style="display:grid;grid-template-columns:600px minmax(0, 1fr);column-gap:64px;align-items:start">
+      <div>${label('Ground')}${field('open', '2 selected')}${list([row('paper', true, false), row('navy', true, true), row('mist', false, false)].join(''))}</div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding-top:52px">
+        ${note('Row', `${web(O.height)} → ${ROW}px · flush to the list edge · square corners · text ${web(TY.scale.web.control)} → ${CTRL}px`)}
+        ${note('Checkbox', `${web(CB.size)} → ${CBS}px · corner ${web(CB.radius)} → ${px(CB.radius)}px · navy when checked · sits under the field's value`)}
+        ${note('Hover', 'surface.hover on one row, the one under the pointer, as a full-width band')}
+        ${note('List', `rule-paper border · corner ${web(L.radius)} → ${px(L.radius)}px · offset ${web(L.offset)} → ${px(L.offset)}px · the brand's only shadow`)}
+      </div>
+    </div>`)}
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    ${secLabel('03 · Primitives')}
+    <div style="display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));column-gap:24px">
+      ${card('Corners', `<div style="display:flex;gap:24px">${corner(px(F.radius), `${px(F.radius)}px · field, list`)}${corner(px(CB.radius), `${px(CB.radius)}px · checkbox`)}${corner(0, '0 · row, post')}</div>`, 'Near-square: design and engineering, not playful. Round only for a photo or a circular icon.')}
+      ${card('Icons', `<div style="display:flex;gap:24px;align-items:center;height:72px">${chevron(false)}${chevron(true)}${box(true)}${errIcon(ref(HP.error))}</div>`, `One stroke, ${web(IC)}px web → ${SW}px on a post · ${CAP} caps · ${JOIN === 'miter' ? 'mitred' : JOIN} joins.`)}
+      ${card('Surfaces', `<div style="display:flex;gap:12px">${swatch('mist')}${swatch('surface-raised')}${swatch('surface-hover')}</div>`, `White lifts ${cr(C['surface-raised'], C.mist).toFixed(1)}:1 off mist with no effect.`)}
+      ${card('Component type', `<div style="display:flex;flex-direction:column;gap:12px"><div style="font-family:${MONO};font-size:${CTRL}px;font-weight:500;line-height:1;color:${C.navy}">Select one</div><div style="font-family:${MONO};font-size:${HELP}px;line-height:1;color:${C.navy}">Pick one ground.</div></div>`, `control ${web(TY.scale.web.control)} → ${CTRL}px · helper ${web(TY.scale.web.helper)} → ${HELP}px, the component floor.`)}
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    ${secLabel('04 · Signature')}
+    ${panel(`<div style="display:flex;justify-content:space-between;align-items:center;gap:48px">
+      <div style="display:flex;align-items:center;gap:20px"><img src="${AVATAR96}" alt="Grace Henriquez" width="96" height="96" style="display:block;width:96px;height:96px;flex-shrink:0"><div style="font-family:${ARCH};font-size:${web(TY.scale.post.label)}px;font-weight:700;line-height:1;letter-spacing:-0.01em;color:${C['slate-deep']}">Grace Henriquez</div></div>
+      <div style="max-width:620px">${small("96px on a post, about 32px in the phone feed: the size of a comment avatar, still a face. The name sits on the 36px post floor. The avatar is one baked PNG with its circle and ring, so the phone export never has to crop, clip or border it.")}</div>
+    </div>`, 32)}
+  </div>
+</div>`
+out('Components', page({ title: 'Components', w: 1440, h: H_COMPONENTS, body: componentsBody }))
 }

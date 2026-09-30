@@ -25,7 +25,7 @@ When a canvas and this folder disagree, the canvas shows the latest thinking and
 | `assets/` | The three logo SVGs (fill `currentColor`, named by index) and the profile photo. |
 | `canvas/canvases.json` | **Which canvas is which**: title and link of the reference canvas and the current posts canvas, the asset ids each one holds, and the archived posts canvases. The generators read it; a session reads it to know where to publish. |
 | `canvas/lib.mjs` | Shared pieces: colours from the solver, fonts, the `.dc.html` page skeleton, logos, `CANVASES` + `asset(canvas, name)` from `canvases.json`. |
-| `canvas/build-brand.mjs` | Reference canvas, Brand identity page: palette, contrast matrix, usable pairings, type system. |
+| `canvas/build-brand.mjs` | Reference canvas, Brand identity page: palette (paper, navy, mist), contrast matrix, usable pairings, type system with the component sizes, and the components board (field states, open list, primitives, signature), all computed from `palette.json`, `typography.json` and `components.json`. |
 | `canvas/build-posts.mjs` | Posts canvas: nine posts (including concepts A and C) and the phone check. Uses the posts canvas's asset ids; concept A cites its report through the `[SOURCE]` placeholder (see Disclosure). |
 | `canvas/build-banners.mjs` | Reference canvas, LinkedIn banner page: statement banner, three photo-checked variants, export frames, illustration review. |
 | `canvas/build.mjs` | Runs all three into `canvas/dist/` (gitignored). |
