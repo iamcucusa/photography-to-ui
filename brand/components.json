@@ -6,6 +6,11 @@
     "$value": 2,
     "$description": "Multiplier from web px to post px. At 2× a 16px text reads about 12px on a phone, the post floor."
   },
+  "icon-stroke": {
+    "$type": "dimension",
+    "$value": "1.75px",
+    "$description": "One stroke for every icon inside a component: the chevron, the checkbox tick, the error icon. Round caps and joins."
+  },
   "focus-ring": {
     "$description": "Keyboard focus and an open field. Same shape as tokens/shape.json focus-ring; colour moves to magenta-mid, the v2 step that clears 3:1 on both grounds.",
     "width": { "$type": "dimension", "$value": "2px" },
@@ -27,7 +32,7 @@
     "value": { "$type": "color", "$value": "{color.navy}" },
     "placeholder": { "$type": "color", "$value": "{color.slate.deep}", "$description": "6.4:1 on white, so placeholder text still passes AA." },
     "label-gap": { "$type": "dimension", "$value": "6px", "$description": "Label to field." },
-    "chevron": { "$type": "dimension", "$value": "16px", "$description": "Stroke icon, 1.75px, round caps, navy. Points down closed, up open." }
+    "chevron": { "$type": "dimension", "$value": "16px", "$description": "Outline icon at icon-stroke, navy. Points down closed, up open." }
   },
   "listbox": {
     "$description": "The open list under a field.",
@@ -51,13 +56,13 @@
     "size": { "$type": "dimension", "$value": "15px" },
     "radius": { "$type": "dimension", "$value": "3px" },
     "border": { "$type": "color", "$value": "{color.slate.mid}" },
-    "checked": { "$type": "color", "$value": "{color.navy}", "$description": "Navy fill, paper tick (1.75px stroke). Checked stays neutral: selection is not an accent." },
+    "checked": { "$type": "color", "$value": "{color.navy}", "$description": "Navy fill, paper tick at icon-stroke. Checked stays neutral: selection is not an accent." },
     "mark": { "$type": "color", "$value": "{color.paper}" }
   },
   "helper": {
     "$description": "Text under a field. Error text uses magenta-deep with a 16px outline icon: calm, polite, 6.2:1 on paper.",
     "gap": { "$type": "dimension", "$value": "10px", "$description": "From the field, or from the open list when the list is shown." },
-    "icon": { "$type": "dimension", "$value": "14px" },
+    "icon": { "$type": "dimension", "$value": "14px", "$description": "Error uses the circled exclamation, outline, at icon-stroke. Not an i, which reads as a tip, and not a triangle or a circled X, which read as a warning or a blocking failure and are louder than an error should be here. Slightly taller than the cap height, which balances a round icon against text." },
     "error": { "$type": "color", "$value": "{color.magenta.deep}" }
   }
 }
