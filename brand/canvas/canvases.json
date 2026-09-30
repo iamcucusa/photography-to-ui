@@ -14,6 +14,7 @@
     "boards": "build-posts.mjs",
     "assets": {
       "avatar": "/_blob/dcd9ce14f97e2ded5387ddefbf69da3e",
+      "avatar-ring-slate-deep": "/_blob/0788786041bbbc14db7398de8748c9d1",
       "photo-200ok": "/_blob/2690a27fa441422d834ebfd089e8cff1"
     }
   },
