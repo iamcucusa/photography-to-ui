@@ -27,7 +27,7 @@
     "surface": { "$type": "color", "$value": "{color.surface.raised}" },
     "border": {
       "rest": { "$type": "color", "$value": "{color.slate.mid}", "$description": "4.1:1 on white, above the 3:1 a control boundary needs." },
-      "open": { "$type": "color", "$value": "{color.navy}" },
+      "open": { "$type": "color", "$value": "{color.navy}", "$description": "Focused or open. Focus shows the ring with the list still closed; open adds the list and turns the chevron up." },
       "error": { "$type": "color", "$value": "{color.magenta.deep}", "$description": "Same width as rest. The error is carried by colour, icon and message, never by a heavier border." }
     },
     "value": { "$type": "color", "$value": "{color.navy}" },

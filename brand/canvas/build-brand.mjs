@@ -316,10 +316,12 @@ const box = (on) => on
   : `<span aria-hidden="true" style="width:${CBS}px;height:${CBS}px;flex-shrink:0;box-sizing:border-box;border-radius:${px(CB.radius)}px;background:${ref(F.surface)};border:${BW}px solid ${ref(CB.border)}"></span>`
 const errIcon = (color) => `<svg width="${px(HP.icon)}" height="${px(HP.icon)}" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="14" r="11.5" stroke="${color}" stroke-width="${SW}"/><path d="M14 8.5V15" stroke="${color}" stroke-width="${SW}" stroke-linecap="${CAP}"/><circle cx="14" cy="19.5" r="1.8" fill="${color}"/></svg>`
 const label = (t) => `<div style="font-family:${MONO};font-size:${HELP}px;font-weight:500;line-height:1.25;color:${C.navy};margin-bottom:${px(F['label-gap'])}px">${t}</div>`
+/** state: 'rest' | 'focus' (keyboard focus, list closed) | 'open' (list shown) | 'error' (closed, after leaving the field).
+    The chevron points up only when the list is open. */
 const field = (state, value) => {
-  const open = state !== 'rest', err = state === 'error'
-  const bc = ref(err ? F.border.error : open ? F.border.open : F.border.rest)
-  const ring = open ? `box-shadow:0 0 0 ${px(RING.offset)}px ${C.mist},0 0 0 ${px(RING.offset) + px(RING.width)}px ${ref(RING.color)};` : ''
+  const open = state === 'open', err = state === 'error', focused = state === 'focus' || open
+  const bc = ref(err ? F.border.error : focused ? F.border.open : F.border.rest)
+  const ring = focused ? `box-shadow:0 0 0 ${px(RING.offset)}px ${C.mist},0 0 0 ${px(RING.offset) + px(RING.width)}px ${ref(RING.color)};` : ''
   const placeholder = value === 'Select one'
   return `<div style="width:100%;height:${px(F.height)}px;box-sizing:border-box;padding:0 ${PE}px 0 ${PS}px;border:${BW}px solid ${bc};border-radius:${px(F.radius)}px;background:${ref(F.surface)};${ring}display:flex;align-items:center;justify-content:space-between"><span style="font-family:${MONO};font-size:${CTRL}px;font-weight:500;color:${placeholder ? ref(F.placeholder) : ref(F.value)}">${value}</span>${chevron(open)}</div>`
 }
@@ -334,7 +336,7 @@ const card = (title, inner, caption) => `<div style="background:${C.paper};borde
 const corner = (r, t) => `<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start"><div style="width:72px;height:72px;box-sizing:border-box;border:${BW}px solid ${C.navy};border-radius:${r}px;background:${ref(F.surface)}"></div>${small(t, C.navy)}</div>`
 const swatch = (k) => `<div style="display:flex;flex-direction:column;gap:6px;flex-grow:1;flex-basis:0"><div style="height:56px;background:${C[k]};border:1px solid ${C['rule-paper']}"></div><div style="font-family:${MONO};font-size:12px;font-weight:600;color:${C.navy}">${k}</div>${small(`${C[k]} · navy ${cr(C.navy, C[k]).toFixed(1)}:1`)}</div>`
 
-const H_COMPONENTS = 1760
+const H_COMPONENTS = 1820
 const componentsBody = `<div style="width:1440px;height:${H_COMPONENTS}px;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:40px;background:${C.paper}">
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
     <div style="display:flex;flex-direction:column;gap:14px">
@@ -345,16 +347,16 @@ const componentsBody = `<div style="width:1440px;height:${H_COMPONENTS}px;box-si
   </div>
 
   <div style="display:flex;flex-direction:column;gap:16px">
-    ${secLabel('01 · Field states')}
+    ${secLabel('01 · Field states · closed')}
     ${panel(`<div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:48px;align-items:start">
       <div>${label('Rest')}${field('rest', 'Select one')}<div style="margin-top:24px">${small(`${F.border.rest.$value.slice(7, -1).replace('.', '-')} border, ${web(F['border-width'])} → ${BW}px · corner ${web(F.radius)} → ${px(F.radius)}px · field ${web(F.height)} → ${px(F.height)}px`)}</div></div>
-      <div>${label('Open, focused')}${field('open', 'Select one')}<div style="margin-top:24px">${small(`navy border · magenta-mid ring ${web(RING.width)} + ${web(RING.offset)} → ${px(RING.width)} + ${px(RING.offset)}px, the gap in the ground colour`)}</div></div>
-      <div>${label('Error')}${field('error', '3 selected')}${errLine('Pick one ground.')}<div style="margin-top:24px">${small('magenta-deep at the same border width · circled exclamation and a message, never a heavier border')}</div></div>
+      <div>${label('Focused')}${field('focus', 'Select one')}<div style="margin-top:24px">${small(`keyboard focus, list still closed · navy border · magenta-mid ring ${web(RING.width)} + ${web(RING.offset)} → ${px(RING.width)} + ${px(RING.offset)}px, the gap in the ground colour`)}</div></div>
+      <div>${label('Error')}${field('error', '3 selected')}${errLine('Pick one ground.')}<div style="margin-top:24px">${small('closed, after leaving the field · magenta-deep at the same border width · circled exclamation and a message, never a heavier border')}</div></div>
     </div>`)}
   </div>
 
   <div style="display:flex;flex-direction:column;gap:16px">
-    ${secLabel('02 · The open list')}
+    ${secLabel('02 · The open list · chevron up')}
     ${panel(`<div style="display:grid;grid-template-columns:600px minmax(0, 1fr);column-gap:64px;align-items:start">
       <div>${label('Ground')}${field('open', '2 selected')}${list([row('paper', true, false), row('navy', true, true), row('mist', false, false)].join(''))}</div>
       <div style="display:flex;flex-direction:column;gap:16px;padding-top:52px">
