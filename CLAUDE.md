@@ -146,6 +146,7 @@ switching-brain/     # @cucusa/switching-brain — "The Switching Brain" viz (se
 brand/               # Identity v2 playground — palette solver, type scales, board generators (see brand/CLAUDE.md)
   palette.mjs        # The solver: hue/sat/luminance spec → palette.json (DTCG-shaped, generated)
   typography.json    # Archivo + JetBrains Mono, three px scales (post, web, banner)
+  components.json    # Component conventions at web 1x (select field, list, checkbox); posts draw them at 2x
   canvas/            # Generators for the Design-canvas boards; dist/ is gitignored
   assets/            # Logo SVGs (by index) + profile photo
 decision-surface/    # @cucusa/decision-surface — Country Data Overview (see decision-surface/CLAUDE.md)

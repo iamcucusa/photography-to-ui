@@ -60,7 +60,7 @@ function solve(h, s, Y) {
 
 // ── The spec: hue, saturation, luminance target ────────────────────
 const GROUNDS = {
-  paper: { value: '#F9FBFE', description: 'Default ground. Near-white tinted cool toward the slate hue (214°), solved to Y 0.965: as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.' },
+  paper: { value: '#F9FBFE', description: 'Default ground. Near-white tinted cool toward the slate hue (214°), at Y 0.963 (solved to 0.965, then rounded to hex): as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.' },
   navy: { value: '#10203A', description: 'Ink on paper, and the dark ground. The professional layer.' },
   mist: { value: '#E7EBF1', description: 'Cool light ground for a post that shows light UI: slate hue 214°, saturation 28 %, Y 0.83. Dark enough that a white component lifts off it (1.2:1) with no extra effect; every text that sits on paper still passes on it.' },
 }

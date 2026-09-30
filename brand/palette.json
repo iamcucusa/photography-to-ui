@@ -5,7 +5,7 @@
     "$type": "color",
     "paper": {
       "$value": "#F9FBFE",
-      "$description": "Default ground. Near-white tinted cool toward the slate hue (214°), solved to Y 0.965: as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.",
+      "$description": "Default ground. Near-white tinted cool toward the slate hue (214°), at Y 0.963 (solved to 0.965, then rounded to hex): as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.",
       "$extensions": {
         "com.cucusa.brand": {
           "luminance": 0.963,

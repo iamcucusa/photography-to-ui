@@ -4,7 +4,7 @@
   "post-scale": {
     "$type": "number",
     "$value": 2,
-    "$description": "Multiplier from web px to post px. At 2× a 16px text reads about 12px on a phone, the post floor."
+    "$description": "Multiplier from web px to post px. At 2× a 16px text is 32px on the post, about 11px in the phone feed. That is why 16px is the component floor: it is one step under the 36px post-type floor, never further."
   },
   "icon-stroke": {
     "$type": "dimension",
@@ -61,7 +61,7 @@
     "mark": { "$type": "color", "$value": "{color.paper}" }
   },
   "helper": {
-    "$description": "Text under a field. Error text uses magenta-deep with a 16px outline icon: calm, polite, 6.2:1 on paper.",
+    "$description": "Text under a field. Error text uses magenta-deep with the icon below: calm, polite, 6.3:1 on paper and 5.4:1 on mist.",
     "gap": { "$type": "dimension", "$value": "10px", "$description": "From the field, or from the open list when the list is shown." },
     "icon": { "$type": "dimension", "$value": "14px", "$description": "Error uses the circled exclamation, outline, at icon-stroke. Not an i, which reads as a tip, and not a triangle or a circled X, which read as a warning or a blocking failure and are louder than an error should be here. Slightly taller than the cap height, which balances a round icon against text." },
     "error": { "$type": "color", "$value": "{color.magenta.deep}" }

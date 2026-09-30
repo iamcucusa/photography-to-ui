@@ -38,12 +38,17 @@ const paletteBody = `<div style="width:1440px;height:960px;box-sizing:border-box
     <div style="width:320px;display:flex;flex-direction:column;gap:10px">
       <div style="height:132px;background:${C.paper};border:3px solid ${C.navy};box-sizing:border-box;display:flex;align-items:flex-end;padding:14px 16px;font-family:${ARCH};font-size:34px;font-weight:800;color:${C.navy}">Aa</div>
       <div style="display:flex;justify-content:space-between;font-family:${MONO};font-size:13px;font-weight:600"><span>paper</span><span>${C.paper}</span></div>
-      <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">DEFAULT GROUND · NEAR-WHITE, A TRACE OF WARMTH<br>Y 0.956 · vs navy 15.6:1</div>
+      <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">DEFAULT GROUND · COOL NEAR-WHITE, NEVER A WARM IVORY<br>Y ${lum(C.paper).toFixed(3)} · vs navy ${cr(C.paper, C.navy).toFixed(1)}:1</div>
     </div>
     <div style="width:320px;display:flex;flex-direction:column;gap:10px">
       <div style="height:132px;background:${C.navy};display:flex;align-items:flex-end;padding:14px 16px;box-sizing:border-box;font-family:${ARCH};font-size:34px;font-weight:800;color:${C.paper}">Aa</div>
       <div style="display:flex;justify-content:space-between;font-family:${MONO};font-size:13px;font-weight:600"><span>navy</span><span>${C.navy}</span></div>
-      <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">INK ON PAPER · DARK GROUND · PROFESSIONAL LAYER<br>Y 0.014 · vs paper 15.6:1</div>
+      <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">INK ON PAPER · DARK GROUND · PROFESSIONAL LAYER<br>Y ${lum(C.navy).toFixed(3)} · vs paper ${cr(C.navy, C.paper).toFixed(1)}:1</div>
+    </div>
+    <div style="width:320px;display:flex;flex-direction:column;gap:10px">
+      <div style="height:132px;background:${C.mist};box-sizing:border-box;display:flex;align-items:flex-end;padding:14px 16px;gap:12px"><div style="font-family:${ARCH};font-size:34px;font-weight:800;color:${C.navy};line-height:1">Aa</div><div style="flex-grow:1;height:40px;background:${C['surface-raised']};border:1px solid ${C['slate-mid']};border-radius:2px"></div></div>
+      <div style="display:flex;justify-content:space-between;font-family:${MONO};font-size:13px;font-weight:600"><span>mist</span><span>${C.mist}</span></div>
+      <div style="font-family:${MONO};font-size:11px;letter-spacing:0.06em;color:${C['slate-deep']};line-height:1.45">UI GROUND · POSTS THAT SHOW LIGHT UI · WHITE LIFTS ${cr(C['surface-raised'], C.mist).toFixed(1)}:1<br>Y ${lum(C.mist).toFixed(3)} · vs navy ${cr(C.mist, C.navy).toFixed(1)}:1</div>
     </div>
     <div style="flex-grow:1;display:flex;gap:16px">
       <div style="flex-grow:1;display:flex;flex-direction:column;gap:10px">
@@ -170,7 +175,7 @@ const scale = [
   {step:'H2', li:72, ph:24, web:40, face:'Archivo 700', lh:'1.10', ls:'-0.02em', use:'Second thought, section title', fam:ARCH, w:700, sls:'-0.02em'},
   {step:'Lead', li:56, ph:19, web:24, face:'Archivo 500', lh:'1.25', ls:'-0.01em', use:'Subtitle, quote attribution', fam:ARCH, w:500, sls:'-0.01em'},
   {step:'Body', li:44, ph:15, web:18, face:'JetBrains Mono 400', lh:'1.40', ls:'0', use:'Explanations, table cells · ≤35 chars per line', fam:MONO, w:400, sls:'0'},
-  {step:'Label', li:36, ph:12, web:13, face:'JetBrains Mono 500 · caps', lh:'1.20', ls:'+0.08em', use:'Eyebrows, tags, axes · the floor, nothing smaller', fam:MONO, w:500, sls:'0.08em', caps:true},
+  {step:'Label', li:36, ph:12, web:13, face:'JetBrains Mono 500 · caps', lh:'1.20', ls:'+0.08em', use:'Eyebrows, tags, axes · the floor for post type', fam:MONO, w:500, sls:'0.08em', caps:true},
 ]
 const num = v => `<div style="font-family:${MONO};font-size:15px;font-weight:500;color:${C.navy}">${v}</div>`
 const cell = v => `<div style="font-family:${MONO};font-size:13px;color:${C.navy}">${v}</div>`
@@ -237,7 +242,7 @@ const body = `<div style="width:1440px;height:1960px;box-sizing:border-box;paddi
     <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:48px;border-top:3px solid ${C.navy}">
       <div style="display:flex;flex-direction:column;gap:10px;padding-top:20px">
         <div style="font-family:${ARCH};font-size:18px;font-weight:800;color:${C.navy}">Readability</div>
-        <div style="font-family:${MONO};font-size:12px;line-height:1.6;color:${C.slateD}">Label 36px is the floor: 12px on a phone, LinkedIn's own caption size. Body at 44px keeps 35 characters per line inside 80px margins, so a paragraph never runs past 4 lines. Headlines break by meaning, by hand, never by width.</div>
+        <div style="font-family:${MONO};font-size:12px;line-height:1.6;color:${C.slateD}">Label 36px is the floor for post type: 12px on a phone, LinkedIn's own caption size. UI drawn inside a post follows components.json at 2×, whose floor is 16px web, 32px on the post. Body at 44px keeps 35 characters per line inside 80px margins, so a paragraph never runs past 4 lines. Headlines break by meaning, by hand, never by width.</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;padding-top:20px">
         <div style="font-family:${ARCH};font-size:18px;font-weight:800;color:${C.navy}">Responsive</div>

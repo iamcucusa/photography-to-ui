@@ -18,7 +18,7 @@
   "scale": {
     "$description": "Sizes are px on the design canvas. 'screen' is the approximate size once the platform scales the artwork.",
     "post": {
-      "$description": "LinkedIn post, 1080×1350. Phone shows it at ~×0.33. Label 36px is the floor: 12px on screen.",
+      "$description": "LinkedIn post, 1080×1350. Phone shows it at ~×0.33. Label 36px is the floor for post type: 12px on screen. UI drawn inside a post is sized from scale.web.control and scale.web.helper at 2× (components.json), so its smallest text is 32px.",
       "display": { "$type": "dimension", "$value": "144px", "$description": "Archivo 800, leading 0.95, tracking -0.03em. One statement, 2–5 words. ~48px on screen." },
       "h1":      { "$type": "dimension", "$value": "104px", "$description": "Archivo 800, leading 1.00, tracking -0.025em. Post headline, ≤3 lines, ≤17 chars per line. ~35px on screen." },
       "h2":      { "$type": "dimension", "$value": "72px",  "$description": "Archivo 700, leading 1.10, tracking -0.02em. Second thought, section title. ~24px on screen." },
