@@ -9,7 +9,8 @@
   "icon-stroke": {
     "$type": "dimension",
     "$value": "1.75px",
-    "$description": "One stroke for every icon inside a component: the chevron, the checkbox tick, the error icon. Round caps and joins."
+    "$description": "One stroke for every icon inside a component: the chevron, the checkbox tick, the error icon. Square caps and mitred joins, so line ends read as cut, not rounded.",
+    "$extensions": { "com.cucusa.brand": { "linecap": "square", "linejoin": "miter" } }
   },
   "focus-ring": {
     "$description": "Keyboard focus and an open field. Same shape as tokens/shape.json focus-ring; colour moves to magenta-mid, the v2 step that clears 3:1 on both grounds.",
@@ -21,7 +22,7 @@
     "$description": "The closed control: a button that opens a list. One border, one radius, the value on the left and a chevron on the right.",
     "height": { "$type": "dimension", "$value": "44px", "$description": "Also the minimum touch target." },
     "padding-inline": { "$type": "dimension", "$value": "14px 12px", "$description": "Start, end. The end is tighter because the chevron carries its own space." },
-    "radius": { "$type": "dimension", "$value": "10px", "$description": "tokens/shape.json radius.sm, the input-field radius." },
+    "radius": { "$type": "dimension", "$value": "2px", "$description": "Near-square on purpose: corners read as engineered, not playful. tokens/shape.json uses 10px (radius.sm) for inputs; v2 departs from it." },
     "border-width": { "$type": "dimension", "$value": "1px" },
     "surface": { "$type": "color", "$value": "{color.surface.raised}" },
     "border": {
@@ -37,24 +38,24 @@
   "listbox": {
     "$description": "The open list under a field.",
     "offset": { "$type": "dimension", "$value": "10px", "$description": "Field to list. Clears the focus ring (2 + 2px) with room to spare." },
-    "radius": { "$type": "dimension", "$value": "10px" },
+    "radius": { "$type": "dimension", "$value": "2px", "$description": "Same as the field." },
     "padding-block": { "$type": "dimension", "$value": "4px" },
     "border": { "$type": "color", "$value": "{color.rule.paper}" },
     "shadow": { "$type": "shadow", "$value": { "color": "#10203A1F", "offsetX": "0px", "offsetY": "8px", "blur": "20px", "spread": "0px" }, "$description": "Navy at 12 %. The only shadow in the brand: an open list has to sit above the page. Every other surface stays flat." }
   },
   "option": {
-    "$description": "One row in the list. Rows are inset from the list edge so a hovered row reads as a shape, not a stripe.",
+    "$description": "One row in the list. Rows run edge to edge with square corners, so a hovered row is a full-width band.",
     "height": { "$type": "dimension", "$value": "32px", "$description": "Squeeze to 28px before shrinking any text when a list must fit a square post." },
-    "inset": { "$type": "dimension", "$value": "4px" },
-    "padding-inline": { "$type": "dimension", "$value": "10px" },
+    "inset": { "$type": "dimension", "$value": "0px" },
+    "padding-inline": { "$type": "dimension", "$value": "14px", "$description": "Same as the field's start padding, so the checkbox sits exactly under the field's value." },
     "gap": { "$type": "dimension", "$value": "10px", "$description": "Checkbox to text." },
-    "radius": { "$type": "dimension", "$value": "6px" },
+    "radius": { "$type": "dimension", "$value": "0px" },
     "hover": { "$type": "color", "$value": "{color.surface.hover}", "$description": "Only the row under the pointer." },
     "text": { "$type": "color", "$value": "{color.navy}" }
   },
   "checkbox": {
     "size": { "$type": "dimension", "$value": "15px" },
-    "radius": { "$type": "dimension", "$value": "3px" },
+    "radius": { "$type": "dimension", "$value": "1px" },
     "border": { "$type": "color", "$value": "{color.slate.mid}" },
     "checked": { "$type": "color", "$value": "{color.navy}", "$description": "Navy fill, paper tick at icon-stroke. Checked stays neutral: selection is not an accent." },
     "mark": { "$type": "color", "$value": "{color.paper}" }
