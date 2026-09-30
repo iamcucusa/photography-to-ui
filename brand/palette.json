@@ -25,6 +25,17 @@
         }
       }
     },
+    "mist": {
+      "$value": "#E7EBF1",
+      "$description": "Cool light ground for a post that shows light UI: slate hue 214°, saturation 28 %, Y 0.83. Dark enough that a white component lifts off it (1.2:1) with no extra effect; every text that sits on paper still passes on it.",
+      "$extensions": {
+        "com.cucusa.brand": {
+          "luminance": 0.828,
+          "onPaper": 1.15,
+          "onNavy": 13.61
+        }
+      }
+    },
     "rule": {
       "paper": {
         "$value": "#D0D5DC",

@@ -62,6 +62,7 @@ function solve(h, s, Y) {
 const GROUNDS = {
   paper: { value: '#F9FBFE', description: 'Default ground. Near-white tinted cool toward the slate hue (214°), solved to Y 0.965: as light as it can go for text contrast while a post edge stays visible on a white feed. Cool on purpose, so it never reads as a warm ivory.' },
   navy: { value: '#10203A', description: 'Ink on paper, and the dark ground. The professional layer.' },
+  mist: { value: '#E7EBF1', description: 'Cool light ground for a post that shows light UI: slate hue 214°, saturation 28 %, Y 0.83. Dark enough that a white component lifts off it (1.2:1) with no extra effect; every text that sits on paper still passes on it.' },
 }
 const RULES = {
   paper: { value: '#D0D5DC', description: 'Decorative dividers on paper, the same cool hue as paper at the old divider luminance. Structural lines use slate-mid.' },
@@ -101,6 +102,7 @@ export function buildPalette() {
   const color = { $type: 'color' }
   color.paper = token(P, GROUNDS.paper.description)
   color.navy = token(N, GROUNDS.navy.description)
+  color.mist = token(GROUNDS.mist.value, GROUNDS.mist.description)
   color.rule = { paper: token(RULES.paper.value, RULES.paper.description), navy: token(RULES.navy.value, RULES.navy.description) }
   color.surface = { raised: token(SURFACES.raised.value, SURFACES.raised.description), hover: token(SURFACES.hover.value, SURFACES.hover.description) }
   for (const [name, spec] of Object.entries(HUES)) {

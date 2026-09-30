@@ -14,7 +14,7 @@
   "focus-ring": {
     "$description": "Keyboard focus and an open field. Same shape as tokens/shape.json focus-ring; colour moves to magenta-mid, the v2 step that clears 3:1 on both grounds.",
     "width": { "$type": "dimension", "$value": "2px" },
-    "offset": { "$type": "dimension", "$value": "2px", "$description": "The gap shows the ground (paper), so the ring reads as separate from the border." },
+    "offset": { "$type": "dimension", "$value": "2px", "$description": "The gap shows the ground (mist on a UI post), so the ring reads as separate from the border." },
     "color": { "$type": "color", "$value": "{color.magenta.mid}" }
   },
   "field": {
