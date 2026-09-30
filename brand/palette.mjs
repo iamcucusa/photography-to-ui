@@ -67,6 +67,10 @@ const RULES = {
   paper: { value: '#D9D4CB', description: 'Decorative dividers on paper. Structural lines use slate-mid.' },
   navy: { value: '#2A3D56', description: 'Decorative dividers and grids on navy. Structural lines use slate-light.' },
 }
+const SURFACES = {
+  raised: { value: '#FFFFFF', description: 'A component that sits on paper: a field, an open list. White, so the control lifts off the warm ground without a shadow.' },
+  hover: { value: '#EEEFF1', description: 'Hovered row inside a raised component: navy at 7 % over white. One row at a time, the one under the pointer.' },
+}
 const HUES = {
   magenta: { h: 335, s: { deep: 0.8, mid: 0.74, light: 0.8 }, Y: { deep: 0.112, mid: 0.195, light: 0.335 },
     meaning: 'Strength, energy, resilience, fashion. The hero colour: it carries statements, never decoration.' },
@@ -98,6 +102,7 @@ export function buildPalette() {
   color.paper = token(P, GROUNDS.paper.description)
   color.navy = token(N, GROUNDS.navy.description)
   color.rule = { paper: token(RULES.paper.value, RULES.paper.description), navy: token(RULES.navy.value, RULES.navy.description) }
+  color.surface = { raised: token(SURFACES.raised.value, SURFACES.raised.description), hover: token(SURFACES.hover.value, SURFACES.hover.description) }
   for (const [name, spec] of Object.entries(HUES)) {
     color[name] = { $description: spec.meaning }
     for (const step of ['deep', 'mid', 'light']) {

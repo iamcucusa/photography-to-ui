@@ -27,13 +27,15 @@
       "label":   { "$type": "dimension", "$value": "36px",  "$description": "JetBrains Mono 500 caps, leading 1.20, tracking +0.08em. Eyebrows, tags, axes. The floor: ~12px on screen." }
     },
     "web": {
-      "$description": "Blog and portfolio: the same hierarchy re-based on an 18px body, where the reader controls zoom.",
+      "$description": "Blog and portfolio: the same hierarchy re-based on an 18px body, where the reader controls zoom. control and helper size components (brand/components.json); a post draws a component at 2×, so they become 36px and 32px there.",
       "display": { "$type": "dimension", "$value": "72px" },
       "h1":      { "$type": "dimension", "$value": "56px" },
       "h2":      { "$type": "dimension", "$value": "40px" },
       "lead":    { "$type": "dimension", "$value": "24px" },
       "body":    { "$type": "dimension", "$value": "18px" },
-      "label":   { "$type": "dimension", "$value": "13px" }
+      "label":   { "$type": "dimension", "$value": "13px" },
+      "control": { "$type": "dimension", "$value": "18px", "$description": "JetBrains Mono 400 (500 for a field's value). Text inside a component: a field's value, an option in a list. Same size as body, so a control reads as text." },
+      "helper":  { "$type": "dimension", "$value": "16px", "$description": "JetBrains Mono 500 for a field label, 400 for helper and error text. The smallest component size: nothing in a component goes below 16px." }
     },
     "banner": {
       "$description": "LinkedIn profile banner, 1584×396. Desktop top card shows it at ~804px (×0.51), phone at ~393px (×0.25). The headline carries the message alone; everything else is texture on a phone.",

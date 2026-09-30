@@ -1,0 +1,63 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Component conventions for brand v2: only what the posts draw so far, a select field with a multi-select list. Values are web px at 1×. A 1080 px post draws a component at 2× (post-scale), so a 10px radius becomes 20px there. Shape rules follow tokens/shape.json; colours come from brand/palette.json; sizes from brand/typography.json. Hand-authored.",
+  "post-scale": {
+    "$type": "number",
+    "$value": 2,
+    "$description": "Multiplier from web px to post px. At 2× a 16px text reads about 12px on a phone, the post floor."
+  },
+  "focus-ring": {
+    "$description": "Keyboard focus and an open field. Same shape as tokens/shape.json focus-ring; colour moves to magenta-mid, the v2 step that clears 3:1 on both grounds.",
+    "width": { "$type": "dimension", "$value": "2px" },
+    "offset": { "$type": "dimension", "$value": "2px", "$description": "The gap shows the ground (paper), so the ring reads as separate from the border." },
+    "color": { "$type": "color", "$value": "{color.magenta.mid}" }
+  },
+  "field": {
+    "$description": "The closed control: a button that opens a list. One border, one radius, the value on the left and a chevron on the right.",
+    "height": { "$type": "dimension", "$value": "44px", "$description": "Also the minimum touch target." },
+    "padding-inline": { "$type": "dimension", "$value": "14px 12px", "$description": "Start, end. The end is tighter because the chevron carries its own space." },
+    "radius": { "$type": "dimension", "$value": "10px", "$description": "tokens/shape.json radius.sm, the input-field radius." },
+    "border-width": { "$type": "dimension", "$value": "1px" },
+    "surface": { "$type": "color", "$value": "{color.surface.raised}" },
+    "border": {
+      "rest": { "$type": "color", "$value": "{color.slate.mid}", "$description": "4.1:1 on white, above the 3:1 a control boundary needs." },
+      "open": { "$type": "color", "$value": "{color.navy}" },
+      "error": { "$type": "color", "$value": "{color.magenta.deep}", "$description": "Same width as rest. The error is carried by colour, icon and message, never by a heavier border." }
+    },
+    "value": { "$type": "color", "$value": "{color.navy}" },
+    "placeholder": { "$type": "color", "$value": "{color.slate.deep}", "$description": "6.4:1 on white, so placeholder text still passes AA." },
+    "label-gap": { "$type": "dimension", "$value": "6px", "$description": "Label to field." },
+    "chevron": { "$type": "dimension", "$value": "16px", "$description": "Stroke icon, 1.75px, round caps, navy. Points down closed, up open." }
+  },
+  "listbox": {
+    "$description": "The open list under a field.",
+    "offset": { "$type": "dimension", "$value": "10px", "$description": "Field to list. Clears the focus ring (2 + 2px) with room to spare." },
+    "radius": { "$type": "dimension", "$value": "10px" },
+    "padding-block": { "$type": "dimension", "$value": "4px" },
+    "border": { "$type": "color", "$value": "{color.rule.paper}" },
+    "shadow": { "$type": "shadow", "$value": { "color": "#10203A1F", "offsetX": "0px", "offsetY": "8px", "blur": "20px", "spread": "0px" }, "$description": "Navy at 12 %. The only shadow in the brand: an open list has to sit above the page. Every other surface stays flat." }
+  },
+  "option": {
+    "$description": "One row in the list. Rows are inset from the list edge so a hovered row reads as a shape, not a stripe.",
+    "height": { "$type": "dimension", "$value": "32px", "$description": "Squeeze to 28px before shrinking any text when a list must fit a square post." },
+    "inset": { "$type": "dimension", "$value": "4px" },
+    "padding-inline": { "$type": "dimension", "$value": "10px" },
+    "gap": { "$type": "dimension", "$value": "10px", "$description": "Checkbox to text." },
+    "radius": { "$type": "dimension", "$value": "6px" },
+    "hover": { "$type": "color", "$value": "{color.surface.hover}", "$description": "Only the row under the pointer." },
+    "text": { "$type": "color", "$value": "{color.navy}" }
+  },
+  "checkbox": {
+    "size": { "$type": "dimension", "$value": "15px" },
+    "radius": { "$type": "dimension", "$value": "3px" },
+    "border": { "$type": "color", "$value": "{color.slate.mid}" },
+    "checked": { "$type": "color", "$value": "{color.navy}", "$description": "Navy fill, paper tick (1.75px stroke). Checked stays neutral: selection is not an accent." },
+    "mark": { "$type": "color", "$value": "{color.paper}" }
+  },
+  "helper": {
+    "$description": "Text under a field. Error text uses magenta-deep with a 16px outline icon: calm, polite, 6.2:1 on paper.",
+    "gap": { "$type": "dimension", "$value": "10px", "$description": "From the field, or from the open list when the list is shown." },
+    "icon": { "$type": "dimension", "$value": "14px" },
+    "error": { "$type": "color", "$value": "{color.magenta.deep}" }
+  }
+}

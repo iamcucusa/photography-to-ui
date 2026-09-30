@@ -49,6 +49,30 @@
         }
       }
     },
+    "surface": {
+      "raised": {
+        "$value": "#FFFFFF",
+        "$description": "A component that sits on paper: a field, an open list. White, so the control lifts off the warm ground without a shadow.",
+        "$extensions": {
+          "com.cucusa.brand": {
+            "luminance": 1,
+            "onPaper": 1.04,
+            "onNavy": 16.28
+          }
+        }
+      },
+      "hover": {
+        "$value": "#EEEFF1",
+        "$description": "Hovered row inside a raised component: navy at 7 % over white. One row at a time, the one under the pointer.",
+        "$extensions": {
+          "com.cucusa.brand": {
+            "luminance": 0.863,
+            "onPaper": 1.1,
+            "onNavy": 14.15
+          }
+        }
+      }
+    },
     "magenta": {
       "$description": "Strength, energy, resilience, fashion. The hero colour: it carries statements, never decoration.",
       "deep": {
