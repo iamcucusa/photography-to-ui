@@ -27,7 +27,8 @@ When a canvas and this folder disagree, the canvas shows the latest thinking and
 | `canvas/build-brand.mjs` | Reference canvas, Brand identity page: palette, contrast matrix, usable pairings, type system. |
 | `canvas/build-posts.mjs` | Posts canvas: nine posts (including concepts A and C) and the phone check. Uses the posts canvas's asset ids; concept A cites its report through the `[SOURCE]` placeholder (see Disclosure). |
 | `canvas/build-banners.mjs` | Reference canvas, LinkedIn banner page: statement banner, three photo-checked variants, export frames, illustration review. |
-| `canvas/build.mjs` | Runs all three into `canvas/dist/` (gitignored). |
+| `canvas/build-carousel.mjs` | LinkedIn carousel pages (1080×1350): each page as a posts-canvas board and as a standalone `.html` with the avatar inlined, for printing to the carousel PDF. Page 1 of "One sentence per design token" lives here; the slope chart uses the mid steps as series. |
+| `canvas/build.mjs` | Runs all four into `canvas/dist/` (gitignored). |
 
 ## The system in one screen
 

@@ -88,9 +88,9 @@ class Component extends DCLogic {
 export const mono = (t, size, color, extra = '') =>
   `<div style="font-family:${MONO};font-size:${size}px;font-weight:500;line-height:1.2;color:${color};${extra}">${t}</div>`
 
-/** Write a board to brand/canvas/dist/<name>.dc.html */
-export function out(name, html) {
+/** Write a board to brand/canvas/dist/<name>.dc.html (or another extension, e.g. '.html' for a standalone page) */
+export function out(name, html, ext = '.dc.html') {
   mkdirSync(DIST, { recursive: true })
-  writeFileSync(resolve(DIST, `${name}.dc.html`), html)
-  console.log('  ' + name + '.dc.html')
+  writeFileSync(resolve(DIST, `${name}${ext}`), html)
+  console.log('  ' + name + ext)
 }
