@@ -71,6 +71,30 @@ const arch = (t, size, { weight = 800, lh = 1, track = '-0.025em', color = G.fg,
 const mono = (t, size, { weight = 400, lh = 1.2, color = G.fg, extra = '' } = {}) =>
   `<div style="font-family:${MONO};font-size:${size}px;font-weight:${weight};line-height:${lh};color:${color};${extra}">${t}</div>`
 
+/* ── Round shapes as polygons ──────────────────────────────────────── */
+// A PDF rasteriser may flatten curves coarsely: LinkedIn's document preview drew the chart's dots as
+// octagons and the ringed avatar rough. So every circle, ring and pill end is drawn as a 72-gon path
+// (its vertices are the flattening), and the printed avatar is a bitmap (see close()).
+const circlePath = (cx, cy, r, n = 72) =>
+  Array.from({ length: n }, (_, k) => {
+    const a = (k / n) * 2 * Math.PI
+    return `${k ? 'L' : 'M'}${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`
+  }).join('') + 'Z'
+const dot = (cx, cy, r, { fill = 'none', stroke = '', width = 0 } = {}) =>
+  `<path d="${circlePath(cx, cy, r)}" fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width="${width}"` : ''}/>`
+/** The ring badge (A, B, 1, 2): a 72-gon ring with the letter set in Archivo at two thirds of the size. */
+const ring = (letter, size = 48, { font = Math.round(size * 0.67), stroke = 3, extra = '' } = {}) =>
+  `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${letter}" style="display:block;flex-shrink:0;${extra}">${dot(size / 2, size / 2, size / 2 - stroke / 2, { stroke: G.fg, width: stroke })}<text x="${size / 2}" y="${(size / 2 + font * 0.36).toFixed(1)}" text-anchor="middle" font-family="${ARCH}" font-size="${font}" font-weight="800" fill="${G.fg}">${letter}</text></svg>`
+/** One end of the pill: a half disc, 32px radius, as a polygon. */
+const pillEnd = (side, fill) => {
+  const n = 36
+  const pts = Array.from({ length: n + 1 }, (_, k) => {
+    const a = (side === 'left' ? Math.PI / 2 : -Math.PI / 2) + (k / n) * Math.PI
+    return `${(32 + 32 * Math.cos(a)).toFixed(2)} ${(32 + 32 * Math.sin(a)).toFixed(2)}`
+  })
+  return `<svg width="32" height="64" viewBox="${side === 'left' ? 0 : 32} 0 32 64" aria-hidden="true" style="display:block;flex-shrink:0"><path d="M${pts.join('L')}Z" fill="${fill}"/></svg>`
+}
+
 /* ── Slope chart: SVG in page px, no scaling, so every size is literal ─ */
 function slopeChart({ height }) {
   const xA = 270, xB = 600 // columns; the end labels at B carry value and model name
@@ -98,19 +122,19 @@ function slopeChart({ height }) {
   // out in the list above the chart.
   const header = (x, letter) => {
     const cy = base + 24 + headerH / 2
-    return `<circle cx="${x}" cy="${cy}" r="22.5" fill="${G.bg}" stroke="${G.fg}" stroke-width="3"/>
+    return `${dot(x, cy, 22.5, { fill: G.bg, stroke: G.fg, width: 3 })}
       <text x="${x}" y="${cy + 12}" text-anchor="middle" font-family="${ARCH}" font-size="32" font-weight="800" fill="${G.fg}">${letter}</text>`
   }
 
   // Lines + dots, drawn before the labels so the labels knock them out where they must.
   const lines = SERIES.map(
     (s) =>
-      `<line x1="${xA}" y1="${y(s.a)}" x2="${xB}" y2="${y(s.b)}" stroke="${s.line}" stroke-width="7" stroke-linecap="round"/>`,
+      `<line x1="${xA}" y1="${y(s.a)}" x2="${xB}" y2="${y(s.b)}" stroke="${s.line}" stroke-width="7"/>`,
   ).join('')
   const dots = SERIES.map(
     (s) =>
-      `<circle cx="${xA}" cy="${y(s.a)}" r="11" fill="${s.line}" stroke="${G.bg}" stroke-width="5"/>
-       <circle cx="${xB}" cy="${y(s.b)}" r="11" fill="${s.line}" stroke="${G.bg}" stroke-width="5"/>`,
+      `${dot(xA, y(s.a), 11, { fill: s.line, stroke: G.bg, width: 5 })}
+       ${dot(xB, y(s.b), 11, { fill: s.line, stroke: G.bg, width: 5 })}`,
   ).join('')
 
   // End values: A values sit left of their dots. At B each line ends in its value and its model
@@ -124,7 +148,7 @@ function slopeChart({ height }) {
   const endVal = (x, yy, v, anchor, name = '', style = knock) =>
     `<text x="${x}" y="${yy + 17}" text-anchor="${anchor}" font-family="${ARCH}" font-size="48" font-weight="700" letter-spacing="-0.02em" fill="${G.fg}" style="${style}">${v}${name ? `<tspan dx="14" dy="-4" font-family="${MONO}" font-size="36" font-weight="400" letter-spacing="0" fill="${G.muted}">${name}</tspan>` : ''}</text>`
   const leader = (s, yy) =>
-    `<line x1="${xB + 14}" y1="${y(s.b) + (yy - y(s.b)) / 3}" x2="${xB + 30}" y2="${yy}" stroke="${s.line}" stroke-width="3" stroke-linecap="round"/>`
+    `<line x1="${xB + 14}" y1="${y(s.b) + (yy - y(s.b)) / 3}" x2="${xB + 30}" y2="${yy}" stroke="${s.line}" stroke-width="3"/>`
   const ends = `
     ${endVal(xA - 30, y(small.a), small.a, 'end')}
     ${endVal(xA - 30, y(mid.a), mid.a, 'end')}
@@ -150,7 +174,7 @@ function slopeChart({ height }) {
 /* ── Pieces shared by every slide ──────────────────────────────────── */
 /** Condition row: outlined ring badge beside its muted label. The group header on the slide 3 matrix. */
 const condition = (letter, text) => `<div style="display:flex;align-items:center;gap:20px;height:48px">
-      <div style="width:48px;height:48px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:32px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${letter}</div>
+      ${ring(letter, 48)}
       ${mono(text, 36, { color: G.muted })}
     </div>`
 /** The legend, the same on every slide: 32px muted labels (the component floor, about 11px on a
@@ -164,7 +188,7 @@ const legendRow = (items, gapTop) => `<div style="${gapTop ? `margin-top:${gapTo
  *  footnote everywhere and the key never moves between slides. */
 const keyBlock = (gapTop = 20) => `<div style="margin-top:${gapTop}px;display:flex;flex-direction:column;gap:10px">${CONF.map(
   (c) => `<div style="display:flex;align-items:center;gap:16px;height:40px">
-      <div style="width:40px;height:40px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:26px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${c.letter}</div>
+      ${ring(c.letter, 40, { font: 26 })}
       ${mono(c.label, 32, { color: G.muted })}
     </div>`,
 ).join('')}</div>`
@@ -180,9 +204,13 @@ const close = (avatarUrl, cta, ctaLabel, arrow = 'right') => `<div style="positi
         : `<img src="${avatarUrl}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${G.fg};box-sizing:border-box;flex-shrink:0">`}
       ${arch('Grace Henriquez', 44, { weight: 700, track: '-0.02em' })}
     </div>
-    ${cta ? `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:center;gap:16px;height:64px;padding:0 24px 0 32px;border-radius:32px;background:${G.hero};color:${G.bg};text-decoration:none;flex-shrink:0">
-      ${arch(cta, 36, { weight: 700, lh: 1, track: '-0.015em', color: G.bg, extra: 'white-space:nowrap' })}
-      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="${arrow === 'down' ? 'M16 4v22M7 18l9 9 9-9' : 'M4 16h22M18 7l9 9-9 9'}" fill="none" stroke="${G.bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    ${cta ? `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:stretch;height:64px;color:${G.bg};text-decoration:none;flex-shrink:0">
+      ${pillEnd('left', G.hero)}
+      <span style="position:relative;z-index:1;display:flex;align-items:center;gap:16px;background:${G.hero};color:${G.bg}">
+        ${arch(cta, 36, { weight: 700, lh: 1, track: '-0.015em', color: G.bg, extra: 'white-space:nowrap' })}
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="${arrow === 'down' ? 'M16 4v22M7 18l9 9 9-9' : 'M4 16h22M18 7l9 9-9 9'}" fill="none" stroke="${G.bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span style="margin-left:-8px;display:block">${pillEnd('right', G.hero)}</span>
     </a>` : ''}
   </div>`
 
@@ -196,7 +224,7 @@ function page1(avatarUrl) {
   // 112px one (37px on a phone). Budget inside the 80px safe zone (1190px):
   // 176+20+53 · 48 · chart+56+40+20+90 · 62 · 112 → chart 513px.
   const CHART_H = 513
-  const seriesMark = (s) => `<svg width="56" height="14" viewBox="0 0 56 14" aria-hidden="true"><line x1="0" y1="7" x2="56" y2="7" stroke="${s.line}" stroke-width="7" stroke-linecap="round"/><circle cx="28" cy="7" r="7" fill="${s.line}"/></svg>`
+  const seriesMark = (s) => `<svg width="56" height="14" viewBox="0 0 56 14" aria-hidden="true"><line x1="0" y1="7" x2="56" y2="7" stroke="${s.line}" stroke-width="7"/>${dot(28, 7, 7, { fill: s.line })}</svg>`
 
   return `<div style="position:relative;width:${W}px;height:${H}px;box-sizing:border-box;padding:${PAD}px;background:${G.bg};color:${G.fg};display:flex;flex-direction:column;overflow:hidden">
   ${arch('One sentence per design token.', 88, { stretch: 94, extra: 'text-wrap:balance' })}
@@ -228,7 +256,7 @@ function page2(avatarUrl, { variant = 'count' } = {}) {
   // In every variant magenta means "sure" (a 3), an outlined segment means "doubted" (a 1 or 2),
   // and the sure answers above use the same two marks, so one legend covers the whole slide.
   const badge = (letter, size = 48) =>
-    `<div style="width:${size}px;height:${size}px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:${Math.round(size * 0.67)}px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${letter}</div>`
+    ring(letter, size)
   const BAR_W = 660, BAR_H = 60, SEG_GAP = 4, LABEL = 40 // in-bar labels one step above the floor
 
   // A stacked bar: segments of {n, sure, label}, on a scale of `max` units across BAR_W.
@@ -406,7 +434,7 @@ function runsTable() {
         ? `<div style="width:${size}px;height:${size}px;border-radius:2px;background:${G.mark}"></div>`
         : `<div style="width:${size}px;height:${size}px;border-radius:2px;box-sizing:border-box;border:3px solid ${G.line}"></div>`
   const badge = (letter) =>
-    `<div style="width:48px;height:48px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:32px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${letter}</div>`
+    `${ring(letter, 48)}`
   const head = `<div style="display:flex;align-items:center;height:56px;border-bottom:2px solid ${G.line}">
       ${cell('', COLS[0] + COLS[1], 'flex-start')}
       ${cell(mark('wrong'), COLS[2], 'center')}
@@ -508,7 +536,7 @@ function page3Case(avatarUrl) {
   const cell = (inner, w, align = 'flex-start') =>
     `<div style="width:${w}px;flex-shrink:0;display:flex;align-items:center;justify-content:${align};box-sizing:border-box">${inner}</div>`
   const badge = (letter) =>
-    `<div style="width:48px;height:48px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:32px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${letter}</div>`
+    `${ring(letter, 48)}`
   // The token in three weights, so the mistakes lead and nothing else is boxed: a right answer
   // is plain text (the table's title says which token that is), indented to the boxed tokens'
   // text so the column lines up; a wrong one takes a 3px line in the wrong-and-sure colour; a
@@ -551,7 +579,7 @@ function page3Case(avatarUrl) {
   // right, the rating scale under a "Rated" head, the number in the mark's slot in the table's
   // face. Rows are the shared foot's: 40px, 32px muted labels, 40px marks.
   const swatch = (sure) => `<div style="width:${SW}px;height:${SW}px;border-radius:2px;box-sizing:border-box;flex-shrink:0;${sure ? `background:${G.hero}` : `border:3px solid ${G.hero}`}"></div>`
-  const badge40 = (letter) => `<div style="width:40px;height:40px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:26px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${letter}</div>`
+  const badge40 = (letter) => `${ring(letter, 40, { font: 26 })}`
   const slot = (inner) => `<div style="width:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0">${inner}</div>`
   const frow = (mark, label) => `<div style="display:flex;align-items:center;gap:16px;height:40px">${mark}${mono(label, 32, { color: G.muted })}</div>`
   const stack = (rows, extra = '') => `<div style="display:flex;flex-direction:column;gap:8px;${extra}">${rows.join('')}</div>`
@@ -602,7 +630,7 @@ function page4(avatarUrl) {
   // The badge sits at the middle of its whole item, so a two- or three-line item reads as one
   // block with its number beside it.
   const step = (t, i) => `<div style="display:flex;align-items:center;gap:24px">
-      <div style="width:48px;height:48px;border-radius:50%;box-sizing:border-box;border:3px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:32px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i + 1}</div>
+      ${ring(i + 1, 48)}
       ${mono(t, 36, { extra: 'line-height:48px' })}
     </div>`
   return `<div style="position:relative;width:${W}px;height:${H}px;box-sizing:border-box;padding:${PAD}px;background:${G.bg};color:${G.fg};display:flex;flex-direction:column;overflow:hidden">
