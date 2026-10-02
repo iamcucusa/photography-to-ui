@@ -71,29 +71,17 @@ const arch = (t, size, { weight = 800, lh = 1, track = '-0.025em', color = G.fg,
 const mono = (t, size, { weight = 400, lh = 1.2, color = G.fg, extra = '' } = {}) =>
   `<div style="font-family:${MONO};font-size:${size}px;font-weight:${weight};line-height:${lh};color:${color};${extra}">${t}</div>`
 
-/* ── Round shapes as polygons ──────────────────────────────────────── */
-// A PDF rasteriser may flatten curves coarsely: LinkedIn's document preview drew the chart's dots as
-// octagons and the ringed avatar rough. So every circle, ring and pill end is drawn as a 72-gon path
-// (its vertices are the flattening), and the printed avatar is a bitmap (see close()).
-const circlePath = (cx, cy, r, n = 72) =>
-  Array.from({ length: n }, (_, k) => {
-    const a = (k / n) * 2 * Math.PI
-    return `${k ? 'L' : 'M'}${(cx + r * Math.cos(a)).toFixed(2)} ${(cy + r * Math.sin(a)).toFixed(2)}`
-  }).join('') + 'Z'
-const dot = (cx, cy, r, { fill = 'none', stroke = '', width = 0 } = {}) =>
-  `<path d="${circlePath(cx, cy, r)}" fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width="${width}"` : ''}/>`
-/** The ring badge (A, B, 1, 2): a 72-gon ring with the letter set in Archivo at two thirds of the size. */
+/* ── Round shapes ──────────────────────────────────────────────────── */
+// What LinkedIn's document preview can draw: CSS rounded boxes (the ring badges, the pill) print
+// as plain paths and come out clean; SVG circles and polygons come out as octagons or ragged; a
+// clipped image comes out rough (so the printed avatar is a bitmap, see close()). So every round
+// mark is a CSS box, including the chart's dots, which sit as positioned boxes over the chart's SVG.
+/** The ring badge (A, B, 1, 2): a CSS ring with the letter set in Archivo at two thirds of the size. */
 const ring = (letter, size = 48, { font = Math.round(size * 0.67), stroke = 3, extra = '' } = {}) =>
-  `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${letter}" style="display:block;flex-shrink:0;${extra}">${dot(size / 2, size / 2, size / 2 - stroke / 2, { stroke: G.fg, width: stroke })}<text x="${size / 2}" y="${(size / 2 + font * 0.36).toFixed(1)}" text-anchor="middle" font-family="${ARCH}" font-size="${font}" font-weight="800" fill="${G.fg}">${letter}</text></svg>`
-/** One end of the pill: a half disc, 32px radius, as a polygon. */
-const pillEnd = (side, fill) => {
-  const n = 36
-  const pts = Array.from({ length: n + 1 }, (_, k) => {
-    const a = (side === 'left' ? Math.PI / 2 : -Math.PI / 2) + (k / n) * Math.PI
-    return `${(32 + 32 * Math.cos(a)).toFixed(2)} ${(32 + 32 * Math.sin(a)).toFixed(2)}`
-  })
-  return `<svg width="32" height="64" viewBox="${side === 'left' ? 0 : 32} 0 32 64" aria-hidden="true" style="display:block;flex-shrink:0"><path d="M${pts.join('L')}Z" fill="${fill}"/></svg>`
-}
+  `<div style="width:${size}px;height:${size}px;border-radius:50%;box-sizing:border-box;border:${stroke}px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:${font}px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;${extra}">${letter}</div>`
+/** A chart dot as a CSS box, positioned over the SVG at its centre. */
+const cssDot = (cx, cy, r, { fill, stroke = '', width = 0 } = {}) =>
+  `<div style="position:absolute;left:${(cx - r - width / 2).toFixed(1)}px;top:${(cy - r - width / 2).toFixed(1)}px;width:${2 * r + width}px;height:${2 * r + width}px;border-radius:50%;box-sizing:border-box;background:${fill};${stroke ? `border:${width}px solid ${stroke};` : ''}"></div>`
 
 /* ── Slope chart: SVG in page px, no scaling, so every size is literal ─ */
 function slopeChart({ height }) {
@@ -122,19 +110,18 @@ function slopeChart({ height }) {
   // out in the list above the chart.
   const header = (x, letter) => {
     const cy = base + 24 + headerH / 2
-    return `${dot(x, cy, 22.5, { fill: G.bg, stroke: G.fg, width: 3 })}
-      <text x="${x}" y="${cy + 12}" text-anchor="middle" font-family="${ARCH}" font-size="32" font-weight="800" fill="${G.fg}">${letter}</text>`
+    return ring(letter, 48, { extra: `position:absolute;left:${x - 24}px;top:${cy - 24}px` })
   }
 
-  // Lines + dots, drawn before the labels so the labels knock them out where they must.
+  // Lines in the SVG; the dots are CSS boxes placed over it after the labels (nothing overlaps).
   const lines = SERIES.map(
     (s) =>
       `<line x1="${xA}" y1="${y(s.a)}" x2="${xB}" y2="${y(s.b)}" stroke="${s.line}" stroke-width="7"/>`,
   ).join('')
   const dots = SERIES.map(
     (s) =>
-      `${dot(xA, y(s.a), 11, { fill: s.line, stroke: G.bg, width: 5 })}
-       ${dot(xB, y(s.b), 11, { fill: s.line, stroke: G.bg, width: 5 })}`,
+      `${cssDot(xA, y(s.a), 11, { fill: s.line, stroke: G.bg, width: 5 })}
+       ${cssDot(xB, y(s.b), 11, { fill: s.line, stroke: G.bg, width: 5 })}`,
   ).join('')
 
   // End values: A values sit left of their dots. At B each line ends in its value and its model
@@ -163,11 +150,16 @@ function slopeChart({ height }) {
     <text x="${xA + 0.2 * (xB - xA)}" y="${at(mid, xA + 0.2 * (xB - xA)) - 36}" text-anchor="middle" font-family="${ARCH}" font-size="64" font-weight="800" letter-spacing="-0.02em" fill="${mid.ink}">+${mid.b - mid.a}</text>`
 
   const label = `Slope chart. ${small.name}: ${small.a} right answers with names and values only, ${small.b} with one sentence per role. ${mid.name}: ${mid.a} to ${mid.b}. Ceiling at all 44.`
-  return `<svg width="${COL}" height="${height}" viewBox="0 0 ${COL} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}" style="display:block;overflow:visible">
-    ${grid}${ceiling}${lines}${dots}${ends}${deltas}
-    ${header(xA, 'A')}
-    ${header(xB, 'B')}
-  </svg>`
+  // The SVG carries lines and text; the dots and the column badges are CSS boxes over it (see
+  // Round shapes above). Nothing they cover is text: the labels start clear of the dots.
+  return `<div style="position:relative;width:${COL}px;height:${height}px">
+  <svg width="${COL}" height="${height}" viewBox="0 0 ${COL} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}" style="display:block;overflow:visible">
+    ${grid}${ceiling}${lines}${ends}${deltas}
+  </svg>
+  ${dots}
+  ${header(xA, 'A')}
+  ${header(xB, 'B')}
+  </div>`
 }
 
 /* ── Page 1: the result ─────────────────────────────────────────────── */
@@ -204,13 +196,9 @@ const close = (avatarUrl, cta, ctaLabel, arrow = 'right') => `<div style="positi
         : `<img src="${avatarUrl}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${G.fg};box-sizing:border-box;flex-shrink:0">`}
       ${arch('Grace Henriquez', 44, { weight: 700, track: '-0.02em' })}
     </div>
-    ${cta ? `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:stretch;height:64px;color:${G.bg};text-decoration:none;flex-shrink:0">
-      ${pillEnd('left', G.hero)}
-      <span style="position:relative;z-index:1;display:flex;align-items:center;gap:16px;background:${G.hero};color:${G.bg}">
-        ${arch(cta, 36, { weight: 700, lh: 1, track: '-0.015em', color: G.bg, extra: 'white-space:nowrap' })}
-        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="${arrow === 'down' ? 'M16 4v22M7 18l9 9 9-9' : 'M4 16h22M18 7l9 9-9 9'}" fill="none" stroke="${G.bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-      <span style="margin-left:-8px;display:block">${pillEnd('right', G.hero)}</span>
+    ${cta ? `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:center;gap:16px;height:64px;padding:0 24px 0 32px;border-radius:32px;background:${G.hero};color:${G.bg};text-decoration:none;flex-shrink:0">
+      ${arch(cta, 36, { weight: 700, lh: 1, track: '-0.015em', color: G.bg, extra: 'white-space:nowrap' })}
+      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="${arrow === 'down' ? 'M16 4v22M7 18l9 9 9-9' : 'M4 16h22M18 7l9 9-9 9'}" fill="none" stroke="${G.bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>` : ''}
   </div>`
 
@@ -224,7 +212,7 @@ function page1(avatarUrl) {
   // 112px one (37px on a phone). Budget inside the 80px safe zone (1190px):
   // 176+20+53 · 48 · chart+56+40+20+90 · 62 · 112 → chart 513px.
   const CHART_H = 513
-  const seriesMark = (s) => `<svg width="56" height="14" viewBox="0 0 56 14" aria-hidden="true"><line x1="0" y1="7" x2="56" y2="7" stroke="${s.line}" stroke-width="7"/>${dot(28, 7, 7, { fill: s.line })}</svg>`
+  const seriesMark = (s) => `<div style="position:relative;width:56px;height:14px;flex-shrink:0"><svg width="56" height="14" viewBox="0 0 56 14" aria-hidden="true" style="display:block"><line x1="0" y1="7" x2="56" y2="7" stroke="${s.line}" stroke-width="7"/></svg>${cssDot(28, 7, 7, { fill: s.line })}</div>`
 
   return `<div style="position:relative;width:${W}px;height:${H}px;box-sizing:border-box;padding:${PAD}px;background:${G.bg};color:${G.fg};display:flex;flex-direction:column;overflow:hidden">
   ${arch('One sentence per design token.', 88, { stretch: 94, extra: 'text-wrap:balance' })}
