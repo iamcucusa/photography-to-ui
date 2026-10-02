@@ -288,7 +288,7 @@ function page2(avatarUrl, { variant = 'count' } = {}) {
 
   const swatch = (sure) => `<div style="width:${SW}px;height:${SW}px;border-radius:2px;box-sizing:border-box;flex-shrink:0;${sure ? `background:${G.hero}` : `border:3px solid ${G.muted}`}"></div>`
   // The legend reads the marks as the mistakes section uses them; the rating scale stays in the post.
-  const legend = legendRow([[swatch(false), 'Wrong, doubted'], [swatch(true), 'Wrong and sure']], 56)
+  const legend = legendRow([[swatch(false), 'Wrong and doubted'], [swatch(true), 'Wrong and sure']], 56)
 
   const evidence = variant === 'count'
     ? `${mono('Answers rated sure, both models', 36, { color: G.muted, extra: 'margin-top:48px' })}
@@ -444,7 +444,7 @@ function page3(avatarUrl, { compact = true, variant = 'matrix' } = {}) {
         : `<div style="width:${SW}px;height:${SW}px;border-radius:2px;box-sizing:border-box;border:3px solid ${G.line};flex-shrink:0"></div>`
   const legend = legendRow([
     ...(variant === 'table' ? [] : [[swatch('right'), 'Right']]),
-    [swatch('wrong'), 'Wrong, doubted'],
+    [swatch('wrong'), 'Wrong and doubted'],
     [swatch('sure'), 'Wrong and sure'],
   ], 40)
   // The callout is drawn like the brand's components, at twice web scale: 16px web → 32px here,
@@ -556,7 +556,7 @@ function page3Case(avatarUrl) {
   const criteria = (t) => `<span style="font-family:${MONO};font-size:32px;line-height:1;background:${C.mist};border-radius:4px;padding:13px 17px;white-space:nowrap">${t}</span>`
   const foot = `<div style="margin-top:40px;display:flex;align-items:flex-start">
     ${stack([
-      frow(slot(swatch(false)), 'Wrong, doubted'),
+      frow(slot(swatch(false)), 'Wrong and doubted'),
       frow(slot(swatch(true)), 'Wrong and sure'),
       ...CONF.map((c) => frow(badge40(c.letter), c.label)),
     ], 'width:520px;flex-shrink:0')}
