@@ -169,9 +169,15 @@ const keyBlock = (gapTop = 20) => `<div style="margin-top:${gapTop}px;display:fl
     </div>`,
 ).join('')}</div>`
 /** The close: the brand's 112px author lockup left, a short button right, no rule. */
+// On a board the avatar is the canvas's asset, cropped and ringed by CSS. In the printed pages it is
+// the baked bitmap (brand/assets/avatar-ring-*.png: the circle and its ring, with alpha, at 4×),
+// because a PDF rasteriser draws a CSS clip path without anti-aliasing and the ring came out rough
+// on LinkedIn's preview. The ring is paper on navy and navy on paper, like the CSS one.
 const close = (avatarUrl, cta, ctaLabel, arrow = 'right') => `<div style="position:absolute;left:${PAD}px;right:${PAD}px;bottom:${PAD}px;display:flex;align-items:center;justify-content:space-between;gap:32px">
     <div style="display:flex;align-items:center;gap:20px;flex-shrink:0">
-      <img src="${avatarUrl}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${G.fg};box-sizing:border-box;flex-shrink:0">
+      ${avatarUrl === 'baked'
+        ? `<img src="${AVATAR_BAKED[G.bg === C.navy ? 'onNavy' : 'onPaper']}" alt="Grace Henriquez" width="112" height="112" style="display:block;width:112px;height:112px;flex-shrink:0">`
+        : `<img src="${avatarUrl}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${G.fg};box-sizing:border-box;flex-shrink:0">`}
       ${arch('Grace Henriquez', 44, { weight: 700, track: '-0.02em' })}
     </div>
     ${cta ? `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:center;gap:16px;height:64px;padding:0 24px 0 32px;border-radius:32px;background:${G.hero};color:${G.bg};text-decoration:none;flex-shrink:0">
@@ -611,7 +617,11 @@ function page4(avatarUrl) {
 
 /* ── Output ──────────────────────────────────────────────────────────── */
 const TITLE = 'One sentence per design token: a small test'
-const avatarData = `data:image/png;base64,${readFileSync(resolve(ASSETS, 'avatar.png')).toString('base64')}`
+const AVATAR_BAKED = {
+  onNavy: `data:image/png;base64,${readFileSync(resolve(ASSETS, 'avatar-ring-paper.png')).toString('base64')}`,
+  onPaper: `data:image/png;base64,${readFileSync(resolve(ASSETS, 'avatar-ring-navy.png')).toString('base64')}`,
+}
+const avatarData = 'baked' // the printed pages take the baked avatar, see close()
 
 // Boards for the posts canvas (canvas asset id for the avatar, like every post board): the four
 // slides as they stand, slide 2 in its share variant, slide 3 the up-close case on paper.
