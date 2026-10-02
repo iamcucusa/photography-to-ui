@@ -60,11 +60,16 @@ function solve(h, s, Y) {
 
 // ── The spec: hue, saturation, luminance target ────────────────────
 const GROUNDS = {
-  paper: { value: '#FBFAF7', description: 'Default ground. Near-white with a trace of warmth so a post edge stays visible on a white feed.' },
+  paper: { value: '#F9FBFE', description: 'Default ground. Cool near-white, never a warm ivory.' },
   navy: { value: '#10203A', description: 'Ink on paper, and the dark ground. The professional layer.' },
+  mist: { value: '#E7EBF1', description: 'UI ground, for posts that show light UI. White lifts 1.2:1 off it with no effect.' },
+}
+const SURFACES = {
+  raised: { value: '#FFFFFF', description: 'A field or list on mist: white lifts 1.2:1 off it with no effect. The brand has one shadow, an open list.' },
+  hover: { value: '#EEEFF1', description: 'The row under the pointer, as a full-width band.' },
 }
 const RULES = {
-  paper: { value: '#D9D4CB', description: 'Decorative dividers on paper. Structural lines use slate-mid.' },
+  paper: { value: '#D0D5DC', description: 'Decorative dividers on paper. Structural lines use slate-mid.' },
   navy: { value: '#2A3D56', description: 'Decorative dividers and grids on navy. Structural lines use slate-light.' },
 }
 const HUES = {
@@ -97,7 +102,9 @@ export function buildPalette() {
   const color = { $type: 'color' }
   color.paper = token(P, GROUNDS.paper.description)
   color.navy = token(N, GROUNDS.navy.description)
+  color.mist = token(GROUNDS.mist.value, GROUNDS.mist.description)
   color.rule = { paper: token(RULES.paper.value, RULES.paper.description), navy: token(RULES.navy.value, RULES.navy.description) }
+  color.surface = { raised: token(SURFACES.raised.value, SURFACES.raised.description), hover: token(SURFACES.hover.value, SURFACES.hover.description) }
   for (const [name, spec] of Object.entries(HUES)) {
     color[name] = { $description: spec.meaning }
     for (const step of ['deep', 'mid', 'light']) {

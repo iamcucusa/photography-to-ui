@@ -27,12 +27,12 @@ When a canvas and this folder disagree, the canvas shows the latest thinking and
 | `canvas/build-brand.mjs` | Reference canvas, Brand identity page: palette, contrast matrix, usable pairings, type system. |
 | `canvas/build-posts.mjs` | Posts canvas: nine posts (including concepts A and C) and the phone check. Uses the posts canvas's asset ids; concept A cites its report through the `[SOURCE]` placeholder (see Disclosure). |
 | `canvas/build-banners.mjs` | Reference canvas, LinkedIn banner page: statement banner, three photo-checked variants, export frames, illustration review. |
-| `canvas/build-carousel.mjs` | LinkedIn carousel pages (1080×1350): each page as a posts-canvas board and as a standalone `.html` with the avatar inlined, for printing to the carousel PDF. Page 1 of "One sentence per design token" lives here; the slope chart uses the mid steps as series. |
+| `canvas/build-carousel.mjs` | LinkedIn carousel pages (1080×1350): each page as a posts-canvas board (`Carousel-Token-Test-01…04`, on the posts canvas under their own row title) and as a standalone `.html` with the avatar inlined, for printing to the carousel PDF. The four slides of "One sentence per design token" live here (result, confidence, the mistake up close on paper, where to look); the slope chart uses the mid steps as series; the shared foot (legend at 32px, A/B key) is the same block on slides 1–3. |
 | `canvas/build.mjs` | Runs all four into `canvas/dist/` (gitignored). |
 
 ## The system in one screen
 
-**Colour.** Two grounds, paper `#FBFAF7` and navy `#10203A`. Four hues, magenta / sky / sand / slate, each with three steps solved to a luminance target so every step has one job: *deep* is text on paper and the ground under paper text (≥ 5.7:1); *mid* is lines, shapes and chart series, ≥ 3:1 on both grounds; *light* is text on navy and the ground under navy text (≥ 6:1). Same-hue stacks never pass. No step above Y 0.40, so nothing reads neon; saturation 64–80 %, so nothing reads pastel; fields are flat.
+**Colour.** Two grounds, paper `#F9FBFE` (cool near-white, never a warm ivory) and navy `#10203A`, plus mist `#E7EBF1` as the ground under light UI. Four hues, magenta / sky / sand / slate, each with three steps solved to a luminance target so every step has one job: *deep* is text on paper and the ground under paper text (≥ 5.7:1); *mid* is lines, shapes and chart series, ≥ 3:1 on both grounds; *light* is text on navy and the ground under navy text (≥ 6:1). Same-hue stacks never pass. No step above Y 0.40, so nothing reads neon; saturation 64–80 %, so nothing reads pastel; fields are flat.
 
 **Type.** Archivo (variable width and weight) at display sizes, JetBrains Mono at reading sizes, and mono never above the H2 step. Scales are fixed in px per surface because each surface is designed once and only scales down. The post floor is 36px (12px on a phone); the banner floor is 26px (13px on the desktop top card).
 
