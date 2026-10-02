@@ -648,5 +648,18 @@ out('carousel-token-test-p3', withTheme('light', () => standalone(TITLE, `<div c
 out('carousel-token-test-p3-table', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData, { variant: 'table' })}</div>`)), '.html')
 out('carousel-token-test-p3-case', withTheme('light', () => standalone(TITLE, `<div class="page">${page3Case(avatarData)}</div>`)), '.html')
 out('carousel-token-test-p4', standalone(TITLE, `<div class="page">${page4(avatarData)}</div>`), '.html')
-// The combined document (every slide in one file, printed to the carousel PDF) is produced once
-// each slide is approved: `[page1, page2].map((p) => \`<div class="page">${p(avatarData)}</div>\`).join('')`.
+// The combined document: every slide in one file, printed to the carousel PDF (one page per slide,
+// all 1080×1350, fonts embedded by the print). Slide 3 is on paper, so it is drawn in its theme.
+out(
+  'carousel-token-test',
+  standalone(
+    TITLE,
+    [
+      `<div class="page">${page1(avatarData)}</div>`,
+      `<div class="page">${page2(avatarData, { variant: 'share' })}</div>`,
+      withTheme('light', () => `<div class="page">${page3Case(avatarData)}</div>`),
+      `<div class="page">${page4(avatarData)}</div>`,
+    ].join(''),
+  ),
+  '.html',
+)
