@@ -4,11 +4,12 @@ import { C, ARCH, MONO, FONTS, ASSETS, page, out, AVATAR } from './lib.mjs'
 
 /**
  * LinkedIn carousel "One sentence per design token: a small test", 1080×1350 pages.
- * Three slides: 1 the result, 2 confidence, 3 the runs. Each is a function here; all export as one PDF.
+ * Four slides: 1 the result, 2 the confidence, 3 the mistake up close, 4 where to look. Each is
+ * a function here; all four print as one PDF.
  *
  * Each page is written twice: a `.dc.html` board for the rolling posts canvas (avatar from the
- * canvas's asset store, like every post board) and a standalone `.html` with the avatar inlined,
- * which is what gets printed to the carousel PDF. Same markup in both.
+ * canvas's asset store, like every post board) and a standalone `.html` for printing to the
+ * carousel PDF, where the round marks and the avatar are baked bitmaps (see Round shapes).
  *
  * Geometry: 80px padding keeps everything inside LinkedIn's 80px counter/arrow zone and well
  * inside the 48px safe margin.
@@ -25,9 +26,9 @@ const W = 1080, H = 1350
 const COL = W - 2 * PAD // 920
 
 /* ── Data (blind choice test, conditions A and B only) ─────────────── */
-// Two grounds. Slides 1 and 2 are navy with paper type, the strongest pairing and a card that
-// keeps its edge on the white feed. Slide 3 turns to paper: a change of ground where the data
-// gets dense, so the reader gets a breath. Every role below is solved for its ground.
+// Two grounds. Slides 1, 2 and 4 are navy with paper type, the strongest pairing and a card that
+// keeps its edge on the white feed. Slide 3 turns to paper: the "look closely" moment between the
+// dark slides. Every role below is solved for its ground.
 const THEMES = {
   dark: {
     bg: C.navy, // ground
@@ -182,13 +183,7 @@ function slopeChart({ height }) {
   </div>`
 }
 
-/* ── Page 1: the result ─────────────────────────────────────────────── */
 /* ── Pieces shared by every slide ──────────────────────────────────── */
-/** Condition row: outlined ring badge beside its muted label. The group header on the slide 3 matrix. */
-const condition = (letter, text) => `<div style="display:flex;align-items:center;gap:20px;height:48px">
-      ${ring(letter, 48)}
-      ${mono(text, 36, { color: G.muted })}
-    </div>`
 /** The legend, the same on every slide: 32px muted labels (the component floor, about 11px on a
  *  phone) 14px off their mark, items 48px apart, on a 40px row like the key below it. */
 const LEG = 32, SW = 28
@@ -236,6 +231,7 @@ const close = (avatarUrl, cta, ctaLabel, arrow = 'right') => `<div style="positi
     ${cta ? pill(cta, ctaLabel, arrow) : ''}
   </div>`
 
+/* ── Slide 1: the result ────────────────────────────────────────────── */
 function page1(avatarUrl) {
   // Three groups, separated by white space, tight inside: the statement (headline, subtitle),
   // the evidence (A/B key, chart, model legend), the close (author left, a two-word swipe button
@@ -266,17 +262,12 @@ const CONF = [
   { letter: 'B', label: 'One sentence per role', mistakes: 3, doubted: 0, sure: 84, n: 88 },
 ]
 
-function page2(avatarUrl, { variant = 'count' } = {}) {
-  // Three variants under review. The A/B key sits under the subtitle, as on slide 1, so every
-  // row below needs only its badge. All of them open with the share of answers rated sure.
-  //   count  the doubted mistakes as one big number per condition.
-  //   bars   part-to-whole bars, the horizontal analogue of a pie: one bar per condition, its
-  //          length the number of mistakes (16 and 3 on one scale), split into the doubted part
-  //          and the sure part. Reads both facts at once: fewer mistakes, and none of them doubted.
-  //   share  the same split with every bar at full width (a 100% stacked bar): the proportion
-  //          only, which makes B a solid block but hides that B is only 3.
-  // In every variant magenta means "sure" (a 3), an outlined segment means "doubted" (a 1 or 2),
-  // and the sure answers above use the same two marks, so one legend covers the whole slide.
+function page2(avatarUrl) {
+  // The share of answers rated sure, then the mistakes split into doubted and sure, both as 100%
+  // stacked bars (one bar per condition, every bar at full width, so the proportion reads at a
+  // glance; the total at the right says how many). Magenta means "sure" (a 3), an outlined
+  // segment means "doubted" (a 1 or 2); the sure-answers bars above use neutral marks, so the
+  // legend's two marks mean one thing on the slide.
   const badge = (letter, size = 48) =>
     ring(letter, size)
   const BAR_W = 660, BAR_H = 60, SEG_GAP = 4, LABEL = 40 // in-bar labels one step above the floor
@@ -324,34 +315,22 @@ function page2(avatarUrl, { variant = 'count' } = {}) {
     row(c.letter, [{ n: c.sure, sure: true }, { n: c.n - c.sure, sure: false }], c.n, `${c.n}`, `${c.letter}: ${c.sure} of ${c.n} answers rated sure`, 'neutral'),
   ).join('')
 
-  // Mistakes: doubted | sure. 'bars' scales both to the larger count; 'share' fills each bar.
-  // As above, the segments carry the counts and the right column shows only the total.
-  const maxMistakes = Math.max(...CONF.map((c) => c.mistakes))
+  // Mistakes: doubted | sure, each bar filled to its own total. As above, the segments carry the
+  // counts and the right column shows only the total.
   const mistakeRows = CONF.map((c) =>
     row(
       c.letter,
       [{ n: c.doubted, sure: false }, { n: c.mistakes - c.doubted, sure: true }],
-      variant === 'share' ? c.mistakes : maxMistakes,
+      c.mistakes,
       `${c.mistakes}`,
       `${c.letter}: ${c.doubted} of ${c.mistakes} mistakes flagged with doubt, ${c.mistakes - c.doubted} made with full confidence`,
     ),
   ).join('')
-  const countRows = CONF.map((c) => `<div role="img" aria-label="${c.letter}: ${c.doubted} of ${c.mistakes} mistakes flagged with doubt" style="display:flex;align-items:center;gap:20px;white-space:nowrap">
-      ${badge(c.letter)}
-      ${arch(`${c.doubted} of ${c.mistakes}`, 72, { weight: 800, track: '-0.02em', lh: 1, extra: 'font-variant-numeric:tabular-nums' })}
-      ${mono('mistakes flagged<br>with doubt', 36, { color: G.muted })}
-    </div>`).join('')
-
   const swatch = (sure) => `<div style="width:${SW}px;height:${SW}px;border-radius:2px;box-sizing:border-box;flex-shrink:0;${sure ? `background:${G.hero}` : `border:3px solid ${G.muted}`}"></div>`
   // The legend reads the marks as the mistakes section uses them; the rating scale stays in the post.
   const legend = legendRow([[swatch(false), 'Wrong and doubted'], [swatch(true), 'Wrong and sure']], 56)
 
-  const evidence = variant === 'count'
-    ? `${mono('Answers rated sure, both models', 36, { color: G.muted, extra: 'margin-top:48px' })}
-  <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">${sureRows}</div>
-  <div style="margin-top:56px;display:flex;flex-direction:column;gap:40px">${countRows}</div>
-  ${mono('Rated 1 guess · 2 fairly sure · 3 sure.<br>Doubt is a 1 or a 2.', 36, { color: G.muted, extra: 'margin-top:48px' })}`
-    : `${mono('Answers rated sure, both models', 36, { weight: 500, extra: 'margin-top:56px' })}
+  const evidence = `${mono('Answers rated sure, both models', 36, { weight: 500, extra: 'margin-top:56px' })}
   <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px">${sureRows}</div>
   ${mono('Mistakes, both models', 36, { weight: 500, extra: 'margin-top:56px' })}
   <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px">${mistakeRows}</div>
@@ -366,170 +345,7 @@ function page2(avatarUrl, { variant = 'count' } = {}) {
 </div>`
 }
 
-/* ── Slide 3: the runs ──────────────────────────────────────────────── */
-// Conditions A and B, both models: every wrong answer by element (1–44), with its confidence,
-// from the blind choice test. Element 42 is the fill of a progress bar: the small model gave it
-// the primary button's colour in A (fairly sure) and again in B (sure). Only the B one is pinned.
-const RUNS = [
-  { letter: 'A', model: 'Haiku 4.5', right: 33, wrong: [[2, 2], [8, 2], [9, 2], [13, 1], [14, 2], [20, 3], [23, 3], [25, 1], [35, 3], [40, 2], [42, 2]] },
-  { letter: 'A', model: 'Sonnet 5', right: 39, wrong: [[20, 3], [25, 2], [30, 2], [35, 3], [40, 2]] },
-  { letter: 'B', model: 'Haiku 4.5', right: 42, wrong: [[23, 3], [42, 3]], spotlight: 42 },
-  { letter: 'B', model: 'Sonnet 5', right: 43, wrong: [[40, 3]] },
-]
-const ELEMENTS = 44
-// The small model's two sure mistakes in B, as the test recorded them: what it picked, and the key.
-const PINNED = [
-  { el: 42, description: "The fill of a progress bar showing '3 of 5 steps done'.", picked: 'sys.action.primary.bg', expected: 'sys.signal.bg' },
-  { el: 23, description: "Grey text 'Updated 2 hours ago' under a card title.", picked: 'sys.text.secondary', expected: 'sys.text.tertiary' },
-]
-
-/** The matrix, compressed for a phone: right answers collapse into a structural line (the brand's
- *  slate-mid on paper, slate-light on navy) whose length is their count, wrong answers stay as
- *  single marks in element order, and each row stretches to the column width. Nothing is written
- *  on the runs: the score beside the model name says how many were right; the total of 44 is
- *  said once, in the headline. One header per condition, in the key's style, groups its two
- *  model rows; the pinned element's tag sits above its mark, in the label row's empty right half. */
-function runsMatrix({ compact = false } = {}) {
-  // Marks are near-square, 2px corners, like the brand's checkbox. Compact: 32px marks with the
-  // row pitch tightened to match, to see what a shorter matrix buys the headline.
-  const SQ = compact ? 32 : 40, GAP = compact ? 5 : 6, MIN_RUN = 10
-  const BIND = compact ? 12 : 16, ROW = compact ? 28 : 36, GROUP = compact ? 48 : 56
-  const row = (r) => {
-    // Tokens in element order: a run of right answers {n}, or a wrong answer {el, sure}.
-    const wrong = new Map(r.wrong)
-    const tokens = []
-    for (let el = 1; el <= ELEMENTS; el++) {
-      if (wrong.has(el)) tokens.push({ el, sure: wrong.get(el) === 3 })
-      else if (tokens.length && tokens.at(-1).n) tokens.at(-1).n++
-      else tokens.push({ n: 1 })
-    }
-    const wrongs = r.wrong.length
-    const free = COL - wrongs * SQ - (tokens.length - 1) * GAP
-    const unit = free / r.right
-    let x = 0
-    const marks = tokens.map((t) => {
-      let out
-      if (t.n) {
-        const w = Math.max(MIN_RUN, t.n * unit)
-        out = `<rect x="${x}" y="${SQ / 2 - 3}" width="${w}" height="6" rx="3" fill="${G.line}"/>`
-        x += w + GAP
-      } else {
-        const spot = t.el === r.spotlight
-        const box = t.sure
-          ? `<rect x="${x}" y="0" width="${SQ}" height="${SQ}" rx="2" fill="${G.mark}"/>`
-          : `<rect x="${x + 1.5}" y="1.5" width="${SQ - 3}" height="${SQ - 3}" rx="2" fill="none" stroke="${G.line}" stroke-width="3"/>`
-        const ring = spot ? `<rect x="${x - 7}" y="-7" width="${SQ + 14}" height="${SQ + 14}" rx="4" fill="none" stroke="${G.fg}" stroke-width="3"/>` : ''
-        const tag = spot ? `<text x="${x + SQ / 2}" y="-22" text-anchor="middle" font-family="${MONO}" font-size="36" font-weight="500" fill="${G.fg}">${t.el}</text>` : ''
-        out = box + ring + tag
-        x += SQ + GAP
-      }
-      return out
-    })
-    const aria = `${r.model}: ${r.right} of ${ELEMENTS} right. Wrong: ${r.wrong.map(([el, c]) => `element ${el}${c === 3 ? ', sure' : ''}`).join('; ')}.`
-    return `<div role="img" aria-label="${aria}">
-      ${mono(`<span style="font-weight:500">${r.model}</span><span style="color:${G.muted};margin-left:0.6em">· ${r.right}</span>`, 36, { extra: 'font-variant-numeric:tabular-nums;height:44px;display:flex;align-items:center' })}
-      <svg width="${COL}" height="${SQ}" aria-hidden="true" style="display:block;margin-top:${BIND}px;overflow:visible">${marks.join('')}</svg>
-    </div>`
-  }
-  // Inside a row the label binds to its marks at 16px; rows stand 36px apart, so a label is
-  // never read as a caption for the marks above it; groups stand 56px apart.
-  const group = (c) => `<div style="display:flex;flex-direction:column;gap:24px">
-      ${condition(c.letter, c.label)}
-      <div style="display:flex;flex-direction:column;gap:${ROW}px">${RUNS.filter((r) => r.letter === c.letter).map(row).join('')}</div>
-    </div>`
-  return `<div style="display:flex;flex-direction:column;gap:${GROUP}px">${CONF.map(group).join('')}</div>`
-}
-
-/** The same runs as a table, for a phone: a condition badge spanning its two model rows, the model,
- *  then the two mistake counts under the legend marks as column heads (the legend above spells
- *  them out and the A/B key names the badges). Right answers are slide 1's and stay out. Rows are
- *  drawn like the brand's list rows: 64px, square corners, rule-paper dividers, mono at the 36px
- *  floor for cells. The pinned row's sure count is ringed in the wrong-and-sure colour. */
-function runsTable() {
-  const COLS = [72, 528, 160, 160] // condition · model · wrong · wrong and sure (right was slide 1's)
-  const cell = (inner, w, align = 'flex-end') =>
-    `<div style="width:${w}px;flex-shrink:0;display:flex;align-items:center;justify-content:${align};box-sizing:border-box">${inner}</div>`
-  const mark = (kind, size = 28) =>
-    kind === 'right'
-      ? `<div style="width:${size}px;height:6px;border-radius:3px;background:${G.line}"></div>`
-      : kind === 'sure'
-        ? `<div style="width:${size}px;height:${size}px;border-radius:2px;background:${G.mark}"></div>`
-        : `<div style="width:${size}px;height:${size}px;border-radius:2px;box-sizing:border-box;border:3px solid ${G.line}"></div>`
-  const badge = (letter) =>
-    `${ring(letter, 48)}`
-  const head = `<div style="display:flex;align-items:center;height:56px;border-bottom:2px solid ${G.line}">
-      ${cell('', COLS[0] + COLS[1], 'flex-start')}
-      ${cell(mark('wrong'), COLS[2], 'center')}
-      ${cell(mark('sure'), COLS[3], 'center')}
-    </div>`
-  const num = (n) => mono(`${n}`, 36, { weight: 500, extra: 'font-variant-numeric:tabular-nums' })
-  // The pinned row's sure count is ringed in the wrong-and-sure colour, the shape step on paper.
-  const ringed = (inner) => `<div style="padding:2px 14px;border:3px solid ${G.mark};border-radius:4px;display:flex">${inner}</div>`
-  const row = (r, last) => {
-    const doubted = r.wrong.filter(([, c]) => c < 3).length
-    const sure = r.wrong.filter(([, c]) => c === 3).length
-    const aria = `${r.letter}, ${r.model}: ${doubted} wrong, ${sure} wrong and sure${r.spotlight ? ', elements 23 and 42' : ''}.`
-    return `<div role="row" aria-label="${aria}" style="display:flex;align-items:center;height:64px;${last ? '' : `border-bottom:2px solid ${G.grid}`}">
-      ${cell(mono(r.model, 36, { weight: 500 }), COLS[1], 'flex-start')}
-      ${cell(num(doubted), COLS[2], 'center')}
-      ${cell(r.spotlight ? ringed(num(sure)) : num(sure), COLS[3], 'center')}
-    </div>`
-  }
-  // The badge spans its two rows: one cell beside a two-row block, the divider only between the rows.
-  const group = (c) => {
-    const rows = RUNS.filter((r) => r.letter === c.letter)
-    return `<div role="rowgroup" aria-label="${c.letter}, ${c.label}" style="display:flex;align-items:stretch;border-bottom:2px solid ${G.line}">
-      <div style="width:${COLS[0]}px;flex-shrink:0;display:flex;align-items:center;justify-content:flex-start">${badge(c.letter)}</div>
-      <div style="display:flex;flex-direction:column;flex-grow:1">${rows.map((r, i) => row(r, i === rows.length - 1)).join('')}</div>
-    </div>`
-  }
-  return `<div role="table" aria-label="Wrong and wrong-and-sure answers per model and condition" style="display:flex;flex-direction:column">${head}${CONF.map(group).join('')}</div>`
-}
-
-function page3(avatarUrl, { compact = true, variant = 'matrix' } = {}) {
-  // The evidence first, then the callouts, then the legend and the A/B key just above the close; the
-  // close takes its usual place later. The callouts wear the ring's colour, so they read as the
-  // pinned count opened up; token names sit in the brand's field: white on a rule-paper border.
-  // The legend and the A/B key at the component floor, 32px (about 11px on a phone), one step
-  // under the 36px body floor, with swatches and badges scaled to match.
-  const swatch = (kind) =>
-    kind === 'right'
-      ? `<div style="width:${SW}px;height:6px;border-radius:3px;background:${G.line};flex-shrink:0"></div>`
-      : kind === 'sure'
-        ? `<div style="width:${SW}px;height:${SW}px;border-radius:2px;background:${G.mark};flex-shrink:0"></div>`
-        : `<div style="width:${SW}px;height:${SW}px;border-radius:2px;box-sizing:border-box;border:3px solid ${G.line};flex-shrink:0"></div>`
-  const legend = legendRow([
-    ...(variant === 'table' ? [] : [[swatch('right'), 'Right']]),
-    [swatch('wrong'), 'Wrong and doubted'],
-    [swatch('sure'), 'Wrong and sure'],
-  ], 40)
-  // The callout is drawn like the brand's components, at twice web scale: 16px web → 32px here,
-  // the component floor, for the description, the labels and the token chips.
-  const chip = (t) => `<span style="font-family:${MONO};font-size:32px;line-height:1;padding:6px 12px;border:2px solid ${C['rule-paper']};border-radius:4px;background:${C['surface-raised']};color:${C.navy};white-space:nowrap">${t}</span>`
-  const field = (label, value) => `<div style="display:flex;align-items:center;gap:20px;height:44px">
-      ${mono(label, 32, { color: G.muted, extra: 'width:176px;flex-shrink:0' })}${chip(value)}
-    </div>`
-  // One callout per sure mistake, picked and expected only: the progress bar first, then the grey
-  // text. Their border is the ring on the count they open up: the wrong-and-sure colour.
-  const callout = PINNED.map(
-    (m) => `<div role="group" aria-label="Element ${m.el}: ${m.description}" style="border:3px solid ${G.mark};border-radius:4px;padding:24px 28px;display:flex;flex-direction:column;gap:12px">
-    ${field('Picked', m.picked)}
-    ${field('Expected', m.expected)}
-  </div>`,
-  ).join('')
-  const callouts = `<div style="margin-top:40px;display:flex;flex-direction:column;gap:20px">${callout}</div>`
-  // The content sits as low as it can, 62px above the close like the other slides, so the room
-  // left at the top is the room a headline has.
-  return `<div style="position:relative;width:${W}px;height:${H}px;box-sizing:border-box;padding:${PAD}px ${PAD}px ${PAD + 112 + 62}px;background:${G.bg};color:${G.fg};display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
-  <div id="p3-content">${variant === 'table' ? runsTable() : runsMatrix({ compact })}
-  ${callouts}
-  ${legend}
-  ${variant === 'table' ? keyBlock() : ''}</div>
-  ${close(avatarUrl, 'The fix', 'The fix: the next post in the series')}
-</div>`
-}
-
-/* ── Slide 3, up close: one element, four runs ──────────────────────── */
+/* ── Slide 3: the mistake, up close ─────────────────────────────────── */
 // Element 42 of the blind choice test, the fill of a progress bar showing "3 of 5 steps done",
 // across the four runs. The small model picked the button's token in both conditions; in B it
 // rated that answer 3, surer than the large model's right answer at 2. Confidence as recorded:
@@ -546,7 +362,7 @@ const CASE = {
   ],
 }
 
-function page3Case(avatarUrl) {
+function page3(avatarUrl) {
   // Statement (headline, subtitle naming the element in plain words), the four runs as list rows (badge spanning its two rows, like the runs table), the
   // right token and the rating scale as two quiet lines, then the shared foot and close.
   // Three groups: the statement, the evidence (titled table), the foot (two stacks: marks and
@@ -673,11 +489,10 @@ const AVATAR_BAKED = {
 }
 const avatarData = 'print' // unused: under withPrint, close() places the baked avatar
 
-// Boards for the posts canvas (canvas asset id for the avatar, like every post board): the four
-// slides as they stand, slide 2 in its share variant, slide 3 the up-close case on paper.
+// Boards for the posts canvas (canvas asset id for the avatar, like every post board).
 out('Carousel-Token-Test-01', page({ title: 'Carousel slide 1 of 4: the result', w: W, h: H, body: page1(AVATAR.posts), bg: G.bg, fg: G.fg }))
-out('Carousel-Token-Test-02', page({ title: 'Carousel slide 2 of 4: the confidence', w: W, h: H, body: page2(AVATAR.posts, { variant: 'share' }), bg: G.bg, fg: G.fg }))
-withTheme('light', () => out('Carousel-Token-Test-03', page({ title: 'Carousel slide 3 of 4: the mistake, up close', w: W, h: H, body: page3Case(AVATAR.posts), bg: G.bg, fg: G.fg })))
+out('Carousel-Token-Test-02', page({ title: 'Carousel slide 2 of 4: the confidence', w: W, h: H, body: page2(AVATAR.posts), bg: G.bg, fg: G.fg }))
+withTheme('light', () => out('Carousel-Token-Test-03', page({ title: 'Carousel slide 3 of 4: the mistake, up close', w: W, h: H, body: page3(AVATAR.posts), bg: G.bg, fg: G.fg })))
 out('Carousel-Token-Test-04', page({ title: 'Carousel slide 4 of 4: where to look', w: W, h: H, body: page4(AVATAR.posts), bg: G.bg, fg: G.fg }))
 
 // Standalone page for the PDF export: inline avatar, @page at the artwork size, PDF title from <title>.
@@ -700,13 +515,10 @@ ${inner}
 </body>
 </html>
 `
+// One standalone page per slide, for proofs of a single slide.
 withPrint(() => out('carousel-token-test-p1', standalone(TITLE, `<div class="page">${page1(avatarData)}</div>`), '.html'))
 withPrint(() => out('carousel-token-test-p2', standalone(TITLE, `<div class="page">${page2(avatarData)}</div>`), '.html'))
-withPrint(() => out('carousel-token-test-p2-bars', standalone(TITLE, `<div class="page">${page2(avatarData, { variant: 'bars' })}</div>`), '.html'))
-withPrint(() => out('carousel-token-test-p2-share', standalone(TITLE, `<div class="page">${page2(avatarData, { variant: 'share' })}</div>`), '.html'))
 withPrint(() => out('carousel-token-test-p3', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData)}</div>`)), '.html'))
-withPrint(() => out('carousel-token-test-p3-table', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData, { variant: 'table' })}</div>`)), '.html'))
-withPrint(() => out('carousel-token-test-p3-case', withTheme('light', () => standalone(TITLE, `<div class="page">${page3Case(avatarData)}</div>`)), '.html'))
 withPrint(() => out('carousel-token-test-p4', standalone(TITLE, `<div class="page">${page4(avatarData)}</div>`), '.html'))
 // The combined document: every slide in one file, printed to the carousel PDF (one page per slide,
 // all 1080×1350, fonts embedded by the print). Slide 3 is on paper, so it is drawn in its theme.
@@ -716,8 +528,8 @@ withPrint(() => out(
     TITLE,
     [
       `<div class="page">${page1(avatarData)}</div>`,
-      `<div class="page">${page2(avatarData, { variant: 'share' })}</div>`,
-      withTheme('light', () => `<div class="page">${page3Case(avatarData)}</div>`),
+      `<div class="page">${page2(avatarData)}</div>`,
+      withTheme('light', () => `<div class="page">${page3(avatarData)}</div>`),
       `<div class="page">${page4(avatarData)}</div>`,
     ].join(''),
   ),
