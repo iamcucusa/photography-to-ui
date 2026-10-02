@@ -72,16 +72,36 @@ const mono = (t, size, { weight = 400, lh = 1.2, color = G.fg, extra = '' } = {}
   `<div style="font-family:${MONO};font-size:${size}px;font-weight:${weight};line-height:${lh};color:${color};${extra}">${t}</div>`
 
 /* ── Round shapes ──────────────────────────────────────────────────── */
-// What LinkedIn's document preview can draw: CSS rounded boxes (the ring badges, the pill) print
-// as plain paths and come out clean; SVG circles and polygons come out as octagons or ragged; a
-// clipped image comes out rough (so the printed avatar is a bitmap, see close()). So every round
-// mark is a CSS box, including the chart's dots, which sit as positioned boxes over the chart's SVG.
+// LinkedIn's document preview rasterises vector curves roughly: CSS rings, SVG circles and polygons
+// all came out ragged, and a clipped image rough. Bitmaps it scales cleanly. So the printed pages
+// (PRINT on) place PNGs with alpha, baked at 4× from the same CSS (brand/assets/print, and the
+// avatar in brand/assets): the ring badges, the chart's dots, the pill's two ends, the avatar.
+// Boards on the canvas keep the CSS, which a browser draws cleanly.
+let PRINT = false
+const withPrint = (fn) => {
+  PRINT = true
+  try { return fn() } finally { PRINT = false }
+}
+const bakedCache = new Map()
+const baked = (name) => {
+  if (!bakedCache.has(name)) bakedCache.set(name, `data:image/png;base64,${readFileSync(resolve(ASSETS, 'print', `${name}.png`)).toString('base64')}`)
+  return bakedCache.get(name)
+}
+const inkName = () => (G.fg === C.paper ? 'paper' : 'navy')
 /** The ring badge (A, B, 1, 2): a CSS ring with the letter set in Archivo at two thirds of the size. */
 const ring = (letter, size = 48, { font = Math.round(size * 0.67), stroke = 3, extra = '' } = {}) =>
-  `<div style="width:${size}px;height:${size}px;border-radius:50%;box-sizing:border-box;border:${stroke}px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:${font}px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;${extra}">${letter}</div>`
-/** A chart dot as a CSS box, positioned over the SVG at its centre. */
-const cssDot = (cx, cy, r, { fill, stroke = '', width = 0 } = {}) =>
-  `<div style="position:absolute;left:${(cx - r - width / 2).toFixed(1)}px;top:${(cy - r - width / 2).toFixed(1)}px;width:${2 * r + width}px;height:${2 * r + width}px;border-radius:50%;box-sizing:border-box;background:${fill};${stroke ? `border:${width}px solid ${stroke};` : ''}"></div>`
+  PRINT && ['A', 'B', '1', '2'].includes(String(letter))
+    ? `<img src="${baked(`ring-${letter}-${inkName()}`)}" alt="${letter}" width="${size}" height="${size}" style="display:block;width:${size}px;height:${size}px;flex-shrink:0;${extra}">`
+    : `<div style="width:${size}px;height:${size}px;border-radius:50%;box-sizing:border-box;border:${stroke}px solid ${G.fg};color:${G.fg};font-family:${ARCH};font-size:${font}px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;${extra}">${letter}</div>`
+/** A chart dot as a CSS box, positioned over the SVG at its centre; a bitmap when printing. */
+const cssDot = (cx, cy, r, { fill, stroke = '', width = 0 } = {}) => {
+  const d = 2 * r + width
+  const pos = `position:absolute;left:${(cx - d / 2).toFixed(1)}px;top:${(cy - d / 2).toFixed(1)}px;width:${d}px;height:${d}px;`
+  const hue = fill === C['sky-light'] ? 'sky' : fill === C['sand-mid'] ? 'sand' : ''
+  return PRINT && hue
+    ? `<img src="${baked(`dot-${hue}${stroke ? '-ringed' : ''}`)}" alt="" width="${d}" height="${d}" style="${pos}display:block">`
+    : `<div style="${pos}border-radius:50%;box-sizing:border-box;background:${fill};${stroke ? `border:${width}px solid ${stroke};` : ''}"></div>`
+}
 
 /* ── Slope chart: SVG in page px, no scaling, so every size is literal ─ */
 function slopeChart({ height }) {
@@ -189,17 +209,31 @@ const keyBlock = (gapTop = 20) => `<div style="margin-top:${gapTop}px;display:fl
 // the baked bitmap (brand/assets/avatar-ring-*.png: the circle and its ring, with alpha, at 4×),
 // because a PDF rasteriser draws a CSS clip path without anti-aliasing and the ring came out rough
 // on LinkedIn's preview. The ring is paper on navy and navy on paper, like the CSS one.
+/** The pill: a CSS stadium; when printing, its two ends are baked half discs around a flat middle. */
+const pill = (cta, ctaLabel, arrow) => {
+  const inner = `${arch(cta, 36, { weight: 700, lh: 1, track: '-0.015em', color: G.bg, extra: 'white-space:nowrap' })}
+      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="${arrow === 'down' ? 'M16 4v22M7 18l9 9 9-9' : 'M4 16h22M18 7l9 9-9 9'}" fill="none" stroke="${G.bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+  if (!PRINT)
+    return `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:center;gap:16px;height:64px;padding:0 24px 0 32px;border-radius:32px;background:${G.hero};color:${G.bg};text-decoration:none;flex-shrink:0">
+      ${inner}
+    </a>`
+  const hue = G.hero === C['magenta-light'] ? 'magenta-light' : 'magenta-deep'
+  const end = (side) => `<img src="${baked(`pill-${side}-${hue}`)}" alt="" width="32" height="64" style="display:block;width:32px;height:64px;flex-shrink:0">`
+  // The arrow keeps its 24px from the right edge: the middle overlaps the right end by 8px.
+  return `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:stretch;height:64px;color:${G.bg};text-decoration:none;flex-shrink:0">
+      ${end('left')}
+      <span style="position:relative;z-index:1;display:flex;align-items:center;gap:16px;background:${G.hero};color:${G.bg};margin-right:-8px;padding-right:8px">${inner}</span>
+      ${end('right')}
+    </a>`
+}
 const close = (avatarUrl, cta, ctaLabel, arrow = 'right') => `<div style="position:absolute;left:${PAD}px;right:${PAD}px;bottom:${PAD}px;display:flex;align-items:center;justify-content:space-between;gap:32px">
     <div style="display:flex;align-items:center;gap:20px;flex-shrink:0">
-      ${avatarUrl === 'baked'
+      ${PRINT
         ? `<img src="${AVATAR_BAKED[G.bg === C.navy ? 'onNavy' : 'onPaper']}" alt="Grace Henriquez" width="112" height="112" style="display:block;width:112px;height:112px;flex-shrink:0">`
         : `<img src="${avatarUrl}" alt="Grace Henriquez" style="width:112px;height:112px;border-radius:50%;object-fit:cover;border:4px solid ${G.fg};box-sizing:border-box;flex-shrink:0">`}
       ${arch('Grace Henriquez', 44, { weight: 700, track: '-0.02em' })}
     </div>
-    ${cta ? `<a href="#next" aria-label="${ctaLabel}" style="display:inline-flex;align-items:center;gap:16px;height:64px;padding:0 24px 0 32px;border-radius:32px;background:${G.hero};color:${G.bg};text-decoration:none;flex-shrink:0">
-      ${arch(cta, 36, { weight: 700, lh: 1, track: '-0.015em', color: G.bg, extra: 'white-space:nowrap' })}
-      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="${arrow === 'down' ? 'M16 4v22M7 18l9 9 9-9' : 'M4 16h22M18 7l9 9-9 9'}" fill="none" stroke="${G.bg}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>` : ''}
+    ${cta ? pill(cta, ctaLabel, arrow) : ''}
   </div>`
 
 function page1(avatarUrl) {
@@ -637,7 +671,7 @@ const AVATAR_BAKED = {
   onNavy: `data:image/png;base64,${readFileSync(resolve(ASSETS, 'avatar-ring-paper.png')).toString('base64')}`,
   onPaper: `data:image/png;base64,${readFileSync(resolve(ASSETS, 'avatar-ring-navy.png')).toString('base64')}`,
 }
-const avatarData = 'baked' // the printed pages take the baked avatar, see close()
+const avatarData = 'print' // unused: under withPrint, close() places the baked avatar
 
 // Boards for the posts canvas (canvas asset id for the avatar, like every post board): the four
 // slides as they stand, slide 2 in its share variant, slide 3 the up-close case on paper.
@@ -666,17 +700,17 @@ ${inner}
 </body>
 </html>
 `
-out('carousel-token-test-p1', standalone(TITLE, `<div class="page">${page1(avatarData)}</div>`), '.html')
-out('carousel-token-test-p2', standalone(TITLE, `<div class="page">${page2(avatarData)}</div>`), '.html')
-out('carousel-token-test-p2-bars', standalone(TITLE, `<div class="page">${page2(avatarData, { variant: 'bars' })}</div>`), '.html')
-out('carousel-token-test-p2-share', standalone(TITLE, `<div class="page">${page2(avatarData, { variant: 'share' })}</div>`), '.html')
-out('carousel-token-test-p3', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData)}</div>`)), '.html')
-out('carousel-token-test-p3-table', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData, { variant: 'table' })}</div>`)), '.html')
-out('carousel-token-test-p3-case', withTheme('light', () => standalone(TITLE, `<div class="page">${page3Case(avatarData)}</div>`)), '.html')
-out('carousel-token-test-p4', standalone(TITLE, `<div class="page">${page4(avatarData)}</div>`), '.html')
+withPrint(() => out('carousel-token-test-p1', standalone(TITLE, `<div class="page">${page1(avatarData)}</div>`), '.html'))
+withPrint(() => out('carousel-token-test-p2', standalone(TITLE, `<div class="page">${page2(avatarData)}</div>`), '.html'))
+withPrint(() => out('carousel-token-test-p2-bars', standalone(TITLE, `<div class="page">${page2(avatarData, { variant: 'bars' })}</div>`), '.html'))
+withPrint(() => out('carousel-token-test-p2-share', standalone(TITLE, `<div class="page">${page2(avatarData, { variant: 'share' })}</div>`), '.html'))
+withPrint(() => out('carousel-token-test-p3', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData)}</div>`)), '.html'))
+withPrint(() => out('carousel-token-test-p3-table', withTheme('light', () => standalone(TITLE, `<div class="page">${page3(avatarData, { variant: 'table' })}</div>`)), '.html'))
+withPrint(() => out('carousel-token-test-p3-case', withTheme('light', () => standalone(TITLE, `<div class="page">${page3Case(avatarData)}</div>`)), '.html'))
+withPrint(() => out('carousel-token-test-p4', standalone(TITLE, `<div class="page">${page4(avatarData)}</div>`), '.html'))
 // The combined document: every slide in one file, printed to the carousel PDF (one page per slide,
 // all 1080×1350, fonts embedded by the print). Slide 3 is on paper, so it is drawn in its theme.
-out(
+withPrint(() => out(
   'carousel-token-test',
   standalone(
     TITLE,
@@ -688,4 +722,4 @@ out(
     ].join(''),
   ),
   '.html',
-)
+))
