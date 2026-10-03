@@ -476,8 +476,8 @@ function page4(avatarUrl) {
   ${mono('Why: the progress bar and the button are the same cobalt in both themes.', 44, { weight: 500, extra: 'margin-top:20px;text-wrap:balance' })}
   ${mono('What I’m doing:', 36, { color: G.muted, extra: 'margin-top:132px;white-space:nowrap' })}
   <div style="margin-top:32px;display:flex;flex-direction:column;gap:40px">${LOOK.map(step).join('')}</div>
-  ${mono('Full test and article in the comments.', 36, { weight: 500, extra: 'margin-top:132px;white-space:nowrap' })}
-  ${close(avatarUrl, 'Comments', 'The full test and the article are in the comments', 'down')}
+  ${mono('Full article in the comments.', 36, { weight: 500, extra: 'margin-top:132px;white-space:nowrap' })}
+  ${close(avatarUrl, 'Comments', 'The full article is in the comments', 'down')}
 </div>`
 }
 
