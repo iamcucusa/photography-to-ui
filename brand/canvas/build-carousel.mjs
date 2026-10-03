@@ -403,7 +403,9 @@ function page3(avatarUrl) {
   }
   // The title does the legend's work for the right answers: it names the right token, so a plain
   // chip reads as right and only the mistakes carry a colour. Slide 2's section-title style.
-  const title = mono(`The right token is ${CASE.expected}`, 36, { weight: 500 })
+  // Quiet, so it labels the table rather than competing with the subtitle: muted at body size,
+  // with only the token itself in ink.
+  const title = mono(`The right token is <span style="color:${G.fg};font-weight:500">${CASE.expected}</span>`, 36, { color: G.muted })
   // Column heads in the footer's voice: the run (its condition badge and model, the subtitle's
   // "four runs"), what it picked, and how it rated the answer.
   const head = `<div role="row" style="display:flex;align-items:center;height:40px;border-bottom:2px solid ${G.line}">
